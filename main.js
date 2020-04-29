@@ -16,7 +16,6 @@ Vue.component('cu-custom',cuCustom)
 Vue.prototype.$validate = validate
 Vue.config.productionTip = false
 Vue.prototype.$store = store
-
 App.mpType = 'app'
 Vue.prototype.$http = request
 const app = new Vue({
