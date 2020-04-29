@@ -1,0 +1,108 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	 {
+	     "path" : "pages/plantManage/workeMethod",
+	     "style" : {
+			 "navigationBarTitleText": "工單操作方法"
+		 }
+	 },
+	 {
+	     "path" : "pages/plantManage/workOrder",
+	     "style" : {}
+	 },
+	 {
+	     "path" : "pages/message/message",
+	     "style" : {
+	 		"navigationBarTitleText": "消息"
+	 	}
+	 },
+      {
+            "path" : "pages/login/login",
+            "style" : {
+					"navigationBarTitleText": "登录"
+			}
+        },
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "带带web"
+			}
+		}
+        
+        ,{
+            "path" : "pages/plantManage/plantManage",
+            "style" : {
+					"navigationBarTitleText": "种植管理",
+					"navigationBarBackgroundColor":"#29B982",
+					"navigationBarTextStyle":"white"
+			}
+			
+        }
+        ,{
+            "path" : "pages/service/service",
+            "style" : {
+            		"navigationBarTitleText": "服务管理"
+            }
+        }
+		,{
+		    "path" : "pages/fair/fair",
+		    "style" : {
+					"navigationBarTitleText": "市集"
+			}
+		}
+        ,{
+            "path" : "pages/personal/personal",
+            "style" : {
+            		"navigationBarTitleText": "我的"
+            }
+        }
+        
+        
+       
+    ],
+"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "代代为本",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		// 下拉刷新
+		"enablePullDownRefresh": true
+	},
+	"tabBar": {
+		"color": "#999999",
+		"selectedColor": "#00AE66",
+		"backgroundColor": "#F7F7F7",
+		"list": [
+			{
+				"pagePath": "pages/message/message",
+				"text": "消息",
+				"iconPath": "static/tab/tab_icon_messag_def@2x.png",
+				"selectedIconPath": "static/tab/tab_icon_messag_pre@2x.png"
+			},{
+				"pagePath": "pages/plantManage/plantManage",
+				"text": "种植管理",
+		
+				"iconPath": "static/tab/tab_icon_plant_def@2x.png",
+				"selectedIconPath": "static/tab/tab_icon_plant_pre@2x.png"
+			},{
+				"pagePath": "pages/service/service",
+				"text": "服务管理",
+			
+				"iconPath": "static/tab/tab_icon_service_def@2x.png",
+				"selectedIconPath": "static/tab/tab_icon_service_pre@2x.png"
+			},{
+				"pagePath": "pages/fair/fair",
+				"text": "市集",
+		
+				"iconPath": "static/tab/tab_icon_fair_def@2x.png",
+				"selectedIconPath": "static/tab/tab_icon_fair_pre@2x.png"
+			},{
+				"pagePath": "pages/personal/personal",
+				"text": "我的",
+			
+				"iconPath": "static/tab/tab_icon_mine_def@2x.png",
+				"selectedIconPath": "static/tab/tab_icon_mine_pre@2x.png"
+			}
+			]
+			}
+}

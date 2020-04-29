@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/message/message",
+    "pages/login/login",
+    "pages/index/index",
+    "pages/plantManage/plantManage",
+    "pages/service/service",
+    "pages/fair/fair",
+    "pages/personal/personal",
+    "pages/plantManage/workOrder"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "代代为本",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#00AE66",
+    "backgroundColor": "#F7F7F7",
+    "list": [
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息",
+        "iconPath": "static/tab/tab_icon_messag_def@2x.png",
+        "selectedIconPath": "static/tab/tab_icon_messag_pre@2x.png"
+      },
+      {
+        "pagePath": "pages/plantManage/plantManage",
+        "text": "种植管理",
+        "iconPath": "static/tab/tab_icon_plant_def@2x.png",
+        "selectedIconPath": "static/tab/tab_icon_plant_pre@2x.png"
+      },
+      {
+        "pagePath": "pages/service/service",
+        "text": "服务管理",
+        "iconPath": "static/tab/tab_icon_service_def@2x.png",
+        "selectedIconPath": "static/tab/tab_icon_service_pre@2x.png"
+      },
+      {
+        "pagePath": "pages/fair/fair",
+        "text": "市集",
+        "iconPath": "static/tab/tab_icon_fair_def@2x.png",
+        "selectedIconPath": "static/tab/tab_icon_fair_pre@2x.png"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "text": "我的",
+        "iconPath": "static/tab/tab_icon_mine_def@2x.png",
+        "selectedIconPath": "static/tab/tab_icon_mine_pre@2x.png"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap57.json"
+}

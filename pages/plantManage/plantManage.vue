@@ -1,0 +1,307 @@
+<!-- 种植管理  已有基地-->
+<template>
+	<view class="plant">
+		<view class="plant-top">
+
+			<view class="flex-top">
+				<view class="name">sdfsd的土地信息</view>
+				<view class="section right">
+					<text @click="downSelect">00000 <image src="/static/plant/font1.png" class="imgSize" :class="{'degimg':isShow}"></image></text>
+
+				</view>
+
+
+			</view>
+
+			<view class="select-model" :class="{'showModel':isShow}">
+				<view v-for="item in 5" class="select-li" @click="selectedFun(item)">{{item}}</view>
+			</view>
+			<view class="plant-top-content flex-top">
+				<view class="item">
+					<view>
+						<text class="fb">111</text><text>亩</text>
+					</view>
+					<view>土地总面积</view>
+				</view>
+				<view class="item">
+					<view>
+						<text class="fb">111</text><text>块</text>
+					</view>
+					<view>总地块数量 </view>
+				</view>
+
+				<view class="item">
+					<view>
+						<text class="fb">111</text><text>批</text>
+					</view>
+					<view>种植中批次</view>
+				</view>
+
+
+			</view>
+
+		</view>
+
+		<view class="plant-item ">
+			<view class="cark" style="    left: 60rpx;"></view>
+			<view class="cark cark-right"></view>
+			<view class="flex">
+				<view>
+					<view>
+						<image src="/static/plant/icon_pending@2x.png" class="icon" />
+
+					</view>
+					<tex>待处理</tex>
+				</view>
+				<view>
+					<view>
+						<image src="/static/plant/icon_warning@2x.png" class="icon" />
+
+					</view>
+					<tex>预警提醒</tex>
+				</view>
+				<view>
+					<view>
+						<image src="/static/plant/icon_batch@2x.png" class="icon" />
+
+					</view>
+					<tex>批次管理</tex>
+				</view>
+				<view>
+					<view>
+						<image src="/static/plant/icon_plot@2x.png" class="icon" />
+
+					</view>
+					<tex>地块管理</tex>
+				</view>
+				<view>
+					<view>
+						<image src="/static/plant/icon_farming@2x.png" class="icon" />
+
+					</view>
+					<tex>农事管理</tex>
+				</view>
+
+			</view>
+<label class="title">种植中批次</label>
+			<view style="overflow-y: auto;height: 70%;">
+				
+				<view >
+					<view v-for="(item,index) in 3" class="item-view">
+						<view class="item-title">xxxx批次</view>
+						<view style="padding: 10px 0;">
+							<view class="inline content">
+								<view class="f20">
+									1
+								</view>
+								<view class="cr2 f12">地块数量</view>
+							</view>
+							<view class="inline line"></view>
+							<view class="inline content">
+								<view class="f20">
+									1
+								</view>
+								<view class="cr2 f12">待处理</view>
+							</view>
+
+							<view class="inline line"></view>
+							<view class="inline content">
+								<view class="f20">
+									1
+								</view>
+								<view class="cr2 f12">种植品种</view>
+							</view>
+
+						</view>
+
+					</view>
+				</view>
+
+				
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+
+		data() {
+			return {
+				array: ['美国', '中国', '巴西', '日本'],
+				isShow: false,
+
+			};
+		},
+		methods: {
+			downSelect() {
+				this.isShow = !this.isShow
+			},
+			selectedFun(item) {
+
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.plant {
+		.flex {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.select-model {
+			background-color: #fff;
+			width: 100vw;
+			max-height: 0;
+			overflow: auto;
+			transition: max-height .25s;
+			position: absolute;
+			z-index: 9999;
+			left: 0;
+			top: 60rpx;
+
+			.select-li {
+				color: #666;
+				padding: 10px 6px;
+				border-bottom: 1px solid #dddedd;
+
+			}
+
+			box-shadow:1px 4px 8px #f0f0f0;
+		}
+
+		.showModel {
+			max-height: 20vh;
+
+
+
+
+
+		}
+
+		.plant-top {
+			height: 20vh;
+
+			color: #FFFFFF;
+			background: linear-gradient(top, rgba(41, 185, 130, 1), rgba(45, 187, 87, 1));
+			;
+			padding: 0px 16rpx;
+
+			.imgSize {
+				width: 48rpx;
+				height: 48rpx;
+				vertical-align: text-bottom;
+				transition: transform 0.2s ease-in;
+
+			}
+
+			.degimg {
+				transform: rotate(180deg);
+			}
+
+			.flex-top {
+				display: flex;
+				justify-content: space-between;
+
+				.name {
+					font-size: 17px;
+				}
+
+			}
+
+			.plant-top-content {
+				margin-top: 26px;
+				text-align: right;
+				font-size: 12px;
+				line-height: 22px;
+
+				.fb {
+					font-size: 20px;
+				}
+
+				.item {
+					padding: 0px 10px;
+				}
+
+			}
+		}
+
+		.plant-item {
+			box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
+			border-radius: 10px;
+			background-color: #fff;
+			margin: 0px 16px;
+			margin-top: -16px;
+			position: relative;
+			height: 65vh;
+			 
+
+			.flex {
+				font-size: 12px;
+				text-align: center;
+				color: #666666;
+				padding: 16px;
+				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
+
+			}
+
+			.cark {
+				width: 6px;
+				height: 17px;
+				background-color: #f1f0f0;
+				position: absolute;
+				top: -8px;
+
+				border-radius: 6px;
+				box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+
+			}
+
+			.cark-right {
+
+				right: 60rpx;
+			}
+
+			.icon {
+				width: 38rpx;
+				height: 38rpx;
+			}
+
+			.title {
+				margin-top: 50rpx;
+				display: inline-block;
+				margin-bottom: 5px;
+			}
+
+			.item-title {
+				padding: 6px 16px;
+				background-color: #EEFEF0;
+			}
+
+			.inline {
+				display: inline-block;
+				text-align: center;
+			}
+
+			.content {
+				width: 32%;
+				line-height: 25px;
+			}
+
+			.line {
+				width: 2px;
+				height: 35px;
+				background-color: #D1D1D1;
+			}
+
+			.item-view {
+				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
+				margin-bottom: 20px;
+			}
+
+		}
+
+	}
+</style>
