@@ -42,10 +42,55 @@ export const test3 = (data) => {
 		data,
 	})
 }
-
-export const test4 = (data) => {
+/* 种植管理 ----- 种植中批次 */
+export const getPagingCriteriaQuery = (data) => {
 	return http.request({
 		url: 'api/plantingBatchs/pagingCriteriaQuery/'+data.pageNo,
+		method: 'GET',
+		data,
+	})
+}
+ //http://localhost:8090/api/api/workOrders/pagingCriteriaQuery/1?plantingBatchCode=&pageNo=1&baseId=23&workOrderStatus=1
+/* 种植管理 ----- 种植中批次 ---待处理工单*/
+export const gerWorkOrders = (data) => {
+	return http.request({
+		url: 'api/workOrders/pagingCriteriaQuery/'+data.pageNo,
+		method: 'GET',
+		data,
+	})
+}
+
+/*待处理工单详情*/
+export const getByWorkId = (data) => {
+	return http.request({
+		url: 'api/workOrders/'+data.id,
+		method: 'GET',
+		data,
+	})
+}
+
+/* 待处理工单详情 -- 人资费用*/
+export const getByWorkOrderIdPerson = (data) => {
+	return http.request({
+		url: 'api/personResources/getByWorkOrderId',
+		method: 'GET',
+		data,
+	})
+}
+
+/* 待处理工单详情 -- 设备费用*/
+export const getByWorkOrderIdEqu = (data) => {
+	return http.request({
+		url: 'api/equitmenResources/getByWorkOrderId',
+		method: 'GET',
+		data,
+	})
+}
+
+/* 待处理工单详情 -- 物料信息*/
+export const getByWorkOrderIdSup = (data) => {
+	return http.request({
+		url: 'api/suppliesResources/getByWorkOrderId',
 		method: 'GET',
 		data,
 	})
