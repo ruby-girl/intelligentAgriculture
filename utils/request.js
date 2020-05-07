@@ -9,6 +9,7 @@ export default {
 		method: "GET",
 		dataType: "json",  /* 如设为json，会对返回的数据做一次 JSON.parse */
 		responseType: "text",
+		withCredentials:true,
 		success() {},
 		fail() {},
 		complete() {}
