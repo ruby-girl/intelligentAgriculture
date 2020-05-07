@@ -68,9 +68,12 @@
             		"navigationBarTitleText": "我的"
             }
         }
-        
-        
-       
+        ,{
+            "path" : "pages/plantManage/batchManagement/list",
+            "style" : {
+				"navigationBarTitleText": "批次管理"
+			}
+        }
        
        
     ],

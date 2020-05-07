@@ -174,11 +174,6 @@
 
 		.showModel {
 			max-height: 20vh;
-
-
-
-
-
 		}
 
 		.plant-top {

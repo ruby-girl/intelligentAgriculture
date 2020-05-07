@@ -1,5 +1,14 @@
 {
   "pages": [
+    "pages/service/addLand",
+    "pages/service/map3",
+    "pages/service/map2",
+    "pages/plantManage/map",
+    "pages/plantManage/framManage",
+    "pages/plantManage/addFram",
+    "pages/plantManage/workDetail",
+    "pages/plantManage/workeMethod",
+    "pages/plantManage/workOrder",
     "pages/message/message",
     "pages/login/login",
     "pages/index/index",
@@ -7,7 +16,10 @@
     "pages/service/service",
     "pages/fair/fair",
     "pages/personal/personal",
-    "pages/plantManage/workOrder"
+    "pages/plantManage/batchManagement/list",
+    "pages/plantManage/chooseHandle",
+    "pages/service/map4",
+    "pages/service/landDetail"
   ],
   "subPackages": [],
   "window": {
@@ -54,6 +66,14 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap57.json"
+  "permission": {
+    "scope.userLocation": {
+      "desc": "地图开发"
+    }
+  },
+  "usingComponents": {
+    "xfl-select": "/components/xfl-select/xfl-select",
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "cu-custom": "/colorui/components/cu-custom"
+  }
 }
