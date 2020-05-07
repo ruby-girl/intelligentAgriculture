@@ -47,59 +47,64 @@
 			<view class="cark cark-right"></view>
 			<view class="flex">
 				<view>
-					<view>
-						<image src="/static/plant/icon_pending@2x.png" class="icon" />
-
-					</view>
-					<tex>待处理</tex>
+					<navigator url="/pages/plantManage/workOrder">
+						<view>
+							<image src="/static/plant/icon_pending@2x.png" class="icon" />
+						
+						</view>
+						<text>待处理</text>
+						
+					</navigator>
+				
 				</view>
 				<view>
 					<view>
 						<image src="/static/plant/icon_warning@2x.png" class="icon" />
 
 					</view>
-					<tex>预警提醒</tex>
+					<text>预警提醒</text>
 				</view>
 				<view>
 					<view>
 						<image src="/static/plant/icon_batch@2x.png" class="icon" />
 
 					</view>
-					<tex>批次管理</tex>
+					<text>批次管理</text>
 				</view>
 				<view>
 					<view>
 						<image src="/static/plant/icon_plot@2x.png" class="icon" />
 
 					</view>
-					<tex>地块管理</tex>
+					<text>地块管理</text>
 				</view>
 				<view>
 					<view>
 						<image src="/static/plant/icon_farming@2x.png" class="icon" />
 
 					</view>
-					<tex>农事管理</tex>
+					<text>农事管理</text>
 				</view>
 
 			</view>
-<label class="title">种植中批次</label>
+			<label class="title">种植中批次</label>
 			<view style="overflow-y: auto;height: 70%;">
+
+				<view>
+					<view   v-for="(item, index) in listData" :key="index" class="item-view">
 				
-				<view >
-					<view v-for="(item,index) in 3" class="item-view">
-						<view class="item-title">xxxx批次</view>
+						<view class="item-title">{{item.name}}</view>
 						<view style="padding: 10px 0;">
 							<view class="inline content">
 								<view class="f20">
-									1
+						{{item.landParcels.length}}
 								</view>
 								<view class="cr2 f12">地块数量</view>
 							</view>
 							<view class="inline line"></view>
 							<view class="inline content">
 								<view class="f20">
-									1
+									?
 								</view>
 								<view class="cr2 f12">待处理</view>
 							</view>
@@ -107,7 +112,7 @@
 							<view class="inline line"></view>
 							<view class="inline content">
 								<view class="f20">
-									1
+									{{item.breed.name}}
 								</view>
 								<view class="cr2 f12">种植品种</view>
 							</view>
@@ -117,7 +122,7 @@
 					</view>
 				</view>
 
-				
+
 			</view>
 		</view>
 	</view>
@@ -130,10 +135,29 @@
 			return {
 				array: ['美国', '中国', '巴西', '日本'],
 				isShow: false,
+				listData:[]
 
 			};
 		},
+		// 页面初次渲染
+		onReady() {
+			/* 种植中批次 */
+			this.initData()
+		},
 		methods: {
+			initData() {
+				this.$api.getPagingCriteriaQuery({
+					plantingPlanId: '',
+					code: '',
+					pageNo: 1,
+					baseId: 23,
+					plantingBatchStatus: 2
+
+				}).then(res => {
+					this.listData  = res.data.data.data
+				})
+
+			},
 			downSelect() {
 				this.isShow = !this.isShow
 			},
@@ -174,11 +198,6 @@
 
 		.showModel {
 			max-height: 20vh;
-
-
-
-
-
 		}
 
 		.plant-top {
@@ -212,7 +231,7 @@
 			}
 
 			.plant-top-content {
-				margin-top: 26px;
+				margin-top: 26rpx;
 				text-align: right;
 				font-size: 12px;
 				line-height: 22px;
@@ -236,13 +255,13 @@
 			margin-top: -16px;
 			position: relative;
 			height: 65vh;
-			 
+
 
 			.flex {
 				font-size: 12px;
 				text-align: center;
 				color: #666666;
-				padding: 16px;
+				padding:30rpx 30rpx 20rpx 30rpx;
 				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
 
 			}

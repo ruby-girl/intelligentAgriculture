@@ -15,13 +15,29 @@
 	      <view class="method-center">
 			  <label><text class="line"></text>人物资料</label>
 			  <view>
-				  <label>
-					  <image src="/static/plant/icon_artificial@2x.png" class="imgIcon"></image> 人工费用</label>
+				  <view>
+					  <image src="/static/plant/icon_artificial@2x.png" class="imgIcon"></image>人工费用</view>
+			    <view>
+					<view><text class="cr2">人工（亩）：</text> sss</view>
+					<view><text class="cr2">
+                                工价（元）：
+                            </text> sss</view>
+					<view><text class="cr2">
+                                总面积（亩）：
+                            </text> sss</view>
+					<view><text class="cr2">
+                                总人工（人）：
+                            </text> sss</view>
+							<view><text class="cr2">
+                                总费用（元）： 
+                            </text> sss</view>
+				</view>
 			  </view>
 			  
 		  </view>
-		
-		  
+		  		<navigator :url="'/pages/plantManage/addFram?id='+id">	
+		  <button class="cu-btn block bg-green  lg">立即执行</button>
+		  </navigator>
 	</view>
 </template>
 
@@ -29,8 +45,15 @@
 	export default {
 		data() {
 			return {
-				
+				id:''
 			};
+		},
+		onLoad(option) {
+			debugger
+			this.id =  option.id
+		},
+		methods:{
+			
 		}
 	}
 </script>
@@ -43,7 +66,8 @@
 		 padding: 30rpx; 
 		 .imgIcon{
 			 width: 40rpx;
-			 height: 40rpx;
+			 height: 45rpx;
+			 vertical-align: middle;
 		 }
 	  }
 		.method-top{
@@ -66,6 +90,7 @@
 			}
 		}
 		label{
+			
 			display:block;
 			font-size: 34rpx;
 			border-bottom: 1px solid #E1E1E1;
@@ -79,6 +104,11 @@
 				margin-right: 8px;
 				vertical-align: text-top;
 			}
+		}
+		.cu-btn{
+			width: 90%;
+			margin: 0 auto;
+			margin-top: 60rpx;
 		}
 	}
 

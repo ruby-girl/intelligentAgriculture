@@ -1,14 +1,28 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 	 {
+	     "path" : "pages/plantManage/addFram",
+	     "style" : {
+			 "navigationBarTitleText": "添加农事操作记录"
+		 }
+	 },
+	 {
+	     "path" : "pages/plantManage/workDetail",
+	     "style" : {
+			  "navigationBarTitleText": "工单详情"
+		 }
+	 },
+	 {
 	     "path" : "pages/plantManage/workeMethod",
 	     "style" : {
-			 "navigationBarTitleText": "工單操作方法"
+			 "navigationBarTitleText": "工单操作方法"
 		 }
 	 },
 	 {
 	     "path" : "pages/plantManage/workOrder",
-	     "style" : {}
+	     "style" : {
+			 	"navigationBarTitleText": "待处理"
+		 }
 	 },
 	 {
 	     "path" : "pages/message/message",
@@ -65,6 +79,7 @@
 				"enablePullDownRefresh": true
 			}
         }
+
 		,{
 		    "path" : "pages/plantManage/batchManagement/addBatch",
 		    "style" : {

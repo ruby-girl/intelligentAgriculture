@@ -1,3 +1,4 @@
+<!-- 待处理 -->
 <template>
 	<view class="workOrder ">
 		<view class="top" id="mjltest">
@@ -45,7 +46,7 @@
 			</view>
 			<scroll-view scroll-x class="bg-white nav" >
 				<view class="flex text-center">
-				<view class="cu-item flex-sub" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in tabs" :key="index" @tap="tabSelect" :data-id="item.id">
+				<view class="cu-item flex-sub" :class="item.id==TabCur?'text-green cur':''" v-for="(item,index) in tabs" :key="index" @tap="tabSelect" :data-id="item.id">
 					  {{item.name}}
 				</view>
 				</view>
@@ -55,23 +56,24 @@
 	
 		<view class="content" :style="{top:topHeight}">
 		
-			  <view class="item" v-for="item in 5">
+			  <view class="item" v-for="(item,index) in listData" :key="index" @click="toUrl(item.id)">
+				  
 				  <!-- 跟距狀態不一樣 字段不同-->
 				   <view class="flex">
 					   <view>
 						   <image src="/static/plant/icon_fertilization@2x.png" class="imgIcon"></image>
-						   <text>施肥</text><text class="f10 cr3">来自:工单</text>
+						   <text>{{item.farmWorkItemName}}</text><text class="f10 cr3">来自:工单</text>
 					   </view>
-					   <view><text class="cr">去zhixing</text></view>
+					   <view><text class="cr">执行</text></view>
 					  </view>
 			       <view>
-					   <text class="cr3">开始时间：</text>10000
+					   <text class="cr3">开始时间：</text>{{item.scheduledtime}}
 				   </view>
 				   <view>
-					   <text class="cr3">结束时间：</text>
+					   <text class="cr3">结束时间：</text>{{item.scheduledtime}}
 				   </view>
 					 <view>
-					   <text class="cr3">作物：</text>
+					   <text class="cr3">作物：</text>{{item.scheduledtime}}
 				   </view>
 						<view>
 					   <text class="cr3">地块：</text>
@@ -105,12 +107,13 @@
 				            ],
 							tabs:[
 								{id:'',name:'全部'},
-								{id:1,name:'未开始'},
-								{id:2,name:'待处理'},
-								{id:3,name:'已结束'},
+								// {id:0,name:'未开始'},
+								{id:1,name:'待处理'},
+								{id:2,name:'已结束'},
 							],
-							TabCur: 0,
-							topHeight:''
+							TabCur: 1,
+							topHeight:'',
+							listData:[]
 			};
 		},
 		onReady() {
@@ -124,12 +127,34 @@
 			  me.topHeight = res[0].height+'px'
 			 
 			  })
-
+			  
+           /* 种植中批次 */
+			this.initData()
 		},
 	
 		methods:{
+			initData(){
+			
+				this.$api.gerWorkOrders({
+					plantingBatchCode: '',
+					pageNo: 1,
+					baseId: 23,
+					workOrderStatus: this.TabCur ,
+				
+				}).then(res => {
+					this.listData  = res.data.data.data
+				})
+				
+			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
+				this.initData()
+			},
+			/* 跳转 查看详情 */
+			toUrl(id){
+				uni.navigateTo({
+				    url: '/pages/plantManage/workDetail?id='+id
+				});
 			},
 			  open(){
 			         this.$refs.popup.open()
