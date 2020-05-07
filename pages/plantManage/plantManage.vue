@@ -47,11 +47,15 @@
 			<view class="cark cark-right"></view>
 			<view class="flex">
 				<view>
-					<view>
-						<image src="/static/plant/icon_pending@2x.png" class="icon" />
-
-					</view>
-					<text>待处理</text>
+					<navigator url="/pages/plantManage/workOrder">
+						<view>
+							<image src="/static/plant/icon_pending@2x.png" class="icon" />
+						
+						</view>
+						<text>待处理</text>
+						
+					</navigator>
+				
 				</view>
 				<view>
 					<view>
@@ -87,19 +91,20 @@
 			<view style="overflow-y: auto;height: 70%;">
 
 				<view>
-					<view v-for="(item,index) in 3" class="item-view">
-						<view class="item-title">xxxx批次</view>
+					<view   v-for="(item, index) in listData" :key="index" class="item-view">
+				
+						<view class="item-title">{{item.name}}</view>
 						<view style="padding: 10px 0;">
 							<view class="inline content">
 								<view class="f20">
-									1
+						{{item.landParcels.length}}
 								</view>
 								<view class="cr2 f12">地块数量</view>
 							</view>
 							<view class="inline line"></view>
 							<view class="inline content">
 								<view class="f20">
-									1
+									?
 								</view>
 								<view class="cr2 f12">待处理</view>
 							</view>
@@ -107,7 +112,7 @@
 							<view class="inline line"></view>
 							<view class="inline content">
 								<view class="f20">
-									1
+									{{item.breed.name}}
 								</view>
 								<view class="cr2 f12">种植品种</view>
 							</view>
@@ -130,34 +135,18 @@
 			return {
 				array: ['美国', '中国', '巴西', '日本'],
 				isShow: false,
+				listData:[]
 
 			};
 		},
 		// 页面初次渲染
 		onReady() {
-			/* 初始化数据 */
+			/* 种植中批次 */
 			this.initData()
 		},
 		methods: {
 			initData() {
-				this.$api.test().then(res => {
-
-				})
-				this.$api.test1({
-					pageNo: 1,
-					pageSize: 10,
-					name:'',
-					 breedId:'',
-					 baseId: 23
-				}).then(res => {
-
-				})
-				this.$api.test3({
-					plantingPlanId:21
-				}).then(res => {
-
-				})
-				this.$api.test4({
+				this.$api.getPagingCriteriaQuery({
 					plantingPlanId: '',
 					code: '',
 					pageNo: 1,
@@ -165,7 +154,7 @@
 					plantingBatchStatus: 2
 
 				}).then(res => {
-
+					this.listData  = res.data.data.data
 				})
 
 			},
@@ -242,7 +231,7 @@
 			}
 
 			.plant-top-content {
-				margin-top: 26px;
+				margin-top: 26rpx;
 				text-align: right;
 				font-size: 12px;
 				line-height: 22px;
@@ -272,7 +261,7 @@
 				font-size: 12px;
 				text-align: center;
 				color: #666666;
-				padding: 16px;
+				padding:30rpx 30rpx 20rpx 30rpx;
 				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
 
 			}
