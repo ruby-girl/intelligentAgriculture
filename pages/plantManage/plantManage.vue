@@ -51,42 +51,42 @@
 						<image src="/static/plant/icon_pending@2x.png" class="icon" />
 
 					</view>
-					<tex>待处理</tex>
+					<text>待处理</text>
 				</view>
 				<view>
 					<view>
 						<image src="/static/plant/icon_warning@2x.png" class="icon" />
 
 					</view>
-					<tex>预警提醒</tex>
+					<text>预警提醒</text>
 				</view>
 				<view>
 					<view>
 						<image src="/static/plant/icon_batch@2x.png" class="icon" />
 
 					</view>
-					<tex>批次管理</tex>
+					<text>批次管理</text>
 				</view>
 				<view>
 					<view>
 						<image src="/static/plant/icon_plot@2x.png" class="icon" />
 
 					</view>
-					<tex>地块管理</tex>
+					<text>地块管理</text>
 				</view>
 				<view>
 					<view>
 						<image src="/static/plant/icon_farming@2x.png" class="icon" />
 
 					</view>
-					<tex>农事管理</tex>
+					<text>农事管理</text>
 				</view>
 
 			</view>
-<label class="title">种植中批次</label>
+			<label class="title">种植中批次</label>
 			<view style="overflow-y: auto;height: 70%;">
-				
-				<view >
+
+				<view>
 					<view v-for="(item,index) in 3" class="item-view">
 						<view class="item-title">xxxx批次</view>
 						<view style="padding: 10px 0;">
@@ -117,7 +117,7 @@
 					</view>
 				</view>
 
-				
+
 			</view>
 		</view>
 	</view>
@@ -133,7 +133,42 @@
 
 			};
 		},
+		// 页面初次渲染
+		onReady() {
+			/* 初始化数据 */
+			this.initData()
+		},
 		methods: {
+			initData() {
+				this.$api.test().then(res => {
+
+				})
+				this.$api.test1({
+					pageNo: 1,
+					pageSize: 10,
+					name:'',
+					 breedId:'',
+					 baseId: 23
+				}).then(res => {
+
+				})
+				this.$api.test3({
+					plantingPlanId:21
+				}).then(res => {
+
+				})
+				this.$api.test4({
+					plantingPlanId: '',
+					code: '',
+					pageNo: 1,
+					baseId: 23,
+					plantingBatchStatus: 2
+
+				}).then(res => {
+
+				})
+
+			},
 			downSelect() {
 				this.isShow = !this.isShow
 			},
@@ -231,7 +266,7 @@
 			margin-top: -16px;
 			position: relative;
 			height: 65vh;
-			 
+
 
 			.flex {
 				font-size: 12px;
