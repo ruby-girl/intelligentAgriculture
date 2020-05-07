@@ -20,7 +20,9 @@
 	 },
 	 {
 	     "path" : "pages/plantManage/workOrder",
-	     "style" : {}
+	     "style" : {
+			 	"navigationBarTitleText": "待处理"
+		 }
 	 },
 	 {
 	     "path" : "pages/message/message",
