@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/plantManage/workeMethod",
+    "pages/plantManage/workOrder",
     "pages/message/message",
     "pages/login/login",
     "pages/index/index",
@@ -7,7 +9,10 @@
     "pages/service/service",
     "pages/fair/fair",
     "pages/personal/personal",
-    "pages/plantManage/workOrder"
+    "pages/plantManage/batchManagement/list",
+    "pages/plantManage/batchManagement/addBatch",
+    "pages/plantManage/batchManagement/selectPlan",
+    "pages/plantManage/batchManagement/selectCompany"
   ],
   "subPackages": [],
   "window": {
@@ -54,6 +59,9 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap57.json"
+  "usingComponents": {
+    "xfl-select": "/components/xfl-select/xfl-select",
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "cu-custom": "/colorui/components/cu-custom"
+  }
 }
