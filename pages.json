@@ -53,7 +53,9 @@
         ,{
             "path" : "pages/personal/personal",
             "style" : {
-            		"navigationBarTitleText": "我的"
+            		"navigationBarTitleText": "我的",
+					"navigationBarBackgroundColor": "#00AE66",
+					"navigationBarTextStyle":"white"
             }
         }
         ,{
@@ -81,6 +83,12 @@
 				"navigationBarTitleText": "选择种苗企业"
 			}
 		}
+        ,{
+            "path" : "pages/personal/RealInformation",
+            "style" : {
+				"navigationBarTitleText": "实名信息"
+			}
+        }
     ],
 "globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -121,7 +129,6 @@
 			},{
 				"pagePath": "pages/personal/personal",
 				"text": "我的",
-			
 				"iconPath": "static/tab/tab_icon_mine_def@2x.png",
 				"selectedIconPath": "static/tab/tab_icon_mine_pre@2x.png"
 			}

@@ -54,6 +54,7 @@
       {
         "pagePath": "pages/personal/personal",
         "text": "我的",
+        "navigationBarBackgroundColor": "#00AE66",
         "iconPath": "static/tab/tab_icon_mine_def@2x.png",
         "selectedIconPath": "static/tab/tab_icon_mine_pre@2x.png"
       }

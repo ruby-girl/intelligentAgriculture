@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view>
 		<title-item title="基础信息"/>
 		<view class="container-input">
 			<form>
@@ -14,7 +14,7 @@
 				<view class="cu-form-group">
 					<view class="title">种苗企业</view>
 					<input disabled="true" class="form-input-left" placeholder="请选择种苗企业" name="input"></input>
-					<img class="right-jt" src="@/static/plant/nav_icon_back@2x.png" alt="">
+					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 				</view>
 			</form>
 		</view>
@@ -31,7 +31,7 @@
 			<view class="cu-form-group" @click="toPlan">
 				<view class="title">种植计划</view>
 				<input disabled="true" class="form-input-left" placeholder="请选择种植计划" name="input"></input>
-				<img class="right-jt" src="@/static/plant/nav_icon_back@2x.png" alt="">
+				<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 			</view>
 		</view>
 		<button class="cu-btn block bg-green margin-tb-sm lg" style="margin:40px 20px 0 20px">
