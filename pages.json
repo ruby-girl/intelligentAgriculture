@@ -1,5 +1,19 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	{
+		 "path": "pages/index/index", //首页
+		            "style": {
+		                "app-plus": {
+		                    "titleNView": false //禁用原生导航栏
+		                }
+		            }
+	},
+	{
+	    "path" : "pages/plantManage/addFram",
+	    "style" : {
+				 "navigationBarTitleText": "添加农事操作记录"
+			 }
+	},
 	 {
 	     "path" : "pages/plantManage/addFram",
 	     "style" : {
@@ -99,10 +113,14 @@
 			}
 		}
         ,{
-            "path" : "pages/personal/RealInformation",
+            "path" : "pages/personal/realInformation",
             "style" : {
 				"navigationBarTitleText": "实名信息"
 			}
+        }
+        ,{
+            "path" : "pages/login/register",
+            "style" : {}
         }
     ],
 "globalStyle": {

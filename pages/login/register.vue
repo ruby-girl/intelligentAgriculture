@@ -1,6 +1,9 @@
 <template>
 	<view class="padding-login">
-		<view class="title">慧种植</view>
+		<view class="border-bottom">
+			<view><i class="iconfont iconxingming color-green" style="font-size: 26px;"></i><text class="text-margin">姓名</text></view>
+			<input placeholder="请输入姓名" name="input"></input>
+		</view>
 		<view class="border-bottom">
 			<view><i class="iconfont iconipad color-green" style="font-size: 26px;"></i><text class="text-margin">手机</text></view>
 			<input placeholder="请输入手机号码" name="input"></input>

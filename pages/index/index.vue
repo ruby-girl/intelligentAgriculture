@@ -1,10 +1,7 @@
 <!-- 启动页 -->
 <template>
 	<view class="content">
-		启动页
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
+		<view class="bg">
 		</view>
 	</view>
 </template>
@@ -26,29 +23,18 @@
 </script>
 
 <style>
+	page,
 	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+		width: 100%;
+		height: 100%;
+		padding: 0;
 	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+	.bg {
+		height: 100%;
+		width: 100%;
+		background-image: url('@/static/loading.png');
+		background-repeat: no-repeat;
+		background-size: 100%;
 	}
 </style>
