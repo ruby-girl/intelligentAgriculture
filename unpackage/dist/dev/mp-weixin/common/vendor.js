@@ -1560,7 +1560,7 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 112:
+/***/ 113:
 /*!****************************************************!*\
   !*** D:/yzx/wxItem/static/plant/icon_plant@2x.png ***!
   \****************************************************/
@@ -1571,7 +1571,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6
 
 /***/ }),
 
-/***/ 113:
+/***/ 114:
 /*!***************************************************!*\
   !*** D:/yzx/wxItem/static/plant/icon_plan@2x.png ***!
   \***************************************************/
@@ -1582,7 +1582,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6
 
 /***/ }),
 
-/***/ 114:
+/***/ 115:
 /*!***************************************************!*\
   !*** D:/yzx/wxItem/static/plant/icon_date@2x.png ***!
   \***************************************************/
@@ -1593,7 +1593,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6
 
 /***/ }),
 
-/***/ 115:
+/***/ 116:
 /*!***************************************************!*\
   !*** D:/yzx/wxItem/static/plant/icon_land@2x.png ***!
   \***************************************************/
@@ -1604,7 +1604,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6
 
 /***/ }),
 
-/***/ 116:
+/***/ 117:
 /*!***************************************************!*\
   !*** D:/yzx/wxItem/static/plant/icon_area@2x.png ***!
   \***************************************************/
@@ -1860,12 +1860,13 @@ var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+{
   config: {
-    baseUrl: "http://192.168.101.32:8090/api/",
+    baseUrl: "http://192.168.101.29:8088/",
     header: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'X-Access-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NTQsImV4cCI6MTU4ODgyNDE0N30.XmkG-b7ZrnTiMmEhQnXmg2_7c4iAQS_Cyti_z1TsxNY' },
+      'X-Access-Token': '' },
 
     data: {},
     method: "GET",
@@ -1881,7 +1882,6 @@ var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
     response: null },
 
   request: function request(options) {var _this = this;
-
     if (!options) {
       options = {};
     }
@@ -1891,14 +1891,16 @@ var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
 
     options.data = options.data || {};
     options.method = options.method || this.config.method;
-    //TODO 加密数据
-
+    //TODO 加密数据	
     //TODO 数据签名
-    /* 
-    _token = {'token': getStorage(STOREKEY_LOGIN).token || 'undefined'},
-    _sign = {'sign': sign(JSON.stringify(options.data))}
-    options.header = Object.assign({}, options.header, _token,_sign) 
-    */
+    uni.getStorage({
+      key: 'ddwb',
+      success: function success(res) {
+        options.header = {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Access-Token': res.data.token || 'undefined' };
+
+      } });
 
     return new Promise(function (resolve, reject) {
       var _config = null;
@@ -1956,7 +1958,6 @@ var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
     return this.request(options);
   },
   post: function post(url, data, options) {
-    debugger;
     if (!options) {
       options = {};
     }
@@ -1982,13 +1983,20 @@ var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
     options.data = data;
     options.method = 'DELETE';
     return this.request(options);
-  } };
+  } };exports.default = _default;
 
+function getToken() {
+  console.log('qwe');
+  uni.getStorage({
+    key: 'ddwb',
+    success: function success(e) {
+      return e.data.token; //这就是你想要取的token
+    } });
 
-
+}
 /**
-        * 请求接口日志记录
-        */exports.default = _default;
+   * 请求接口日志记录
+   */
 function _reqlog(req) {
 
 
@@ -2031,6 +2039,33 @@ function _reqlog(req) {
 /***/ }),
 
 /***/ 17:
+/*!**************************************!*\
+  !*** D:/yzx/wxItem/common/apiYZX.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.login = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+//设置请求结束后拦截器
+_request.default.interceptor.response = function (response) {
+
+  //判断返回状态 执行相应操作
+  return response;
+};
+// 登录
+var login = function login(data) {
+  return _request.default.request({
+    url: 'userLogin/userLogin',
+    method: 'post',
+    data: data });
+
+};exports.login = login;
+
+/***/ }),
+
+/***/ 18:
 /*!*******************************************!*\
   !*** D:/yzx/wxItem/utils/graceChecker.js ***!
   \*******************************************/
@@ -2141,7 +2176,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 18:
+/***/ 19:
 /*!************************************!*\
   !*** D:/yzx/wxItem/store/index.js ***!
   \************************************/
@@ -2149,8 +2184,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 19));var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 22));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 20));var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 23));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 
 _vue.default.use(_vuex.default);
 
@@ -2223,17 +2258,6 @@ var store = new _vuex.default.Store({
 
 store;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 19:
-/*!*********************************************************************************************!*\
-  !*** ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator/index.js ***!
-  \*********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ 20);
 
 /***/ }),
 
@@ -8268,6 +8292,17 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 20:
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator/index.js ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 21);
+
+/***/ }),
+
+/***/ 21:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -8298,7 +8333,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 21);
+module.exports = __webpack_require__(/*! ./runtime */ 22);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -8315,7 +8350,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 21:
+/***/ 22:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -9047,7 +9082,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 22:
+/***/ 23:
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!
   \********************************************/
@@ -9998,7 +10033,7 @@ var index_esm = {
 
 /***/ }),
 
-/***/ 23:
+/***/ 24:
 /*!**************************************!*\
   !*** D:/yzx/wxItem/utils/amap-wx.js ***!
   \**************************************/
@@ -10957,7 +10992,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "带带web", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情", "usingComponents": { "t-table": "/components/t-table/t-table", "t-th": "/components/t-table/t-th", "t-tr": "/components/t-table/t-tr", "t-td": "/components/t-table/t-td" }, "usingAutoImportComponents": { "t-table": "/components/t-table/t-table" } }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理", "usingComponents": {}, "usingAutoImportComponents": { "xfl-select": "/components/xfl-select/xfl-select" } }, "pages/message/message": { "navigationBarTitleText": "消息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/login": { "navigationBarTitleText": "登录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/service": { "navigationBarTitleText": "服务管理", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/fair/fair": { "navigationBarTitleText": "市集", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次", "usingComponents": { "title-item": "/components/title-item/TitleItem" }, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/register": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/retypePassword": { "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": true } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": {}, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录" }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情" }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法" }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理" }, "pages/message/message": { "navigationBarTitleText": "消息" }, "pages/login/login": { "navigationBarTitleText": "登录" }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white" }, "pages/service/service": { "navigationBarTitleText": "服务管理" }, "pages/fair/fair": { "navigationBarTitleText": "市集" }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white" }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次" }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划" }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业" }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息" }, "pages/login/register": {}, "pages/login/retypePassword": {} }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8", "enablePullDownRefresh": true } };exports.default = _default;
 
 /***/ }),
 

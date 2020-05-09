@@ -10,7 +10,7 @@ page {
   color: #00AE61;
   font-weight: bold;
   text-align: center;
-  padding: 62rpx 0 227rpx 0;
+  padding: 62rpx 0 160rpx 0;
 }
 .border-bottom {
   border-bottom: 1px solid #eee;
@@ -18,6 +18,10 @@ page {
 }
 .border-bottom .uni-input-placeholder {
   font-size: 14px;
+}
+.border-bottom .iconfont {
+  position: relative;
+  top: 2px;
 }
 .padding-login {
   padding: 0 60rpx;

@@ -3,6 +3,7 @@ import Vue from 'vue'
 import App from './App'
 
 import * as api from '@/common/api.js'
+import * as apiYZX from '@/common/apiYZX.js'
 import validate from '@/utils/graceChecker.js'
 
 import store from './store'
@@ -14,6 +15,7 @@ import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom', cuCustom)
 import amap from '@/utils/amap-wx.js';
 Vue.prototype.$api = api;
+Vue.prototype.$apiYZX = apiYZX;
 Vue.prototype.$validate = validate
 Vue.prototype.amap = amap
 Vue.config.productionTip = false

@@ -7,7 +7,6 @@
     "pages/plantManage/workOrder",
     "pages/message/message",
     "pages/login/login",
-    "pages/index/index",
     "pages/plantManage/plantManage",
     "pages/service/service",
     "pages/fair/fair",
@@ -74,5 +73,6 @@
     "xfl-select": "/components/xfl-select/xfl-select",
     "uni-popup": "/components/uni-popup/uni-popup",
     "cu-custom": "/colorui/components/cu-custom"
-  }
+  },
+  "sitemapLocation": "sitemap12.json"
 }

@@ -33,7 +33,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn">
+		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" @click="toadd">
 			新建批次</button>
 	</view>
 </template>
@@ -85,6 +85,11 @@
 			}, 1000);
 		},
 		methods: {
+			toadd(){
+				uni.navigateTo({
+					url: 'addBatch'
+				})
+			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
