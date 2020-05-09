@@ -15,12 +15,6 @@
 			 }
 	},
 	 {
-	     "path" : "pages/plantManage/addFram",
-	     "style" : {
-			 "navigationBarTitleText": "添加农事操作记录"
-		 }
-	 },
-	 {
 	     "path" : "pages/plantManage/workDetail",
 	     "style" : {
 			  "navigationBarTitleText": "工单详情"
@@ -120,6 +114,10 @@
         }
         ,{
             "path" : "pages/login/register",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/login/retypePassword",
             "style" : {}
         }
     ],

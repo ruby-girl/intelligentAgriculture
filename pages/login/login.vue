@@ -58,6 +58,9 @@
 	.border-bottom {
 		border-bottom: 1px solid #eee;
 		padding: 5px 0;
+		.uni-input-placeholder{
+			font-size: 14px;
+		}
 	}
 
 	.padding-login {
