@@ -2,14 +2,14 @@
 	<view>
 		<view class="bg-personal">
 			<view class="user-info text-center">
-				<view class="cu-avatar lg round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg);"></view>
-				<view style="margin-top:20rpx" class="text-lg">毛小瓜</view>
-				<text class="text-gray">13696279917</text>
+				<view class="cu-avatar lg round" v-bind:style="{'backgroundImage':'url('+user.headPortrait+')'}"></view>
+				<view style="margin-top:20rpx" class="text-lg">{{user.name}}</view>
+				<text class="text-gray">{{user.phone}}</text>
 			</view>
 		</view>
 		<view class="container-input">
 			<form>
-				<view class="cu-form-group">
+				<view class="cu-form-group" @click="toRealInformmation">
 					<view class="title">实名信息</view>
 					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 				</view>
@@ -27,7 +27,7 @@
 				</view>
 			</form>
 		</view>
-        <button class="cu-btn block line-green lg" style="width:90%;margin:50rpx auto">退出</button>
+		<button class="cu-btn block line-green lg" style="width:90%;margin:50rpx auto">退出</button>
 	</view>
 </template>
 
@@ -35,10 +35,29 @@
 	export default {
 		data() {
 			return {
-				switchB: true
+				switchB: true,
+				user:{}
 			};
 		},
+		onLoad() {
+			let _this=this
+			uni.getStorage({
+			key: 'ddwb',
+			success: function (res) { 
+				_this.user= {			
+					name: res.data.name || '',
+					phone:res.data.phone||'',
+					headPortrait:res.data.headPortrait
+				}
+			}
+			});
+		},
 		methods: {
+			toRealInformmation(){
+				uni.navigateTo({
+				    url: 'realInformation'
+				});
+			},
 			changeSwitch(e) {
 				this.switchB = e.detail.value
 			}

@@ -1,25 +1,19 @@
 <template>
-	<view>
-		<page-head :title="title"></page-head>
-		<view class="uni-padding-wrap">
-			<form @submit="formSubmit">
-				<view class="uni-form-item ">
-                   
-					<view class="title">账户</view>
-					 <input class="uni-input" name="nickname" placeholder="这是一个输入框" />
-					
-				</view>
-				<view class="uni-form-item ">
-           
-					<view class="title">密码</view>
-					<input class="uni-input" name="passowr" type="password" placeholder="这是一个输入框" />
-					
-				</view>
-			
-				<view class="uni-form-item ">
-					<button class="btn-submit" formType="submit" type="primary">登录</button>
-				</view>
-			</form>
+	<view class="padding-login">
+		<view class="title">慧种植</view>
+		<view class="border-bottom">
+			<view><text class="iconfont iconipad color-green" style="font-size: 26px;"></text><text class="text-margin">手机</text></view>
+			<input type="number" v-model="obj.account" placeholder="请输入手机号码" name="input"></input>
+		</view>
+		<view class="border-bottom">
+			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">密码</text></view>
+			<input placeholder="请输入登录密码" v-model="obj.password" type="password" name="input"></input>
+		</view>
+		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx"  open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo">
+			登录</button>
+		<view class="flex justify-content-flex-justify color-green">
+			<text @click="toRegister">注册新用户</text>
+			<text @click="toRetypePassword">忘记密码</text>
 		</view>
 	</view>
 </template>
@@ -27,68 +21,135 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello',
+				obj:{
+					account:'',
+					captcha:'',
+					password:''
+				},
+				headPortrait:''
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-			formSubmit(e){
-				var rule = [{
-						name: "nickname",
-						checkType: "notnull",
-						checkRule: "",
-						errorMsg: "sd"
-					},
-				
-				];
-			
-				var formData = e.detail.value;
-				var checkRes = this.$validate.check(formData, rule);
-				if (checkRes) {
-					uni.showToast({
-						title: "验证通过!",
-						icon: "none"
-					});
-				} else {
-					uni.showToast({
-						title:  this.$validate.error,
-						icon: "none"
-					});
-				}
+			getSettingMes() {
+			                let _this = this;
+			                uni.getSetting({
+			                    success(res) {
+			                        if (res.authSetting['scope.userInfo']) {
+			                            // 用户信息已授权，获取用户信息
+			                            uni.getUserInfo({
+			                                success(res) {
+												_this.headPortrait=res.userInfo.avatarUrl
+												_this.userLogin()
+			                                },
+			                                fail() {
+			                                    console.log("获取用户信息失败")
+			                                }
+			                            })
+			                        } else if (!res.authSetting['scope.userInfo']) {    
+			                            console.log("需要点击按钮手动授权")
+			                        }
+			                    },
+			                    fail() {
+			                        console.log("获取已授权选项失败")
+			                    }
+			                })
+			            },
+			            // 手动授权方法
+			            onGotUserInfo(e) {
+							let _this = this;
+			                // 获取用户信息
+			                uni.getUserInfo({
+			                    // 获取信息成功
+			                    success(res) {
+									_this.headPortrait=res.userInfo.avatarUrl
+									_this.userLogin()                       
+			                    },
+			                    fail() {
+			                        console.log("获取用户信息失败");
+			                    }
+			                })
+			            },
+			toRegister() {
+				uni.navigateTo({
+					url: 'register'
+				})
 			},
-			
-			
+			toRetypePassword(){
+				uni.navigateTo({
+					url: 'retypePassword'
+				})			
+			},
+			userLogin(){
+				this.$apiYZX.login(this.obj).then(res=>{
+					if(res.data.code==200){
+						let obj={
+							token:res.data.data.token,
+							userid:res.data.data.user.id,
+							phone:res.data.data.user.phone,
+							name:res.data.data.user.name,
+							headPortrait:this.headPortrait
+						}
+						uni.setStorage({
+						key:'ddwb',
+						data:obj,
+						success() {
+							uni.showToast({
+							    title: '登录成功',
+								icon:'success',
+								success() {
+									uni.switchTab({
+									    url: '../personal/personal'
+									});
+								}
+							})		
+						}
+						})
+					}			
+				})
+			}
 		}
 	}
 </script>
 
-
-
 <style lang="less">
-	.uni-form-item{
-		    display: flex;
-		    width: 100%;
-		    padding: 5px 0;
-			.title{
-				    padding: 10px 0;
-			}
-			.uni-input {
-			    height: 26px;
-			    padding: 8px 13px;
-			    line-height: 26px;
-			    font-size: 14px;
-			    background:#f8f8f8;
-			    -webkit-box-flex: 1;
-			    -webkit-flex: 1;
-			    flex: 1;
-				}
-				.btn-submit{
-					width: 80%;
-				}
+	page {
+		background: #fff;
 	}
-	.uni-column{
-		    flex-direction: column;
+
+	.text-margin {
+		margin-left: 5px;
+		font-size: 15px;
+	}
+
+	.title {
+		font-size: 20px;
+		color: #00AE61;
+		font-weight: bold;
+		text-align: center;
+		padding: 62rpx 0 160rpx 0;
+	}
+
+	.border-bottom {
+		border-bottom: 1px solid #eee;
+		padding: 5px 0;
+		.uni-input-placeholder{
+			font-size: 14px;
+		}
+		.iconfont{
+			position: relative;
+			top:2px;
+		}
+	}
+
+	.padding-login {
+		padding: 0 60rpx;
+	}
+
+	.color-green {
+		color: #00AE66;
 	}
 </style>

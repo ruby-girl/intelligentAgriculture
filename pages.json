@@ -1,5 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
 	 {
 	     "path" : "pages/plantManage/addBaseLand",
 	     "style" : {
@@ -22,12 +23,23 @@
 	     "path" : "pages/service/landDetail",
 	     "style" : {}
 	 },
-	 {
-	     "path" : "pages/plantManage/addFram",
-	     "style" : {
-	 			 "navigationBarTitleText": "添加农事操作记录"
-	 		 }
-	 },
+	
+
+	{
+		 "path": "pages/index/index", //首页
+		            "style": {
+		                "app-plus": {
+		                    "titleNView": false //禁用原生导航栏
+		                }
+		            }
+	},
+	{
+	    "path" : "pages/plantManage/addFram",
+	    "style" : {
+				 "navigationBarTitleText": "添加农事操作记录"
+			 }
+	},
+
 	 {
 	     "path" : "pages/plantManage/workDetail",
 	     "style" : {
@@ -57,14 +69,7 @@
             "style" : {
 					"navigationBarTitleText": "登录"
 			}
-        },
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "带带web"
-			}
-		}
-        
+        } 
         ,{
             "path" : "pages/plantManage/plantManage",
             "style" : {
@@ -91,14 +96,16 @@
             "style" : {
             		"navigationBarTitleText": "我的",
 					"navigationBarBackgroundColor": "#00AE66",
-					"navigationBarTextStyle":"white"
+					"navigationBarTextStyle":"white",
+					"disableScroll": true
             }
         }
         ,{
             "path" : "pages/plantManage/batchManagement/list",
             "style" : {
 				"navigationBarTitleText": "批次管理",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": true,
+				"disableScroll": true
 			}
         }
 
@@ -121,21 +128,33 @@
 			}
 		}
         ,{
-            "path" : "pages/personal/RealInformation",
+            "path" : "pages/personal/realInformation",
             "style" : {
 				"navigationBarTitleText": "实名信息"
 			}
         }
-      
-       
+
+        ,{
+            "path" : "pages/login/register",
+            "style" : {
+				"navigationBarTitleText": "注册"
+			}
+        }
+        ,{
+            "path" : "pages/login/retypePassword",
+            "style" : {
+				"navigationBarTitleText": "找回密码"
+			}
+        }
+
     ],
 "globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "代代为本",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
 		// 下拉刷新
-		"enablePullDownRefresh": true
+		// "enablePullDownRefresh": true
 	},
 	"tabBar": {
 		"color": "#999999",

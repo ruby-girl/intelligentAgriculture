@@ -1,9 +1,10 @@
+
 export default {
 	config: {
-		baseUrl: "http://192.168.101.29:8088/api/",
+		baseUrl: "http://192.168.101.30:8088/",
 		header: {
 			 'Content-Type':'application/x-www-form-urlencoded',
-			 'X-Access-Token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NTQsImV4cCI6MTU4ODgyNDE0N30.XmkG-b7ZrnTiMmEhQnXmg2_7c4iAQS_Cyti_z1TsxNY'
+			 'X-Access-Token':''
 		},  
 		data: {},
 		method: "GET",
@@ -19,7 +20,9 @@ export default {
 		response: null
 	}, 
 	request(options) {
-		
+		uni.showLoading({
+		    title: '加载中'
+		});
 		if (!options) {
 			options = {}
 		}
@@ -29,15 +32,17 @@ export default {
 		
 		options.data = options.data || {}
 		options.method = options.method || this.config.method
-		//TODO 加密数据
-		
+		//TODO 加密数据	
 		//TODO 数据签名
-		/* 
-		_token = {'token': getStorage(STOREKEY_LOGIN).token || 'undefined'},
-		_sign = {'sign': sign(JSON.stringify(options.data))}
-		options.header = Object.assign({}, options.header, _token,_sign) 
-		*/
-	   
+		uni.getStorage({
+	    key: 'ddwb',
+	    success: function (res) { 
+			options.header = {
+				'Content-Type':'application/x-www-form-urlencoded',
+				'X-Access-Token': res.data.token || 'undefined'
+			}
+	    }
+	    });
 		return new Promise((resolve, reject) => {
 			let _config = null
 			
@@ -46,7 +51,7 @@ export default {
 				response.config = _config
 				if (process.env.NODE_ENV === 'development') {
 					if (statusCode === 200) {
-						console.log("【" + _config.requestId + "】 结果：" + JSON.stringify(response.data))
+			
 					}
 				}
 				if (this.interceptor.response) {
@@ -75,9 +80,9 @@ export default {
 			_reqlog(_config)
  
 			if (process.env.NODE_ENV === 'development') {
-				console.log("【" + _config.requestId + "】 地址：" + _config.url)
+				
 				if (_config.data) {
-					console.log("【" + _config.requestId + "】 参数：" + JSON.stringify(_config.data))
+					
 				}
 			}
  
@@ -94,7 +99,6 @@ export default {
 		return this.request(options)
 	},
 	post(url, data, options) {
-		debugger
 		if (!options) {
 			options = {}
 		}
@@ -122,8 +126,14 @@ export default {
 		return this.request(options)
 	}
 }
- 
- 
+function getToken(){
+		uni.getStorage({
+		key:'ddwb',
+		success(e){
+		return e.data.token//这就是你想要取的token
+		}
+		})
+	}
 /**
  * 请求接口日志记录
  */
