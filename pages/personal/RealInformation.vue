@@ -1,5 +1,5 @@
 <template>
-	<view class="padding">
+	<view class="padding container">
 		<view class="text-black text-lg" style="padding-top:8px">
 			基本资料
 		</view>
@@ -239,7 +239,7 @@
 </script>
 
 <style lang="scss" scoped>
-	page {
+	page,.container{
 		background: #fff;
 	}
 
@@ -267,5 +267,8 @@
 		line-height: 34px;
 		text-align: left;
 		padding-left: 7px;
+	}
+	.cu-form-group picker .picker{
+		text-align: left;
 	}
 </style>

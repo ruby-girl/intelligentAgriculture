@@ -68,4 +68,10 @@ export const getByCityCode = (data) => {
 		data,
 	})
 }
-
+export const userPerfectInfo = (data) => {
+	return http.request({
+		url: 'api/users/userPerfectInfo',
+		method: 'post',
+		data,
+	})
+}

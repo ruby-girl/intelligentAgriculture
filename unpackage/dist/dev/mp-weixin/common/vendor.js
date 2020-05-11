@@ -2048,7 +2048,7 @@ function _reqlog(req) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.getByCityCode = exports.getByProvinceCode = exports.provinces = exports.modify = exports.captcha = exports.loginReg = exports.login = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.userPerfectInfo = exports.getByCityCode = exports.getByProvinceCode = exports.provinces = exports.modify = exports.captcha = exports.loginReg = exports.login = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //设置请求结束后拦截器
 _request.default.interceptor.response = function (response) {
@@ -2118,6 +2118,13 @@ exports.getByProvinceCode = getByProvinceCode;var getByCityCode = function getBy
     data: data });
 
 };exports.getByCityCode = getByCityCode;
+var userPerfectInfo = function userPerfectInfo(data) {
+  return _request.default.request({
+    url: 'api/users/userPerfectInfo',
+    method: 'post',
+    data: data });
+
+};exports.userPerfectInfo = userPerfectInfo;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
