@@ -70,14 +70,16 @@
             "style" : {
             		"navigationBarTitleText": "我的",
 					"navigationBarBackgroundColor": "#00AE66",
-					"navigationBarTextStyle":"white"
+					"navigationBarTextStyle":"white",
+					"disableScroll": true
             }
         }
         ,{
             "path" : "pages/plantManage/batchManagement/list",
             "style" : {
 				"navigationBarTitleText": "批次管理",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": true,
+				"disableScroll": true
 			}
         }
 
@@ -122,9 +124,9 @@
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "代代为本",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
 		// 下拉刷新
-		"enablePullDownRefresh": true
+		// "enablePullDownRefresh": true
 	},
 	"tabBar": {
 		"color": "#999999",
@@ -167,7 +169,7 @@
 		"list": [
 			{
 				"name": "测试", //模式名称
-				"path": "pages/login/login", //启动页面，必选
+				"path": "pages/plantManage/batchManagement/list", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

@@ -196,29 +196,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var _self,
 page = 1,
@@ -247,35 +224,31 @@ timer = null;var _default =
       loadingText: '加载中...',
       loadingType: 0,
       triggered: false,
-      lastTime: 0 };
+      lastTime: 0,
+      windowHeight: 300 };
 
   },
   onLoad: function onLoad() {
     _self = this;
+    this.windowHeight = uni.getSystemInfoSync().windowHeight; // 屏幕的高度
+    console.log('gaodu ', windowHeight);
     //页面一加载时请求一次数据
-    this.getData();
-  },
-  onReachBottom: function onReachBottom() {
-    //触底的时候请求数据，即为上拉加载更多
-    //为了更加清楚的看到效果，添加了定时器
-    console.log('触底了~~~~~~~~~~~~~~~');
-    if (timer != null) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(function () {
-      _self.getData();
-    }, 1000);
+    // this.getData();
   },
   methods: {
+    scrolltoupper: function scrolltoupper() {
+      console.info('下拉');
+    },
     loadingData: function loadingData(e) {
-      console.log('触底了', e);
       if (e.timeStamp - this.lastTime > 5000) {
+        console.log('触底了', e);
         this.lastTime = e.timeStamp;
         var _self2 = this;
         setTimeout(function () {
           _self2.newsList = 8;
         }, 2000);
       } else {
+        console.log('重复 了', e);
         return;
       }
 
@@ -288,45 +261,6 @@ timer = null;var _default =
     tabSelect: function tabSelect(e) {
       this.TabCur = e.currentTarget.dataset.id;
       this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
-    },
-    getData: function getData() {
-      if (_self.loadingType !== 0) {//loadingType!=0;直接返回
-        return false;
-      }
-      _self.loadingType = 1;
-      uni.showNavigationBarLoading(); //显示加载动画
-      // uni.request({
-      // 	url: 'https://demo.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=list1&page=' + page,
-      // 	method: 'GET',
-      // 	success: function(res) {
-
-      // if (res.data == null) { //没有数据
-      // 	_self.loadingType = 2;
-      // 	uni.hideNavigationBarLoading(); //关闭加载动画
-      // 	return;
-      // }
-      page++; //每触底一次 page +1
-      var data = [{ name: '183', id: 123 }];
-      _self.newsList = 8; //将数据拼接在一起
-      _self.loadingType = 0; //将loadingType归0重置
-      uni.hideNavigationBarLoading(); //关闭加载动画
-      // 	}
-      // });
-    },
-    getnewsList: function getnewsList() {//第一次回去数据
-      page = 1;
-      this.loadingType = 0;
-      uni.showNavigationBarLoading();
-      // uni.request({
-      // 	url: 'https://demo.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=list1&page=1',
-      // 	method: 'GET',
-      // 	success: function(res) {
-      page++; //得到数据之后page+1
-      _self.newsList = [{ name: '123', id: 123 }];
-      uni.hideNavigationBarLoading();
-      uni.stopPullDownRefresh(); //得到数据后停止下拉刷新
-      // }
-      // });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
