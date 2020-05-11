@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
 	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": []
@@ -8,14 +7,28 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": false,
-		"minified": true
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.2",
-	"appid": "wx346f8913c8a9c6ae",
+	"appid": "wx8e7f5f0f5232df45",
 	"projectname": "item",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -41,68 +54,4 @@
 			]
 		}
 	}
-=======
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "urlCheck": false,
-    "es6": true,
-<<<<<<< HEAD
-    "postcss": true,
-=======
-    "postcss": false,
->>>>>>> ae71cbf17f9496048b31f1fca041d5934504f0c0
-    "minified": true
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.9.2",
-<<<<<<< HEAD
-  "appid": "wx8e7f5f0f5232df45",
-=======
-  "appid": "wx346f8913c8a9c6ae",
->>>>>>> ae71cbf17f9496048b31f1fca041d5934504f0c0
-  "projectname": "item",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-<<<<<<< HEAD
-      "current": 0,
-      "list": [
-        {
-          "id": 0,
-          "name": "pages/service/map2",
-          "pathName": "pages/service/map2",
-=======
-      "current": 1,
-      "list": [
-        {
-          "name": "测试",
-          "query": "",
-          "id": 0,
-          "pathName": "pages/plantManage/batchManagement/list"
-        },
-        {
-          "id": 1,
-          "name": "pages/plantManage/batchManagement/selectPlan",
-          "pathName": "pages/plantManage/batchManagement/selectPlan",
->>>>>>> ae71cbf17f9496048b31f1fca041d5934504f0c0
-          "query": ""
-        }
-      ]
-    }
-  }
->>>>>>> 51cfb5363ac79967ffde86f31f1ab6d64acda1d8
 }

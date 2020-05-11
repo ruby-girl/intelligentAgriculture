@@ -1,6 +1,6 @@
 export default {
 	config: {
-		baseUrl: "http://192.168.101.32:8090/api/",
+		baseUrl: "http://192.168.101.29:8088/api/",
 		header: {
 			 'Content-Type':'application/x-www-form-urlencoded',
 			 'X-Access-Token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NTQsImV4cCI6MTU4ODgyNDE0N30.XmkG-b7ZrnTiMmEhQnXmg2_7c4iAQS_Cyti_z1TsxNY'
@@ -17,7 +17,7 @@ export default {
 	interceptor: {
 		request: null,
 		response: null
-	},
+	}, 
 	request(options) {
 		
 		if (!options) {

@@ -2,8 +2,8 @@
 	<view>
 
 <view class="drawMap">
-	<map id="map" :longitude="longitude" :latitude="latitude" scale="14" show-location style="width: 100%; height: 100%;">
-	</map>
+	<!-- <map id="map" :longitude="longitude" :latitude="latitude" scale="14" show-location style="width: 100%; height: 100%;">
+	</map> -->
 </view>
 <view class="draw-content">
 	<view class="tr">

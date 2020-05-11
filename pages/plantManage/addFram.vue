@@ -10,10 +10,10 @@
 				<view class="title">
 					种植批次
 				</view>
-				<picker @change="PickerChange" :value="ttt" :range="picker">
+				<picker @change="batchChange" :value="ttt" :range="batchData">
 					<view class="picker">
 
-						{{ttt>-1?picker[ttt]:'请选择'}}
+						{{ttt>-1?batchData[ttt]:'请选择'}}
 
 					</view>
 				</picker>
@@ -230,11 +230,23 @@
 		data() {
 			return {
 				ttt: -1,
+				batchData:[],
 				picker: ['喵喵喵', '汪汪汪', '哼唧哼唧'],
 				imgList: [],
 			};
 		},
+		onLoad() {
+			this.initSelect()
+		},
 		methods: {
+			initSelect(){
+				this.$api.getPlantingBatchs({baseId:23}).then(res=>{
+					this.batchData =  res.data.data
+				})	
+				this.$api.getFarmWorkItems().then(res=>{
+					
+				})
+			},
 			ChooseImage() {
 				uni.chooseImage({
 					count: 4, //默认9
@@ -267,6 +279,10 @@
 						}
 					}
 				})
+			},
+			/*选择批次 */
+			batchChange(e){
+				 
 			},
 			PickerChange(e) {
 				this.ttt = e.detail.value

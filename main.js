@@ -12,10 +12,8 @@ Vue.component('xfl-select', xflSelect);
 Vue.component('uni-popup', uniPopup);
 import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom', cuCustom)
-import amap from '@/utils/amap-wx.js';
 Vue.prototype.$api = api;
 Vue.prototype.$validate = validate
-Vue.prototype.amap = amap
 Vue.config.productionTip = false
 Vue.prototype.$store = store
 App.mpType = 'app'

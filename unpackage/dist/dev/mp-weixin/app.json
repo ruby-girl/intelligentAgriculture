@@ -1,15 +1,11 @@
 {
   "pages": [
-<<<<<<< HEAD
+    "pages/plantManage/addBaseLand",
     "pages/service/addLand",
-    "pages/service/map3",
-    "pages/service/map2",
-    "pages/plantManage/map",
-    "pages/plantManage/framManage",
+    "pages/plantManage/chooseHandle",
+    "pages/service/landDetail",
     "pages/plantManage/addFram",
     "pages/plantManage/workDetail",
-=======
->>>>>>> ae71cbf17f9496048b31f1fca041d5934504f0c0
     "pages/plantManage/workeMethod",
     "pages/plantManage/workOrder",
     "pages/message/message",
@@ -20,15 +16,10 @@
     "pages/fair/fair",
     "pages/personal/personal",
     "pages/plantManage/batchManagement/list",
-<<<<<<< HEAD
-    "pages/plantManage/chooseHandle",
-    "pages/service/map4",
-    "pages/service/landDetail"
-=======
     "pages/plantManage/batchManagement/addBatch",
     "pages/plantManage/batchManagement/selectPlan",
-    "pages/plantManage/batchManagement/selectCompany"
->>>>>>> ae71cbf17f9496048b31f1fca041d5934504f0c0
+    "pages/plantManage/batchManagement/selectCompany",
+    "pages/personal/RealInformation"
   ],
   "subPackages": [],
   "window": {
@@ -70,20 +61,16 @@
       {
         "pagePath": "pages/personal/personal",
         "text": "我的",
-        "navigationBarBackgroundColor": "#00AE66",
         "iconPath": "static/tab/tab_icon_mine_def@2x.png",
         "selectedIconPath": "static/tab/tab_icon_mine_pre@2x.png"
       }
     ]
   },
-<<<<<<< HEAD
   "permission": {
     "scope.userLocation": {
       "desc": "地图开发"
     }
   },
-=======
->>>>>>> ae71cbf17f9496048b31f1fca041d5934504f0c0
   "usingComponents": {
     "xfl-select": "/components/xfl-select/xfl-select",
     "uni-popup": "/components/uni-popup/uni-popup",

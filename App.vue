@@ -1,6 +1,8 @@
 <script>
+	
 	export default {
 		onLaunch: function() {
+		
 			console.log('App Launch')
 		},
 		onShow: function() {
@@ -13,9 +15,12 @@
 </script>
 
 <style>
-	    @import "colorui/main.css";
+	  /*  @import "https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"; */
+	    	   @import './common/map.css';
+		@import "colorui/main.css";
 	    @import "colorui/icon.css";
 	   @import './common/uni.css';
+
 	/*每个页面公共css */
 	.display-flex{
 	  display: -webkit-box;

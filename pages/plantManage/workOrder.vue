@@ -56,7 +56,7 @@
 	
 		<view class="content" :style="{top:topHeight}">
 		
-			  <view class="item" v-for="(item,index) in listData" :key="index" @click="toUrl(item.id)">
+			  <view class="item" v-for="(item,index) in listData" :key="index"  @tap="toUrl(item.id)">
 				  
 				  <!-- 跟距狀態不一樣 字段不同-->
 				   <view class="flex">
@@ -64,7 +64,10 @@
 						   <image src="/static/plant/icon_fertilization@2x.png" class="imgIcon"></image>
 						   <text>{{item.farmWorkItemName}}</text><text class="f10 cr3">来自:工单</text>
 					   </view>
-					   <view><text class="cr">执行</text></view>
+					
+						   	   <view @tap.stop='goAddUrl(item.id)'><text class="cr">执行</text></view>
+					
+				
 					  </view>
 			       <view>
 					   <text class="cr3">开始时间：</text>{{item.scheduledtime}}
@@ -107,7 +110,7 @@
 				            ],
 							tabs:[
 								{id:'',name:'全部'},
-								// {id:0,name:'未开始'},
+								 {id:3,name:'未开始'},
 								{id:1,name:'待处理'},
 								{id:2,name:'已结束'},
 							],
@@ -154,6 +157,12 @@
 			toUrl(id){
 				uni.navigateTo({
 				    url: '/pages/plantManage/workDetail?id='+id
+				});
+			},
+			/* 跳转 添加农事 */
+			goAddUrl(id){
+				uni.navigateTo({
+				    url: '/pages/plantManage/addFram??id='+id
 				});
 			},
 			  open(){

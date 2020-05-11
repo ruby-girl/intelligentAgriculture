@@ -22,6 +22,20 @@
 				</view>
 			</view>
 			<view class="mb20">
+				<label><text class="line"></text>工单操作方法</label>
+			<view class="method-top">
+				<view><b>采收</b></view>
+				<view>机械采收，人工辅助</view>
+				<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll">
+				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+				                   <image src="/static/timg.jpg"lazy-load="true" mode="aspectFill"></image>
+				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+				                 </scroll-view> 
+			</view>
+			</view>
+			<view class="mb20">
 
 				<label><text class="line"></text>人资物料费用预算</label>
 				<view class="content">
@@ -291,7 +305,25 @@
 		.first {
 			background-color: #fff;
 			padding: 30rpx;
-
+	.method-top{
+			background-color: #fff;
+		
+			.scroll-view_H{
+				       padding: 20rpx 0;
+				      height: 140rpx;
+					      white-space: nowrap;
+				box-sizing: content-box;
+				width:calc(100vw - 60rpx);  
+				    image{
+					   display: inline-block;
+					   width: 200rpx;
+					   height: 100%;
+					   margin-right: 10rpx;
+					   border-radius: 3px;
+					
+				   }
+			}
+		}
 			.content {
 				.cr3 {
 					margin-right: 30rpx;

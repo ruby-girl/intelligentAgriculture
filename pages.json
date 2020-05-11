@@ -1,10 +1,32 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 	 {
+	     "path" : "pages/plantManage/addBaseLand",
+	     "style" : {
+	 			 "navigationBarTitleText": "创建基地"
+	 		 }
+	 },
+	 
+	 {
+	     "path" : "pages/service/addLand",
+	     "style" : {}
+	 },
+	
+	 {
+	     "path" : "pages/plantManage/chooseHandle",
+	     "style" : {}
+	 }
+	       
+	
+	 ,{
+	     "path" : "pages/service/landDetail",
+	     "style" : {}
+	 },
+	 {
 	     "path" : "pages/plantManage/addFram",
 	     "style" : {
-			 "navigationBarTitleText": "添加农事操作记录"
-		 }
+	 			 "navigationBarTitleText": "添加农事操作记录"
+	 		 }
 	 },
 	 {
 	     "path" : "pages/plantManage/workDetail",
@@ -104,6 +126,8 @@
 				"navigationBarTitleText": "实名信息"
 			}
         }
+      
+       
     ],
 "globalStyle": {
 		"navigationBarTextStyle": "black",
