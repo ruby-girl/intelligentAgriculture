@@ -11,10 +11,10 @@
 			<view><i class="red">*</i><text class="text-margin">身份证号</text></view>
 			<input placeholder="请输入身份证号" name="input"></input>
 		</view>
-		<view class="border-bottom">
+		<!-- <view class="border-bottom">
 			<view><i class="red">*</i><text class="text-margin">手机号码</text></view>
 			<input placeholder="请输入手机号码" name="input"></input>
-		</view>
+		</view> -->
 		<view class="border-bottom">
 			<view><text class="text-margin">邮箱地址</text></view>
 			<input placeholder="请输入邮箱地址" name="input"></input>
@@ -29,11 +29,11 @@
 
 		</view>
 		<view class="border-bottom">
-			<view><i class="red">*</i><text class="text-margin">教育程度</text></view>
+			<view><i class="red">*</i><text class="text-margin">所在区域</text></view>
 			<view class="cu-form-group">
-				<picker mode="multiSelector" @change="MultiChange"  @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
+				<picker mode="multiSelector" @change="MultiChange" :range-key="'name'"  @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
 					<view class="picker">
-						{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}
+						{{multiArray[0][multiIndex[0]].name}}，{{multiArray[1][multiIndex[1]].name}}，{{multiArray[2][multiIndex[2]].name}}
 					</view>
 				</picker>
 			</view>
@@ -120,17 +120,64 @@
 						value: 8
 					}
 				],
-				jy: 0,
+				jy: 1,
 				multiArray: [
-					['无脊柱动物', '脊柱动物'],
-					['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'],
-					['猪肉绦虫', '吸血虫']
 				],
-				multiIndex: [0, 0, 0],
+				multiIndex: [],
+				multiIndexsave:[],
 				imgList: [],
+				init:true
 			}
 		},
+		onLoad(){
+			this.$apiYZX.provinces().then(res=>{
+				// this.provincesList = res.data.data;
+				let arr=[]
+				res.data.data.forEach(item=>{
+					let obj={
+						name:item.name,
+						id:item.code
+					}
+					arr.push(obj)
+				})	
+				this.multiArray[0]=arr;
+				this.getByProvinceCode(res.data.data[0].code)
+			})
+		},
 		methods: {
+			getByProvinceCode(code){
+				this.$apiYZX.getByProvinceCode({provinceCode:code}).then(res=>{
+					let arr=[]
+					res.data.data.forEach(item=>{
+						let obj={
+							name:item.name,
+							id:item.code
+						}
+						arr.push(obj)
+					})	
+					this.multiArray[1]=arr;
+					this.getByCityCode(res.data.data[0].code)
+				})
+			},
+			getByCityCode(code){
+				this.$apiYZX.getByCityCode({cityCode:code}).then(res=>{
+					let arr=[]
+					res.data.data.forEach(item=>{
+						let obj={
+							name:item.name,
+							id:item.code
+						}
+						arr.push(obj)
+					})	
+					this.multiArray[2]=arr;
+					if(this.init){
+						this.multiIndex=[0,0,0]
+						this.init=false
+					}else{
+						this.multiIndex=[...this.multiIndexsave]
+					}			
+				})
+			},
 			ChooseImage() {
 				uni.chooseImage({
 					count: 4, //默认9
@@ -172,62 +219,17 @@
 					multiArray: this.multiArray,
 					multiIndex: this.multiIndex
 				};
-				data.multiIndex[e.detail.column] = e.detail.value;
+				this.multiIndex[e.detail.column] = e.detail.value;
+				this.multiIndexsave=[...this.multiIndex]
 				switch (e.detail.column) {
 					case 0:
-						switch (data.multiIndex[0]) {
-							case 0:
-								data.multiArray[1] = ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'];
-								data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-								break;
-							case 1:
-								data.multiArray[1] = ['鱼', '两栖动物', '爬行动物'];
-								data.multiArray[2] = ['鲫鱼', '带鱼'];
-								break;
-						}
-						data.multiIndex[1] = 0;
-						data.multiIndex[2] = 0;
+						this.getByProvinceCode(data.multiArray[0][data.multiIndex[0]].id)
 						break;
 					case 1:
-						switch (data.multiIndex[0]) {
-							case 0:
-								switch (data.multiIndex[1]) {
-									case 0:
-										data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-										break;
-									case 1:
-										data.multiArray[2] = ['蛔虫'];
-										break;
-									case 2:
-										data.multiArray[2] = ['蚂蚁', '蚂蟥'];
-										break;
-									case 3:
-										data.multiArray[2] = ['河蚌', '蜗牛', '蛞蝓'];
-										break;
-									case 4:
-										data.multiArray[2] = ['昆虫', '甲壳动物', '蛛形动物', '多足动物'];
-										break;
-								}
-								break;
-							case 1:
-								switch (data.multiIndex[1]) {
-									case 0:
-										data.multiArray[2] = ['鲫鱼', '带鱼'];
-										break;
-									case 1:
-										data.multiArray[2] = ['青蛙', '娃娃鱼'];
-										break;
-									case 2:
-										data.multiArray[2] = ['蜥蜴', '龟', '壁虎'];
-										break;
-								}
-								break;
-						}
-						data.multiIndex[2] = 0;
+						this.getByCityCode(data.multiArray[1][data.multiIndex[1]].id)
 						break;
-				}
-				this.multiArray = data.multiArray;
-				this.multiIndex = data.multiIndex;
+				}			
+
 			},
 			pickerChange: function(e, val) {
 				this.jy= e.target.value

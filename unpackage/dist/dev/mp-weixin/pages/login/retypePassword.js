@@ -159,16 +159,86 @@ var _default =
 {
   data: function data() {
     return {
-      title: 'Hello' };
+      title: 'Hello',
+      disabled: false,
+      btnTitle: "验证码",
+      txt: '',
+      userInfo: {
+        phone: '',
+        captcha: '',
+        password: '',
+        passwordComfirm: '' } };
+
 
   },
   onLoad: function onLoad() {
 
   },
   methods: {
-    toRegister: function toRegister() {
-      uni.navigateTo({
-        url: 'register' });
+    codeClick: function codeClick() {var _this2 = this;
+      //点击发送验证码		    
+      var _this = this;
+      if (!this.userInfo.phone) {
+        uni.showToast({
+          title: '请输入手机号',
+          icon: 'none' });
+
+        return;
+      }
+      this.disabled = true;
+      this.$apiYZX.captcha({ phone: this.userInfo.phone, type: '3' }).then(function (res) {
+        if (res.data.code == 200) {
+          _this2.btnTitle = 60;
+          var _this3 = _this2;
+          _this2.txt = 'S秒后获取';
+          var timer = setInterval(function () {
+            if (_this3.btnTitle == 1) {
+              clearInterval(timer);
+              _this3.btnTitle = '获取验证码';
+              _this3.txt = '';
+              _this3.disabled = false;
+            } else {
+              _this3.btnTitle = _this3.btnTitle - 1;
+            }
+          }, 1000);
+        } else {
+          _this2.disabled = false;
+        }
+      });
+    },
+    test: function test() {
+      if (!this.userInfo.phone || !this.userInfo.captcha || !this.userInfo.password || !this.userInfo.
+      passwordComfirm) {
+        uni.showToast({
+          title: '请输入完整信息',
+          icon: 'none' });
+
+        return false;
+      }
+      if (this.userInfo.passwordComfirm !== this.userInfo.password) {
+        uni.showToast({
+          title: '输入的密码不一致',
+          icon: 'none' });
+
+        return false;
+      }
+      return true;
+    },
+    modifyFunc: function modifyFunc() {
+      if (!this.test()) return false;
+      this.$apiYZX.modify(this.userInfo).then(function (res) {
+        if (res.data.code == '200') {
+          uni.showToast({
+            title: '重置成功',
+            icon: 'success',
+            success: function success() {
+              uni.navigateTo({
+                url: 'login' });
+
+            } });
+
+        }
+      });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

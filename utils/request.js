@@ -1,7 +1,7 @@
 
 export default {
 	config: {
-		baseUrl: "http://192.168.101.29:8088/",
+		baseUrl: "http://192.168.101.30:8088/",
 		header: {
 			 'Content-Type':'application/x-www-form-urlencoded',
 			 'X-Access-Token':''
@@ -20,6 +20,9 @@ export default {
 		response: null
 	},
 	request(options) {
+		uni.showLoading({
+		    title: '加载中'
+		});
 		if (!options) {
 			options = {}
 		}
@@ -48,7 +51,7 @@ export default {
 				response.config = _config
 				if (process.env.NODE_ENV === 'development') {
 					if (statusCode === 200) {
-						console.log("【" + _config.requestId + "】 结果：" + JSON.stringify(response.data))
+						
 					}
 				}
 				if (this.interceptor.response) {
@@ -77,9 +80,9 @@ export default {
 			_reqlog(_config)
  
 			if (process.env.NODE_ENV === 'development') {
-				console.log("【" + _config.requestId + "】 地址：" + _config.url)
+				
 				if (_config.data) {
-					console.log("【" + _config.requestId + "】 参数：" + JSON.stringify(_config.data))
+					
 				}
 			}
  
@@ -124,7 +127,6 @@ export default {
 	}
 }
 function getToken(){
-	console.log('qwe')
 		uni.getStorage({
 		key:'ddwb',
 		success(e){

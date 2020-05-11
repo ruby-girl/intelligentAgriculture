@@ -139,7 +139,7 @@ page.data-v-6f6fa25f {
   word-wrap: break-word;
 }
 .container.data-v-6f6fa25f, page.data-v-6f6fa25f {
-  height: 100%;
+  height: 100vh;
   background: #fff !important;
 }
 .container .list-container.data-v-6f6fa25f, page .list-container.data-v-6f6fa25f {

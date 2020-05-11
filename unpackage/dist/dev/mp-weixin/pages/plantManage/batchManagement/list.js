@@ -192,6 +192,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _self,
 page = 1,
@@ -216,10 +243,11 @@ timer = null;var _default =
         contentrefresh: '正在加载...',
         contentnomore: '没有更多数据了' },
 
-      newsList: [],
+      newsList: 4,
       loadingText: '加载中...',
-      loadingType: 0 };
-
+      loadingType: 0,
+      triggered: false,
+      lastTime: 0 };
 
   },
   onLoad: function onLoad() {
@@ -239,6 +267,19 @@ timer = null;var _default =
     }, 1000);
   },
   methods: {
+    loadingData: function loadingData(e) {
+      console.log('触底了', e);
+      if (e.timeStamp - this.lastTime > 5000) {
+        this.lastTime = e.timeStamp;
+        var _self2 = this;
+        setTimeout(function () {
+          _self2.newsList = 8;
+        }, 2000);
+      } else {
+        return;
+      }
+
+    },
     toadd: function toadd() {
       uni.navigateTo({
         url: 'addBatch' });
@@ -266,7 +307,7 @@ timer = null;var _default =
       // }
       page++; //每触底一次 page +1
       var data = [{ name: '183', id: 123 }];
-      _self.newsList = _self.newsList.concat(data); //将数据拼接在一起
+      _self.newsList = 8; //将数据拼接在一起
       _self.loadingType = 0; //将loadingType归0重置
       uni.hideNavigationBarLoading(); //关闭加载动画
       // 	}

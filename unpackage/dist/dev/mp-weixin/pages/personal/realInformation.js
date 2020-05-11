@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(n);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;} //
 //
 //
 //
@@ -252,27 +252,74 @@ var _default =
         value: 8 }],
 
 
-      jy: 0,
-      multiArray: [
-      ['无脊柱动物', '脊柱动物'],
-      ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'],
-      ['猪肉绦虫', '吸血虫']],
+      jy: 1,
+      multiArray: [],
 
-      multiIndex: [0, 0, 0],
-      imgList: [] };
+      multiIndex: [],
+      multiIndexsave: [],
+      imgList: [],
+      init: true };
 
   },
+  onLoad: function onLoad() {var _this = this;
+    this.$apiYZX.provinces().then(function (res) {
+      // this.provincesList = res.data.data;
+      var arr = [];
+      res.data.data.forEach(function (item) {
+        var obj = {
+          name: item.name,
+          id: item.code };
+
+        arr.push(obj);
+      });
+      _this.multiArray[0] = arr;
+      _this.getByProvinceCode(res.data.data[0].code);
+    });
+  },
   methods: {
-    ChooseImage: function ChooseImage() {var _this = this;
+    getByProvinceCode: function getByProvinceCode(code) {var _this2 = this;
+      this.$apiYZX.getByProvinceCode({ provinceCode: code }).then(function (res) {
+        var arr = [];
+        res.data.data.forEach(function (item) {
+          var obj = {
+            name: item.name,
+            id: item.code };
+
+          arr.push(obj);
+        });
+        _this2.multiArray[1] = arr;
+        _this2.getByCityCode(res.data.data[0].code);
+      });
+    },
+    getByCityCode: function getByCityCode(code) {var _this3 = this;
+      this.$apiYZX.getByCityCode({ cityCode: code }).then(function (res) {
+        var arr = [];
+        res.data.data.forEach(function (item) {
+          var obj = {
+            name: item.name,
+            id: item.code };
+
+          arr.push(obj);
+        });
+        _this3.multiArray[2] = arr;
+        if (_this3.init) {
+          _this3.multiIndex = [0, 0, 0];
+          _this3.init = false;
+        } else {
+          _this3.multiIndex = _toConsumableArray(_this3.multiIndexsave);
+        }
+      });
+    },
+    ChooseImage: function ChooseImage() {var _this4 = this;
       uni.chooseImage({
         count: 4, //默认9
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album'], //从相册选择
         success: function success(res) {
-          if (_this.imgList.length != 0) {
-            _this.imgList = _this.imgList.concat(res.tempFilePaths);
+          if (_this4.imgList.length != 0) {
+            _this4.imgList = _this4.imgList.concat(res.tempFilePaths);
           } else {
-            _this.imgList = res.tempFilePaths;
+            _this4.imgList = res.tempFilePaths;
           }
         } });
 
@@ -283,7 +330,7 @@ var _default =
         current: e.currentTarget.dataset.url });
 
     },
-    DelImg: function DelImg(e) {var _this2 = this;
+    DelImg: function DelImg(e) {var _this5 = this;
       uni.showModal({
         title: '召唤师',
         content: '确定要删除这段回忆吗？',
@@ -291,7 +338,7 @@ var _default =
         confirmText: '再见',
         success: function success(res) {
           if (res.confirm) {
-            _this2.imgList.splice(e.currentTarget.dataset.index, 1);
+            _this5.imgList.splice(e.currentTarget.dataset.index, 1);
           }
         } });
 
@@ -304,62 +351,17 @@ var _default =
         multiArray: this.multiArray,
         multiIndex: this.multiIndex };
 
-      data.multiIndex[e.detail.column] = e.detail.value;
+      this.multiIndex[e.detail.column] = e.detail.value;
+      this.multiIndexsave = _toConsumableArray(this.multiIndex);
       switch (e.detail.column) {
         case 0:
-          switch (data.multiIndex[0]) {
-            case 0:
-              data.multiArray[1] = ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'];
-              data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-              break;
-            case 1:
-              data.multiArray[1] = ['鱼', '两栖动物', '爬行动物'];
-              data.multiArray[2] = ['鲫鱼', '带鱼'];
-              break;}
-
-          data.multiIndex[1] = 0;
-          data.multiIndex[2] = 0;
+          this.getByProvinceCode(data.multiArray[0][data.multiIndex[0]].id);
           break;
         case 1:
-          switch (data.multiIndex[0]) {
-            case 0:
-              switch (data.multiIndex[1]) {
-                case 0:
-                  data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-                  break;
-                case 1:
-                  data.multiArray[2] = ['蛔虫'];
-                  break;
-                case 2:
-                  data.multiArray[2] = ['蚂蚁', '蚂蟥'];
-                  break;
-                case 3:
-                  data.multiArray[2] = ['河蚌', '蜗牛', '蛞蝓'];
-                  break;
-                case 4:
-                  data.multiArray[2] = ['昆虫', '甲壳动物', '蛛形动物', '多足动物'];
-                  break;}
-
-              break;
-            case 1:
-              switch (data.multiIndex[1]) {
-                case 0:
-                  data.multiArray[2] = ['鲫鱼', '带鱼'];
-                  break;
-                case 1:
-                  data.multiArray[2] = ['青蛙', '娃娃鱼'];
-                  break;
-                case 2:
-                  data.multiArray[2] = ['蜥蜴', '龟', '壁虎'];
-                  break;}
-
-              break;}
-
-          data.multiIndex[2] = 0;
+          this.getByCityCode(data.multiArray[1][data.multiIndex[1]].id);
           break;}
 
-      this.multiArray = data.multiArray;
-      this.multiIndex = data.multiIndex;
+
     },
     pickerChange: function pickerChange(e, val) {
       this.jy = e.target.value;

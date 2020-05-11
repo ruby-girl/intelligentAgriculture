@@ -167,86 +167,27 @@ var _default =
 {
   data: function data() {
     return {
-      switchB: true };
+      switchB: true,
+      user: {} };
 
   },
   onLoad: function onLoad() {
-    this.getSettingMes();
+    var _this = this;
+    uni.getStorage({
+      key: 'ddwb',
+      success: function success(res) {
+        _this.user = {
+          name: res.data.name || '',
+          phone: res.data.phone || '',
+          headPortrait: res.data.headPortrait };
+
+      } });
+
   },
   methods: {
-    // 查看已授权选项
-    getSettingMes: function getSettingMes() {
-      console.log('1111111');
-      var _this = this;
-      uni.getSetting({
-        success: function success(res) {
-          console.log('123123213213', res.authSetting);
-          if (res.authSetting['scope.userInfo']) {
-            // 用户信息已授权，获取用户信息
-            uni.getUserInfo({
-              success: function success(res) {
-                console.log(res);
-              },
-              fail: function fail() {
-                console.log("获取用户信息失败");
-              } });
-
-          } else if (!res.authSetting['scope.userInfo']) {
-            console.log('失败了');
-            // console.log("需要点击按钮手动授权")
-            uni.authorize({
-              scope: 'scope.userInfo',
-              success: function success(res) {
-                console.log('授权成功');
-                uni.getUserInfo({
-                  // 获取信息成功
-                  success: function success(res) {
-                    console.log(res);
-                    // 成功后进行登录,获取code
-                    uni.login({
-                      success: function success(res) {
-                        console.log(res);
-                        if (res.code) {
-                          //发起网络请求
-                          uni.request({
-                            // 请求路径
-                            url: 'https://test.com/onLogin',
-                            // 请求参数code
-                            data: {
-                              code: res.code },
-
-                            method: 'GET',
-                            success: function success(res) {
-                              // 请求成功后获取openid和session_key
-                              console.log(res);
-                            } });
-
-                        } else {
-                          console.log('登录失败！' + res.errMsg);
-                        }
-                      } });
-
-                  },
-                  fail: function fail() {
-                    console.log("获取用户信息失败");
-                  } });
-
-              },
-              fail: function fail() {
-                // 这里再次唤起
-                uni.openSetting({
-                  success: function success(res) {
-                    console.log('再次');
-                  } });
-
-                console.log("授权失败");
-              } });
-
-          }
-        },
-        fail: function fail() {
-          console.log("获取已授权选项失败");
-        } });
+    toRealInformmation: function toRealInformmation() {
+      uni.navigateTo({
+        url: 'realInformation' });
 
     },
     changeSwitch: function changeSwitch(e) {

@@ -2,14 +2,14 @@
 	<view>
 		<view class="bg-personal">
 			<view class="user-info text-center">
-				<view class="cu-avatar lg round" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg);"></view>
-				<view style="margin-top:20rpx" class="text-lg">毛小瓜</view>
-				<text class="text-gray">13696279917</text>
+				<view class="cu-avatar lg round" v-bind:style="{'backgroundImage':'url('+user.headPortrait+')'}"></view>
+				<view style="margin-top:20rpx" class="text-lg">{{user.name}}</view>
+				<text class="text-gray">{{user.phone}}</text>
 			</view>
 		</view>
 		<view class="container-input">
 			<form>
-				<view class="cu-form-group">
+				<view class="cu-form-group" @click="toRealInformmation">
 					<view class="title">实名信息</view>
 					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 				</view>
@@ -35,87 +35,28 @@
 	export default {
 		data() {
 			return {
-				switchB: true
+				switchB: true,
+				user:{}
 			};
 		},
 		onLoad() {
-			this.getSettingMes()
+			let _this=this
+			uni.getStorage({
+			key: 'ddwb',
+			success: function (res) { 
+				_this.user= {			
+					name: res.data.name || '',
+					phone:res.data.phone||'',
+					headPortrait:res.data.headPortrait
+				}
+			}
+			});
 		},
 		methods: {
-			// 查看已授权选项
-			getSettingMes() {
-				console.log('1111111')
-				let _this = this;
-				uni.getSetting({
-					success(res) {
-						console.log('123123213213', res.authSetting)
-						if (res.authSetting['scope.userInfo']) {
-							// 用户信息已授权，获取用户信息
-							uni.getUserInfo({
-								success(res) {
-									console.log(res);
-								},
-								fail() {
-									console.log("获取用户信息失败")
-								}
-							})
-						} else if (!res.authSetting['scope.userInfo']) {
-							console.log('失败了')
-							// console.log("需要点击按钮手动授权")
-							uni.authorize({
-								scope: 'scope.userInfo',
-								success(res) {
-									console.log('授权成功')
-									uni.getUserInfo({
-										// 获取信息成功
-										success(res) {
-											console.log(res);
-											// 成功后进行登录,获取code
-											uni.login({
-												success(res) {
-													console.log(res);
-													if (res.code) {
-														//发起网络请求
-														uni.request({
-															// 请求路径
-															url: 'https://test.com/onLogin',
-															// 请求参数code
-															data: {
-																code: res.code
-															},
-															method: 'GET',
-															success(res) {
-																// 请求成功后获取openid和session_key
-																console.log(res)
-															}
-														})
-													} else {
-														console.log('登录失败！' + res.errMsg)
-													}
-												}
-											})
-										},
-										fail() {
-											console.log("获取用户信息失败");
-										}
-									})
-								},
-								fail() {
-									// 这里再次唤起
-									uni.openSetting({
-										success: (res) => {
-											console.log('再次')
-										}
-									})
-									console.log("授权失败");
-								}
-							})
-						}
-					},
-					fail() {
-						console.log("获取已授权选项失败")
-					}
-				})
+			toRealInformmation(){
+				uni.navigateTo({
+				    url: 'realInformation'
+				});
 			},
 			changeSwitch(e) {
 				this.switchB = e.detail.value

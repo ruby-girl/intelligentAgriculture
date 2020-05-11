@@ -2,28 +2,28 @@
 	<view class="padding-login">
 		<view class="border-bottom">
 			<view><text class="iconfont iconxingming color-green" style="font-size: 26px;"></text><text class="text-margin">姓名</text></view>
-			<input placeholder="请输入姓名" name="input"></input>
+			<input placeholder="请输入姓名" name="input" v-model="userInfo.account"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconipad color-green" style="font-size: 26px;"></text><text class="text-margin">手机</text></view>
-			<input placeholder="请输入手机号码" name="input"></input>
+			<input placeholder="请输入手机号码" type="number" name="input" v-model="userInfo.phone"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconsecurity color-green" style="font-size: 26px;"></text><text class="text-margin">验证码</text></view>
 			<view class="cu-form-group">
-				<input placeholder="请输入验证码" type="password" name="input"></input>
-				<button class='cu-btn line-green shadow'>验证码</button>
+				<input placeholder="请输入验证码"  name="input" v-model="userInfo.captcha"></input>
+				<button class='cu-btn line-green shadow' :disabled="disabled"  @click="codeClick">{{btnTitle}}{{txt}}</button>
 			</view>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">密码</text></view>
-			<input placeholder="请设置密码" name="input"></input>
+			<input placeholder="请设置密码" type="password" name="input" v-model="userInfo.password"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">请确认密码</text></view>
-			<input placeholder="请确认密码" name="input"></input>
+			<input placeholder="请确认密码" type="password" name="input" v-model="userInfo.passwordComfirm"></input>
 		</view>
-		<button @click="login" class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx">
+		<button @click="register" class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx">
 			注册</button>
 	</view>
 </template>
@@ -31,24 +31,89 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello',
+				userInfo: {
+					account: '',
+					phone: '',
+					captcha: '',
+					password: '',
+					passwordComfirm: ''
+				},
+				disabled: false,
+				btnTitle: "验证码",
+				txt: ''
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-			login() {
-				uni.login({
-					provider: 'weixin',
-					success: (data) => {
-						console.log('code', data.code)
-
-					},
-					fail: (err) => {
-						console.log('uni.login 接口调用失败，将无法正常使用开放接口等服务', err)
+			codeClick() {
+				//点击发送验证码		     
+				let _this = this
+				if (!this.userInfo.phone) {
+					uni.showToast({
+						title: '请输入手机号',
+						icon: 'none'
+					})
+					return
+				}
+				this.disabled = true
+				this.$apiYZX.captcha({
+					phone: this.userInfo.phone,
+					type: '2'
+				}).then(res => {			
+					if (res.data.code == 200) {					
+						this.btnTitle = 60
+						this.txt = 'S秒后获取'
+						let timer = setInterval(function() {
+							if (_this.btnTitle == 1) {
+								clearInterval(timer)
+								_this.btnTitle = '获取验证码'
+								_this.txt = ''
+								_this.disabled = false
+							} else {
+								_this.btnTitle = _this.btnTitle - 1
+							}
+						}, 1000)
+					} else {
+						this.disabled = false
 					}
 				})
+			},
+			register() {
+				if(!this.test()) return false
+				this.$apiYZX.loginReg(this.userInfo).then(res => {
+					if(res.data.code=='200'){
+						uni.showToast({
+						    title: '注册成功',
+							icon:'success',
+							success() {
+								uni.navigateTo({
+								    url: 'login'
+								});
+							}
+						})	
+					}
+				})
+			},
+			test() {
+				if(!this.userInfo.account || !this.userInfo.phone || !this.userInfo.captcha || !this.userInfo.password || !this.userInfo
+					.passwordComfirm) {		
+					uni.showToast({
+						title: '请输入完整信息',
+						icon: 'none'
+					})
+					return false
+				}
+				if(this.userInfo.passwordComfirm!==this.userInfo.password){
+					uni.showToast({
+						title: '输入的密码不一致',
+						icon: 'none'
+					})
+					return false
+				}
+				return true
 			}
 		}
 	}

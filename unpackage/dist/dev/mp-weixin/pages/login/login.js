@@ -157,43 +157,90 @@ var _default =
       obj: {
         account: '',
         captcha: '',
-        password: '' } };
+        password: '' },
 
+      headPortrait: '' };
 
   },
   onLoad: function onLoad() {
 
   },
   methods: {
-    toRegister: function toRegister() {
-      // uni.navigateTo({
-      // 	url: 'register'
-      // })
+    getSettingMes: function getSettingMes() {
+      var _this = this;
+      uni.getSetting({
+        success: function success(res) {
+          if (res.authSetting['scope.userInfo']) {
+            // 用户信息已授权，获取用户信息
+            uni.getUserInfo({
+              success: function success(res) {
+                _this.headPortrait = res.userInfo.avatarUrl;
+                _this.userLogin();
+              },
+              fail: function fail() {
+                console.log("获取用户信息失败");
+              } });
 
-      uni.switchTab({
-        url: '../personal/personal' });
+          } else if (!res.authSetting['scope.userInfo']) {
+            console.log("需要点击按钮手动授权");
+          }
+        },
+        fail: function fail() {
+          console.log("获取已授权选项失败");
+        } });
 
     },
-    toRetypePassword: function toRetypePassword() {
-      // uni.navigateTo({
-      // 	url: 'retypePassword'
-      // })
+    // 手动授权方法
+    onGotUserInfo: function onGotUserInfo(e) {
+      var _this = this;
+      // 获取用户信息
+      uni.getUserInfo({
+        // 获取信息成功
+        success: function success(res) {
+          _this.headPortrait = res.userInfo.avatarUrl;
+          _this.userLogin();
+        },
+        fail: function fail() {
+          console.log("获取用户信息失败");
+        } });
+
+    },
+    toRegister: function toRegister() {
       uni.navigateTo({
         url: 'register' });
 
     },
-    userLogin: function userLogin() {
+    toRetypePassword: function toRetypePassword() {
+      uni.navigateTo({
+        url: 'retypePassword' });
+
+    },
+    userLogin: function userLogin() {var _this2 = this;
       this.$apiYZX.login(this.obj).then(function (res) {
-        var obj = {
-          token: res.data.data.token,
-          userid: res.data.data.user.id,
-          phone: res.data.data.user.phone,
-          name: res.data.data.user.name };
+        if (res.data.code == 200) {
+          var obj = {
+            token: res.data.data.token,
+            userid: res.data.data.user.id,
+            phone: res.data.data.user.phone,
+            name: res.data.data.user.name,
+            headPortrait: _this2.headPortrait };
 
-        uni.setStorage({
-          key: 'ddwb',
-          data: obj });
+          uni.setStorage({
+            key: 'ddwb',
+            data: obj,
+            success: function success() {
+              uni.showToast({
+                title: '登录成功',
+                icon: 'success',
+                success: function success() {
+                  uni.switchTab({
+                    url: '../personal/personal' });
 
+                } });
+
+            } });
+
+        }
       });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

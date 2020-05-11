@@ -163,24 +163,89 @@ var _default =
 {
   data: function data() {
     return {
-      title: 'Hello' };
+      title: 'Hello',
+      userInfo: {
+        account: '',
+        phone: '',
+        captcha: '',
+        password: '',
+        passwordComfirm: '' },
+
+      disabled: false,
+      btnTitle: "验证码",
+      txt: '' };
 
   },
   onLoad: function onLoad() {
 
   },
   methods: {
-    login: function login() {
-      uni.login({
-        provider: 'weixin',
-        success: function success(data) {
-          console.log('code', data.code);
+    codeClick: function codeClick() {var _this2 = this;
+      //点击发送验证码		     
+      var _this = this;
+      if (!this.userInfo.phone) {
+        uni.showToast({
+          title: '请输入手机号',
+          icon: 'none' });
 
-        },
-        fail: function fail(err) {
-          console.log('uni.login 接口调用失败，将无法正常使用开放接口等服务', err);
-        } });
+        return;
+      }
+      this.disabled = true;
+      this.$apiYZX.captcha({
+        phone: this.userInfo.phone,
+        type: '2' }).
+      then(function (res) {
+        if (res.data.code == 200) {
+          _this2.btnTitle = 60;
+          _this2.txt = 'S秒后获取';
+          var timer = setInterval(function () {
+            if (_this.btnTitle == 1) {
+              clearInterval(timer);
+              _this.btnTitle = '获取验证码';
+              _this.txt = '';
+              _this.disabled = false;
+            } else {
+              _this.btnTitle = _this.btnTitle - 1;
+            }
+          }, 1000);
+        } else {
+          _this2.disabled = false;
+        }
+      });
+    },
+    register: function register() {
+      if (!this.test()) return false;
+      this.$apiYZX.loginReg(this.userInfo).then(function (res) {
+        if (res.data.code == '200') {
+          uni.showToast({
+            title: '注册成功',
+            icon: 'success',
+            success: function success() {
+              uni.navigateTo({
+                url: 'login' });
 
+            } });
+
+        }
+      });
+    },
+    test: function test() {
+      if (!this.userInfo.account || !this.userInfo.phone || !this.userInfo.captcha || !this.userInfo.password || !this.userInfo.
+      passwordComfirm) {
+        uni.showToast({
+          title: '请输入完整信息',
+          icon: 'none' });
+
+        return false;
+      }
+      if (this.userInfo.passwordComfirm !== this.userInfo.password) {
+        uni.showToast({
+          title: '输入的密码不一致',
+          icon: 'none' });
+
+        return false;
+      }
+      return true;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

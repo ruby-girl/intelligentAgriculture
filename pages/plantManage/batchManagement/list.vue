@@ -8,7 +8,7 @@
 				</view>
 			</view>
 		</scroll-view>
-		<scroll-view scroll-y="true" class="list-container" style="height:1040rpx;">
+		<!-- <scroll-view scroll-y="true" class="list-container" style="height:1040rpx;">
 			<view class="list-item" v-for="item in 4" :key="item">
 
 				<view class="flex align-items-center">
@@ -32,7 +32,34 @@
 					<view>地块面积：3亩</view>
 				</view>
 			</view>
-		</scroll-view>
+		</scroll-view> -->
+		<scroll-view style="height: 1040rpx;" scroll-y="true"  :refresher-triggered="triggered"
+		            :refresher-threshold="100"  @scrolltolower="loadingData"
+		           >
+					<view class="list-item" v-for="item in newsList" :key="item">
+					
+						<view class="flex align-items-center">
+							<img src="@/static/plant/icon_plant@2x.png" alt="">
+							<view>作物：川麦冬</view>
+						</view>
+						<view class="flex align-items-center">
+							<img src="@/static/plant/icon_plan@2x.png" alt="">
+							<view>种植计划：川麦冬计划</view>
+						</view>
+						<view class="flex align-items-center">
+							<img src="@/static/plant/icon_date@2x.png" alt="">
+							<view>种植年份：2020</view>
+						</view>
+						<view class="flex align-items-center">
+							<img src="@/static/plant/icon_land@2x.png" alt="">
+							<view>地块数量：3</view>
+						</view>
+						<view class="flex align-items-center">
+							<img src="@/static/plant/icon_area@2x.png" alt="">
+							<view>地块面积：3亩</view>
+						</view>
+					</view>
+					</scroll-view>
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" @click="toadd">
 			新建批次</button>
 	</view>
@@ -62,10 +89,11 @@
 					contentrefresh: '正在加载...',
 					contentnomore: '没有更多数据了'
 				},
-				newsList: [],
+				newsList: 4,
 				loadingText: '加载中...',
 				loadingType: 0,
-
+				triggered: false,
+				lastTime:0
 			}
 		},
 		onLoad: function() {
@@ -85,6 +113,19 @@
 			}, 1000);
 		},
 		methods: {
+			loadingData(e){
+				console.log('触底了',e)
+				if(e.timeStamp-this.lastTime>5000){
+					this.lastTime=e.timeStamp
+					let _self=this
+					setTimeout(function(){
+						_self.newsList =8;
+					},2000)
+				}else{
+					return
+				}
+				
+			},
 			toadd(){
 				uni.navigateTo({
 					url: 'addBatch'
@@ -112,7 +153,7 @@
 						// }
 						page++; //每触底一次 page +1
 						let data=[{name:'183',id:123}]
-						_self.newsList = _self.newsList.concat(data); //将数据拼接在一起
+						_self.newsList = 8; //将数据拼接在一起
 						_self.loadingType = 0; //将loadingType归0重置
 						uni.hideNavigationBarLoading(); //关闭加载动画
 				// 	}
@@ -139,7 +180,7 @@
 
 <style lang="scss" scoped>
 	.container,page {
-		height: 100%;
+		height: 100vh;
 		background: #fff !important;
 
 		.list-container {
