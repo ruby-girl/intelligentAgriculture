@@ -38,11 +38,9 @@
 	</view>
 </template>
 <script>
-	import mapItem from '@/pages/plantManage/map5.vue'
+	
 	export default {
-		components: {
-			mapItem
-		},
+		
 		data() {
 			return {
 				latitude: "24.47951",
