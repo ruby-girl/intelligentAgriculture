@@ -174,6 +174,24 @@ page {
   background-color: #fff;
   padding: 30rpx;
 }
+.work-detail .first .method-top {
+  background-color: #fff;
+}
+.work-detail .first .method-top .scroll-view_H {
+  padding: 20rpx 0;
+  height: 140rpx;
+  white-space: nowrap;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  width: calc(100vw - 60rpx);
+}
+.work-detail .first .method-top .scroll-view_H image {
+  display: inline-block;
+  width: 200rpx;
+  height: 100%;
+  margin-right: 10rpx;
+  border-radius: 3px;
+}
 .work-detail .first .content .cr3 {
   margin-right: 30rpx;
 }

@@ -757,7 +757,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1560,61 +1560,6 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 113:
-/*!****************************************************!*\
-  !*** D:/yzx/wxItem/static/plant/icon_plant@2x.png ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjFFOUQ3QjQzODUwMzExRUE5RTExRDc4OTMwNjkzNEJFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjFFOUQ3QjQ0ODUwMzExRUE5RTExRDc4OTMwNjkzNEJFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MUU5RDdCNDE4NTAzMTFFQTlFMTFENzg5MzA2OTM0QkUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MUU5RDdCNDI4NTAzMTFFQTlFMTFENzg5MzA2OTM0QkUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5K5DLhAAACf0lEQVR42uyXW4iMYRjHZyytrBwXK2lRSJtyTiZLyQ2RnPbCJgk3TktSSijFBUK4GVuUiJzu7YVWMS1X1plyuHDMBWuzOeyO31P/rc/bO7PTfvPZVfPUr2/nfb933v8873N4N55Op2PdwXrEuokVhLjWM5lMRr3HKJgIw8EC8gU0QMtfQiLavB/sg0qY6pn/AHfhHFyJSsh8OA9DsrxTBovFPdiRbyFj4YZn/Al8g1IYBiWBuelQn28hB5zP1+E+xCGhOPElyJtMQmbCFCgXveA1PIM6eJVh3Wg9LSg3wzvYAnPdjXV89fAI3rpCqmAjzO7glx+DbZ7xQXomxDXPOyZgDfz2ZU1vRe/CHI+gRk9XzFVlxCLY5Vl3BtZ66wgMhpQCrd1a4aGC7KuCayBMgDEBMafhcWCdZcB+GOfZ6xDszFZZGx0RZkVy82Qdk539d9gDGwIxkgismQbVcAKanXhYlk1Eu0dSen6BNhUj22Ck5/0VUAub5OKmwJyJ/Agn4SxUSPyDnEo8LPeMF8NhbejaOlgKt5VZl5Se5rmVeqdZZTx00/uh9JujOuDLDitQ/SV2qLxT1+mm18H8LZikDFgfqBO1+hxTjC3REUd+DTiobBkPIwIizLbCPCde8u4R1557xm7CSwns8ovRU7WBf+aRTNYS9kflyyNNSvku98iC0HfWTq7ro+Jl99Hjuh781NxueegifIpKyGpYBTNggMaspe/V3yndZcyOwB24oObYFlaINcCj6i0lnvly9Rbfd1eKU3AZtsP7MMFakUFErpZWQSwO45FWVU7zzCy5vkxH01dfXiTX/1LHNT7rutCgu01Wixf+CS8I+V+E/BFgAAwMgMS4k9rGAAAAAElFTkSuQmCC"
-
-/***/ }),
-
-/***/ 114:
-/*!***************************************************!*\
-  !*** D:/yzx/wxItem/static/plant/icon_plan@2x.png ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjM1NjQ0REY5ODUwMzExRUFBQ0NEOEI4MDMxNUM0QzFFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjM1NjQ0REZBODUwMzExRUFBQ0NEOEI4MDMxNUM0QzFFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzU2NDRERjc4NTAzMTFFQUFDQ0Q4QjgwMzE1QzRDMUUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzU2NDRERjg4NTAzMTFFQUFDQ0Q4QjgwMzE1QzRDMUUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7KRukpAAACjklEQVR42uyYTUhUURTH31PLQQhsZYIEZkOCpEVEbdqULUR3tjPbBAPpJigixAjBijZRLooGcRG1MVwobhRpX0hYthArKiQ0wkzFqNHx9T/wf3C7vI87zdVm0YEf73nf/Thf99w7up7nOYUgRU6BSMEoUqL+kU6no/p2gitgN4iLpwvWwBNwOaxTKpUKVoTSxkUTYJOLSr9DORq5C1wCLWCVykkEMmAQ3An1CKQJPI6YfAPcBD84qat999jm0hPl4EDAPMc4V1+YIl18ykLP+S5e2QuStOa6oUfaqMgX8IaKy1x1YA84F6WIn7zvwUml/TzoZ/96sKR4w9NyxlNCIzLORX15KOnBHAoNzU8+i7X2DJ87wVSA9V5AeHyjlrS+CSXMsdtXj/0omFa+6RQpFCvzfgV3TUpGiWG8xaoGcAFUGY5ZBAMBHnHyUcR3+f3trqzuP62sIVIB1sE3MMatKIXqIDiubHHdEDFyEryMSOycFGnh1p0AjXzfAV4bGisFbdaGR56yiIkSZ8AQxz1jcYqSd2DZVmhWuOBRLu7XgFMx412G1LG5a1YVJfSzZ0uT1dXe/QTrplL3eF4c0b7r41+BOVseaQcXwQhzpZvVc97Q2CRzJe9d8wIcJnIFuEFFPoDqmLEL4Jctj8wwUZtBD9uyYB/YH2Gl1JG3NnPEYWGaDNme21ZZVbnKS1Mfi1rSoI5kbClylheZYXAL9DJHPoHKmLHfmVsfbSgiF6ET5AG4Rm9UGowtDzhY/3rXyCF3GrSCDrat815SGzN2Nt86oms9QVT5THKVrMl9JBHlPkuSDXKC7hH/kKq1uTUVg+XeUsP3sihFbvMXXakyYCtEzqtHfxSu//+WKFRFfgswAMVXjJqykLPHAAAAAElFTkSuQmCC"
-
-/***/ }),
-
-/***/ 115:
-/*!***************************************************!*\
-  !*** D:/yzx/wxItem/static/plant/icon_date@2x.png ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI4QzUzQjMwODUwMzExRUE5MEJEQjM1NDk3ODg5ODBDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI4QzUzQjMxODUwMzExRUE5MEJEQjM1NDk3ODg5ODBDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjhDNTNCMkU4NTAzMTFFQTkwQkRCMzU0OTc4ODk4MEMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjhDNTNCMkY4NTAzMTFFQTkwQkRCMzU0OTc4ODk4MEMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5ilFhWAAADB0lEQVR42uyYW4iNURTHz2XmMMeMMjWS8ISYPHikKZcHFMWDPCiJ4qR0UkRJIomXkVFTOCkv3syDFA+uyZBSeJKMXGrygIMZMw7n9vmv+n9abXt/lzNNnQerfn372+u7/L+911p7n5P0PC/RDJZKNIk1jZAWfVIoFFzXHQCbwFHwIOY7+kA32AuGTGcul/tXiMMWgl62L4EFMUSsAfvYPgfWT2RqZql2NuZozFHtGRONkV+q/TumkKpqVyLHCG0+2A6mgxfgjSFE7jkIuoAX8IFXwRfVNwoy4DRIgo/gLKjZhMgcXgdpnn8Dq5V/jF95KuJIXlDnw6AM9qu+zWC5bWpOKhEJjooo3wqeg40xgnUV+AD6wROwh5mnbZlrapLGuYi6QiHPwExwJ6IQecl5pnwHWAeuGdf8cAmxBeNaUASfGRdxTEZBCsV30Bkna4IWnq4Gi2YqQETdNSK+MBnCp5yqcXWDx1qSUSNYUlMqx3Y+x+O9VZ7X+b4sz3fpGuUScgYMTvLyIhV7W1hBm82jZMlL8I7rxHtZktR1l5kZ4nvLa/0yvoSZJv7XPErAL7JVadda48fKTrDY8O1mAIrtsNwrxfAm6AFLDd881o1XZoaGlfiipW/MUf59+2qmpmHjjaw1qZC+IH/S8cxkI0I6LH16bjMW/zQepzqeOSXqoqcFyh6ilTfX+TUP1XXHWEE9+ios6WL3wAA/psp3jYD7cYT4NhiSxicCfJJpWxraKlpsJTgC2rhcy/V3ORIJrsIr+MVpBu9x8IjbiT5uiMqcRgnkPMtAJCF+Jc1zu6etRwk5bLn3E4XI9mGDxT9gExIWrCOWvp+qXbb4R4PS1JHyoUK8kD4v4j2h/jAhnQHp6UpFf5Pc7nhmNkqw+sWmxqNsbOaqYJWAvKWu72cs1FSwXqRP0vSxEaxF9buoEiSkjccSj7eJy/IBviEGdqSMNYUM81dZLxe3FIOzxtHyKLZVfVVJ+VKcuqQK7Kryt7Dips1sNIUcYu3oJpNtN/7GxP+/JZpVyB8BBgBXrafdiXdvoAAAAABJRU5ErkJggg=="
-
-/***/ }),
-
-/***/ 116:
-/*!***************************************************!*\
-  !*** D:/yzx/wxItem/static/plant/icon_land@2x.png ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjQ1ODdDNjcxODUwMzExRUE5M0RGRDg1QTYzRUY3N0I4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjQ1ODdDNjcyODUwMzExRUE5M0RGRDg1QTYzRUY3N0I4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDU4N0M2NkY4NTAzMTFFQTkzREZEODVBNjNFRjc3QjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDU4N0M2NzA4NTAzMTFFQTkzREZEODVBNjNFRjc3QjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6yeyTAAAAByElEQVR42mL8//8/w2AATAyDBAwah7Agc2bNmgVjxgLxVCL0Hwdidyi7F4hTidDTBcQtIEZaWhp2hyABBSDmJcJQByBmBeLfQPyfSD3WpESNFJEhygbEYlD2AyL1CJPiEHUSolcQSr8hUj0fKQ4RIsMhb4lULwSNTqIcIkiCQ0Sg9DsSHC5IjEN4SAwRUh3Cgs18JhyJiYcEhwgjRc03EqKHoEMESSyLYA75REKoEOUQIRIdIoLEfk+GHpwOERksDhEm0SHIIUhs1OjirWvQHAIqsg8B8S88hkmgpakV0GL+H4GK9gIxDhFFygUOeAzsBuISqMMZoQ5fCcVUaQbAgvoJAb1XkeJbioFCgC9qpIF4NtS36ADke1Ukz4DYT4FYA4jLiIiaz9DQ/I3PIUpIUZRCpIfEkUInkUg9XVDHY40afmhbhIHMnPOQjMoSq0NAPmInwyHIxfxnajhEkMy0BiugvpFQlojgc4gQhQ4hpV0iQihqGCiIGlJKV2F8DhEm0yFCZISIMC1ChJz6hmZRAyuTXg9kYgXlNnko+yY5jSMmCroR6EAbSj8mUr0qvrqGg4QCCR1wQemXRJrxBZnDODosMVgdAhBgAAz+RSZCCSiiAAAAAElFTkSuQmCC"
-
-/***/ }),
-
-/***/ 117:
-/*!***************************************************!*\
-  !*** D:/yzx/wxItem/static/plant/icon_area@2x.png ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjUzNDU1QTRBODUwMzExRUFBQkY1RDcxRTg4RTE3MDQzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjUzNDU1QTRCODUwMzExRUFBQkY1RDcxRTg4RTE3MDQzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTM0NTVBNDg4NTAzMTFFQUFCRjVENzFFODhFMTcwNDMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTM0NTVBNDk4NTAzMTFFQUFCRjVENzFFODhFMTcwNDMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5zHbXNAAAEC0lEQVR42uxYa0zOURh/JZe0pjJjomE2ozQSIpfINcplDbPlLvdhrl98wuY+t4YwjGGzVprSRiRNigpJfGDuxshlsynq9Tvb79jjOG/1vnzwwbP9dp7/Of/3//+d5/zO85z/28jpdDr+BfNy/CPmrZ2UlJSuaOYBvoAOUyPgFbAN+PoH71kEhPB5+rlVwKmkpKSiX4jA1gKzXDzoKPDiD4gku+hvB0w2iXxnux64QtabgMFAJHDbuL8hVgu0pf8ESGS0Q4EDMso2IjlAAf2HJHL2L8jgGZBP/zGJOGxE9Pq1EH3N2V4FPgOfqKGJYpZ36SstRQE9eJ3H+1UE4gEf8Vxfl2KF+Wvd8gWNgb7sm8YXKTvBNhMYJ37fCrhOfwWwS4wpMn2Aa0C1WC4fG5HLwFSgM6HtI2emrBgIt5DoB9ygvxTYJ8bOC3+gEYhiWx45BARREw6KswsQCHwBbpJElkEitA4SqcBYRkpN7oyIcEdgsy0iep0r6at9/oh+LhABZPPB2hTREvrLDBJK4JOAW9SOsvdsy4Cn9WXWNmxfslUvHwJkAGPEfSpB3QOaAMuBPQaJBI4PEP1BQk8uxWpaAJAGjKImxouxcLG+isRuMZbN3xRToE6xbBPqTfEWGyryitREL0FilUHiAkmUGCSWGBFzu+ipnTTcIKE1sRrYIcaUiEcDpQYJVb/2Mg/d8oSIEmqMuO4pSKwBtouxTOqnlKKuZX8C85LWVKonRJ4bW7RUFMdtYuw0EAsUMRKaxBRRGoawaIZ5ohE/tt2BO/QXGjXiHNN3rtCUsvnivv4iz3zwJCIV3Mq3ed8ig0Q6SZQYJJLEfTGChEOUDLeI9GYkVJ5YB+wXY2nczmWcsba5wEH6Iyh2KeYIT5ammzifbDHStsoH5XxwNfvnsEwoGwlcsojZ4+2rhLlRXGcwbRcyYtXiKHiYvtruFw0dKTGfJNwmonbJVnGtTm1xLGCRrEV6OZJFFc4xiMfzPJNo1pf6iLxj+9mYVTRJRIn+GWI5IrmF5W/iKNZo9gW72j0mEX9uV306a61O2pxVgUFiOnBMbNFCy46qEGIOECezLuIg9ptYFzNlNxNhfku/0KiiKszH6Q8ztmg6d1S5ODY+Mg5bqdTXBq1BSSSKJB5wJt4Uno+h+NnAEeANSdy3bOt0ca51CBJZ1FYwxR5mi8gnkRXzxPfMTK53FZdLH/e+ASuBTkCNccT0Y3oPFAfwQnGoCqZwrZ8TTvECh+EPsoi6PaNjsxhLX5Xwq+tKaNpXImspip0uYHd5snfHalgmchm5WBbFEGPy1u+adYS0fPE54a49YNuBGVZaUxuRncBrrqmX+PqrrKtqNvAfhwU8tXtzwrVc9nM/o/D//xHDfggwADo6+yo/VRjoAAAAAElFTkSuQmCC"
-
-/***/ }),
-
 /***/ 14:
 /*!**********************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -1744,6 +1689,61 @@ function normalizeComponent (
 
 /***/ }),
 
+/***/ 144:
+/*!****************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_plant@2x.png ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjFFOUQ3QjQzODUwMzExRUE5RTExRDc4OTMwNjkzNEJFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjFFOUQ3QjQ0ODUwMzExRUE5RTExRDc4OTMwNjkzNEJFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MUU5RDdCNDE4NTAzMTFFQTlFMTFENzg5MzA2OTM0QkUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MUU5RDdCNDI4NTAzMTFFQTlFMTFENzg5MzA2OTM0QkUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5K5DLhAAACf0lEQVR42uyXW4iMYRjHZyytrBwXK2lRSJtyTiZLyQ2RnPbCJgk3TktSSijFBUK4GVuUiJzu7YVWMS1X1plyuHDMBWuzOeyO31P/rc/bO7PTfvPZVfPUr2/nfb933v8873N4N55Op2PdwXrEuokVhLjWM5lMRr3HKJgIw8EC8gU0QMtfQiLavB/sg0qY6pn/AHfhHFyJSsh8OA9DsrxTBovFPdiRbyFj4YZn/Al8g1IYBiWBuelQn28hB5zP1+E+xCGhOPElyJtMQmbCFCgXveA1PIM6eJVh3Wg9LSg3wzvYAnPdjXV89fAI3rpCqmAjzO7glx+DbZ7xQXomxDXPOyZgDfz2ZU1vRe/CHI+gRk9XzFVlxCLY5Vl3BtZ66wgMhpQCrd1a4aGC7KuCayBMgDEBMafhcWCdZcB+GOfZ6xDszFZZGx0RZkVy82Qdk539d9gDGwIxkgismQbVcAKanXhYlk1Eu0dSen6BNhUj22Ck5/0VUAub5OKmwJyJ/Agn4SxUSPyDnEo8LPeMF8NhbejaOlgKt5VZl5Se5rmVeqdZZTx00/uh9JujOuDLDitQ/SV2qLxT1+mm18H8LZikDFgfqBO1+hxTjC3REUd+DTiobBkPIwIizLbCPCde8u4R1557xm7CSwns8ovRU7WBf+aRTNYS9kflyyNNSvku98iC0HfWTq7ro+Jl99Hjuh781NxueegifIpKyGpYBTNggMaspe/V3yndZcyOwB24oObYFlaINcCj6i0lnvly9Rbfd1eKU3AZtsP7MMFakUFErpZWQSwO45FWVU7zzCy5vkxH01dfXiTX/1LHNT7rutCgu01Wixf+CS8I+V+E/BFgAAwMgMS4k9rGAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 145:
+/*!***************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_plan@2x.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjM1NjQ0REY5ODUwMzExRUFBQ0NEOEI4MDMxNUM0QzFFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjM1NjQ0REZBODUwMzExRUFBQ0NEOEI4MDMxNUM0QzFFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzU2NDRERjc4NTAzMTFFQUFDQ0Q4QjgwMzE1QzRDMUUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzU2NDRERjg4NTAzMTFFQUFDQ0Q4QjgwMzE1QzRDMUUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7KRukpAAACjklEQVR42uyYTUhUURTH31PLQQhsZYIEZkOCpEVEbdqULUR3tjPbBAPpJigixAjBijZRLooGcRG1MVwobhRpX0hYthArKiQ0wkzFqNHx9T/wf3C7vI87zdVm0YEf73nf/Thf99w7up7nOYUgRU6BSMEoUqL+kU6no/p2gitgN4iLpwvWwBNwOaxTKpUKVoTSxkUTYJOLSr9DORq5C1wCLWCVykkEMmAQ3An1CKQJPI6YfAPcBD84qat999jm0hPl4EDAPMc4V1+YIl18ykLP+S5e2QuStOa6oUfaqMgX8IaKy1x1YA84F6WIn7zvwUml/TzoZ/96sKR4w9NyxlNCIzLORX15KOnBHAoNzU8+i7X2DJ87wVSA9V5AeHyjlrS+CSXMsdtXj/0omFa+6RQpFCvzfgV3TUpGiWG8xaoGcAFUGY5ZBAMBHnHyUcR3+f3trqzuP62sIVIB1sE3MMatKIXqIDiubHHdEDFyEryMSOycFGnh1p0AjXzfAV4bGisFbdaGR56yiIkSZ8AQxz1jcYqSd2DZVmhWuOBRLu7XgFMx412G1LG5a1YVJfSzZ0uT1dXe/QTrplL3eF4c0b7r41+BOVseaQcXwQhzpZvVc97Q2CRzJe9d8wIcJnIFuEFFPoDqmLEL4Jctj8wwUZtBD9uyYB/YH2Gl1JG3NnPEYWGaDNme21ZZVbnKS1Mfi1rSoI5kbClylheZYXAL9DJHPoHKmLHfmVsfbSgiF6ET5AG4Rm9UGowtDzhY/3rXyCF3GrSCDrat815SGzN2Nt86oms9QVT5THKVrMl9JBHlPkuSDXKC7hH/kKq1uTUVg+XeUsP3sihFbvMXXakyYCtEzqtHfxSu//+WKFRFfgswAMVXjJqykLPHAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 146:
+/*!***************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_date@2x.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI4QzUzQjMwODUwMzExRUE5MEJEQjM1NDk3ODg5ODBDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI4QzUzQjMxODUwMzExRUE5MEJEQjM1NDk3ODg5ODBDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjhDNTNCMkU4NTAzMTFFQTkwQkRCMzU0OTc4ODk4MEMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjhDNTNCMkY4NTAzMTFFQTkwQkRCMzU0OTc4ODk4MEMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5ilFhWAAADB0lEQVR42uyYW4iNURTHz2XmMMeMMjWS8ISYPHikKZcHFMWDPCiJ4qR0UkRJIomXkVFTOCkv3syDFA+uyZBSeJKMXGrygIMZMw7n9vmv+n9abXt/lzNNnQerfn372+u7/L+911p7n5P0PC/RDJZKNIk1jZAWfVIoFFzXHQCbwFHwIOY7+kA32AuGTGcul/tXiMMWgl62L4EFMUSsAfvYPgfWT2RqZql2NuZozFHtGRONkV+q/TumkKpqVyLHCG0+2A6mgxfgjSFE7jkIuoAX8IFXwRfVNwoy4DRIgo/gLKjZhMgcXgdpnn8Dq5V/jF95KuJIXlDnw6AM9qu+zWC5bWpOKhEJjooo3wqeg40xgnUV+AD6wROwh5mnbZlrapLGuYi6QiHPwExwJ6IQecl5pnwHWAeuGdf8cAmxBeNaUASfGRdxTEZBCsV30Bkna4IWnq4Gi2YqQETdNSK+MBnCp5yqcXWDx1qSUSNYUlMqx3Y+x+O9VZ7X+b4sz3fpGuUScgYMTvLyIhV7W1hBm82jZMlL8I7rxHtZktR1l5kZ4nvLa/0yvoSZJv7XPErAL7JVadda48fKTrDY8O1mAIrtsNwrxfAm6AFLDd881o1XZoaGlfiipW/MUf59+2qmpmHjjaw1qZC+IH/S8cxkI0I6LH16bjMW/zQepzqeOSXqoqcFyh6ilTfX+TUP1XXHWEE9+ios6WL3wAA/psp3jYD7cYT4NhiSxicCfJJpWxraKlpsJTgC2rhcy/V3ORIJrsIr+MVpBu9x8IjbiT5uiMqcRgnkPMtAJCF+Jc1zu6etRwk5bLn3E4XI9mGDxT9gExIWrCOWvp+qXbb4R4PS1JHyoUK8kD4v4j2h/jAhnQHp6UpFf5Pc7nhmNkqw+sWmxqNsbOaqYJWAvKWu72cs1FSwXqRP0vSxEaxF9buoEiSkjccSj7eJy/IBviEGdqSMNYUM81dZLxe3FIOzxtHyKLZVfVVJ+VKcuqQK7Kryt7Dips1sNIUcYu3oJpNtN/7GxP+/JZpVyB8BBgBXrafdiXdvoAAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 147:
+/*!***************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_land@2x.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjQ1ODdDNjcxODUwMzExRUE5M0RGRDg1QTYzRUY3N0I4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjQ1ODdDNjcyODUwMzExRUE5M0RGRDg1QTYzRUY3N0I4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDU4N0M2NkY4NTAzMTFFQTkzREZEODVBNjNFRjc3QjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDU4N0M2NzA4NTAzMTFFQTkzREZEODVBNjNFRjc3QjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6yeyTAAAAByElEQVR42mL8//8/w2AATAyDBAwah7Agc2bNmgVjxgLxVCL0Hwdidyi7F4hTidDTBcQtIEZaWhp2hyABBSDmJcJQByBmBeLfQPyfSD3WpESNFJEhygbEYlD2AyL1CJPiEHUSolcQSr8hUj0fKQ4RIsMhb4lULwSNTqIcIkiCQ0Sg9DsSHC5IjEN4SAwRUh3Cgs18JhyJiYcEhwgjRc03EqKHoEMESSyLYA75REKoEOUQIRIdIoLEfk+GHpwOERksDhEm0SHIIUhs1OjirWvQHAIqsg8B8S88hkmgpakV0GL+H4GK9gIxDhFFygUOeAzsBuISqMMZoQ5fCcVUaQbAgvoJAb1XkeJbioFCgC9qpIF4NtS36ADke1Ukz4DYT4FYA4jLiIiaz9DQ/I3PIUpIUZRCpIfEkUInkUg9XVDHY40afmhbhIHMnPOQjMoSq0NAPmInwyHIxfxnajhEkMy0BiugvpFQlojgc4gQhQ4hpV0iQihqGCiIGlJKV2F8DhEm0yFCZISIMC1ChJz6hmZRAyuTXg9kYgXlNnko+yY5jSMmCroR6EAbSj8mUr0qvrqGg4QCCR1wQemXRJrxBZnDODosMVgdAhBgAAz+RSZCCSiiAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 148:
+/*!***************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_area@2x.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjUzNDU1QTRBODUwMzExRUFBQkY1RDcxRTg4RTE3MDQzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjUzNDU1QTRCODUwMzExRUFBQkY1RDcxRTg4RTE3MDQzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTM0NTVBNDg4NTAzMTFFQUFCRjVENzFFODhFMTcwNDMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTM0NTVBNDk4NTAzMTFFQUFCRjVENzFFODhFMTcwNDMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5zHbXNAAAEC0lEQVR42uxYa0zOURh/JZe0pjJjomE2ozQSIpfINcplDbPlLvdhrl98wuY+t4YwjGGzVprSRiRNigpJfGDuxshlsynq9Tvb79jjOG/1vnzwwbP9dp7/Of/3//+d5/zO85z/28jpdDr+BfNy/CPmrZ2UlJSuaOYBvoAOUyPgFbAN+PoH71kEhPB5+rlVwKmkpKSiX4jA1gKzXDzoKPDiD4gku+hvB0w2iXxnux64QtabgMFAJHDbuL8hVgu0pf8ESGS0Q4EDMso2IjlAAf2HJHL2L8jgGZBP/zGJOGxE9Pq1EH3N2V4FPgOfqKGJYpZ36SstRQE9eJ3H+1UE4gEf8Vxfl2KF+Wvd8gWNgb7sm8YXKTvBNhMYJ37fCrhOfwWwS4wpMn2Aa0C1WC4fG5HLwFSgM6HtI2emrBgIt5DoB9ygvxTYJ8bOC3+gEYhiWx45BARREw6KswsQCHwBbpJElkEitA4SqcBYRkpN7oyIcEdgsy0iep0r6at9/oh+LhABZPPB2hTREvrLDBJK4JOAW9SOsvdsy4Cn9WXWNmxfslUvHwJkAGPEfSpB3QOaAMuBPQaJBI4PEP1BQk8uxWpaAJAGjKImxouxcLG+isRuMZbN3xRToE6xbBPqTfEWGyryitREL0FilUHiAkmUGCSWGBFzu+ipnTTcIKE1sRrYIcaUiEcDpQYJVb/2Mg/d8oSIEmqMuO4pSKwBtouxTOqnlKKuZX8C85LWVKonRJ4bW7RUFMdtYuw0EAsUMRKaxBRRGoawaIZ5ohE/tt2BO/QXGjXiHNN3rtCUsvnivv4iz3zwJCIV3Mq3ed8ig0Q6SZQYJJLEfTGChEOUDLeI9GYkVJ5YB+wXY2nczmWcsba5wEH6Iyh2KeYIT5ammzifbDHStsoH5XxwNfvnsEwoGwlcsojZ4+2rhLlRXGcwbRcyYtXiKHiYvtruFw0dKTGfJNwmonbJVnGtTm1xLGCRrEV6OZJFFc4xiMfzPJNo1pf6iLxj+9mYVTRJRIn+GWI5IrmF5W/iKNZo9gW72j0mEX9uV306a61O2pxVgUFiOnBMbNFCy46qEGIOECezLuIg9ptYFzNlNxNhfku/0KiiKszH6Q8ztmg6d1S5ODY+Mg5bqdTXBq1BSSSKJB5wJt4Uno+h+NnAEeANSdy3bOt0ca51CBJZ1FYwxR5mi8gnkRXzxPfMTK53FZdLH/e+ASuBTkCNccT0Y3oPFAfwQnGoCqZwrZ8TTvECh+EPsoi6PaNjsxhLX5Xwq+tKaNpXImspip0uYHd5snfHalgmchm5WBbFEGPy1u+adYS0fPE54a49YNuBGVZaUxuRncBrrqmX+PqrrKtqNvAfhwU8tXtzwrVc9nM/o/D//xHDfggwADo6+yo/VRjoAAAAAElFTkSuQmCC"
+
+/***/ }),
+
 /***/ 15:
 /*!***********************************!*\
   !*** D:/yzx/wxItem/common/api.js ***!
@@ -1752,7 +1752,7 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getByWorkOrderIdSup = exports.getByWorkOrderIdEqu = exports.getByWorkOrderIdPerson = exports.getByWorkId = exports.gerWorkOrders = exports.getPagingCriteriaQuery = exports.test3 = exports.test1 = exports.test = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getFarmWorkItems = exports.getPlantingBatchs = exports.getByWorkOrderIdSup = exports.getByWorkOrderIdEqu = exports.getByWorkOrderIdPerson = exports.getByWorkId = exports.gerWorkOrders = exports.getPagingCriteriaQuery = exports.test3 = exports.test1 = exports.test = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //设置请求结束后拦截器
 _request.default.interceptor.response = function (response) {
@@ -1764,7 +1764,7 @@ _request.default.interceptor.response = function (response) {
 
 
 var test = function test(data) {
-  /* http.config.baseUrl = "http://localhost:8080/api/"
+  /* http.config.baseUrl = "http://localhost:8080/"
                                 //设置请求前拦截器
                                 http.interceptor.request = (config) => {
                                 	config.header = {
@@ -1773,7 +1773,7 @@ var test = function test(data) {
                                 } */
 
   return _request.default.request({
-    url: 'api/breeds/',
+    url: 'breeds/',
     method: 'GET',
     data: data });
 
@@ -1782,7 +1782,7 @@ var test = function test(data) {
 var test1 = function test1(data) {
 
   return _request.default.request({
-    url: 'api/plantingPlans/pagingCriteriaQuery/' + data.pageNo,
+    url: 'plantingPlans/pagingCriteriaQuery/' + data.pageNo,
     method: 'GET',
     data: data });
 
@@ -1791,7 +1791,7 @@ var test1 = function test1(data) {
 
 var test3 = function test3(data) {
   return _request.default.request({
-    url: 'api/years/getByPlantingPlanId/',
+    url: 'years/getByPlantingPlanId/',
     method: 'POST',
     data: data });
 
@@ -1799,16 +1799,16 @@ var test3 = function test3(data) {
 /* 种植管理 ----- 种植中批次 */exports.test3 = test3;
 var getPagingCriteriaQuery = function getPagingCriteriaQuery(data) {
   return _request.default.request({
-    url: 'api/plantingBatchs/pagingCriteriaQuery/' + data.pageNo,
+    url: 'plantingBatchs/pagingCriteriaQuery/' + data.pageNo,
     method: 'GET',
     data: data });
 
 };
-//http://localhost:8090/api/api/workOrders/pagingCriteriaQuery/1?plantingBatchCode=&pageNo=1&baseId=23&workOrderStatus=1
+//http://localhost:8090/workOrders/pagingCriteriaQuery/1?plantingBatchCode=&pageNo=1&baseId=23&workOrderStatus=1
 /* 种植管理 ----- 种植中批次 ---待处理工单*/exports.getPagingCriteriaQuery = getPagingCriteriaQuery;
 var gerWorkOrders = function gerWorkOrders(data) {
   return _request.default.request({
-    url: 'api/workOrders/pagingCriteriaQuery/' + data.pageNo,
+    url: 'workOrders/pagingCriteriaQuery/' + data.pageNo,
     method: 'GET',
     data: data });
 
@@ -1817,7 +1817,7 @@ var gerWorkOrders = function gerWorkOrders(data) {
 /*待处理工单详情*/exports.gerWorkOrders = gerWorkOrders;
 var getByWorkId = function getByWorkId(data) {
   return _request.default.request({
-    url: 'api/workOrders/' + data.id,
+    url: 'workOrders/' + data.id,
     method: 'GET',
     data: data });
 
@@ -1826,7 +1826,7 @@ var getByWorkId = function getByWorkId(data) {
 /* 待处理工单详情 -- 人资费用*/exports.getByWorkId = getByWorkId;
 var getByWorkOrderIdPerson = function getByWorkOrderIdPerson(data) {
   return _request.default.request({
-    url: 'api/personResources/getByWorkOrderId',
+    url: 'personResources/getByWorkOrderId',
     method: 'GET',
     data: data });
 
@@ -1835,7 +1835,7 @@ var getByWorkOrderIdPerson = function getByWorkOrderIdPerson(data) {
 /* 待处理工单详情 -- 设备费用*/exports.getByWorkOrderIdPerson = getByWorkOrderIdPerson;
 var getByWorkOrderIdEqu = function getByWorkOrderIdEqu(data) {
   return _request.default.request({
-    url: 'api/equitmenResources/getByWorkOrderId',
+    url: 'equitmenResources/getByWorkOrderId',
     method: 'GET',
     data: data });
 
@@ -1844,11 +1844,31 @@ var getByWorkOrderIdEqu = function getByWorkOrderIdEqu(data) {
 /* 待处理工单详情 -- 物料信息*/exports.getByWorkOrderIdEqu = getByWorkOrderIdEqu;
 var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
   return _request.default.request({
-    url: 'api/suppliesResources/getByWorkOrderId',
+    url: 'suppliesResources/getByWorkOrderId',
     method: 'GET',
     data: data });
 
-};exports.getByWorkOrderIdSup = getByWorkOrderIdSup;
+};
+
+
+/* 添加农事信息   -- 种植批次获取*/exports.getByWorkOrderIdSup = getByWorkOrderIdSup;
+var getPlantingBatchs = function getPlantingBatchs(data) {
+  return _request.default.request({
+    url: 'plantingBatchs/getByBaseId',
+    method: 'GET',
+    data: data });
+
+};
+
+
+/* 添加农事信息   -- 获取操作类型*/exports.getPlantingBatchs = getPlantingBatchs;
+var getFarmWorkItems = function getFarmWorkItems(data) {
+  return _request.default.request({
+    url: 'farmWorkItems/',
+    method: 'GET',
+    data: data });
+
+};exports.getFarmWorkItems = getFarmWorkItems;
 
 /***/ }),
 
@@ -7857,7 +7877,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7878,14 +7898,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7961,7 +7981,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -10097,17 +10117,6 @@ var index_esm = {
 
 /***/ }),
 
-/***/ 24:
-/*!**************************************!*\
-  !*** D:/yzx/wxItem/utils/amap-wx.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function AMapWX(a) {this.key = a.key, this.requestConfig = { key: a.key, s: "rsx", platform: "WXJS", appname: a.key, sdkversion: "1.2.0", logversion: "2.0" };}AMapWX.prototype.getWxLocation = function (a, b) {wx.getLocation({ type: "gcj02", success: function success(a) {var c = a.longitude + "," + a.latitude;wx.setStorage({ key: "userLocation", data: c }), b(c);}, fail: function fail(c) {wx.getStorage({ key: "userLocation", success: function success(a) {a.data && b(a.data);} }), a.fail({ errCode: "0", errMsg: c.errMsg || "" });} });}, AMapWX.prototype.getRegeo = function (a) {function c(c) {var d = b.requestConfig;wx.request({ url: "https://restapi.amap.com/v3/geocode/regeo", data: { key: b.key, location: c, extensions: "all", s: d.s, platform: d.platform, appname: b.key, sdkversion: d.sdkversion, logversion: d.logversion }, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {var d, e, f, g, h, i, j, k, l;b.data.status && "1" == b.data.status ? (d = b.data.regeocode, e = d.addressComponent, f = [], g = "", d && d.roads[0] && d.roads[0].name && (g = d.roads[0].name + "附近"), h = c.split(",")[0], i = c.split(",")[1], d.pois && d.pois[0] && (g = d.pois[0].name + "附近", j = d.pois[0].location, j && (h = parseFloat(j.split(",")[0]), i = parseFloat(j.split(",")[1]))), e.provice && f.push(e.provice), e.city && f.push(e.city), e.district && f.push(e.district), e.streetNumber && e.streetNumber.street && e.streetNumber.number ? (f.push(e.streetNumber.street), f.push(e.streetNumber.number)) : (k = "", d && d.roads[0] && d.roads[0].name && (k = d.roads[0].name), f.push(k)), f = f.join(""), l = [{ iconPath: a.iconPath, width: a.iconWidth, height: a.iconHeight, name: f, desc: g, longitude: h, latitude: i, id: 0, regeocodeData: d }], a.success(l)) : a.fail({ errCode: b.data.infocode, errMsg: b.data.info });}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}var b = this;a.location ? c(a.location) : b.getWxLocation(a, function (a) {c(a);});}, AMapWX.prototype.getWeather = function (a) {function d(d) {var e = "base";a.type && "forecast" == a.type && (e = "all"), wx.request({ url: "https://restapi.amap.com/v3/weather/weatherInfo", data: { key: b.key, city: d, extensions: e, s: c.s, platform: c.platform, appname: b.key, sdkversion: c.sdkversion, logversion: c.logversion }, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {function c(a) {var b = { city: { text: "城市", data: a.city }, weather: { text: "天气", data: a.weather }, temperature: { text: "温度", data: a.temperature }, winddirection: { text: "风向", data: a.winddirection + "风" }, windpower: { text: "风力", data: a.windpower + "级" }, humidity: { text: "湿度", data: a.humidity + "%" } };return b;}var d, e;b.data.status && "1" == b.data.status ? b.data.lives ? (d = b.data.lives, d && d.length > 0 && (d = d[0], e = c(d), e["liveData"] = d, a.success(e))) : b.data.forecasts && b.data.forecasts[0] && a.success({ forecast: b.data.forecasts[0] }) : a.fail({ errCode: b.data.infocode, errMsg: b.data.info });}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}function e(e) {wx.request({ url: "https://restapi.amap.com/v3/geocode/regeo", data: { key: b.key, location: e, extensions: "all", s: c.s, platform: c.platform, appname: b.key, sdkversion: c.sdkversion, logversion: c.logversion }, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {var c, e;b.data.status && "1" == b.data.status ? (e = b.data.regeocode, e.addressComponent ? c = e.addressComponent.adcode : e.aois && e.aois.length > 0 && (c = e.aois[0].adcode), d(c)) : a.fail({ errCode: b.data.infocode, errMsg: b.data.info });}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}var b = this,c = b.requestConfig;a.city ? d(a.city) : b.getWxLocation(a, function (a) {e(a);});}, AMapWX.prototype.getPoiAround = function (a) {function d(d) {var e = { key: b.key, location: d, s: c.s, platform: c.platform, appname: b.key, sdkversion: c.sdkversion, logversion: c.logversion };a.querytypes && (e["types"] = a.querytypes), a.querykeywords && (e["keywords"] = a.querykeywords), wx.request({ url: "https://restapi.amap.com/v3/place/around", data: e, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {var c, d, e, f;if (b.data.status && "1" == b.data.status) {if (b = b.data, b && b.pois) {for (c = [], d = 0; d < b.pois.length; d++) {e = 0 == d ? a.iconPathSelected : a.iconPath, c.push({ latitude: parseFloat(b.pois[d].location.split(",")[1]), longitude: parseFloat(b.pois[d].location.split(",")[0]), iconPath: e, width: 22, height: 32, id: d, name: b.pois[d].name, address: b.pois[d].address });}f = { markers: c, poisData: b.pois }, a.success(f);}} else a.fail({ errCode: b.data.infocode, errMsg: b.data.info });}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}var b = this,c = b.requestConfig;a.location ? d(a.location) : b.getWxLocation(a, function (a) {d(a);});}, AMapWX.prototype.getStaticmap = function (a) {function f(b) {c.push("location=" + b), a.zoom && c.push("zoom=" + a.zoom), a.size && c.push("size=" + a.size), a.scale && c.push("scale=" + a.scale), a.markers && c.push("markers=" + a.markers), a.labels && c.push("labels=" + a.labels), a.paths && c.push("paths=" + a.paths), a.traffic && c.push("traffic=" + a.traffic);var e = d + c.join("&");a.success({ url: e });}var e,b = this,c = [],d = "https://restapi.amap.com/v3/staticmap?";c.push("key=" + b.key), e = b.requestConfig, c.push("s=" + e.s), c.push("platform=" + e.platform), c.push("appname=" + e.appname), c.push("sdkversion=" + e.sdkversion), c.push("logversion=" + e.logversion), a.location ? f(a.location) : b.getWxLocation(a, function (a) {f(a);});}, AMapWX.prototype.getInputtips = function (a) {var b = this,c = b.requestConfig,d = { key: b.key, s: c.s, platform: c.platform, appname: b.key, sdkversion: c.sdkversion, logversion: c.logversion };a.location && (d["location"] = a.location), a.keywords && (d["keywords"] = a.keywords), a.type && (d["type"] = a.type), a.city && (d["city"] = a.city), a.citylimit && (d["citylimit"] = a.citylimit), wx.request({ url: "https://restapi.amap.com/v3/assistant/inputtips", data: d, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {b && b.data && b.data.tips && a.success({ tips: b.data.tips });}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}, AMapWX.prototype.getDrivingRoute = function (a) {var b = this,c = b.requestConfig,d = { key: b.key, s: c.s, platform: c.platform, appname: b.key, sdkversion: c.sdkversion, logversion: c.logversion };a.origin && (d["origin"] = a.origin), a.destination && (d["destination"] = a.destination), a.strategy && (d["strategy"] = a.strategy), a.waypoints && (d["waypoints"] = a.waypoints), a.avoidpolygons && (d["avoidpolygons"] = a.avoidpolygons), a.avoidroad && (d["avoidroad"] = a.avoidroad), wx.request({ url: "https://restapi.amap.com/v3/direction/driving", data: d, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {b && b.data && b.data.route && a.success({ paths: b.data.route.paths, taxi_cost: b.data.route.taxi_cost || "" });}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}, AMapWX.prototype.getWalkingRoute = function (a) {var b = this,c = b.requestConfig,d = { key: b.key, s: c.s, platform: c.platform, appname: b.key, sdkversion: c.sdkversion, logversion: c.logversion };a.origin && (d["origin"] = a.origin), a.destination && (d["destination"] = a.destination), wx.request({ url: "https://restapi.amap.com/v3/direction/walking", data: d, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {b && b.data && b.data.route && a.success({ paths: b.data.route.paths });}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}, AMapWX.prototype.getTransitRoute = function (a) {var b = this,c = b.requestConfig,d = { key: b.key, s: c.s, platform: c.platform, appname: b.key, sdkversion: c.sdkversion, logversion: c.logversion };a.origin && (d["origin"] = a.origin), a.destination && (d["destination"] = a.destination), a.strategy && (d["strategy"] = a.strategy), a.city && (d["city"] = a.city), a.cityd && (d["cityd"] = a.cityd), wx.request({ url: "https://restapi.amap.com/v3/direction/transit/integrated", data: d, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {if (b && b.data && b.data.route) {var c = b.data.route;a.success({ distance: c.distance || "", taxi_cost: c.taxi_cost || "", transits: c.transits });}}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}, AMapWX.prototype.getRidingRoute = function (a) {var b = this,c = b.requestConfig,d = { key: b.key, s: c.s, platform: c.platform, appname: b.key, sdkversion: c.sdkversion, logversion: c.logversion };a.origin && (d["origin"] = a.origin), a.destination && (d["destination"] = a.destination), wx.request({ url: "https://restapi.amap.com/v4/direction/bicycling", data: d, method: "GET", header: { "content-type": "application/json" }, success: function success(b) {b && b.data && b.data.data && a.success({ paths: b.data.data.paths });}, fail: function fail(b) {a.fail({ errCode: "0", errMsg: b.errMsg || "" });} });}, module.exports.AMapWX = AMapWX;
-
-/***/ }),
-
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -11056,7 +11065,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情", "usingComponents": { "t-table": "/components/t-table/t-table", "t-th": "/components/t-table/t-th", "t-tr": "/components/t-table/t-tr", "t-td": "/components/t-table/t-td" }, "usingAutoImportComponents": { "t-table": "/components/t-table/t-table" } }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理", "usingComponents": {}, "usingAutoImportComponents": { "xfl-select": "/components/xfl-select/xfl-select" } }, "pages/message/message": { "navigationBarTitleText": "消息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/login": { "navigationBarTitleText": "登录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/service": { "navigationBarTitleText": "服务管理", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/fair/fair": { "navigationBarTitleText": "市集", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white", "disableScroll": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true, "disableScroll": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次", "usingComponents": { "title-item": "/components/title-item/TitleItem" }, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/register": { "navigationBarTitleText": "注册", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/retypePassword": { "navigationBarTitleText": "找回密码", "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/plantManage/addBaseLand": { "navigationBarTitleText": "创建基地" }, "pages/service/addLand": {}, "pages/plantManage/chooseHandle": {}, "pages/service/landDetail": {}, "pages/index/index": {}, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录" }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情" }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法" }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理" }, "pages/message/message": { "navigationBarTitleText": "消息" }, "pages/login/login": { "navigationBarTitleText": "登录" }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white" }, "pages/service/service": { "navigationBarTitleText": "服务管理" }, "pages/fair/fair": { "navigationBarTitleText": "市集" }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white", "disableScroll": true }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true, "disableScroll": true }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次" }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划" }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业" }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息" }, "pages/login/register": { "navigationBarTitleText": "注册" }, "pages/login/retypePassword": { "navigationBarTitleText": "找回密码" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

@@ -1,6 +1,6 @@
 <!-- 创建基地 -->
 <template>
-	<web-view src="http://192.168.101.32:8081/#/"></web-view>
+	<!-- <web-view src="http://192.168.101.32:8081/#/"></web-view> -->
 
 	<!-- <view class="add-base-land"> 
 		<map-item v-on:dataMsg="getMsg" ref="childMap"></map-item>
