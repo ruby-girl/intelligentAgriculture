@@ -32,7 +32,7 @@ export const loginReg = (data) => {
 export const captcha = (data) => {
 	return http.request({
 		url: 'userLogin/captcha',
-		method: 'post',
+		method: 'get',
 		data,
 	})
 }

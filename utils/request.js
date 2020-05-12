@@ -3,7 +3,7 @@ export default {
 	config: {
 		baseUrl: "http://192.168.101.30:8088/",
 		header: {
-			 'Content-Type':'application/x-www-form-urlencoded',
+			 'Content-Type':'application/json',
 			 'X-Access-Token':''
 		},  
 		data: {},
@@ -38,7 +38,7 @@ export default {
 	    key: 'ddwb',
 	    success: function (res) { 
 			options.header = {
-				'Content-Type':'application/x-www-form-urlencoded',
+				'Content-Type':'application/json',
 				'X-Access-Token': res.data.token || 'undefined'
 			}
 	    }

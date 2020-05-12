@@ -1885,7 +1885,7 @@ var getFarmWorkItems = function getFarmWorkItems(data) {
   config: {
     baseUrl: "http://192.168.101.30:8088/",
     header: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       'X-Access-Token': '' },
 
     data: {},
@@ -1920,7 +1920,7 @@ var getFarmWorkItems = function getFarmWorkItems(data) {
       key: 'ddwb',
       success: function success(res) {
         options.header = {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
           'X-Access-Token': res.data.token || 'undefined' };
 
       } });
@@ -2102,7 +2102,7 @@ exports.login = login;var loginReg = function loginReg(data) {
 exports.loginReg = loginReg;var captcha = function captcha(data) {
   return _request.default.request({
     url: 'userLogin/captcha',
-    method: 'post',
+    method: 'get',
     data: data });
 
 };
@@ -11065,7 +11065,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/plantManage/addBaseLand": { "navigationBarTitleText": "创建基地" }, "pages/service/addLand": {}, "pages/plantManage/chooseHandle": {}, "pages/service/landDetail": {}, "pages/index/index": {}, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录" }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情" }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法" }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理" }, "pages/message/message": { "navigationBarTitleText": "消息" }, "pages/login/login": { "navigationBarTitleText": "登录" }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white" }, "pages/service/service": { "navigationBarTitleText": "服务管理" }, "pages/fair/fair": { "navigationBarTitleText": "市集" }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white", "disableScroll": true }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true, "disableScroll": true }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次" }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划" }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业" }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息" }, "pages/login/register": { "navigationBarTitleText": "注册" }, "pages/login/retypePassword": { "navigationBarTitleText": "找回密码" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/plantManage/addBaseLand": { "navigationBarTitleText": "创建基地", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/addLand": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/chooseHandle": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/landDetail": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/index": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情", "usingComponents": { "t-table": "/components/t-table/t-table", "t-th": "/components/t-table/t-th", "t-tr": "/components/t-table/t-tr", "t-td": "/components/t-table/t-td" }, "usingAutoImportComponents": { "t-table": "/components/t-table/t-table" } }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理", "usingComponents": {}, "usingAutoImportComponents": { "xfl-select": "/components/xfl-select/xfl-select" } }, "pages/message/message": { "navigationBarTitleText": "消息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/login": { "navigationBarTitleText": "登录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/service": { "navigationBarTitleText": "服务管理", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/fair/fair": { "navigationBarTitleText": "市集", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white", "disableScroll": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true, "disableScroll": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次", "usingComponents": { "title-item": "/components/title-item/TitleItem" }, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/register": { "navigationBarTitleText": "注册", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/retypePassword": { "navigationBarTitleText": "找回密码", "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 
