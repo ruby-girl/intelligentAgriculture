@@ -68,6 +68,15 @@ export const getByCityCode = (data) => {
 		data,
 	})
 }
+// 获取用户信息
+export const getUserById = (data) => {
+	return http.request({
+		url: 'api/users/'+data,
+		method: 'get',
+		data,
+	})
+}
+// 完善用户信息
 export const userPerfectInfo = (data) => {
 	return http.request({
 		url: 'api/users/userPerfectInfo',

@@ -42,7 +42,7 @@ export default {
 				'X-Access-Token': res.data.token || 'undefined'
 			}
 	    }
-	    });
+	    }); 
 		return new Promise((resolve, reject) => {
 			let _config = null
 			

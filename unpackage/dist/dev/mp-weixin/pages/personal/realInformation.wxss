@@ -138,7 +138,8 @@ page.data-v-1854cfef {
   overflow: hidden;
   word-wrap: break-word;
 }
-page.data-v-1854cfef, .container.data-v-1854cfef {
+page.data-v-1854cfef,
+.container.data-v-1854cfef {
   background: #fff;
 }
 .border-bottom.data-v-1854cfef {
@@ -159,7 +160,10 @@ page.data-v-1854cfef, .container.data-v-1854cfef {
 .cu-form-group .uni-input.data-v-1854cfef {
   height: 33px;
 }
-.cu-form-group uni-picker .picker.data-v-1854cfef, .cu-form-group uni-picker.data-v-1854cfef::after, .cu-form-group picker .picker.data-v-1854cfef, .cu-form-group picker .picker.data-v-1854cfef::after {
+.cu-form-group uni-picker .picker.data-v-1854cfef,
+.cu-form-group uni-picker.data-v-1854cfef::after,
+.cu-form-group picker .picker.data-v-1854cfef,
+.cu-form-group picker .picker.data-v-1854cfef::after {
   line-height: 34px;
   text-align: left;
   padding-left: 7px;

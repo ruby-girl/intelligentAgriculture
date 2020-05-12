@@ -5,19 +5,15 @@
 		</view>
 		<view class="border-bottom">
 			<view><text class="red">*</text><text class="text-margin">真实姓名</text></view>
-			<input placeholder="请输入真实姓名" name="input"></input>
+			<input placeholder="请输入真实姓名" v-model="userInfo.name" name="input"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="red">*</text><text class="text-margin">身份证号</text></view>
-			<input placeholder="请输入身份证号" name="input"></input>
+			<input placeholder="请输入身份证号" v-model="userInfo.idcard" name="input"></input>
 		</view>
-		<!-- <view class="border-bottom">
-			<view><i class="red">*</i><text class="text-margin">手机号码</text></view>
-			<input placeholder="请输入手机号码" name="input"></input>
-		</view> -->
 		<view class="border-bottom">
 			<view><text class="text-margin">邮箱地址</text></view>
-			<input placeholder="请输入邮箱地址" name="input"></input>
+			<input placeholder="请输入邮箱地址" v-model="userInfo.email" name="input"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="red">*</text><text class="text-margin">教育程度</text></view>
@@ -31,17 +27,18 @@
 		<view class="border-bottom">
 			<view><text class="red">*</text><text class="text-margin">所在区域</text></view>
 			<view class="cu-form-group">
-				<picker mode="multiSelector" @change="MultiChange" :range-key="'name'"  @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
+				<picker mode="multiSelector" @change="MultiChange" :range-key="'name'" @columnchange="MultiColumnChange" :value="multiIndex"
+				 :range="multiArray">
 					<view class="picker">
 						{{multiArray[0][multiIndex[0]].name}}，{{multiArray[1][multiIndex[1]].name}}，{{multiArray[2][multiIndex[2]].name}}
 					</view>
 				</picker>
 			</view>
-		
+
 		</view>
 		<view class="border-bottom">
 			<view><text class="text-margin">详细地址</text></view>
-			<input placeholder="请输入详细地址" name="input"></input>
+			<input placeholder="请输入详细地址" v-model="userInfo.addr" name="input"></input>
 		</view>
 		<view>
 			<view class="text-black text-lg" style="padding-top:8px">身份证照片上传</view>
@@ -52,9 +49,9 @@
 			<!-- 左 -->
 			<view>
 				<view class="cu-form-group">
-					<view class="grid col-2 grid-square flex-sub">				
+					<view class="grid col-2 grid-square flex-sub">
 						<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
-						 <image :src="imgList[index]" mode="aspectFill"></image>
+							<image :src="imgList[index]" mode="aspectFill"></image>
 							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 								<text class='cuIcon-close'></text>
 							</view>
@@ -63,9 +60,9 @@
 							<text class='cuIcon-cameraadd'></text>
 						</view>
 					</view>
-					<view class="grid col-2 grid-square flex-sub">					
+					<view class="grid col-2 grid-square flex-sub">
 						<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
-						 <image :src="imgList[index]" mode="aspectFill"></image>
+							<image :src="imgList[index]" mode="aspectFill"></image>
 							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 								<text class='cuIcon-close'></text>
 							</view>
@@ -73,12 +70,12 @@
 						<view class="solids" @tap="ChooseImage" v-if="imgList.length<1">
 							<text class='cuIcon-cameraadd'></text>
 						</view>
-					</view>				
+					</view>
 				</view>
 			</view>
-			
-		</view>	
-		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn">
+
+		</view>
+		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" @click="submitFunc">
 			提交</button>
 	</view>
 </template>
@@ -121,61 +118,100 @@
 					}
 				],
 				jy: 1,
-				multiArray: [
-				],
+				multiArray: [],
 				multiIndex: [],
-				multiIndexsave:[],
+				multiIndexsave: [],
 				imgList: [],
-				init:true
+				userInfo: {},
+				init: true,
+				provincecode: '',
+				citycode: '',
+				areacode: ''
 			}
 		},
-		onLoad(){
-			this.$apiYZX.provinces().then(res=>{
-				// this.provincesList = res.data.data;
-				let arr=[]
-				res.data.data.forEach(item=>{
-					let obj={
-						name:item.name,
-						id:item.code
-					}
-					arr.push(obj)
-				})	
-				this.multiArray[0]=arr;
-				this.getByProvinceCode(res.data.data[0].code)
-			})
+		onLoad() {		
+			let _this = this
+			uni.getStorage({
+				key: 'ddwb',
+				success: function(res) {
+					_this.$apiYZX.getUserById(res.data.userid).then(res => {
+						_this.userInfo = res.data.data
+						// 还未处理教育程度回显~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+						// 根据code设置省市县默认值
+						_this.provincecode = res.data.data.provincecode
+						_this.citycode = res.data.data.citycode
+						_this.areacode = res.data.data.areacode
+						_this.$apiYZX.provinces().then(res => {
+							let arr = []
+							res.data.data.forEach(item => {
+								let obj = {
+									name: item.name,
+									id: item.code
+								}
+								arr.push(obj)
+							})
+							_this.multiArray[0] = arr;
+							let code;
+							if(_this.provincecode){
+								_this.getByProvinceCode(_this.provincecode)
+							}else{
+								_this.getByProvinceCode(res.data.data[0].code)
+							}
+							
+						})
+					})
+				}
+			});
+
 		},
 		methods: {
-			getByProvinceCode(code){
-				this.$apiYZX.getByProvinceCode({provinceCode:code}).then(res=>{
-					let arr=[]
-					res.data.data.forEach(item=>{
-						let obj={
-							name:item.name,
-							id:item.code
+			getByProvinceCode(code) {
+				this.$apiYZX.getByProvinceCode({
+					provinceCode: code
+				}).then(res => {
+					let arr = []
+					res.data.data.forEach(item => {
+						let obj = {
+							name: item.name,
+							id: item.code
 						}
 						arr.push(obj)
-					})	
-					this.multiArray[1]=arr;
+					})
+					this.multiArray[1] = arr;
 					this.getByCityCode(res.data.data[0].code)
 				})
 			},
-			getByCityCode(code){
-				this.$apiYZX.getByCityCode({cityCode:code}).then(res=>{
-					let arr=[]
-					res.data.data.forEach(item=>{
-						let obj={
-							name:item.name,
-							id:item.code
+			getByCityCode(code) {
+				this.$apiYZX.getByCityCode({
+					cityCode: code
+				}).then(res => {
+					let arr = []
+					res.data.data.forEach(item => {
+						let obj = {
+							name: item.name,
+							id: item.code
 						}
 						arr.push(obj)
-					})	
-					this.multiArray[2]=arr;
-					if(this.init){
-						this.multiIndex=[0,0,0]
-						this.init=false
-					}else{
-						this.multiIndex=[...this.multiIndexsave]
-					}			
+					})
+					this.multiArray[2] = arr;
+					if (this.init && this.provincecode) { //如果有默认值
+						let code1 = this.multiArray[0].findIndex((item, i) => {
+							return item.id == this.provincecode
+						})
+						let code2 = this.multiArray[1].findIndex((item, i) => {
+							return item.id == this.citycode
+						})
+						let code3 = this.multiArray[2].findIndex((item, i) => {
+							return item.id == this.areacode
+						})
+						this.multiIndex = [code1, code2, code3]
+						this.init = false
+					} else if (this.init && !this.provincecode) {
+						this.multiIndex = [0, 0, 0]
+						this.init = false
+					} else {
+						this.multiIndex = [...this.multiIndexsave]
+					}
 				})
 			},
 			ChooseImage() {
@@ -184,11 +220,24 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
+						const tempFilePaths = res.tempFilePaths;
 						if (this.imgList.length != 0) {
 							this.imgList = this.imgList.concat(res.tempFilePaths)
+
 						} else {
 							this.imgList = res.tempFilePaths
 						}
+						uni.uploadFile({
+							url: 'http://192.168.101.30:8088/uploadFile/userIdcardUpload', //仅为示例，非真实的接口地址
+							filePath: tempFilePaths[0],
+							name: 'file',
+							formData: {
+								'files': 'test'
+							},
+							success: (uploadFileRes) => {
+								console.log(uploadFileRes.data);
+							}
+						});
 					}
 				});
 			},
@@ -220,7 +269,7 @@
 					multiIndex: this.multiIndex
 				};
 				this.multiIndex[e.detail.column] = e.detail.value;
-				this.multiIndexsave=[...this.multiIndex]
+				this.multiIndexsave = [...this.multiIndex]
 				switch (e.detail.column) {
 					case 0:
 						this.getByProvinceCode(data.multiArray[0][data.multiIndex[0]].id)
@@ -228,18 +277,56 @@
 					case 1:
 						this.getByCityCode(data.multiArray[1][data.multiIndex[1]].id)
 						break;
-				}			
+				}
 
 			},
 			pickerChange: function(e, val) {
-				this.jy= e.target.value
+				this.jy = e.target.value
 			},
+			submitFunc() {
+				if (!this.testInput()) return false;
+				this.getSelectValue()
+				this.$apiYZX.userPerfectInfo(this.userInfo).then(res => {
+
+				})
+			},
+			getSelectValue(){//获取教育程度，所在区域的值
+				let item=this.educationList.filter((item,i)=>{
+					return i==this.jy
+				})
+				this.userInfo.education=item[0].value
+				let code1 = this.multiArray[0].filter((item, i) => {
+					return i == this.multiIndex[0]
+				})
+				let code2 = this.multiArray[1].filter((item, i) => {
+					return i == this.multiIndex[1]
+				})
+				let code3 = this.multiArray[2].filter((item, i) => {
+					return i == this.multiIndex[2] 
+				})
+				this.userInfo.provincecode=code1[0].id
+				this.userInfo.citycode=code2[0].id
+				this.userInfo.areacode=code3[0].id
+			},
+			testInput() { //验证输入框内容
+				this.userInfo.idcardfront = '23'
+				this.userInfo.idcardreverse = '12'
+				if (!this.userInfo.name || !this.userInfo.idcard || !this.userInfo.idcardfront || !this.userInfo.idcardreverse) {
+					uni.showToast({
+						title: '请填写完整信息',
+						icon: 'none'
+					})
+					return false
+				}
+				return true
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	page,.container{
+	page,
+	.container {
 		background: #fff;
 	}
 
@@ -256,23 +343,30 @@
 		margin-left: 5px;
 		font-size: 15px;
 	}
-	.cu-form-group{
+
+	.cu-form-group {
 		min-height: 0;
-		padding:0;
+		padding: 0;
 	}
-	.cu-form-group .uni-input{
-		height:33px;
+
+	.cu-form-group .uni-input {
+		height: 33px;
 	}
-	.cu-form-group uni-picker .picker,.cu-form-group uni-picker::after,.cu-form-group picker .picker,.cu-form-group picker .picker::after{
+
+	.cu-form-group uni-picker .picker,
+	.cu-form-group uni-picker::after,
+	.cu-form-group picker .picker,
+	.cu-form-group picker .picker::after {
 		line-height: 34px;
 		text-align: left;
 		padding-left: 7px;
 	}
-	
-.cu-form-group picker::after{
-	top:-9rpx;
-}
-	.cu-form-group picker .picker{
+
+	.cu-form-group picker::after {
+		top: -9rpx;
+	}
+
+	.cu-form-group picker .picker {
 		text-align: left;
 	}
 </style>

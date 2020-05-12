@@ -212,9 +212,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -254,31 +251,56 @@ var _default =
 
       jy: 1,
       multiArray: [],
-
       multiIndex: [],
       multiIndexsave: [],
       imgList: [],
-      init: true };
+      userInfo: {},
+      init: true,
+      provincecode: '',
+      citycode: '',
+      areacode: '' };
 
   },
-  onLoad: function onLoad() {var _this = this;
-    this.$apiYZX.provinces().then(function (res) {
-      // this.provincesList = res.data.data;
-      var arr = [];
-      res.data.data.forEach(function (item) {
-        var obj = {
-          name: item.name,
-          id: item.code };
+  onLoad: function onLoad() {
+    var _this = this;
+    uni.getStorage({
+      key: 'ddwb',
+      success: function success(res) {
+        _this.$apiYZX.getUserById(res.data.userid).then(function (res) {
+          _this.userInfo = res.data.data;
+          // 还未处理教育程度回显~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          // 根据code设置省市县默认值
+          _this.provincecode = res.data.data.provincecode;
+          _this.citycode = res.data.data.citycode;
+          _this.areacode = res.data.data.areacode;
+          _this.$apiYZX.provinces().then(function (res) {
+            var arr = [];
+            res.data.data.forEach(function (item) {
+              var obj = {
+                name: item.name,
+                id: item.code };
 
-        arr.push(obj);
-      });
-      _this.multiArray[0] = arr;
-      _this.getByProvinceCode(res.data.data[0].code);
-    });
+              arr.push(obj);
+            });
+            _this.multiArray[0] = arr;
+            var code;
+            if (_this.provincecode) {
+              _this.getByProvinceCode(_this.provincecode);
+            } else {
+              _this.getByProvinceCode(res.data.data[0].code);
+            }
+
+          });
+        });
+      } });
+
+
   },
   methods: {
     getByProvinceCode: function getByProvinceCode(code) {var _this2 = this;
-      this.$apiYZX.getByProvinceCode({ provinceCode: code }).then(function (res) {
+      this.$apiYZX.getByProvinceCode({
+        provinceCode: code }).
+      then(function (res) {
         var arr = [];
         res.data.data.forEach(function (item) {
           var obj = {
@@ -292,7 +314,9 @@ var _default =
       });
     },
     getByCityCode: function getByCityCode(code) {var _this3 = this;
-      this.$apiYZX.getByCityCode({ cityCode: code }).then(function (res) {
+      this.$apiYZX.getByCityCode({
+        cityCode: code }).
+      then(function (res) {
         var arr = [];
         res.data.data.forEach(function (item) {
           var obj = {
@@ -302,7 +326,19 @@ var _default =
           arr.push(obj);
         });
         _this3.multiArray[2] = arr;
-        if (_this3.init) {
+        if (_this3.init && _this3.provincecode) {//如果有默认值
+          var code1 = _this3.multiArray[0].findIndex(function (item, i) {
+            return item.id == _this3.provincecode;
+          });
+          var code2 = _this3.multiArray[1].findIndex(function (item, i) {
+            return item.id == _this3.citycode;
+          });
+          var code3 = _this3.multiArray[2].findIndex(function (item, i) {
+            return item.id == _this3.areacode;
+          });
+          _this3.multiIndex = [code1, code2, code3];
+          _this3.init = false;
+        } else if (_this3.init && !_this3.provincecode) {
           _this3.multiIndex = [0, 0, 0];
           _this3.init = false;
         } else {
@@ -316,11 +352,24 @@ var _default =
         sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album'], //从相册选择
         success: function success(res) {
+          var tempFilePaths = res.tempFilePaths;
           if (_this4.imgList.length != 0) {
             _this4.imgList = _this4.imgList.concat(res.tempFilePaths);
+
           } else {
             _this4.imgList = res.tempFilePaths;
           }
+          uni.uploadFile({
+            url: 'http://192.168.101.30:8088/uploadFile/userIdcardUpload', //仅为示例，非真实的接口地址
+            filePath: tempFilePaths[0],
+            name: 'file',
+            formData: {
+              'files': 'test' },
+
+            success: function success(uploadFileRes) {
+              console.log(uploadFileRes.data);
+            } });
+
         } });
 
     },
@@ -365,6 +414,43 @@ var _default =
     },
     pickerChange: function pickerChange(e, val) {
       this.jy = e.target.value;
+    },
+    submitFunc: function submitFunc() {
+      if (!this.testInput()) return false;
+      this.getSelectValue();
+      this.$apiYZX.userPerfectInfo(this.userInfo).then(function (res) {
+
+      });
+    },
+    getSelectValue: function getSelectValue() {var _this6 = this; //获取教育程度，所在区域的值
+      var item = this.educationList.filter(function (item, i) {
+        return i == _this6.jy;
+      });
+      this.userInfo.education = item[0].value;
+      var code1 = this.multiArray[0].filter(function (item, i) {
+        return i == _this6.multiIndex[0];
+      });
+      var code2 = this.multiArray[1].filter(function (item, i) {
+        return i == _this6.multiIndex[1];
+      });
+      var code3 = this.multiArray[2].filter(function (item, i) {
+        return i == _this6.multiIndex[2];
+      });
+      this.userInfo.provincecode = code1[0].id;
+      this.userInfo.citycode = code2[0].id;
+      this.userInfo.areacode = code3[0].id;
+    },
+    testInput: function testInput() {//验证输入框内容
+      this.userInfo.idcardfront = '23';
+      this.userInfo.idcardreverse = '12';
+      if (!this.userInfo.name || !this.userInfo.idcard || !this.userInfo.idcardfront || !this.userInfo.idcardreverse) {
+        uni.showToast({
+          title: '请填写完整信息',
+          icon: 'none' });
+
+        return false;
+      }
+      return true;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -2068,7 +2068,7 @@ function _reqlog(req) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.userPerfectInfo = exports.getByCityCode = exports.getByProvinceCode = exports.provinces = exports.modify = exports.captcha = exports.loginReg = exports.login = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.userPerfectInfo = exports.getUserById = exports.getByCityCode = exports.getByProvinceCode = exports.provinces = exports.modify = exports.captcha = exports.loginReg = exports.login = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //设置请求结束后拦截器
 _request.default.interceptor.response = function (response) {
@@ -2137,8 +2137,17 @@ exports.getByProvinceCode = getByProvinceCode;var getByCityCode = function getBy
     method: 'get',
     data: data });
 
-};exports.getByCityCode = getByCityCode;
-var userPerfectInfo = function userPerfectInfo(data) {
+};
+// 获取用户信息
+exports.getByCityCode = getByCityCode;var getUserById = function getUserById(data) {
+  return _request.default.request({
+    url: 'api/users/' + data,
+    method: 'get',
+    data: data });
+
+};
+// 完善用户信息
+exports.getUserById = getUserById;var userPerfectInfo = function userPerfectInfo(data) {
   return _request.default.request({
     url: 'api/users/userPerfectInfo',
     method: 'post',
