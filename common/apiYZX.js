@@ -6,7 +6,7 @@ http.interceptor.response = (response) => {
 	if(response.data.code!==200){
 		uni.showToast({
 		    title: response.data.msg,
-			icon:'none'
+			icon:'none'		
 		})		
 	}
 	//判断返回状态 执行相应操作
