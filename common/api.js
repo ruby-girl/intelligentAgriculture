@@ -54,7 +54,7 @@ export const getBaseId = (data) => {
 export const getPagingCriteriaQuery = (data) => {
 	return http.request({
 		//url: 'api/plantingBatchs/pagingCriteriaQuery/'+data.pageNo,
-		url: 'userLogin/appletIndex',
+		url: 'api/appletIndex/appletIndex',
 		method: 'GET',
 		data,
 	})
@@ -128,7 +128,7 @@ export const getFarmWorkItems = (data) => {
 /* 地块管理---获取所有地块*/
 export const getLandparcelsList = (data) => {
 	return http.request({
-		url: 'api/landparcels/pagingCriteriaQuery/'+data.pageNo,
+		url: 'api/organUserLandParcels/getLandParcels',
 		method: 'GET',
 		data,
 	})

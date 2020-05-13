@@ -115,12 +115,6 @@
 											key:'organId',
 											data:obj.landOrgan[0].organ.id,
 										})
-										// that.$api.getBaseId({organId:obj.landOrgan[0].organ.id}).then(res=>{
-										// 	uni.setStorage({
-										// 		key:'organId',
-										// 		data:res.data.data.id,
-										// 	})
-										// })
 								
 									}else{
 										uni.navigateTo({
