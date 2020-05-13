@@ -42,10 +42,19 @@ export const test3 = (data) => {
 		data,
 	})
 }
+/*获取baseId */
+export const getBaseId = (data) => {
+	return http.request({
+		url: 'api/bases/getByOrganId/',
+		method: 'GET',
+		data,
+	})
+}
 /* 种植管理 ----- 种植中批次 */
 export const getPagingCriteriaQuery = (data) => {
 	return http.request({
-		url: 'plantingBatchs/pagingCriteriaQuery/'+data.pageNo,
+		//url: 'api/plantingBatchs/pagingCriteriaQuery/'+data.pageNo,
+		url: 'userLogin/appletIndex',
 		method: 'GET',
 		data,
 	})
@@ -54,7 +63,7 @@ export const getPagingCriteriaQuery = (data) => {
 /* 种植管理 ----- 种植中批次 ---待处理工单*/
 export const gerWorkOrders = (data) => {
 	return http.request({
-		url: 'workOrders/pagingCriteriaQuery/'+data.pageNo,
+		url: 'api/workOrders/pagingCriteriaQuery/'+data.pageNo,
 		method: 'GET',
 		data,
 	})
@@ -63,7 +72,7 @@ export const gerWorkOrders = (data) => {
 /*待处理工单详情*/
 export const getByWorkId = (data) => {
 	return http.request({
-		url: 'workOrders/'+data.id,
+		url: 'api/workOrders/'+data.id,
 		method: 'GET',
 		data,
 	})
@@ -72,7 +81,7 @@ export const getByWorkId = (data) => {
 /* 待处理工单详情 -- 人资费用*/
 export const getByWorkOrderIdPerson = (data) => {
 	return http.request({
-		url: 'personResources/getByWorkOrderId',
+		url: 'api/personResources/getByWorkOrderId',
 		method: 'GET',
 		data,
 	})
@@ -81,7 +90,7 @@ export const getByWorkOrderIdPerson = (data) => {
 /* 待处理工单详情 -- 设备费用*/
 export const getByWorkOrderIdEqu = (data) => {
 	return http.request({
-		url: 'equitmenResources/getByWorkOrderId',
+		url: 'api/equitmenResources/getByWorkOrderId',
 		method: 'GET',
 		data,
 	})
@@ -90,7 +99,7 @@ export const getByWorkOrderIdEqu = (data) => {
 /* 待处理工单详情 -- 物料信息*/
 export const getByWorkOrderIdSup = (data) => {
 	return http.request({
-		url: 'suppliesResources/getByWorkOrderId',
+		url: 'api/suppliesResources/getByWorkOrderId',
 		method: 'GET',
 		data,
 	})
@@ -100,7 +109,7 @@ export const getByWorkOrderIdSup = (data) => {
 /* 添加农事信息   -- 种植批次获取*/
 export const getPlantingBatchs = (data) => {
 	return http.request({
-		url: 'plantingBatchs/getByBaseId',
+		url: 'api/plantingBatchs/getByBaseId',
 		method: 'GET',
 		data,
 	})
@@ -110,7 +119,16 @@ export const getPlantingBatchs = (data) => {
 /* 添加农事信息   -- 获取操作类型*/
 export const getFarmWorkItems = (data) => {
 	return http.request({
-		url: 'farmWorkItems/',
+		url: 'api/farmWorkItems/',
+		method: 'GET',
+		data,
+	})
+}
+
+/* 地块管理---获取所有地块*/
+export const getLandparcelsList = (data) => {
+	return http.request({
+		url: 'api/landparcels/pagingCriteriaQuery/'+data.pageNo,
 		method: 'GET',
 		data,
 	})
