@@ -3,7 +3,6 @@
 		<view class="draw-content">
 			<view class="tr">
 				<button class="cu-btn     line-green">清空</button>
-
 				<button class="cu-btn     line-green" style="margin: 0px 10px;">撤销</button>
 				<button class="cu-btn  bg-green  ">开始圈地</button>
 			</view>

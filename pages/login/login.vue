@@ -93,6 +93,7 @@
 							phone:res.data.data.user.phone,
 							name:res.data.data.user.name,
 							headPortrait:this.headPortrait,
+		
 							landOrgan:res.data.data.user.organUsers
 						}
 						
@@ -107,15 +108,19 @@
 								
 								
 									if(obj.landOrgan.length>0){
-										uni.navigateTo({
-										    url: '../plantManage/plantManage'
-										});	
-										that.$api.getBaseId({organId:obj.landOrgan[0].organ.id}).then(res=>{
-											uni.setStorage({
-												key:'baseId',
-												data:res.data.data.id,
-											})
+										uni.switchTab({
+											  url: '../plantManage/plantManage'
+										});
+										uni.setStorage({
+											key:'organId',
+											data:obj.landOrgan[0].organ.id,
 										})
+										// that.$api.getBaseId({organId:obj.landOrgan[0].organ.id}).then(res=>{
+										// 	uni.setStorage({
+										// 		key:'organId',
+										// 		data:res.data.data.id,
+										// 	})
+										// })
 								
 									}else{
 										uni.navigateTo({

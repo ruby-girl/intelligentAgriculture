@@ -174,6 +174,10 @@
 					organId: this.orgId,
 				}).then(res => {
 					this.resultData = res.data.data
+					uni.setStorage({
+						key:'baseId',
+						data:res.data.data.baseId
+					})
 			
 				})
 			},
