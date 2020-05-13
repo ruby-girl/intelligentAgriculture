@@ -177,7 +177,8 @@
 					uni.setStorage({
 						key:'baseId',
 						data:res.data.data.baseId
-					})
+					});
+					this.baseId = res.data.data.baseId
 			
 				})
 			},

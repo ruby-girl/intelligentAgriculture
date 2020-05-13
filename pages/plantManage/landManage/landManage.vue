@@ -7,71 +7,68 @@
 			</map> -->
 		</view>
 		<view class="draw-content">
-			<view class="cark" style="    left: 90rpx;"></view>
+			<view class="cark" style="left: 90rpx;"></view>
 			<view class="cark cark-right"></view>
-			<view class="item-top display-flex ">
-				<view class="left">
-					<view class="cu-avatar lg round" v-bind:style="{'backgroundImage':'url('+user.headPortrait+')'}"></view>
-					<view class="text-lg">{{user.phone}}</view>
-					
-				</view>
-				<view class=" display-flex justify-content-flex-justify" style="flex: 1;">
-					<view>
-						<view>地块总数：{{listData.length}}</view>
-						<view>地块总面积：{{item1}}亩</view>
-					</view>
-					<view class="tc">
-						<navigator url="/pages/plantManage/landManage/addLand">
-							<view class="tc"><text class="iconfont ">&#xe6c4;</text></view>
-							<view >添加地块</view>
-						</navigator>
-					
-					</view>
-				</view>
+			<view style="background-color: #fff;padding: 0px 30rpx;">
+				<view class="item-top display-flex ">
+					<view class="left">
+						<view class="cu-avatar lg round" v-bind:style="{'backgroundImage':'url('+user.headPortrait+')'}"></view>
+						<view class="text-lg">{{user.name}}</view>
 				
+					</view>
+					<view class=" display-flex justify-content-flex-justify" style="flex: 1;">
+						<view>
+							<view>地块总数：{{resultData.landParcelCount}}</view>
+							<view>地块总面积：{{resultData.acreages}}亩</view>
+						</view>
+						<view class="tc">
+							<navigator url="/pages/plantManage/landManage/addLand">
+								<view class="tc"><text class="iconfont ">&#xe6c4;</text></view>
+								<view>添加地块</view>
+							</navigator>
+				
+						</view>
+					</view>
+				
+				
+				</view>
+			</view>
+
+			
+			<view class="list-model">
+				<view class="mb20" v-for="(item, index) in resultData.landParcels" :key="index">
+					<view class="label display-flex justify-content-flex-justify">
+						<view>
+							<text class="line"></text><text style="font-size: 34rpx;">{{item.name}}</text>
+						</view>
+						<view>
+							<text class="iconfont iconxiugaixiang" style="font-size: 30px;    vertical-align: middle;"></text><text>编辑</text>
+						</view>
+
+					</view>
+					<view class="content">
+
+						<view><text class="cr3 mr10">地块面积
+							</text>{{item.acreage || '-'}}</view>
+						<view><text class="cr3 mr10">
+								种植品种 </text>{{item.scheduledtime || '-'}}</view>
+						<view><text class="cr3 mr10"> 当前批次
+							</text>{{item.creDate || '-'}}</view>
+
+					</view>
+				</view>
 
 			</view>
-			<view class="list-model">
-				<label class="title">所有地块</label>
-					<view >
-				
-					
-							<view v-for="(item, index) in listData" :key="index" class="item-view">
-				
-								<view class="item-title">？</view>
-								<view style="padding: 10px 0;">
-									<view class="inline content">
-										<view class="f20">
-											{{item.name}}
-										</view>
-										<view class="cr2 f12">地块名称</view>
-									</view>
-									<view class="inline line"></view>
-									<view class="inline content">
-										<view class="f20">
-											{{item.acreage}}
-										</view>
-										<view class="cr2 f12">地块面积</view>
-									</view>
-				
-									<view class="inline line"></view>
-									<view class="inline content">
-										<view class="f20">
-											？
-										</view>
-										<view class="cr2 f12">品种</view>
-									</view>
-				
-								</view>
-				
-						
-						</view>
-				
-					</view>
-				
-				
-			</view>
-			</view>
+
+		<view>
+
+</view>
+</view>
+
+		
+
+
+		
 
 	</view>
 </template>
@@ -80,50 +77,43 @@
 	export default {
 		data() {
 			return {
-				param: {
-					name: '',
-					statusing: '',
+				param: {		
 					baseId: '',
-					pageNo: 1
+					userId:''
 				},
-				listData: [],
-				item1:0,
-				user:{}
+				resultData: {},
+				item1: 0,
+				user: {}
 			}
 		},
 		onLoad(option) {
-			let _this= this
-		uni.getStorage({
-		key: 'ddwb',
-		success: function (res) { 
-			_this.user= {			
-				name: res.data.name || '',
-				phone:res.data.phone||'',
-				headPortrait:res.data.headPortrait
-			}
-		}
-		});
+			let _this = this
+			uni.getStorage({
+				key: 'ddwb',
+				success: function(res) {
+					_this.user = {
+						name: res.data.name || '',
+						phone: res.data.phone || '',
+						headPortrait: res.data.headPortrait
+					}
+					_this.param.userId = res.data.userid
+				}
+			});
 			this.param.baseId = option.baseId
-			this.initList();
+	
 		},
 		onReady() {
-
+			this.$nextTick(function(){
+				  this.initList();
+			})
+		
 		},
 		methods: {
 			initList() {
 				this.$api.getLandparcelsList(this.param).then(res => {
-							this.listData = res.data.data.data
-					    let acreage = this.listData.filter(item => {
-					          return item.acreage;
-					        });
-							 this.item1 = 0;
-							        acreage.forEach(element => {
-							          this.item1 += parseFloat(element.acreage);
-							        });
-							        if (this.item1) {
-							          this.item1 = this.item1.toFixed(3);
-							        }
-			
+					this.resultData = res.data.data
+					
+
 				})
 			},
 
@@ -132,9 +122,10 @@
 </script>
 
 <style lang="scss" scoped>
-	.tc{
+	.tc {
 		text-align: center;
 	}
+
 	.drawMap {
 		width: 100vw;
 		height: 25vh;
@@ -143,21 +134,18 @@
 	.draw-content {
 
 		height: 75vh;
-
-		box-sizing: content-box;
-
-		box-sizing: content-box;
-		background-color: #fff;
 		position: relative;
-		padding: 0px 30rpx;
-  .iconfont{
-	  display: inline-block;
-	  color: #00AE66;
-	font-size: 40rpx;
-	      line-height: normal;
 
-	  
-  }
+
+		.iconfont {
+			display: inline-block;
+			color: #00AE66;
+			font-size: 40rpx;
+			line-height: normal;
+
+
+		}
+
 		.cark {
 			width: 6px;
 			height: 17px;
@@ -176,7 +164,7 @@
 		}
 
 		.item-top {
-		
+
 			padding: 20rpx 30rpx;
 			background-color: #fff;
 			box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
@@ -196,31 +184,30 @@
 				height: 80rpx;
 			}
 		}
-		.list-model{
-			.inline {
-				display: inline-block;
-				text-align: center;
+
+		.list-model {
+			background: #fff;
+			padding: 15px;
+
+			.mr10 {
+				margin-right: 10px;
 			}
-			
-			.content {
-				width: 32%;
-				line-height: 25px;
+
+			.label {
+				border-bottom: 1px solid #E1E1E1;
+				padding-bottom: 16rpx;
+				margin-bottom: 20rpx;
+
+				.line {
+					display: inline-block;
+					width: 4px;
+					height: 33rpx;
+					background-color: $uni-text-color-primary;
+					margin-right: 8px;
+					vertical-align: text-top;
+				}
 			}
-			
-			.line {
-				width: 2px;
-				height: 35px;
-				background-color: #D1D1D1;
-			}
-			.item-view {
-				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
-				margin-bottom: 20px;
-				border-radius: 6px;
-			}
-			.item-title {
-				padding: 6px 16px;
-				background-color: #EEFEF0;
-			}
+
 		}
 
 	}
