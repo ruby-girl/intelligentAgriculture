@@ -6,7 +6,7 @@ http.interceptor.response = (response) => {
 	if(response.data.code!==200){
 		uni.showToast({
 		    title: response.data.msg,
-			icon:'none'
+			icon:'none'		
 		})		
 	}
 	//判断返回状态 执行相应操作
@@ -68,6 +68,15 @@ export const getByCityCode = (data) => {
 		data,
 	})
 }
+// 获取用户信息
+export const getUserById = (data) => {
+	return http.request({
+		url: 'api/users/'+data,
+		method: 'get',
+		data,
+	})
+}
+// 完善用户信息
 export const userPerfectInfo = (data) => {
 	return http.request({
 		url: 'api/users/userPerfectInfo',
