@@ -3,8 +3,8 @@ export default {
 	config: {
 		baseUrl: "http://192.168.101.30:8088/",
 		header: {
-			 'Content-Type':'application/x-www-form-urlencoded',
-			 'X-Access-Token':''
+			 'Content-Type':'application/json',
+			 'Authorization':''
 		},  
 		data: {},
 		method: "GET",
@@ -20,32 +20,26 @@ export default {
 		response: null
 	}, 
 	request(options) {
+		let _this =  this;
 		uni.showLoading({
 		    title: '加载中'
 		});
 		if (!options) {
 			options = {}
 		}
-		options.baseUrl = options.baseUrl || this.config.baseUrl
-		options.dataType = options.dataType || this.config.dataType
+		options.baseUrl = options.baseUrl || _this.config.baseUrl
+		options.dataType = options.dataType || _this.config.dataType
 		options.url = options.baseUrl + options.url
 		
 		options.data = options.data || {}
-		options.method = options.method || this.config.method
+		options.method = options.method || _this.config.method
 		//TODO 加密数据	
 		//TODO 数据签名
-		uni.getStorage({
-	    key: 'ddwb',
-	    success: function (res) { 
-			options.header = {
-				'Content-Type':'application/x-www-form-urlencoded',
-				'X-Access-Token': res.data.token || 'undefined'
-			}
-	    }
-	    });
+		  options.header = {'Authorization':uni.getStorageSync('ddwb').token || ''}
+
 		return new Promise((resolve, reject) => {
 			let _config = null
-			
+		
 			options.complete = (response) => {
 				let statusCode = response.statusCode
 				response.config = _config

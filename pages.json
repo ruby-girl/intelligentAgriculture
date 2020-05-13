@@ -1,6 +1,22 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-
+ {
+            "path" : "pages/plantManage/plantManage",
+            "style" : {
+					"navigationBarTitleText": "种植管理",
+					"navigationBarBackgroundColor":"#29B982",
+					"navigationBarTextStyle":"white"
+			}
+			
+        }
+        ,
+		{
+		    "path" : "pages/login/login",
+		    "style" : {
+					"navigationBarTitleText": "登录"
+			}
+		} 
+		,
 	 {
 	     "path" : "pages/plantManage/addBaseLand",
 	     "style" : {
@@ -9,13 +25,17 @@
 	 },
 	 
 	 {
-	     "path" : "pages/service/addLand",
-	     "style" : {}
+	     "path" : "pages/plantManage/landManage/addLand",
+	     "style" : {
+			 "navigationBarTitleText": "添加地块"
+		 }
 	 },
 	
 	 {
 	     "path" : "pages/plantManage/chooseHandle",
-	     "style" : {}
+	    "style" : {
+	    	 			 "navigationBarTitleText": "种植管理"
+	    	 		 }
 	 }
 	       
 	
@@ -64,22 +84,7 @@
 	 		"navigationBarTitleText": "消息"
 	 	}
 	 },
-      {
-            "path" : "pages/login/login",
-            "style" : {
-					"navigationBarTitleText": "登录"
-			}
-        } 
-        ,{
-            "path" : "pages/plantManage/plantManage",
-            "style" : {
-					"navigationBarTitleText": "种植管理",
-					"navigationBarBackgroundColor":"#29B982",
-					"navigationBarTextStyle":"white"
-			}
-			
-        }
-        ,{
+     {
             "path" : "pages/service/service",
             "style" : {
             		"navigationBarTitleText": "服务管理"
@@ -147,6 +152,12 @@
 			}
         }
 
+        ,{
+            "path" : "pages/plantManage/landManage/landManage",
+            "style" : {
+				"navigationBarTitleText": "地块管理"
+			}
+        }
     ],
 "globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -197,7 +208,7 @@
 		"list": [
 			{
 				"name": "测试", //模式名称
-				"path": "pages/plantManage/batchManagement/list", //启动页面，必选
+				"path": "pages/login/login", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]

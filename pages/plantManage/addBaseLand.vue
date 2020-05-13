@@ -1,5 +1,6 @@
 <!-- 创建基地 -->
 <template>
+
 	<web-view src="http://192.168.101.32:8080/#/"></web-view>
 
 

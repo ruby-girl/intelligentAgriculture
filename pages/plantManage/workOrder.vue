@@ -40,7 +40,7 @@
 					
 				
 				<view class="sel">
-				  <text class="f12">筛选</text><image src="../../static/plant/icon_screen@2x.png" class="img"></image>
+				  <text class="f12">筛选{{baseId}}</text><image src="../../static/plant/icon_screen@2x.png" class="img"></image>
 				
 				</view>
 			</view>
@@ -116,8 +116,15 @@
 							],
 							TabCur: 1,
 							topHeight:'',
-							listData:[]
+							listData:[],
+							baseId:''
 			};
+		},
+		onLoad(option) {
+		    
+			
+			this.TabCur =  option.type
+			this.baseId = option.baseId
 		},
 		onReady() {
 		    let me  = this
@@ -131,17 +138,16 @@
 			 
 			  })
 			  
-           /* 种植中批次 */
-			this.initData()
+        this.initData()
 		},
-	
+	  
 		methods:{
 			initData(){
 			
 				this.$api.gerWorkOrders({
 					plantingBatchCode: '',
 					pageNo: 1,
-					baseId: 23,
+					baseId: this.baseId,
 					workOrderStatus: this.TabCur ,
 				
 				}).then(res => {

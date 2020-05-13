@@ -4,11 +4,11 @@
 			基本资料
 		</view>
 		<view class="border-bottom">
-			<view><i class="red">*</i><text class="text-margin">真实姓名</text></view>
+			<view><text class="red">*</text><text class="text-margin">真实姓名</text></view>
 			<input placeholder="请输入真实姓名" name="input"></input>
 		</view>
 		<view class="border-bottom">
-			<view><i class="red">*</i><text class="text-margin">身份证号</text></view>
+			<view><text class="red">*</text><text class="text-margin">身份证号</text></view>
 			<input placeholder="请输入身份证号" name="input"></input>
 		</view>
 		<!-- <view class="border-bottom">
@@ -20,7 +20,7 @@
 			<input placeholder="请输入邮箱地址" name="input"></input>
 		</view>
 		<view class="border-bottom">
-			<view><i class="red">*</i><text class="text-margin">教育程度</text></view>
+			<view><text class="red">*</text><text class="text-margin">教育程度</text></view>
 			<view class="cu-form-group">
 				<picker @change="pickerChange($event)" :value="jy" :range="educationList" range-key="name">
 					<view class="uni-input">{{educationList[jy].name}}</view>
@@ -29,7 +29,7 @@
 
 		</view>
 		<view class="border-bottom">
-			<view><i class="red">*</i><text class="text-margin">所在区域</text></view>
+			<view><text class="red">*</text><text class="text-margin">所在区域</text></view>
 			<view class="cu-form-group">
 				<picker mode="multiSelector" @change="MultiChange" :range-key="'name'"  @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
 					<view class="picker">
@@ -46,8 +46,8 @@
 		<view>
 			<view class="text-black text-lg" style="padding-top:8px">身份证照片上传</view>
 			<view class="cu-form-group" style="padding-bottom:8px">
-				<view><i class="red">*</i><text class="text-margin">身份证人面像：</text></view>
-				<view style="padding-right: 25%;"><i class="red">*</i><text class="text-margin">身份证国徽像：</text></view>
+				<view><text class="red">*</text><text class="text-margin">身份证人面像：</text></view>
+				<view style="padding-right: 25%;"><text class="red">*</text><text class="text-margin">身份证国徽像：</text></view>
 			</view>
 			<!-- 左 -->
 			<view>
@@ -263,11 +263,15 @@
 	.cu-form-group .uni-input{
 		height:33px;
 	}
-	.cu-form-group uni-picker .picker,.cu-form-group uni-picker::after{
+	.cu-form-group uni-picker .picker,.cu-form-group uni-picker::after,.cu-form-group picker .picker,.cu-form-group picker .picker::after{
 		line-height: 34px;
 		text-align: left;
 		padding-left: 7px;
 	}
+	
+.cu-form-group picker::after{
+	top:-9rpx;
+}
 	.cu-form-group picker .picker{
 		text-align: left;
 	}

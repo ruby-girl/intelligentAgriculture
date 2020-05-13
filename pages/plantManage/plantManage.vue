@@ -4,35 +4,38 @@
 		<view class="plant-top">
 
 			<view class="flex-top">
-				<view class="name">sdfsd的土地信息</view>
+				<view class="name">{{resultData.userName}}的土地信息</view>
 				<view class="section right">
-					<text @click="downSelect">00000 <image src="/static/plant/font1.png" class="imgSize" :class="{'degimg':isShow}"></image></text>
+					<view @click="downSelect">
+						<text>{{selectValue.name}}</text>
 
+						<text class="iconfont iconfanhui" :class="{'degimg':isShow}"></text>
+					</view>
 				</view>
 
 
 			</view>
 
 			<view class="select-model" :class="{'showModel':isShow}">
-				<view v-for="item in 5" class="select-li" @click="selectedFun(item)">{{item}}</view>
+				<view v-for="(item,index) in allBaseLand" :key='index' class="select-li" @click="selectedFun(item.id)">{{item.organ.name}}</view>
 			</view>
 			<view class="plant-top-content flex-top">
 				<view class="item">
 					<view>
-						<text class="fb">111</text><text>亩</text>
+						<text class="fb">{{resultData.acreages}}</text><text>亩</text>
 					</view>
 					<view>土地总面积</view>
 				</view>
 				<view class="item">
 					<view>
-						<text class="fb">111</text><text>块</text>
+						<text class="fb">{{resultData.landParcelCount}}</text><text>块</text>
 					</view>
 					<view>总地块数量 </view>
 				</view>
 
 				<view class="item">
 					<view>
-						<text class="fb">111</text><text>批</text>
+						<text class="fb">{{resultData.plantingBatchs.length}}</text><text>批</text>
 					</view>
 					<view>种植中批次</view>
 				</view>
@@ -47,15 +50,15 @@
 			<view class="cark cark-right"></view>
 			<view class="flex">
 				<view>
-					<navigator url="/pages/plantManage/workOrder">
+					<navigator :url="'/pages/plantManage/workOrder?type=1&baseId='+baseId">
 						<view>
 							<image src="/static/plant/icon_pending@2x.png" class="icon" />
-						
+
 						</view>
 						<text>待处理</text>
-						
+
 					</navigator>
-				
+
 				</view>
 				<view>
 					<view>
@@ -72,11 +75,13 @@
 					<text>批次管理</text>
 				</view>
 				<view>
-					<view>
-						<image src="/static/plant/icon_plot@2x.png" class="icon" />
+					<navigator :url="'/pages/plantManage/landManage/landManage?baseId='+baseId">
+						<view>
+							<image src="/static/plant/icon_plot@2x.png" class="icon" />
 
-					</view>
-					<text>地块管理</text>
+						</view>
+						<text>地块管理</text>
+					</navigator>
 				</view>
 				<view>
 					<view>
@@ -91,13 +96,13 @@
 			<view style="overflow-y: auto;height: 70%;">
 
 				<view>
-					<view   v-for="(item, index) in listData" :key="index" class="item-view">
-				
+					<view v-for="(item, index) in resultData.plantingBatchs" :key="index" class="item-view">
+
 						<view class="item-title">{{item.name}}</view>
 						<view style="padding: 10px 0;">
 							<view class="inline content">
 								<view class="f20">
-						{{item.landParcels.length}}
+									{{item.landParcels.length}}
 								</view>
 								<view class="cr2 f12">地块数量</view>
 							</view>
@@ -133,28 +138,44 @@
 			return {
 				array: ['美国', '中国', '巴西', '日本'],
 				isShow: false,
-				listData:[]
+				allBaseLand: [],
+				selectValue: {},
+				baseId: '',
+				orgId: '',
+				userId: '',
+				resultData:{}
 
 			};
 		},
-		// 页面初次渲染
+		onLoad() {
+
+
+
+		},
 		onReady() {
+		
+			const obj = uni.getStorageSync('ddwb');
+			this.allBaseLand = obj.landOrgan;
+			this.userId = obj.userid
+			if (obj.landOrgan.length > 0) {
+				this.selectValue = obj.landOrgan[0].organ
+				this.orgId = obj.landOrgan[0].organ.id
+			}
 			/* 种植中批次 */
-			this.initData()
+			this.$nextTick(function() {
+				this.initData()
+			})
+
 		},
 		methods: {
 			initData() {
 				this.$api.getPagingCriteriaQuery({
-					plantingPlanId: '',
-					code: '',
-					pageNo: 1,
-					baseId: 23,
-					plantingBatchStatus: 2
-
+					userId: this.userId,
+					organId: this.orgId,
 				}).then(res => {
-					this.listData  = res.data.data.data
+					this.resultData = res.data.data
+			
 				})
-
 			},
 			downSelect() {
 				this.isShow = !this.isShow
@@ -178,7 +199,7 @@
 			width: 100vw;
 			max-height: 0;
 			overflow: auto;
-			transition: max-height .25s;
+			transition: max-height .4s;
 			position: absolute;
 			z-index: 9999;
 			left: 0;
@@ -191,7 +212,7 @@
 
 			}
 
-			box-shadow:1px 4px 8px #f0f0f0;
+			box-shadow:0px 5px 8px rgba(37, 37, 37, 0.3);
 		}
 
 		.showModel {
@@ -206,16 +227,16 @@
 			;
 			padding: 0px 16rpx;
 
-			.imgSize {
-				width: 48rpx;
-				height: 48rpx;
-				vertical-align: text-bottom;
+			.iconfont {
+				display: inline-block;
+				margin-left: 3px;
+				transform: rotate(-90deg);
 				transition: transform 0.2s ease-in;
 
 			}
 
 			.degimg {
-				transform: rotate(180deg);
+				transform: rotate(90deg);
 			}
 
 			.flex-top {
@@ -259,7 +280,7 @@
 				font-size: 12px;
 				text-align: center;
 				color: #666666;
-				padding:30rpx 30rpx 20rpx 30rpx;
+				padding: 30rpx 30rpx 20rpx 30rpx;
 				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
 
 			}

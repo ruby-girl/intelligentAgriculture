@@ -84,6 +84,7 @@
 				})			
 			},
 			userLogin(){
+				let that =  this;
 				this.$apiYZX.login(this.obj).then(res=>{
 					if(res.data.code==200){
 						let obj={
@@ -91,8 +92,10 @@
 							userid:res.data.data.user.id,
 							phone:res.data.data.user.phone,
 							name:res.data.data.user.name,
-							headPortrait:this.headPortrait
+							headPortrait:this.headPortrait,
+							landOrgan:res.data.data.user.organUsers
 						}
+						
 						uni.setStorage({
 						key:'ddwb',
 						data:obj,
@@ -101,9 +104,25 @@
 							    title: '登录成功',
 								icon:'success',
 								success() {
-									uni.switchTab({
-									    url: '../personal/personal'
+								
+								
+									if(obj.landOrgan.length>0){
+										uni.navigateTo({
+										    url: '../plantManage/plantManage'
+										});	
+										that.$api.getBaseId({organId:obj.landOrgan[0].organ.id}).then(res=>{
+											uni.setStorage({
+												key:'baseId',
+												data:res.data.data.id,
+											})
+										})
+								
+									}else{
+										uni.navigateTo({
+										    url: '../plantManage/chooseHandle'
 									});
+									}
+									
 								}
 							})		
 						}

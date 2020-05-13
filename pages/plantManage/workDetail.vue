@@ -21,20 +21,7 @@
 						</text>{{resultData.farmWorkItemName || '-'}}</view>
 				</view>
 			</view>
-			<view class="mb20">
-				<label><text class="line"></text>工单操作方法</label>
-			<view class="method-top">
-				<view><b>采收</b></view>
-				<view>机械采收，人工辅助</view>
-				<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll">
-				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-				                   <image src="/static/timg.jpg"lazy-load="true" mode="aspectFill"></image>
-				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-				                 </scroll-view> 
-			</view>
-			</view>
+		
 			<view class="mb20">
 
 				<label><text class="line"></text>人资物料费用预算</label>
@@ -95,7 +82,20 @@
 					</t-table>
 				</view>
 			</view>
-
+	<view class="mb20">
+				<label><text class="line"></text>采收方式</label>
+			<view class="method-top">
+				<view><b>采收</b></view>
+				<view>机械采收，人工辅助</view>
+				<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll">
+				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+				                   <image src="/static/timg.jpg"lazy-load="true" mode="aspectFill"></image>
+				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+				                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+				                 </scroll-view> 
+			</view>
+			</view>
 
 		</view>
 		<view class="second"  v-if="resultData.workOrderStatus == 2">

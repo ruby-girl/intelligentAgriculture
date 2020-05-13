@@ -10,7 +10,7 @@
 		<view>只有创建或者加入基地（合作社或者个人），<br/>
 			才能进行进一步的种植管理。</view>
 			<button class="cu-btn block bg-green  lg">创建基地</button>
-			<button class="cu-btn block   lg line-green">加入基地</button>
+			<button class="cu-btn block lg line-green">加入基地</button>
 			
 
 

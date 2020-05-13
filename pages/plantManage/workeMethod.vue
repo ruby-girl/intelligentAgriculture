@@ -1,17 +1,7 @@
 <!-- 工單操作方法 -->
 <template>
 	<view class="workMethod">
-		<view class="method-top">
-			<label><text class="line"></text>采收</label>
-			<view>机械采收，人工辅助</view>
-			<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll">
-			                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-			                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-			                   <image src="/static/timg.jpg"lazy-load="true" mode="aspectFill"></image>
-			                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-			                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-			                 </scroll-view> 
-		</view>
+	
 	      <view class="method-center">
 			  <label><text class="line"></text>人物资料</label>
 			  <view>
@@ -34,6 +24,17 @@
 				</view>
 			  </view>
 			  
+		  <view class="method-top">
+		  	<label><text class="line"></text>采收方式</label>
+		  	<view>机械采收，人工辅助</view>
+		  	<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll">
+		  	                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+		  	                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+		  	                   <image src="/static/timg.jpg"lazy-load="true" mode="aspectFill"></image>
+		  	                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+		  	                   <image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+		  	                 </scroll-view> 
+		  </view>
 		  </view>
 		  		<navigator :url="'/pages/plantManage/addFram?id='+id">	
 		  <button class="cu-btn block bg-green  lg">立即执行</button>
