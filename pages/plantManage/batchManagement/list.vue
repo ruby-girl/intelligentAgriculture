@@ -9,7 +9,7 @@
 			</view>
 		</scroll-view>
 		
-		<scroll-view v-bind:style="{height:(windowHeight-50)+'px'}" class="scroll-container" scroll-y="true"  :refresher-triggered="triggered"
+		<scroll-view v-bind:style="{height:(windowHeight-135)+'px'}" class="scroll-container" scroll-y="true"  :refresher-triggered="triggered"
 		            :refresher-threshold="100" @scrolltoupper="scrolltoupper"  @scrolltolower="loadingData"
 		           >
 					<view class="list-item" v-for="item in newsList" :key="item">				
@@ -34,9 +34,9 @@
 							<view>地块面积：3亩</view>
 						</view>
 					</view>
-					
+					<view class="loading-more">{{contentdown}}</view>
 					</scroll-view>
-					<view>{{contentText.contentdown}}</view>
+					
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" @click="toadd">
 			新建批次</button>
 	</view>
@@ -61,25 +61,35 @@
 					name: '全部',
 					value: '3'
 				}],
-				contentText: {
-					contentdown: '上拉显示更多',
-					contentrefresh: '正在加载...',
-					contentnomore: '没有更多数据了'
-				},
-				newsList: 4,
+				
+				contentdown: '上拉显示更多',
+				page:1,
+				newsList: [],
 				loadingText: '加载中...',
 				loadingType: 0,
 				triggered: false,
 				lastTime:0,
-				windowHeight:300
+				windowHeight:300,
+				baseId:''
 			}
 		},
 		onLoad: function() {
-			_self = this;
+			
 			 this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			 console.log('gaodu ',windowHeight)
 			//页面一加载时请求一次数据
-			// this.getData();
+		},
+		mounted(){
+			console.log('加载啊。。。')
+			let _this = this;
+			uni.getStorage({
+			key: 'baseId',
+			success: function (res) {
+				console.log('加载啊2222')
+					_this.baseId=res.data
+					_this.getData()
+				}
+			
+			});
 		},
 		methods: {
 			scrolltoupper(){
@@ -89,15 +99,32 @@
 				if(e.timeStamp-this.lastTime>5000){
 					console.log('触底了',e)
 					this.lastTime=e.timeStamp
-					let _self=this
-					setTimeout(function(){
-						_self.newsList =8;
-					},2000)
+					if(this.loadingType){
+						this.page++
+						this.contentdown='加载中...'
+						this.getData()
+					}
+						
+					
+					// let _self=this
+					
 				}else{
 					console.log('重复 了',e)
 					return
-				}
-				
+				}			
+			},
+			getData(){
+				console.log('加载啊11111')
+				this.$apiYZX.plantingBatchsPage(this.page,{baseId:this.baseId}).then(res=>{
+					this.newsList=this.newsList.concat(res.data.data.data)
+					if(res.data.data.pageCount==this.page){
+						this.loadingType=0
+						this.contentdown='无更多数据'
+					}else{
+						this.contentdown='上拉加载更多'
+						this.loadingType=1
+					}
+				})
 			},
 			toadd(){
 				uni.navigateTo({
@@ -129,8 +156,12 @@
 			left: 25rpx;
 		}
 	}
+	.loading-more{
+		text-align: center;
+		color:#ddd;
+	}
 	.scroll-container{
-		padding-bottom: 60px;
+		padding:0 15rpx;
 	}
 	.list-item {
 		box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.2);

@@ -135,8 +135,8 @@
 				key: 'ddwb',
 				success: function(res) {
 					_this.$apiYZX.getUserById(res.data.userid).then(res => {
-						_this.userInfo = res.data.data
-						// 根据code设置省市县默认值
+						_this.userInfo = res.data.data 
+						// 根据code设置省市县默认值 
 						_this.provincecode = res.data.data.provincecode
 						_this.citycode = res.data.data.citycode
 						_this.areacode = res.data.data.areacode

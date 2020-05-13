@@ -7,7 +7,7 @@
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">密码</text></view>
-			<input placeholder="请输入登录密码" v-model="obj.password" type="password" name="input"></input>
+			<input placeholder="请输入登录密码" v-model="obj.password" type="password" name="inputs"></input>
 		</view>
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx"  open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo">
 			登录</button>

@@ -84,3 +84,13 @@ export const userPerfectInfo = (data) => {
 		data,
 	})
 }
+// /api/plantingBatchs/getPageByBaseId/{pageNo}
+
+// 根据基地id查询种植批次信息（分页）
+export const plantingBatchsPage = (page,data) => {
+	return http.request({
+		url: 'api/plantingBatchs/getPageByBaseId/'+page,
+		method: 'get',
+		data,
+	})
+}
