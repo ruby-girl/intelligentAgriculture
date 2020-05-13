@@ -35,20 +35,7 @@ export default {
 		options.method = options.method || _this.config.method
 		//TODO 加密数据	
 		//TODO 数据签名
-<<<<<<< HEAD
 		  options.header = {'Authorization':uni.getStorageSync('ddwb').token || ''}
-
-=======
-		uni.getStorage({
-	    key: 'ddwb',
-	    success: function (res) { 
-			options.header = {
-				'Content-Type':'application/json',
-				'X-Access-Token': res.data.token || 'undefined'
-			}
-	    }
-	    }); 
->>>>>>> 477b44b5c7bb4fc953b75a12e14a1cc15eeac3ef
 		return new Promise((resolve, reject) => {
 			let _config = null
 		
