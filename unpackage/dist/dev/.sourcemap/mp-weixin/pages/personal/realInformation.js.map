@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///D:/project/wxItem/main.js"],"names":["createPage","Page"],"mappings":";;;;wEAAA,qBAAmB,8BACnB,sBACA,sI,mDACAA,EAAWC,a","file":"pages/personal/realInformation.js","sourcesContent":["import 'uni-pages';import '@dcloudio/uni-stat';\nimport Vue from 'vue'\nimport Page from './pages/personal/realInformation.vue'\ncreatePage(Page)"],"sourceRoot":""}

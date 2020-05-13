@@ -6,6 +6,7 @@
 /*!**********************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
   \**********************************************************************************************************/
+<<<<<<< HEAD
 /*! exports provided: default */function(t,e,n){"use strict";function r(t,e,n,r,o,i,a,s,u,c){var l,p="function"===typeof t?t.options:t;if(u){p.components||(p.components={});var f=Object.prototype.hasOwnProperty;for(var d in u)f.call(u,d)&&!f.call(p.components,d)&&(p.components[d]=u[d])}if(c&&((c.beforeCreate||(c.beforeCreate=[])).unshift((function(){this[c.__module]=this})),(p.mixins||(p.mixins=[])).push(c)),e&&(p.render=e,p.staticRenderFns=n,p._compiled=!0),r&&(p.functional=!0),i&&(p._scopeId="data-v-"+i),a?(l=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"===typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),o&&o.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(a)},p._ssrRegister=l):o&&(l=s?function(){o.call(this,this.$root.$options.shadowRoot)}:o),l)if(p.functional){p._injectStyles=l;var h=p.render;p.render=function(t,e){return l.call(e),h(t,e)}}else{var v=p.beforeCreate;p.beforeCreate=v?[].concat(v,l):[l]}return{exports:t,options:p}}n.r(e),n.d(e,"default",(function(){return r}))},144:
 /*!********************************************************!*\
   !*** D:/project/wxItem/static/plant/icon_plant@2x.png ***!
@@ -47,6 +48,640 @@
   !*** D:/project/wxItem/store/index.js ***!
   \****************************************/
 /*! no static exports found */function(t,e,n){"use strict";(function(t){Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r=a(n(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */20)),o=a(n(/*! vue */2)),i=a(n(/*! vuex */23));function a(t){return t&&t.__esModule?t:{default:t}}function s(t,e,n,r,o,i,a){try{var s=t[i](a),u=s.value}catch(c){return void n(c)}s.done?e(u):Promise.resolve(u).then(r,o)}function u(t){return function(){var e=this,n=arguments;return new Promise((function(r,o){var i=t.apply(e,n);function a(t){s(i,r,o,a,u,"next",t)}function u(t){s(i,r,o,a,u,"throw",t)}a(void 0)}))}}o.default.use(i.default);var c=new i.default.Store({state:{hasLogin:!1,loginProvider:"",openid:null,testvuex:!1,colorIndex:0,colorList:["#FF0000","#00FF00","#0000FF"]},mutations:{login:function(t,e){t.hasLogin=!0,t.loginProvider=e},logout:function(t){t.hasLogin=!1,t.openid=null},setOpenid:function(t,e){t.openid=e},setTestTrue:function(t){t.testvuex=!0},setTestFalse:function(t){t.testvuex=!1},setColorIndex:function(t,e){t.colorIndex=e}},getters:{currentColor:function(t){return t.colorList[t.colorIndex]}},actions:{getUserOpenId:function(){var e=u(r.default.mark((function e(n){var o,i;return r.default.wrap((function(e){while(1)switch(e.prev=e.next){case 0:return o=n.commit,i=n.state,e.next=3,new Promise((function(e,n){i.openid?e(i.openid):t.login({success:function(t){o("login"),setTimeout((function(){var t="123456789";console.log("uni.request mock openid["+t+"]"),o("setOpenid",t),e(t)}),1e3)},fail:function(t){console.log("uni.login 接口调用失败，将无法正常使用开放接口等服务",t),n(t)}})}));case 3:return e.abrupt("return",e.sent);case 4:case"end":return e.stop()}}),e)})));function n(t){return e.apply(this,arguments)}return n}()}}),l=c;e.default=l}).call(this,n(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */1)["default"])},2:
+=======
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode, /* vue-cli only */
+  components, // fixed by xxxxxx auto components
+  renderjs // fixed by xxxxxx renderjs
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // fixed by xxxxxx auto components
+  if (components) {
+    if (!options.components) {
+      options.components = {}
+    }
+    var hasOwn = Object.prototype.hasOwnProperty
+    for (var name in components) {
+      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
+        options.components[name] = components[name]
+      }
+    }
+  }
+  // fixed by xxxxxx renderjs
+  if (renderjs) {
+    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
+      this[renderjs.__module] = this
+    });
+    (options.mixins || (options.mixins = [])).push(renderjs)
+  }
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 144:
+/*!****************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_plant@2x.png ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjFFOUQ3QjQzODUwMzExRUE5RTExRDc4OTMwNjkzNEJFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjFFOUQ3QjQ0ODUwMzExRUE5RTExRDc4OTMwNjkzNEJFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MUU5RDdCNDE4NTAzMTFFQTlFMTFENzg5MzA2OTM0QkUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MUU5RDdCNDI4NTAzMTFFQTlFMTFENzg5MzA2OTM0QkUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5K5DLhAAACf0lEQVR42uyXW4iMYRjHZyytrBwXK2lRSJtyTiZLyQ2RnPbCJgk3TktSSijFBUK4GVuUiJzu7YVWMS1X1plyuHDMBWuzOeyO31P/rc/bO7PTfvPZVfPUr2/nfb933v8873N4N55Op2PdwXrEuokVhLjWM5lMRr3HKJgIw8EC8gU0QMtfQiLavB/sg0qY6pn/AHfhHFyJSsh8OA9DsrxTBovFPdiRbyFj4YZn/Al8g1IYBiWBuelQn28hB5zP1+E+xCGhOPElyJtMQmbCFCgXveA1PIM6eJVh3Wg9LSg3wzvYAnPdjXV89fAI3rpCqmAjzO7glx+DbZ7xQXomxDXPOyZgDfz2ZU1vRe/CHI+gRk9XzFVlxCLY5Vl3BtZ66wgMhpQCrd1a4aGC7KuCayBMgDEBMafhcWCdZcB+GOfZ6xDszFZZGx0RZkVy82Qdk539d9gDGwIxkgismQbVcAKanXhYlk1Eu0dSen6BNhUj22Ck5/0VUAub5OKmwJyJ/Agn4SxUSPyDnEo8LPeMF8NhbejaOlgKt5VZl5Se5rmVeqdZZTx00/uh9JujOuDLDitQ/SV2qLxT1+mm18H8LZikDFgfqBO1+hxTjC3REUd+DTiobBkPIwIizLbCPCde8u4R1557xm7CSwns8ovRU7WBf+aRTNYS9kflyyNNSvku98iC0HfWTq7ro+Jl99Hjuh781NxueegifIpKyGpYBTNggMaspe/V3yndZcyOwB24oObYFlaINcCj6i0lnvly9Rbfd1eKU3AZtsP7MMFakUFErpZWQSwO45FWVU7zzCy5vkxH01dfXiTX/1LHNT7rutCgu01Wixf+CS8I+V+E/BFgAAwMgMS4k9rGAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 145:
+/*!***************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_plan@2x.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjM1NjQ0REY5ODUwMzExRUFBQ0NEOEI4MDMxNUM0QzFFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjM1NjQ0REZBODUwMzExRUFBQ0NEOEI4MDMxNUM0QzFFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzU2NDRERjc4NTAzMTFFQUFDQ0Q4QjgwMzE1QzRDMUUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzU2NDRERjg4NTAzMTFFQUFDQ0Q4QjgwMzE1QzRDMUUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7KRukpAAACjklEQVR42uyYTUhUURTH31PLQQhsZYIEZkOCpEVEbdqULUR3tjPbBAPpJigixAjBijZRLooGcRG1MVwobhRpX0hYthArKiQ0wkzFqNHx9T/wf3C7vI87zdVm0YEf73nf/Thf99w7up7nOYUgRU6BSMEoUqL+kU6no/p2gitgN4iLpwvWwBNwOaxTKpUKVoTSxkUTYJOLSr9DORq5C1wCLWCVykkEMmAQ3An1CKQJPI6YfAPcBD84qat999jm0hPl4EDAPMc4V1+YIl18ykLP+S5e2QuStOa6oUfaqMgX8IaKy1x1YA84F6WIn7zvwUml/TzoZ/96sKR4w9NyxlNCIzLORX15KOnBHAoNzU8+i7X2DJ87wVSA9V5AeHyjlrS+CSXMsdtXj/0omFa+6RQpFCvzfgV3TUpGiWG8xaoGcAFUGY5ZBAMBHnHyUcR3+f3trqzuP62sIVIB1sE3MMatKIXqIDiubHHdEDFyEryMSOycFGnh1p0AjXzfAV4bGisFbdaGR56yiIkSZ8AQxz1jcYqSd2DZVmhWuOBRLu7XgFMx412G1LG5a1YVJfSzZ0uT1dXe/QTrplL3eF4c0b7r41+BOVseaQcXwQhzpZvVc97Q2CRzJe9d8wIcJnIFuEFFPoDqmLEL4Jctj8wwUZtBD9uyYB/YH2Gl1JG3NnPEYWGaDNme21ZZVbnKS1Mfi1rSoI5kbClylheZYXAL9DJHPoHKmLHfmVsfbSgiF6ET5AG4Rm9UGowtDzhY/3rXyCF3GrSCDrat815SGzN2Nt86oms9QVT5THKVrMl9JBHlPkuSDXKC7hH/kKq1uTUVg+XeUsP3sihFbvMXXakyYCtEzqtHfxSu//+WKFRFfgswAMVXjJqykLPHAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 146:
+/*!***************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_date@2x.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI4QzUzQjMwODUwMzExRUE5MEJEQjM1NDk3ODg5ODBDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI4QzUzQjMxODUwMzExRUE5MEJEQjM1NDk3ODg5ODBDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjhDNTNCMkU4NTAzMTFFQTkwQkRCMzU0OTc4ODk4MEMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjhDNTNCMkY4NTAzMTFFQTkwQkRCMzU0OTc4ODk4MEMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5ilFhWAAADB0lEQVR42uyYW4iNURTHz2XmMMeMMjWS8ISYPHikKZcHFMWDPCiJ4qR0UkRJIomXkVFTOCkv3syDFA+uyZBSeJKMXGrygIMZMw7n9vmv+n9abXt/lzNNnQerfn372+u7/L+911p7n5P0PC/RDJZKNIk1jZAWfVIoFFzXHQCbwFHwIOY7+kA32AuGTGcul/tXiMMWgl62L4EFMUSsAfvYPgfWT2RqZql2NuZozFHtGRONkV+q/TumkKpqVyLHCG0+2A6mgxfgjSFE7jkIuoAX8IFXwRfVNwoy4DRIgo/gLKjZhMgcXgdpnn8Dq5V/jF95KuJIXlDnw6AM9qu+zWC5bWpOKhEJjooo3wqeg40xgnUV+AD6wROwh5mnbZlrapLGuYi6QiHPwExwJ6IQecl5pnwHWAeuGdf8cAmxBeNaUASfGRdxTEZBCsV30Bkna4IWnq4Gi2YqQETdNSK+MBnCp5yqcXWDx1qSUSNYUlMqx3Y+x+O9VZ7X+b4sz3fpGuUScgYMTvLyIhV7W1hBm82jZMlL8I7rxHtZktR1l5kZ4nvLa/0yvoSZJv7XPErAL7JVadda48fKTrDY8O1mAIrtsNwrxfAm6AFLDd881o1XZoaGlfiipW/MUf59+2qmpmHjjaw1qZC+IH/S8cxkI0I6LH16bjMW/zQepzqeOSXqoqcFyh6ilTfX+TUP1XXHWEE9+ios6WL3wAA/psp3jYD7cYT4NhiSxicCfJJpWxraKlpsJTgC2rhcy/V3ORIJrsIr+MVpBu9x8IjbiT5uiMqcRgnkPMtAJCF+Jc1zu6etRwk5bLn3E4XI9mGDxT9gExIWrCOWvp+qXbb4R4PS1JHyoUK8kD4v4j2h/jAhnQHp6UpFf5Pc7nhmNkqw+sWmxqNsbOaqYJWAvKWu72cs1FSwXqRP0vSxEaxF9buoEiSkjccSj7eJy/IBviEGdqSMNYUM81dZLxe3FIOzxtHyKLZVfVVJ+VKcuqQK7Kryt7Dips1sNIUcYu3oJpNtN/7GxP+/JZpVyB8BBgBXrafdiXdvoAAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 147:
+/*!***************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_land@2x.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjQ1ODdDNjcxODUwMzExRUE5M0RGRDg1QTYzRUY3N0I4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjQ1ODdDNjcyODUwMzExRUE5M0RGRDg1QTYzRUY3N0I4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDU4N0M2NkY4NTAzMTFFQTkzREZEODVBNjNFRjc3QjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDU4N0M2NzA4NTAzMTFFQTkzREZEODVBNjNFRjc3QjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6yeyTAAAAByElEQVR42mL8//8/w2AATAyDBAwah7Agc2bNmgVjxgLxVCL0Hwdidyi7F4hTidDTBcQtIEZaWhp2hyABBSDmJcJQByBmBeLfQPyfSD3WpESNFJEhygbEYlD2AyL1CJPiEHUSolcQSr8hUj0fKQ4RIsMhb4lULwSNTqIcIkiCQ0Sg9DsSHC5IjEN4SAwRUh3Cgs18JhyJiYcEhwgjRc03EqKHoEMESSyLYA75REKoEOUQIRIdIoLEfk+GHpwOERksDhEm0SHIIUhs1OjirWvQHAIqsg8B8S88hkmgpakV0GL+H4GK9gIxDhFFygUOeAzsBuISqMMZoQ5fCcVUaQbAgvoJAb1XkeJbioFCgC9qpIF4NtS36ADke1Ukz4DYT4FYA4jLiIiaz9DQ/I3PIUpIUZRCpIfEkUInkUg9XVDHY40afmhbhIHMnPOQjMoSq0NAPmInwyHIxfxnajhEkMy0BiugvpFQlojgc4gQhQ4hpV0iQihqGCiIGlJKV2F8DhEm0yFCZISIMC1ChJz6hmZRAyuTXg9kYgXlNnko+yY5jSMmCroR6EAbSj8mUr0qvrqGg4QCCR1wQemXRJrxBZnDODosMVgdAhBgAAz+RSZCCSiiAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 148:
+/*!***************************************************!*\
+  !*** D:/yzx/wxItem/static/plant/icon_area@2x.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6RwvCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjUzNDU1QTRBODUwMzExRUFBQkY1RDcxRTg4RTE3MDQzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjUzNDU1QTRCODUwMzExRUFBQkY1RDcxRTg4RTE3MDQzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTM0NTVBNDg4NTAzMTFFQUFCRjVENzFFODhFMTcwNDMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTM0NTVBNDk4NTAzMTFFQUFCRjVENzFFODhFMTcwNDMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5zHbXNAAAEC0lEQVR42uxYa0zOURh/JZe0pjJjomE2ozQSIpfINcplDbPlLvdhrl98wuY+t4YwjGGzVprSRiRNigpJfGDuxshlsynq9Tvb79jjOG/1vnzwwbP9dp7/Of/3//+d5/zO85z/28jpdDr+BfNy/CPmrZ2UlJSuaOYBvoAOUyPgFbAN+PoH71kEhPB5+rlVwKmkpKSiX4jA1gKzXDzoKPDiD4gku+hvB0w2iXxnux64QtabgMFAJHDbuL8hVgu0pf8ESGS0Q4EDMso2IjlAAf2HJHL2L8jgGZBP/zGJOGxE9Pq1EH3N2V4FPgOfqKGJYpZ36SstRQE9eJ3H+1UE4gEf8Vxfl2KF+Wvd8gWNgb7sm8YXKTvBNhMYJ37fCrhOfwWwS4wpMn2Aa0C1WC4fG5HLwFSgM6HtI2emrBgIt5DoB9ygvxTYJ8bOC3+gEYhiWx45BARREw6KswsQCHwBbpJElkEitA4SqcBYRkpN7oyIcEdgsy0iep0r6at9/oh+LhABZPPB2hTREvrLDBJK4JOAW9SOsvdsy4Cn9WXWNmxfslUvHwJkAGPEfSpB3QOaAMuBPQaJBI4PEP1BQk8uxWpaAJAGjKImxouxcLG+isRuMZbN3xRToE6xbBPqTfEWGyryitREL0FilUHiAkmUGCSWGBFzu+ipnTTcIKE1sRrYIcaUiEcDpQYJVb/2Mg/d8oSIEmqMuO4pSKwBtouxTOqnlKKuZX8C85LWVKonRJ4bW7RUFMdtYuw0EAsUMRKaxBRRGoawaIZ5ohE/tt2BO/QXGjXiHNN3rtCUsvnivv4iz3zwJCIV3Mq3ed8ig0Q6SZQYJJLEfTGChEOUDLeI9GYkVJ5YB+wXY2nczmWcsba5wEH6Iyh2KeYIT5ammzifbDHStsoH5XxwNfvnsEwoGwlcsojZ4+2rhLlRXGcwbRcyYtXiKHiYvtruFw0dKTGfJNwmonbJVnGtTm1xLGCRrEV6OZJFFc4xiMfzPJNo1pf6iLxj+9mYVTRJRIn+GWI5IrmF5W/iKNZo9gW72j0mEX9uV306a61O2pxVgUFiOnBMbNFCy46qEGIOECezLuIg9ptYFzNlNxNhfku/0KiiKszH6Q8ztmg6d1S5ODY+Mg5bqdTXBq1BSSSKJB5wJt4Uno+h+NnAEeANSdy3bOt0ca51CBJZ1FYwxR5mi8gnkRXzxPfMTK53FZdLH/e+ASuBTkCNccT0Y3oPFAfwQnGoCqZwrZ8TTvECh+EPsoi6PaNjsxhLX5Xwq+tKaNpXImspip0uYHd5snfHalgmchm5WBbFEGPy1u+adYS0fPE54a49YNuBGVZaUxuRncBrrqmX+PqrrKtqNvAfhwU8tXtzwrVc9nM/o/D//xHDfggwADo6+yo/VRjoAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 15:
+/*!***********************************!*\
+  !*** D:/yzx/wxItem/common/api.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.getLandparcelsList = exports.getFarmWorkItems = exports.getPlantingBatchs = exports.getByWorkOrderIdSup = exports.getByWorkOrderIdEqu = exports.getByWorkOrderIdPerson = exports.getByWorkId = exports.gerWorkOrders = exports.getPagingCriteriaQuery = exports.getBaseId = exports.test3 = exports.test1 = exports.test = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+//设置请求结束后拦截器
+_request.default.interceptor.response = function (response) {
+
+  //判断返回状态 执行相应操作
+  return response;
+};
+
+
+
+var test = function test(data) {
+  /* http.config.baseUrl = "http://localhost:8080/"
+                                //设置请求前拦截器
+                                http.interceptor.request = (config) => {
+                                	config.header = {
+                                		"token": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                                	}
+                                } */
+
+  return _request.default.request({
+    url: 'breeds/',
+    method: 'GET',
+    data: data });
+
+};exports.test = test;
+
+var test1 = function test1(data) {
+
+  return _request.default.request({
+    url: 'plantingPlans/pagingCriteriaQuery/' + data.pageNo,
+    method: 'GET',
+    data: data });
+
+};exports.test1 = test1;
+
+
+var test3 = function test3(data) {
+  return _request.default.request({
+    url: 'years/getByPlantingPlanId/',
+    method: 'POST',
+    data: data });
+
+};
+/*获取baseId */exports.test3 = test3;
+var getBaseId = function getBaseId(data) {
+  return _request.default.request({
+    url: 'api/bases/getByOrganId/',
+    method: 'GET',
+    data: data });
+
+};
+/* 种植管理 ----- 种植中批次 */exports.getBaseId = getBaseId;
+var getPagingCriteriaQuery = function getPagingCriteriaQuery(data) {
+  return _request.default.request({
+    //url: 'api/plantingBatchs/pagingCriteriaQuery/'+data.pageNo,
+    url: 'userLogin/appletIndex',
+    method: 'GET',
+    data: data });
+
+};
+//http://localhost:8090/workOrders/pagingCriteriaQuery/1?plantingBatchCode=&pageNo=1&baseId=23&workOrderStatus=1
+/* 种植管理 ----- 种植中批次 ---待处理工单*/exports.getPagingCriteriaQuery = getPagingCriteriaQuery;
+var gerWorkOrders = function gerWorkOrders(data) {
+  return _request.default.request({
+    url: 'api/workOrders/pagingCriteriaQuery/' + data.pageNo,
+    method: 'GET',
+    data: data });
+
+};
+
+/*待处理工单详情*/exports.gerWorkOrders = gerWorkOrders;
+var getByWorkId = function getByWorkId(data) {
+  return _request.default.request({
+    url: 'api/workOrders/' + data.id,
+    method: 'GET',
+    data: data });
+
+};
+
+/* 待处理工单详情 -- 人资费用*/exports.getByWorkId = getByWorkId;
+var getByWorkOrderIdPerson = function getByWorkOrderIdPerson(data) {
+  return _request.default.request({
+    url: 'api/personResources/getByWorkOrderId',
+    method: 'GET',
+    data: data });
+
+};
+
+/* 待处理工单详情 -- 设备费用*/exports.getByWorkOrderIdPerson = getByWorkOrderIdPerson;
+var getByWorkOrderIdEqu = function getByWorkOrderIdEqu(data) {
+  return _request.default.request({
+    url: 'api/equitmenResources/getByWorkOrderId',
+    method: 'GET',
+    data: data });
+
+};
+
+/* 待处理工单详情 -- 物料信息*/exports.getByWorkOrderIdEqu = getByWorkOrderIdEqu;
+var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
+  return _request.default.request({
+    url: 'api/suppliesResources/getByWorkOrderId',
+    method: 'GET',
+    data: data });
+
+};
+
+
+/* 添加农事信息   -- 种植批次获取*/exports.getByWorkOrderIdSup = getByWorkOrderIdSup;
+var getPlantingBatchs = function getPlantingBatchs(data) {
+  return _request.default.request({
+    url: 'api/plantingBatchs/getByBaseId',
+    method: 'GET',
+    data: data });
+
+};
+
+
+/* 添加农事信息   -- 获取操作类型*/exports.getPlantingBatchs = getPlantingBatchs;
+var getFarmWorkItems = function getFarmWorkItems(data) {
+  return _request.default.request({
+    url: 'api/farmWorkItems/',
+    method: 'GET',
+    data: data });
+
+};
+
+/* 地块管理---获取所有地块*/exports.getFarmWorkItems = getFarmWorkItems;
+var getLandparcelsList = function getLandparcelsList(data) {
+  return _request.default.request({
+    url: 'api/landparcels/pagingCriteriaQuery/' + data.pageNo,
+    method: 'GET',
+    data: data });
+
+};exports.getLandparcelsList = getLandparcelsList;
+
+/***/ }),
+
+/***/ 16:
+/*!**************************************!*\
+  !*** D:/yzx/wxItem/utils/request.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: D:\\yzx\\wxItem\\utils\\request.js: Unexpected token (38:3)\n\n  36 | \t\t//TODO 加密数据\t\n  37 | \t\t//TODO 数据签名\n> 38 | <<<<<<< HEAD\n     |    ^\n  39 | \t\t  options.header = {'Authorization':uni.getStorageSync('ddwb').token || ''}\n  40 | \n  41 | =======\n    at Object._raise (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:742:17)\n    at Object.raiseWithData (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:735:17)\n    at Object.raise (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:729:17)\n    at Object.unexpected (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:8757:16)\n    at Object.jsxParseIdentifier (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4388:12)\n    at Object.jsxParseNamespacedName (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4398:23)\n    at Object.jsxParseElementName (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4409:21)\n    at Object.jsxParseOpeningElementAt (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4495:22)\n    at Object.jsxParseElementAt (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4528:33)\n    at Object.jsxParseElement (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4602:17)\n    at Object.parseExprAtom (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4609:19)\n    at Object.parseExprSubscripts (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9602:23)\n    at Object.parseMaybeUnary (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9582:21)\n    at Object.parseExprOpBaseRightExpr (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9545:34)\n    at Object.parseExprOpRightExpr (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9538:21)\n    at Object.parseExprOp (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9504:27)");
+
+/***/ }),
+
+/***/ 17:
+/*!**************************************!*\
+  !*** D:/yzx/wxItem/common/apiYZX.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.userPerfectInfo = exports.getUserById = exports.getByCityCode = exports.getByProvinceCode = exports.provinces = exports.modify = exports.captcha = exports.loginReg = exports.login = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+//设置请求结束后拦截器
+_request.default.interceptor.response = function (response) {
+  uni.hideLoading();
+  if (response.data.code !== 200) {
+    uni.showToast({
+      title: response.data.msg,
+      icon: 'none' });
+
+  }
+  //判断返回状态 执行相应操作
+  return response;
+};
+// 登录
+var login = function login(data) {
+  return _request.default.request({
+    url: 'userLogin/userLogin',
+    method: 'post',
+    data: data });
+
+};
+// 注册
+exports.login = login;var loginReg = function loginReg(data) {
+  return _request.default.request({
+    url: 'userLogin/reg',
+    method: 'post',
+    data: data });
+
+};
+// 获取验证码
+exports.loginReg = loginReg;var captcha = function captcha(data) {
+  return _request.default.request({
+    url: 'userLogin/captcha',
+    method: 'get',
+    data: data });
+
+};
+// 找回密码
+exports.captcha = captcha;var modify = function modify(data) {
+  return _request.default.request({
+    url: 'userLogin/modify',
+    method: 'post',
+    data: data });
+
+};
+// 获取省
+exports.modify = modify;var provinces = function provinces(data) {
+  return _request.default.request({
+    url: 'api/provinces/',
+    method: 'get',
+    data: data });
+
+};
+// 获取市
+exports.provinces = provinces;var getByProvinceCode = function getByProvinceCode(data) {
+  return _request.default.request({
+    url: 'api/citys/getByProvinceCode/',
+    method: 'get',
+    data: data });
+
+};
+// 获取区县
+exports.getByProvinceCode = getByProvinceCode;var getByCityCode = function getByCityCode(data) {
+  return _request.default.request({
+    url: 'api/areas/getByCityCode',
+    method: 'get',
+    data: data });
+
+};
+// 获取用户信息
+exports.getByCityCode = getByCityCode;var getUserById = function getUserById(data) {
+  return _request.default.request({
+    url: 'api/users/' + data,
+    method: 'get',
+    data: data });
+
+};
+// 完善用户信息
+exports.getUserById = getUserById;var userPerfectInfo = function userPerfectInfo(data) {
+  return _request.default.request({
+    url: 'api/users/userPerfectInfo',
+    method: 'post',
+    data: data });
+
+};exports.userPerfectInfo = userPerfectInfo;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 18:
+/*!*******************************************!*\
+  !*** D:/yzx/wxItem/utils/graceChecker.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+数据验证（表单验证）
+来自 grace.hcoder.net 
+作者 hcoder 深海
+
+版权声明 : 
+GraceUI 的版权约束是不能转售或者将 GraceUI 直接发布到公开渠道！
+侵权必究，请遵守版权约定！
+*/
+module.exports = {
+  error: '',
+  check: function check(data, rule) {
+    for (var i = 0; i < rule.length; i++) {
+      if (!rule[i].checkType) {return true;}
+      if (!rule[i].name) {return true;}
+      if (!rule[i].errorMsg) {return true;}
+      if (!data[rule[i].name]) {this.error = rule[i].errorMsg;return false;}
+      switch (rule[i].checkType) {
+        case 'string':
+          var reg = new RegExp('^.{' + rule[i].checkRule + '}$');
+          if (!reg.test(data[rule[i].name])) {this.error = rule[i].errorMsg;return false;}
+          break;
+        case 'int':
+          var reg = new RegExp('^(-[1-9]|[1-9])[0-9]{' + rule[i].checkRule + '}$');
+          if (!reg.test(data[rule[i].name])) {this.error = rule[i].errorMsg;return false;}
+          break;
+          break;
+        case 'between':
+          if (!this.isNumber(data[rule[i].name])) {
+            this.error = rule[i].errorMsg;
+            return false;
+          }
+          var minMax = rule[i].checkRule.split(',');
+          minMax[0] = Number(minMax[0]);
+          minMax[1] = Number(minMax[1]);
+          if (data[rule[i].name] > minMax[1] || data[rule[i].name] < minMax[0]) {
+            this.error = rule[i].errorMsg;
+            return false;
+          }
+          break;
+        case 'betweenD':
+          var reg = /^-?[1-9][0-9]?$/;
+          if (!reg.test(data[rule[i].name])) {this.error = rule[i].errorMsg;return false;}
+          var minMax = rule[i].checkRule.split(',');
+          minMax[0] = Number(minMax[0]);
+          minMax[1] = Number(minMax[1]);
+          if (data[rule[i].name] > minMax[1] || data[rule[i].name] < minMax[0]) {
+            this.error = rule[i].errorMsg;
+            return false;
+          }
+          break;
+        case 'betweenF':
+          var reg = /^-?[0-9][0-9]?.+[0-9]+$/;
+          if (!reg.test(data[rule[i].name])) {this.error = rule[i].errorMsg;return false;}
+          var minMax = rule[i].checkRule.split(',');
+          minMax[0] = Number(minMax[0]);
+          minMax[1] = Number(minMax[1]);
+          if (data[rule[i].name] > minMax[1] || data[rule[i].name] < minMax[0]) {
+            this.error = rule[i].errorMsg;
+            return false;
+          }
+          break;
+        case 'same':
+          if (data[rule[i].name] != rule[i].checkRule) {this.error = rule[i].errorMsg;return false;}
+          break;
+        case 'notsame':
+          if (data[rule[i].name] == rule[i].checkRule) {this.error = rule[i].errorMsg;return false;}
+          break;
+        case 'email':
+          var reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+          if (!reg.test(data[rule[i].name])) {this.error = rule[i].errorMsg;return false;}
+          break;
+        case 'phoneno':
+          var reg = /^1[0-9]{10,10}$/;
+          if (!reg.test(data[rule[i].name])) {this.error = rule[i].errorMsg;return false;}
+          break;
+        case 'zipcode':
+          var reg = /^[0-9]{6}$/;
+          if (!reg.test(data[rule[i].name])) {this.error = rule[i].errorMsg;return false;}
+          break;
+        case 'reg':
+          var reg = new RegExp(rule[i].checkRule);
+          if (!reg.test(data[rule[i].name])) {this.error = rule[i].errorMsg;return false;}
+          break;
+        case 'in':
+          if (rule[i].checkRule.indexOf(data[rule[i].name]) == -1) {
+            this.error = rule[i].errorMsg;return false;
+          }
+          break;
+        case 'notnull':
+          if (data[rule[i].name] == null || data[rule[i].name].length < 1) {this.error = rule[i].errorMsg;return false;}
+          break;}
+
+    }
+    return true;
+  },
+  isNumber: function isNumber(checkVal) {
+    checkVal = Number(checkVal);
+    if (checkVal == NaN) {return false;}
+    return true;
+  } };
+
+/***/ }),
+
+/***/ 19:
+/*!************************************!*\
+  !*** D:/yzx/wxItem/store/index.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 20));var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 23));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+
+_vue.default.use(_vuex.default);
+
+var store = new _vuex.default.Store({
+  state: {
+    hasLogin: false,
+    loginProvider: "",
+    openid: null,
+    testvuex: false,
+    colorIndex: 0,
+    colorList: ['#FF0000', '#00FF00', '#0000FF'] },
+
+  mutations: {
+    login: function login(state, provider) {
+      state.hasLogin = true;
+      state.loginProvider = provider;
+    },
+    logout: function logout(state) {
+      state.hasLogin = false;
+      state.openid = null;
+    },
+    setOpenid: function setOpenid(state, openid) {
+      state.openid = openid;
+    },
+    setTestTrue: function setTestTrue(state) {
+      state.testvuex = true;
+    },
+    setTestFalse: function setTestFalse(state) {
+      state.testvuex = false;
+    },
+    setColorIndex: function setColorIndex(state, index) {
+      state.colorIndex = index;
+    } },
+
+  getters: {
+    currentColor: function currentColor(state) {
+      return state.colorList[state.colorIndex];
+    } },
+
+  actions: {
+    // lazy loading openid
+    getUserOpenId: function () {var _getUserOpenId = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(_ref) {var commit, state;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                commit = _ref.commit,
+                state = _ref.state;_context.next = 3;return (
+
+                  new Promise(function (resolve, reject) {
+                    if (state.openid) {
+                      resolve(state.openid);
+                    } else {
+                      uni.login({
+                        success: function success(data) {
+                          commit('login');
+                          setTimeout(function () {//模拟异步请求服务器获取 openid
+                            var openid = '123456789';
+                            console.log('uni.request mock openid[' + openid + ']');
+                            commit('setOpenid', openid);
+                            resolve(openid);
+                          }, 1000);
+                        },
+                        fail: function fail(err) {
+                          console.log('uni.login 接口调用失败，将无法正常使用开放接口等服务', err);
+                          reject(err);
+                        } });
+
+                    }
+                  }));case 3:return _context.abrupt("return", _context.sent);case 4:case "end":return _context.stop();}}}, _callee);}));function getUserOpenId(_x) {return _getUserOpenId.apply(this, arguments);}return getUserOpenId;}() } });var _default =
+
+
+
+
+store;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 2:
+>>>>>>> c9b05b26fdbc2a85c887504b06691e55185b6d6d
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
   \******************************************************************************************/
@@ -94,6 +729,7 @@ var r=function(t){var e=Number(t.version.split(".")[0]);if(e>=2)t.mixin({beforeC
 /*!******************************************************!*\
   !*** ./node_modules/@dcloudio/uni-stat/package.json ***!
   \******************************************************/
+<<<<<<< HEAD
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */function(t){t.exports={_from:"@dcloudio/uni-stat@next",_id:"@dcloudio/uni-stat@2.0.0-26920200424005",_inBundle:!1,_integrity:"sha512-FT8Z/C5xSmIxooqhV1v69jTkxATPz+FsRQIFOrbdlWekjGkrE73jfrdNMWm7gL5u41ALPJTVArxN1Re9by1bjQ==",_location:"/@dcloudio/uni-stat",_phantomChildren:{},_requested:{type:"tag",registry:!0,raw:"@dcloudio/uni-stat@next",name:"@dcloudio/uni-stat",escapedName:"@dcloudio%2funi-stat",scope:"@dcloudio",rawSpec:"next",saveSpec:null,fetchSpec:"next"},_requiredBy:["#USER","/","/@dcloudio/vue-cli-plugin-uni"],_resolved:"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-26920200424005.tgz",_shasum:"47f4375095eda3089cf4678b4b96fc656a7ab623",_spec:"@dcloudio/uni-stat@next",_where:"/Users/guoshengqiang/Documents/dcloud-plugins/release/uniapp-cli",author:"",bugs:{url:"https://github.com/dcloudio/uni-app/issues"},bundleDependencies:!1,deprecated:!1,description:"",devDependencies:{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5",eslint:"^6.1.0",rollup:"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},files:["dist","package.json","LICENSE"],gitHead:"94494d54ed23e2dcf9ab8e3245b48b770b4e98a9",homepage:"https://github.com/dcloudio/uni-app#readme",license:"Apache-2.0",main:"dist/index.js",name:"@dcloudio/uni-stat",repository:{type:"git",url:"git+https://github.com/dcloudio/uni-app.git",directory:"packages/uni-stat"},scripts:{build:"NODE_ENV=production rollup -c rollup.config.js",dev:"NODE_ENV=development rollup -w -c rollup.config.js"},version:"2.0.0-26920200424005"}},7:
 /*!*****************************************************!*\
   !*** D:/project/wxItem/pages.json?{"type":"style"} ***!
@@ -103,4 +739,38 @@ var r=function(t){var e=Number(t.version.split(".")[0]);if(e>=2)t.mixin({beforeC
   !*** D:/project/wxItem/pages.json?{"type":"stat"} ***!
   \****************************************************/
 /*! no static exports found */function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var r={appid:""};e.default=r}}]);
+=======
+/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */
+/***/ (function(module) {
+
+module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-26920200424005","_inBundle":false,"_integrity":"sha512-FT8Z/C5xSmIxooqhV1v69jTkxATPz+FsRQIFOrbdlWekjGkrE73jfrdNMWm7gL5u41ALPJTVArxN1Re9by1bjQ==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-26920200424005.tgz","_shasum":"47f4375095eda3089cf4678b4b96fc656a7ab623","_spec":"@dcloudio/uni-stat@next","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"94494d54ed23e2dcf9ab8e3245b48b770b4e98a9","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-26920200424005"};
+
+/***/ }),
+
+/***/ 7:
+/*!*************************************************!*\
+  !*** D:/yzx/wxItem/pages.json?{"type":"style"} ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/plantManage/addBaseLand": { "navigationBarTitleText": "创建基地", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/addLand": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/chooseHandle": { "navigationBarTitleText": "种植管理", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/landDetail": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/index": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情", "usingComponents": { "t-table": "/components/t-table/t-table", "t-th": "/components/t-table/t-th", "t-tr": "/components/t-table/t-tr", "t-td": "/components/t-table/t-td" }, "usingAutoImportComponents": { "t-table": "/components/t-table/t-table" } }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理", "usingComponents": {}, "usingAutoImportComponents": { "xfl-select": "/components/xfl-select/xfl-select" } }, "pages/message/message": { "navigationBarTitleText": "消息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/login": { "navigationBarTitleText": "登录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/service": { "navigationBarTitleText": "服务管理", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/fair/fair": { "navigationBarTitleText": "市集", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white", "disableScroll": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true, "disableScroll": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次", "usingComponents": { "title-item": "/components/title-item/TitleItem" }, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/register": { "navigationBarTitleText": "注册", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/retypePassword": { "navigationBarTitleText": "找回密码", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/landManage/addLand": { "navigationBarTitleText": "添加地块" }, "pages/plantManage/landManage/landManage": { "navigationBarTitleText": "地块管理" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+
+/***/ }),
+
+/***/ 8:
+/*!************************************************!*\
+  !*** D:/yzx/wxItem/pages.json?{"type":"stat"} ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "appid": "" };exports.default = _default;
+
+/***/ })
+
+}]);
+>>>>>>> c9b05b26fdbc2a85c887504b06691e55185b6d6d
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
