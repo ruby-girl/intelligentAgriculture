@@ -1752,7 +1752,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAYAAAA6
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getFarmWorkItems = exports.getPlantingBatchs = exports.getByWorkOrderIdSup = exports.getByWorkOrderIdEqu = exports.getByWorkOrderIdPerson = exports.getByWorkId = exports.gerWorkOrders = exports.getPagingCriteriaQuery = exports.test3 = exports.test1 = exports.test = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.getLandparcelsList = exports.getFarmWorkItems = exports.getPlantingBatchs = exports.getByWorkOrderIdSup = exports.getByWorkOrderIdEqu = exports.getByWorkOrderIdPerson = exports.getByWorkId = exports.gerWorkOrders = exports.getPagingCriteriaQuery = exports.getBaseId = exports.test3 = exports.test1 = exports.test = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! @/utils/request.js */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 //设置请求结束后拦截器
 _request.default.interceptor.response = function (response) {
@@ -1796,10 +1796,19 @@ var test3 = function test3(data) {
     data: data });
 
 };
-/* 种植管理 ----- 种植中批次 */exports.test3 = test3;
+/*获取baseId */exports.test3 = test3;
+var getBaseId = function getBaseId(data) {
+  return _request.default.request({
+    url: 'api/bases/getByOrganId/',
+    method: 'GET',
+    data: data });
+
+};
+/* 种植管理 ----- 种植中批次 */exports.getBaseId = getBaseId;
 var getPagingCriteriaQuery = function getPagingCriteriaQuery(data) {
   return _request.default.request({
-    url: 'plantingBatchs/pagingCriteriaQuery/' + data.pageNo,
+    //url: 'api/plantingBatchs/pagingCriteriaQuery/'+data.pageNo,
+    url: 'userLogin/appletIndex',
     method: 'GET',
     data: data });
 
@@ -1808,7 +1817,7 @@ var getPagingCriteriaQuery = function getPagingCriteriaQuery(data) {
 /* 种植管理 ----- 种植中批次 ---待处理工单*/exports.getPagingCriteriaQuery = getPagingCriteriaQuery;
 var gerWorkOrders = function gerWorkOrders(data) {
   return _request.default.request({
-    url: 'workOrders/pagingCriteriaQuery/' + data.pageNo,
+    url: 'api/workOrders/pagingCriteriaQuery/' + data.pageNo,
     method: 'GET',
     data: data });
 
@@ -1817,7 +1826,7 @@ var gerWorkOrders = function gerWorkOrders(data) {
 /*待处理工单详情*/exports.gerWorkOrders = gerWorkOrders;
 var getByWorkId = function getByWorkId(data) {
   return _request.default.request({
-    url: 'workOrders/' + data.id,
+    url: 'api/workOrders/' + data.id,
     method: 'GET',
     data: data });
 
@@ -1826,7 +1835,7 @@ var getByWorkId = function getByWorkId(data) {
 /* 待处理工单详情 -- 人资费用*/exports.getByWorkId = getByWorkId;
 var getByWorkOrderIdPerson = function getByWorkOrderIdPerson(data) {
   return _request.default.request({
-    url: 'personResources/getByWorkOrderId',
+    url: 'api/personResources/getByWorkOrderId',
     method: 'GET',
     data: data });
 
@@ -1835,7 +1844,7 @@ var getByWorkOrderIdPerson = function getByWorkOrderIdPerson(data) {
 /* 待处理工单详情 -- 设备费用*/exports.getByWorkOrderIdPerson = getByWorkOrderIdPerson;
 var getByWorkOrderIdEqu = function getByWorkOrderIdEqu(data) {
   return _request.default.request({
-    url: 'equitmenResources/getByWorkOrderId',
+    url: 'api/equitmenResources/getByWorkOrderId',
     method: 'GET',
     data: data });
 
@@ -1844,7 +1853,7 @@ var getByWorkOrderIdEqu = function getByWorkOrderIdEqu(data) {
 /* 待处理工单详情 -- 物料信息*/exports.getByWorkOrderIdEqu = getByWorkOrderIdEqu;
 var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
   return _request.default.request({
-    url: 'suppliesResources/getByWorkOrderId',
+    url: 'api/suppliesResources/getByWorkOrderId',
     method: 'GET',
     data: data });
 
@@ -1854,7 +1863,7 @@ var getByWorkOrderIdSup = function getByWorkOrderIdSup(data) {
 /* 添加农事信息   -- 种植批次获取*/exports.getByWorkOrderIdSup = getByWorkOrderIdSup;
 var getPlantingBatchs = function getPlantingBatchs(data) {
   return _request.default.request({
-    url: 'plantingBatchs/getByBaseId',
+    url: 'api/plantingBatchs/getByBaseId',
     method: 'GET',
     data: data });
 
@@ -1864,11 +1873,20 @@ var getPlantingBatchs = function getPlantingBatchs(data) {
 /* 添加农事信息   -- 获取操作类型*/exports.getPlantingBatchs = getPlantingBatchs;
 var getFarmWorkItems = function getFarmWorkItems(data) {
   return _request.default.request({
-    url: 'farmWorkItems/',
+    url: 'api/farmWorkItems/',
     method: 'GET',
     data: data });
 
-};exports.getFarmWorkItems = getFarmWorkItems;
+};
+
+/* 地块管理---获取所有地块*/exports.getFarmWorkItems = getFarmWorkItems;
+var getLandparcelsList = function getLandparcelsList(data) {
+  return _request.default.request({
+    url: 'api/landparcels/pagingCriteriaQuery/' + data.pageNo,
+    method: 'GET',
+    data: data });
+
+};exports.getLandparcelsList = getLandparcelsList;
 
 /***/ }),
 
@@ -1877,186 +1895,9 @@ var getFarmWorkItems = function getFarmWorkItems(data) {
   !*** D:/yzx/wxItem/utils/request.js ***!
   \**************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-{
-  config: {
-    baseUrl: "http://192.168.101.30:8088/",
-    header: {
-      'Content-Type': 'application/json',
-      'X-Access-Token': '' },
-
-    data: {},
-    method: "GET",
-    dataType: "json", /* 如设为json，会对返回的数据做一次 JSON.parse */
-    responseType: "text",
-    withCredentials: true,
-    success: function success() {},
-    fail: function fail() {},
-    complete: function complete() {} },
-
-  interceptor: {
-    request: null,
-    response: null },
-
-  request: function request(options) {var _this = this;
-    uni.showLoading({
-      title: '加载中' });
-
-    if (!options) {
-      options = {};
-    }
-    options.baseUrl = options.baseUrl || this.config.baseUrl;
-    options.dataType = options.dataType || this.config.dataType;
-    options.url = options.baseUrl + options.url;
-
-    options.data = options.data || {};
-    options.method = options.method || this.config.method;
-    //TODO 加密数据	
-    //TODO 数据签名
-    uni.getStorage({
-      key: 'ddwb',
-      success: function success(res) {
-        options.header = {
-          'Content-Type': 'application/json',
-          'X-Access-Token': res.data.token || 'undefined' };
-
-      } });
-
-    return new Promise(function (resolve, reject) {
-      var _config = null;
-
-      options.complete = function (response) {
-        var statusCode = response.statusCode;
-        response.config = _config;
-        if (true) {
-          if (statusCode === 200) {
-
-          }
-        }
-        if (_this.interceptor.response) {
-          var newResponse = _this.interceptor.response(response);
-          if (newResponse) {
-            response = newResponse;
-          }
-        }
-        // 统一的响应日志记录
-        _reslog(response);
-        if (statusCode === 200) {//成功
-          resolve(response);
-        } else {
-          reject(response);
-        }
-      };
-
-      _config = Object.assign({}, _this.config, options);
-      _config.requestId = new Date().getTime();
-
-      if (_this.interceptor.request) {
-        _this.interceptor.request(_config);
-      }
-
-      // 统一的请求日志记录
-      _reqlog(_config);
-
-      if (true) {
-
-        if (_config.data) {
-
-        }
-      }
-
-      uni.request(_config);
-    });
-  },
-  get: function get(url, data, options) {
-    if (!options) {
-      options = {};
-    }
-    options.url = url;
-    options.data = data;
-    options.method = 'GET';
-    return this.request(options);
-  },
-  post: function post(url, data, options) {
-    if (!options) {
-      options = {};
-    }
-    options.url = url;
-    options.data = data;
-    options.method = 'POST';
-    return this.request(options);
-  },
-  put: function put(url, data, options) {
-    if (!options) {
-      options = {};
-    }
-    options.url = url;
-    options.data = data;
-    options.method = 'PUT';
-    return this.request(options);
-  },
-  delete: function _delete(url, data, options) {
-    if (!options) {
-      options = {};
-    }
-    options.url = url;
-    options.data = data;
-    options.method = 'DELETE';
-    return this.request(options);
-  } };exports.default = _default;
-
-function getToken() {
-  uni.getStorage({
-    key: 'ddwb',
-    success: function success(e) {
-      return e.data.token; //这就是你想要取的token
-    } });
-
-}
-/**
-   * 请求接口日志记录
-   */
-function _reqlog(req) {
-
-
-
-
-
-
-
-} // if (process.env.NODE_ENV === 'development') {
-// 	console.log("【" + req.requestId + "】 地址：" + req.url)
-// 	if (req.data) {
-// 		console.log("【" + req.requestId + "】 请求参数：" + JSON.stringify(req.data))
-// 	}
-// }
-//TODO 调接口异步写入日志数据库
-/**
- * 响应接口日志记录
- */function _reslog(res) {// let _statusCode = res.statusCode;
-  // if (process.env.NODE_ENV === 'development') {
-  // 	console.log("【" + res.config.requestId + "】 地址：" + res.config.url)
-  // 	if (res.config.data) {
-  // 		console.log("【" + res.config.requestId + "】 请求参数：" + JSON.stringify(res.config.data))
-  // 	}
-  // 	console.log("【" + res.config.requestId + "】 响应结果：" + JSON.stringify(res))
-  // }
-  // //TODO 除了接口服务错误外，其他日志调接口异步写入日志数据库
-  // switch(_statusCode){
-  // 	case 200:
-  // 		break;
-  // 	case 401:
-  // 		break;
-  // 	case 404:
-  // 		break;
-  // 	default:
-  // 		break;
-  // }
-}
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: D:\\yzx\\wxItem\\utils\\request.js: Unexpected token (38:3)\n\n  36 | \t\t//TODO 加密数据\t\n  37 | \t\t//TODO 数据签名\n> 38 | <<<<<<< HEAD\n     |    ^\n  39 | \t\t  options.header = {'Authorization':uni.getStorageSync('ddwb').token || ''}\n  40 | \n  41 | =======\n    at Object._raise (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:742:17)\n    at Object.raiseWithData (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:735:17)\n    at Object.raise (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:729:17)\n    at Object.unexpected (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:8757:16)\n    at Object.jsxParseIdentifier (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4388:12)\n    at Object.jsxParseNamespacedName (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4398:23)\n    at Object.jsxParseElementName (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4409:21)\n    at Object.jsxParseOpeningElementAt (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4495:22)\n    at Object.jsxParseElementAt (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4528:33)\n    at Object.jsxParseElement (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4602:17)\n    at Object.parseExprAtom (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:4609:19)\n    at Object.parseExprSubscripts (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9602:23)\n    at Object.parseMaybeUnary (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9582:21)\n    at Object.parseExprOpBaseRightExpr (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9545:34)\n    at Object.parseExprOpRightExpr (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9538:21)\n    at Object.parseExprOp (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\core\\node_modules\\@babel\\parser\\lib\\index.js:9504:27)");
 
 /***/ }),
 
@@ -11074,7 +10915,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/plantManage/addBaseLand": { "navigationBarTitleText": "创建基地" }, "pages/service/addLand": {}, "pages/plantManage/chooseHandle": {}, "pages/service/landDetail": {}, "pages/index/index": {}, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录" }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情" }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法" }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理" }, "pages/message/message": { "navigationBarTitleText": "消息" }, "pages/login/login": { "navigationBarTitleText": "登录" }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white" }, "pages/service/service": { "navigationBarTitleText": "服务管理" }, "pages/fair/fair": { "navigationBarTitleText": "市集" }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white", "disableScroll": true }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true, "disableScroll": true }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次" }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划" }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业" }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息" }, "pages/login/register": { "navigationBarTitleText": "注册" }, "pages/login/retypePassword": { "navigationBarTitleText": "找回密码" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/plantManage/addBaseLand": { "navigationBarTitleText": "创建基地", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/addLand": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/chooseHandle": { "navigationBarTitleText": "种植管理", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/landDetail": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/index": { "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/addFram": { "navigationBarTitleText": "添加农事操作记录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workDetail": { "navigationBarTitleText": "工单详情", "usingComponents": { "t-table": "/components/t-table/t-table", "t-th": "/components/t-table/t-th", "t-tr": "/components/t-table/t-tr", "t-td": "/components/t-table/t-td" }, "usingAutoImportComponents": { "t-table": "/components/t-table/t-table" } }, "pages/plantManage/workeMethod": { "navigationBarTitleText": "工单操作方法", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/workOrder": { "navigationBarTitleText": "待处理", "usingComponents": {}, "usingAutoImportComponents": { "xfl-select": "/components/xfl-select/xfl-select" } }, "pages/message/message": { "navigationBarTitleText": "消息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/login": { "navigationBarTitleText": "登录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/plantManage": { "navigationBarTitleText": "种植管理", "navigationBarBackgroundColor": "#29B982", "navigationBarTextStyle": "white", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/service/service": { "navigationBarTitleText": "服务管理", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/fair/fair": { "navigationBarTitleText": "市集", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/personal": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#00AE66", "navigationBarTextStyle": "white", "disableScroll": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/list": { "navigationBarTitleText": "批次管理", "enablePullDownRefresh": true, "disableScroll": true, "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/addBatch": { "navigationBarTitleText": "添加批次", "usingComponents": { "title-item": "/components/title-item/TitleItem" }, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectPlan": { "navigationBarTitleText": "选择种植计划", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/batchManagement/selectCompany": { "navigationBarTitleText": "选择种苗企业", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/personal/realInformation": { "navigationBarTitleText": "实名信息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/register": { "navigationBarTitleText": "注册", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/login/retypePassword": { "navigationBarTitleText": "找回密码", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/plantManage/landManage/addLand": { "navigationBarTitleText": "添加地块" }, "pages/plantManage/landManage/landManage": { "navigationBarTitleText": "地块管理" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "代代为本", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

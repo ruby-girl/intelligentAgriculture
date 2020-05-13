@@ -1,7 +1,9 @@
 {
   "pages": [
+    "pages/plantManage/plantManage",
+    "pages/login/login",
     "pages/plantManage/addBaseLand",
-    "pages/service/addLand",
+    "pages/plantManage/landManage/addLand",
     "pages/plantManage/chooseHandle",
     "pages/service/landDetail",
     "pages/index/index",
@@ -10,8 +12,6 @@
     "pages/plantManage/workeMethod",
     "pages/plantManage/workOrder",
     "pages/message/message",
-    "pages/login/login",
-    "pages/plantManage/plantManage",
     "pages/service/service",
     "pages/fair/fair",
     "pages/personal/personal",
@@ -21,7 +21,8 @@
     "pages/plantManage/batchManagement/selectCompany",
     "pages/personal/realInformation",
     "pages/login/register",
-    "pages/login/retypePassword"
+    "pages/login/retypePassword",
+    "pages/plantManage/landManage/landManage"
   ],
   "subPackages": [],
   "window": {
@@ -76,6 +77,5 @@
     "xfl-select": "/components/xfl-select/xfl-select",
     "uni-popup": "/components/uni-popup/uni-popup",
     "cu-custom": "/colorui/components/cu-custom"
-  },
-  "sitemapLocation": "sitemap4.json"
+  }
 }
