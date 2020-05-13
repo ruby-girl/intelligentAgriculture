@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "添加批次",
-  "usingComponents": {
-    "title-item": "/components/title-item/TitleItem"
-  }
-}

@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "待处理",
-  "usingComponents": {
-    "xfl-select": "/components/xfl-select/xfl-select"
-  }
-}
