@@ -118,6 +118,7 @@ export const getBreedsAll = () => {
 		method: 'get'
 	})
 }
+
 //新增批次
 export const addPlantingBatchs = (data) => {
 	return http.request({
