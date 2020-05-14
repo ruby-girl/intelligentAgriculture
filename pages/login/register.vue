@@ -83,6 +83,11 @@
 			},
 			register() {
 				if(!this.test()) return false
+				 // wx.login({
+				 //      success: res => {
+				 //        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+				 //      }
+				 //    })
 				this.$apiYZX.loginReg(this.userInfo).then(res => {
 					if(res.data.code=='200'){
 						uni.showToast({

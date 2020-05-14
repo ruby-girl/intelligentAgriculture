@@ -84,3 +84,44 @@ export const userPerfectInfo = (data) => {
 		data,
 	})
 }
+
+// 根据基地id查询种植批次信息（分页）
+export const plantingBatchsPage = (page,data) => {
+	return http.request({
+		url: 'api/organUserPlantingBatchManage/getPlantingBatchs/'+page,
+		method: 'get',
+		data,
+	})
+}
+
+// 根据用户id和基地id查询地块
+export const getByUserIdAndBaseId = (data) => {
+	return http.request({
+		url: 'api/landparcels/getByUserIdAndBaseId',
+		method: 'get',
+		data,
+	})
+}
+
+// 页面条件分页查询获取种植计划(根据作物-计划模糊查询)
+export const pagingCriteriaQuery = (page,data) => {
+	return http.request({
+		url: 'api/plantingPlans/pagingCriteriaQuery/'+page,
+		method: 'get',
+		data,
+	})
+}
+// 获取品种下拉框数据
+export const getBreedsAll = () => {
+	return http.request({
+		url: 'api/breeds/',
+		method: 'get'
+	})
+}
+//新增批次
+export const addPlantingBatchs = (data) => {
+	return http.request({
+		url: 'api/plantingBatchs/',
+		method: 'post'
+	})
+}
