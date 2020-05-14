@@ -2,22 +2,22 @@
 	<view class="padding-login">
 		<view class="border-bottom">
 			<view><text class="iconfont iconipad color-green" style="font-size: 26px;"></text><text class="text-margin">手机</text></view>
-			<input placeholder="请输入手机号码" type="number" name="input" v-model="userInfo.phone"></input>
+			<input placeholder="请输入手机号码" type="number" name="input" @input="phoneInput"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconsecurity color-green" style="font-size: 26px;"></text><text class="text-margin">验证码</text></view>
 			<view class="cu-form-group">
-				<input placeholder="请输入短信验证码" v-model="userInfo.captcha"  name="input"></input>
+				<input placeholder="请输入短信验证码" @input="captchaInput" v-model="userInfo.captcha"  name="input"></input>
 				<button class='cu-btn line-green shadow' :disabled="disabled" @click="codeClick">{{btnTitle}}{{txt}}</button>
 			</view>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">密码</text></view>
-			<input placeholder="请设置密码" type="password" v-model="userInfo.password" name="input"></input>
+			<input placeholder="请设置密码" type="password" @input="passwordInput" v-model="userInfo.password" name="input"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">请确认密码</text></view>
-			<input placeholder="请确认密码" type="password" v-model="userInfo.passwordComfirm" name="input"></input>
+			<input placeholder="请确认密码" type="password" @input="passwordComfirmInput" v-model="userInfo.passwordComfirm" name="input"></input>
 		</view>
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" @click="modifyFunc">
 			确定</button>
@@ -43,6 +43,18 @@
 
 		},
 		methods: {
+			phoneInput(e){
+				this.userInfo.phone = e.detail.value
+			},
+			captchaInput(e){
+				this.userInfo.captcha = e.detail.value
+			},
+			passwordInput(e){
+				this.userInfo.password = e.detail.value
+			},
+			passwordComfirmInput(e){
+				this.userInfo.passwordComfirm = e.detail.value
+			},
 			codeClick() {
 			      //点击发送验证码		    
 			      let _this=this

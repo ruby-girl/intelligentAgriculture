@@ -208,7 +208,7 @@
 		"list": [
 			{
 				"name": "测试", //模式名称
-				"path": "pages/plantManage/batchManagement/list", //启动页面，必选
+				"path": "pages/plantManage/plantManage", //启动页面，必选
 				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]
