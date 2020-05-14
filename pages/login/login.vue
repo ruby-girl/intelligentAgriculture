@@ -118,7 +118,7 @@
 								
 									}else{
 										uni.navigateTo({
-										    url: '../plantManage/chooseHandle'
+										    url: '../plantManage/baseLand/chooseHandle'
 									});
 									}
 									

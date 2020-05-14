@@ -3,8 +3,8 @@
 	<view>
 
 		<view class="drawMap">
-			<!-- <map id="map" :longitude="longitude" :latitude="latitude" scale="14" show-location style="width: 100%; height: 100%;">
-			</map> -->
+			<map id="map" :longitude="longitude" :latitude="latitude" scale="10" show-location style="width: 100%; height: 100%;">
+			</map>
 		</view>
 		<view class="draw-content">
 			<view class="cark" style="left: 90rpx;"></view>
@@ -42,7 +42,9 @@
 							<text class="line"></text><text style="font-size: 34rpx;">{{item.name}}</text>
 						</view>
 						<view>
+							<navigator :url='"/pages/plantManage/landManage/addLand?landId="+item.id'>
 							<text class="iconfont iconxiugaixiang" style="font-size: 30px;    vertical-align: middle;"></text><text>编辑</text>
+						    </navigator>
 						</view>
 
 					</view>
@@ -86,12 +88,25 @@
 				listData: [],
 				item1: 0,
 				user: {},
-				resultData:{}
+				resultData:{},
+				longitude:'',
+				latitude:'',
+				
 			}
 		},
 		onLoad(option) {
-			alert()
 			let _this = this
+	uni.getLocation({
+	    type: 'wgs84',
+	    success: function (res) {
+		
+			_this.latitude = res.latitude
+			_this.longitude= res.longitude
+	      
+	    }
+	});
+	
+			
 			uni.getStorage({
 				key: 'ddwb',
 				success: function(res) {
@@ -106,10 +121,15 @@
 			this.param.baseId = option.baseId
 	       this.param.organUserId = uni.getStorageSync('organUserId');
 		},
+		onShow(){
+		
+		this.$nextTick(function(){
+			  this.initList();
+		})
+		},
 		onReady() {
-			this.$nextTick(function(){
-				  this.initList();
-			})
+		
+		
 		
 		},
 		methods: {
