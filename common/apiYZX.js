@@ -130,7 +130,16 @@ export const addPlantingBatchs = (data) => {
 // 工单列表获得批次
 export const getWorkOrderManage = (data) => {
 	return http.request({
-		url: 'api/organUserWorkOrderManage/getBatchBy/',
+		url: 'api/organUserPlantingBatchManage/getBatchByUserIdAndBaseId',
+		method: 'get',
+		data
+	})
+}
+
+// 工单列表
+export const getWorkOrderManageList = (page,data) => {
+	return http.request({
+		url: 'api/organUserWorkOrderManage/getWorkOrders/'+page,
 		method: 'get',
 		data
 	})
