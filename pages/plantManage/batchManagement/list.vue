@@ -14,23 +14,23 @@
 			<view class="list-item" v-for="item in newsList" :key="item">
 				<view class="flex align-items-center">
 					<img src="@/static/plant/icon_plant@2x.png" alt="">
-					<view>作物：{{item.breedName}}</view>
+					<view>作物：川麦冬</view>
 				</view>
 				<view class="flex align-items-center">
 					<img src="@/static/plant/icon_plan@2x.png" alt="">
-					<view>种植计划：{{item.plantingPlanName}}</view>
+					<view>种植计划：川麦冬计划</view>
 				</view>
 				<view class="flex align-items-center">
 					<img src="@/static/plant/icon_date@2x.png" alt="">
-					<view>种植年份：{{item.plantingTime}}</view>
+					<view>种植年份：2020</view>
 				</view>
 				<view class="flex align-items-center">
 					<img src="@/static/plant/icon_land@2x.png" alt="">
-					<view>地块数量：{{item.landParcelCount}}</view>
+					<view>地块数量：3</view>
 				</view>
 				<view class="flex align-items-center">
 					<img src="@/static/plant/icon_area@2x.png" alt="">
-					<view>地块面积：{{item.acreages}}亩</view>
+					<view>地块面积：3亩</view>
 				</view>
 			</view>
 			<view class="loading-more">{{contentdown}}</view>
@@ -174,7 +174,7 @@
 	}
 
 	.scroll-container {
-		padding: 0 20rpx;
+		padding: 0 15rpx;
 	}
 
 	.list-item {
@@ -182,7 +182,8 @@
 		border-radius: 6px;
 		background: #fff;
 		padding: 30rpx;
-		margin:20rpx 8rpx 30rpx 8rpx;
+		margin-bottom: 30rpx;
+
 		img {
 			width: 18px;
 			height: 18px;

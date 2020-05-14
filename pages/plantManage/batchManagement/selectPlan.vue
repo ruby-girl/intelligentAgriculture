@@ -52,8 +52,10 @@
 			uni.getStorage({
 				key: 'baseId',
 				success: function(res) {
-					_this.obj.breedId=options.breed					
-					_this.plantingTime=options.plantingTime	
+					_this.obj.breedId=options.breed
+					
+					_this.plantingTime=options.plantingTime
+					
 					_this.landId=options.landId
 					_this.obj.baseId=res.data
 					_this.getData()

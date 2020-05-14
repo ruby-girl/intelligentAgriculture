@@ -2,26 +2,26 @@
 	<view class="padding-login">
 		<view class="border-bottom">
 			<view><text class="iconfont iconxingming color-green" style="font-size: 26px;"></text><text class="text-margin">姓名</text></view>
-			<input placeholder="请输入姓名" name="input" @input="accountInput"></input>
+			<input placeholder="请输入姓名" name="input" v-model="userInfo.account"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconipad color-green" style="font-size: 26px;"></text><text class="text-margin">手机</text></view>
-			<input placeholder="请输入手机号码" type="number" @input="phoneInput" name="input"></input>
+			<input placeholder="请输入手机号码" type="number" name="input" v-model="userInfo.phone"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconsecurity color-green" style="font-size: 26px;"></text><text class="text-margin">验证码</text></view>
 			<view class="cu-form-group">
-				<input placeholder="请输入验证码"  name="input" @input="captchaInput"></input>
+				<input placeholder="请输入验证码"  name="input" v-model="userInfo.captcha"></input>
 				<button class='cu-btn line-green shadow' :disabled="disabled"  @click="codeClick">{{btnTitle}}{{txt}}</button>
 			</view>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">密码</text></view>
-			<input placeholder="请设置密码" type="password" name="input" @input="passwordInput"></input>
+			<input placeholder="请设置密码" type="password" name="input" v-model="userInfo.password"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">请确认密码</text></view>
-			<input placeholder="请确认密码" type="password" name="input" @input="passwordComfirmInput"></input>
+			<input placeholder="请确认密码" type="password" name="input" v-model="userInfo.passwordComfirm"></input>
 		</view>
 		<button @click="register" class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx">
 			注册</button>
@@ -48,21 +48,6 @@
 
 		},
 		methods: {
-			accountInput(e){
-				this.userInfo.account = e.detail.value
-			},
-			phoneInput(e){
-				this.userInfo.phone = e.detail.value
-			},
-			captchaInput(e){
-				this.userInfo.captcha = e.detail.value
-			},
-			passwordInput(e){
-				this.userInfo.password = e.detail.value
-			},
-			passwordComfirmInput(e){
-				this.userInfo.passwordComfirm = e.detail.value
-			},
 			codeClick() {
 				//点击发送验证码		     
 				let _this = this

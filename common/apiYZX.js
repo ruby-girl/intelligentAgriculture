@@ -122,16 +122,6 @@ export const getBreedsAll = () => {
 export const addPlantingBatchs = (data) => {
 	return http.request({
 		url: 'api/plantingBatchs/',
-		method: 'post',
-		data
-	})
-}
-
-// 工单列表获得批次
-export const getWorkOrderManage = (data) => {
-	return http.request({
-		url: 'api/organUserWorkOrderManage/getBatchBy/',
-		method: 'get',
-		data
+		method: 'post'
 	})
 }
