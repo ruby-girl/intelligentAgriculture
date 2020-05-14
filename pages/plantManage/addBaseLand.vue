@@ -2,7 +2,7 @@
 <template>
 	<view>
 
-	<web-view src="http://192.168.101.32:8080/#/"></web-view>
+	<web-view src="http://192.168.101.32:8091/#/"></web-view>
 
 
 	</view>

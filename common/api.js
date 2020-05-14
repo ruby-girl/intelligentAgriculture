@@ -128,7 +128,7 @@ export const getFarmWorkItems = (data) => {
 /* 地块管理---获取所有地块*/
 export const getLandparcelsList = (data) => {
 	return http.request({
-		url: 'api/organUserLandParcels/getLandParcels',
+		url: 'api/organUserLandParcelManage/getLandParcels/'+data.pageNo,
 		method: 'GET',
 		data,
 	})

@@ -35,8 +35,8 @@
 			</view>
 
 			
-			<view class="list-model">
-				<view class="mb20" v-for="(item, index) in resultData.landParcels" :key="index">
+			<view class="">
+				<view class=" list-model" v-for="(item, index) in listData" :key="index">
 					<view class="label display-flex justify-content-flex-justify">
 						<view>
 							<text class="line"></text><text style="font-size: 34rpx;">{{item.name}}</text>
@@ -51,9 +51,9 @@
 						<view><text class="cr3 mr10">地块面积
 							</text>{{item.acreage || '-'}}</view>
 						<view><text class="cr3 mr10">
-								种植品种 </text>{{item.scheduledtime || '-'}}</view>
+								种植品种 </text>{{item.breedName || '-'}}</view>
 						<view><text class="cr3 mr10"> 当前批次
-							</text>{{item.creDate || '-'}}</view>
+							</text>{{item.plantingBatchName || '-'}}</view>
 
 					</view>
 				</view>
@@ -79,14 +79,18 @@
 			return {
 				param: {		
 					baseId: '',
-					userId:''
+					pageNo:1,
+					organUserId:''
+
 				},
-				resultData: {},
+				listData: [],
 				item1: 0,
-				user: {}
+				user: {},
+				resultData:{}
 			}
 		},
 		onLoad(option) {
+			alert()
 			let _this = this
 			uni.getStorage({
 				key: 'ddwb',
@@ -96,11 +100,11 @@
 						phone: res.data.phone || '',
 						headPortrait: res.data.headPortrait
 					}
-					_this.param.userId = res.data.userid
+					
 				}
 			});
 			this.param.baseId = option.baseId
-	
+	       this.param.organUserId = uni.getStorageSync('organUserId');
 		},
 		onReady() {
 			this.$nextTick(function(){
@@ -111,7 +115,8 @@
 		methods: {
 			initList() {
 				this.$api.getLandparcelsList(this.param).then(res => {
-					this.resultData = res.data.data
+					
+					this.listData = res.data.data.data
 					
 
 				})
@@ -187,8 +192,8 @@
 
 		.list-model {
 			background: #fff;
-			padding: 15px;
-
+			padding: 30rpx;
+			margin-bottom: 10px;
 			.mr10 {
 				margin-right: 10px;
 			}

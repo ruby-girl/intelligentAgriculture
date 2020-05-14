@@ -169,6 +169,7 @@
 		},
 		methods: {
 			initData() {
+			
 				this.$api.getPagingCriteriaQuery({
 					userId: this.userId,
 					organId: this.orgId,
@@ -177,6 +178,10 @@
 					uni.setStorage({
 						key:'baseId',
 						data:res.data.data.baseId
+					});
+					uni.setStorage({
+						key:'organUserId',
+						data:res.data.data.organUserId
 					});
 					this.baseId = res.data.data.baseId
 			
