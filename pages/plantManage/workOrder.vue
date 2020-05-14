@@ -48,12 +48,12 @@
 				<ms-dropdown-item v-model="value1" :list="timeList" :hasSlot="true" title="最近时间"></ms-dropdown-item>
 				<!-- <ms-dropdown-item v-model="value2" :list="list"></ms-dropdown-item> -->
 				<ms-dropdown-item v-model="value2" :list="typeList" :hasSlot="true" title="工单类型">
-					
+
 				</ms-dropdown-item>
 				<ms-dropdown-item v-model="value3" :hasSlot="true" title="工单批次" ref="dropdownItem">
 					<view class="dropdown-item-content">
 						<view>=====此为测试内容=====</view>
-					
+
 					</view>
 				</ms-dropdown-item>
 			</ms-dropdown-menu>
@@ -135,8 +135,7 @@
 						value: 0
 					}
 				],
-				typeList:[
-					{
+				typeList: [{
 						text: '批次工单',
 						value: 1
 					},
@@ -171,15 +170,27 @@
 				TabCur: 1,
 				topHeight: '',
 				listData: [],
-				baseId: ''
+				baseId: '',
+				obj: {
+					baseId: '',
+					organUserId: '',
+					plantingBatchStatus:''//工单状态，初期默认值为空
+				}
 			};
 		},
 		onLoad(option) {
 			this.TabCur = option.type
-			this.baseId = option.baseId
+			this.obj.baseId = option.baseId
 			// 获取下拉数据--工单批次
-			this.$apiYZX.getWorkOrderManage().then(res=>{
-				
+			let _this = this
+			uni.getStorage({
+				key: 'organUserId',
+				success: function(res) {
+					_this.obj.organUserId = res.data
+					_this.$apiYZX.getWorkOrderManage(_this.obj).then(res => {
+
+					})
+				}
 			})
 		},
 		onReady() {
@@ -203,7 +214,7 @@
 				this.$api.gerWorkOrders({
 					plantingBatchCode: '',
 					pageNo: 1,
-					baseId: this.baseId,
+					baseId: this.obj.baseId,
 					workOrderStatus: this.TabCur,
 
 				}).then(res => {
