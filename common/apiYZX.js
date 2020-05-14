@@ -123,7 +123,8 @@ export const getBreedsAll = () => {
 export const addPlantingBatchs = (data) => {
 	return http.request({
 		url: 'api/plantingBatchs/',
-		method: 'post'
+		method: 'post',
+		data
 	})
 }
 // 工单列表获得批次

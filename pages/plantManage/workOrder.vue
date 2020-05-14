@@ -1,7 +1,7 @@
 <!-- 待处理 -->
 <template>
 	<view class="workOrder ">
-		<view class="top" id="mjltest">
+		<view class="top">
 			<!-- <view class="flex select-model">
 				<view class="sel">
 					<xfl-select
@@ -50,11 +50,7 @@
 				<ms-dropdown-item v-model="value2" :list="typeList" :hasSlot="true" title="工单类型">
 					
 				</ms-dropdown-item>
-				<ms-dropdown-item v-model="value3" :hasSlot="true" title="工单批次" ref="dropdownItem">
-					<view class="dropdown-item-content">
-						<view>=====此为测试内容=====</view>
-					
-					</view>
+				<ms-dropdown-item v-model="value3" :hasSlot="true" title="工单批次" :list="orderList">
 				</ms-dropdown-item>
 			</ms-dropdown-menu>
 			<scroll-view scroll-x class="bg-white nav">
@@ -135,6 +131,7 @@
 						value: 0
 					}
 				],
+				orderList:[],
 				typeList:[
 					{
 						text: '批次工单',
@@ -171,29 +168,30 @@
 				TabCur: 1,
 				topHeight: '',
 				listData: [],
-				baseId: ''
+				baseId: '',
+				obj:{
+					baseId:'',
+					organUserId:'',
+					plantingBatchStatus:''//批次状态
+				}
 			};
 		},
 		onLoad(option) {
 			this.TabCur = option.type
-			this.baseId = option.baseId
+			this.obj.baseId = option.baseId
 			// 获取下拉数据--工单批次
-			this.$apiYZX.getWorkOrderManage().then(res=>{
-				
+			uni.getStorage({
+				key: 'organUserId',
+				success: function(res) {				
+					_this.obj.organUserId= res.data			
+					_this.$apiYZX.getWorkOrderManage(_this.obj).then(res=>{
+						
+					})
+				}
 			})
+			
 		},
 		onReady() {
-			let me = this
-			//创建节点选择器
-			var query = wx.createSelectorQuery();
-			//选择id
-			query.select('#mjltest').boundingClientRect()
-			query.exec(function(res) {
-				//res就是 所有标签为mjltest的元素的信息 的数组
-				me.topHeight = res[0].height + 'px'
-
-			})
-
 			this.initData()
 		},
 
@@ -203,7 +201,7 @@
 				this.$api.gerWorkOrders({
 					plantingBatchCode: '',
 					pageNo: 1,
-					baseId: this.baseId,
+					baseId: this.obj.baseId,
 					workOrderStatus: this.TabCur,
 
 				}).then(res => {
