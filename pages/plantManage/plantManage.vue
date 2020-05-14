@@ -53,12 +53,9 @@
 					<navigator :url="'/pages/plantManage/workOrder?type=1&baseId='+baseId">
 						<view>
 							<image src="/static/plant/icon_pending@2x.png" class="icon" />
-
 						</view>
 						<text>待处理</text>
-
 					</navigator>
-
 				</view>
 				<view>
 					<view>
@@ -75,7 +72,7 @@
 					<text>批次管理</text>
 				</view>
 				<view>
-					<navigator :url="'/pages/plantManage/landManage/landManage?baseId='+baseId">
+					<navigator :url="'/pages/plantManage/landManage/landManage?baseId='+baseId+'&acreages='+resultData.acreages+'&landCount='+resultData.landParcelCount">
 						<view>
 							<image src="/static/plant/icon_plot@2x.png" class="icon" />
 
@@ -283,7 +280,9 @@
 			margin: 0px 16px;
 			margin-top: -16px;
 			position: relative;
-			height: 65vh;
+			height: 78vh;
+			padding-bottom: 15px;
+
 
 
 			.flex {

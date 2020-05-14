@@ -106,14 +106,6 @@ export const getByWorkOrderIdSup = (data) => {
 }
 
 
-/* 添加农事信息   -- 种植批次获取*/
-export const getPlantingBatchs = (data) => {
-	return http.request({
-		url: 'api/plantingBatchs/getByBaseId',
-		method: 'GET',
-		data,
-	})
-}
 
 
 /* 添加农事信息   -- 获取操作类型*/
@@ -130,6 +122,24 @@ export const getLandparcelsList = (data) => {
 	return http.request({
 		url: 'api/organUserLandParcelManage/getLandParcels/'+data.pageNo,
 		method: 'GET',
+		data,
+	})
+}
+
+/* 添加农事记录 --- 获取种植批次*/
+export const getFarmWorkSelect = (data) => {
+	return http.request({
+		url: 'api/organUserPlantingBatchManage/getBatchByUserIdAndBaseId',
+		method: 'GET',
+		data,
+	})
+}
+
+/* 添加农事记录 第一步 */
+export const addFarmWorkBase = (data) => {
+	return http.request({
+		url: 'api/organUserFarmWorkRecordManage/',
+		method: 'POST',
 		data,
 	})
 }
