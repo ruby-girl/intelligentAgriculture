@@ -7,17 +7,17 @@
 		<view class="border-bottom">
 			<view><text class="iconfont iconsecurity color-green" style="font-size: 26px;"></text><text class="text-margin">验证码</text></view>
 			<view class="cu-form-group">
-				<input placeholder="请输入短信验证码" @input="captchaInput" v-model="userInfo.captcha"  name="input"></input>
+				<input placeholder="请输入短信验证码" @input="captchaInput"   name="input"></input>
 				<button class='cu-btn line-green shadow' :disabled="disabled" @click="codeClick">{{btnTitle}}{{txt}}</button>
 			</view>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">密码</text></view>
-			<input placeholder="请设置密码" type="password" @input="passwordInput" v-model="userInfo.password" name="input"></input>
+			<input placeholder="请设置密码" type="password" @input="passwordInput"  name="input"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">请确认密码</text></view>
-			<input placeholder="请确认密码" type="password" @input="passwordComfirmInput" v-model="userInfo.passwordComfirm" name="input"></input>
+			<input placeholder="请确认密码" type="password" @input="passwordComfirmInput"  name="input"></input>
 		</view>
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" @click="modifyFunc">
 			确定</button>
