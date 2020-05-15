@@ -112,7 +112,7 @@
 			         		    title: '重置成功',
 			         			icon:'success',
 			         			success() {
-			         				uni.navigateTo({
+			         				uni.redirectTo({
 			         				    url: 'login'
 			         				});
 			         			}
