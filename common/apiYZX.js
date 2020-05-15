@@ -143,4 +143,11 @@ export const getWorkOrderManageList = (page,data) => {
 		method: 'get',
 		data
 	})
+}// 通过id获取数据（组合设备、农资、人资和设备资源、农资资源、人资资源信息）
+export const organUserWorkOrderManageGetById = (data) => {
+	return http.request({
+		url: 'api/organUserWorkOrderManage/getById',
+		method: 'get',
+		data
+	})
 }

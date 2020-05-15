@@ -2,48 +2,6 @@
 <template>
 	<view class="workOrder">
 		<view class="top">
-			<!-- <view class="flex select-model">
-				<view class="sel">
-					<xfl-select
-					            :list="list"
-					            :clearable="false"
-					            :showItemNum="5" 
-					            :initValue="'苹果'"
-								:style_Container="'height: 30px; font-size: 12px;border:0'"
-					        >
-					        </xfl-select>
-				</view>
-				<view  class="sel">
-					<xfl-select
-					            :list="list"
-					            :clearable="false"
-					            :showItemNum="5" 
-					      :style_Container="'height: 30px; font-size: 12px;border:0'"
-					      
-					            :initValue="'苹果'"
-					        >
-					        </xfl-select>
-				</view>
-				
-				<view  class="sel">
-					<xfl-select
-					            :list="list"
-					            :clearable="false"
-					            :showItemNum="5" 
-					      :style_Container="'height: 30px; font-size: 12px;border:0'"
-					      
-					            :initValue="'苹果'"
-					        >
-					        </xfl-select>
-				</view>
-				
-					
-				
-				<view class="sel">
-				  <text class="f12">筛选{{baseId}}</text><image src="../../static/plant/icon_screen@2x.png" class="img"></image>
-				
-				</view>
-			</view> -->
 			<ms-dropdown-menu>
 				<ms-dropdown-item v-model="value1" :list="timeList" :hasSlot="true" title="最近时间"></ms-dropdown-item>
 				<!-- <ms-dropdown-item v-model="value2" :list="list"></ms-dropdown-item> -->
@@ -66,7 +24,7 @@
 
 		<scroll-view v-bind:style="{height:(windowHeight-10)+'px'}" class="list-container" scroll-y="true"
 		 :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper" @scrolltolower="loadingData">
-			<view class="list-item" v-for="item in newsList" :key="item" @tap="toUrl(item.id)">
+			<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.id)">
 				<view v-if="item.workOrderType==1">				
 					<view class="flex justify-content-flex-justify align-items-center">
 						<view>
@@ -74,8 +32,8 @@
 							<text class="order-title">{{item.farmWorkItemName}}</text>
 							<text>来自工单</text>
 						</view>
-						<view style="color:red" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
-						<view style="color:#00AE66" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>执行</view>
+						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
+						<view style="color:red" v-else @tap.stop='goAddUrl(item.id)'>处理</view>
 					</view>
 					<view class="flex align-items-center">				
 						<view>开始时间：{{item.scheduledStartTime}}</view>
@@ -87,7 +45,7 @@
 						<view>作物：{{item.breedName}}</view>
 					</view>
 					<view class="flex align-items-center">				
-						<view>地块：<text v-for="li in item.landParcels">{{li.name}}</text></view>
+						<view>地块：<text v-for="li in item.landParcels" :key="li.id">{{li.name}}</text></view>
 					</view>
 					<view class="flex align-items-center">				
 						<view>种植方案：{{item.plantingPlanName}}</view>
@@ -100,15 +58,15 @@
 							<text class="order-title">{{item.farmWorkItemName}}</text>
 							<text>来自巡查 {{item.executiontime==null?'':item.executiontime}}</text>
 						</view>
-						<view style="color:red" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
-						<view style="color:#00AE66" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>执行</view>
+						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
+						<view style="color:red" v-else @tap.stop='goAddUrl(item.id)'>处理</view>
 					</view>
 					<view>{{item.feedbackContent==null?'':item.feedbackContent}}</view>
 					<view class="flex align-items-center">				
 						<view>发起人：{{item.initiatorName}}</view>
 					</view>
 					<view class="flex align-items-center">				
-						<view>地块：<text v-for="li in item.landParcels">{{li.name}}</text></view>
+						<view>地块：<text v-for="li in item.landParcels" :key="li.id">{{li.name}}</text></view>
 					</view>
 					<view class="flex align-items-center">				
 						<view>种植方案：{{item.plantingPlanName}}</view>
@@ -181,7 +139,7 @@
 					},
 					{
 						id: 2,
-						name: '已结束'
+						name: '已处理'
 					},
 				],
 				TabCur: 1,
@@ -209,14 +167,17 @@
 		watch:{
 			value1(val,oldValue){
 				this.listObj.timeType=val
+				this.newsList=[]
 				this.getData()
 			},
 			value2(val,oldValue){
 				this.listObj.workOrderType=val
+				this.newsList=[]
 				this.getData()
 			},
 			value3(val,oldValue){
 				this.listObj.plantingBatchId=val
+				this.newsList=[]
 				this.getData()
 			}
 		},
@@ -252,9 +213,9 @@
 				if(state==3){
 					return '未开始'
 				}else if(state==1){
-					return '执行'
+					return '处理'
 				}else{
-					return '已结束'
+					return '已处理'
 				}
 			},
 			scrolltoupper() {
@@ -304,9 +265,9 @@
 				});
 			},
 			/* 跳转 添加农事 */
-			goAddUrl(id,plantingBatchId) {
+			goAddUrl(id) {
 				uni.navigateTo({
-					url: '/pages/plantManage/framManage/addFram?workOrderId=' + id +'&plantingBatchId='+plantingBatchId
+					url: '/pages/plantManage/addFram?id=' + id
 				});
 			}
 		}

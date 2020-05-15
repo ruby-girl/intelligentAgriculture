@@ -27,7 +27,7 @@
 				</view>
 			</form>
 		</view>
-		<button @click="toList" class="cu-btn block line-green lg" style="width:90%;margin:50rpx auto">退出</button>
+		<button @click="toLogin" class="cu-btn block line-green lg" style="width:90%;margin:50rpx auto">退出</button>
 	</view>
 </template>
 
@@ -61,9 +61,10 @@
 			changeSwitch(e) {
 				this.switchB = e.detail.value
 			},
-			toList(){//测试跳转批次
-				uni.navigateTo({
-				    url: '/pages/plantManage/batchManagement/list'
+			toLogin(){//测试跳转批次
+				uni.removeStorageSync('ddwb');
+				uni.redirectTo({
+				    url: '/pages/login/login'
 				});
 			}
 		}

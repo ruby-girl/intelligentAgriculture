@@ -1,23 +1,93 @@
-<!-- 启动页 -->
 <template>
 	<view class="content">
-		<view class="bg">
-		</view>
+		<code-elf-guide v-if="guidePages"></code-elf-guide>
 	</view>
 </template>
 
 <script>
+	import codeElfGuide from '@/components/code-elf-guide/code-elf-guide.vue'
 	export default {
+		components: {
+			codeElfGuide
+		},
 		data() {
 			return {
-				title: 'Hello'
+				guidePages: true
 			}
 		},
 		onLoad() {
-
+			this.loadExecution()
+		},
+		onShow() {
+			uni.hideHomeButton()
 		},
 		methods: {
-			
+			loadExecution: function() {
+				console.log('12323')
+				/**
+				 * 获取本地存储中ddwbFlag的值
+				 * 若存在，说明不是首次启动，直接进入首页；
+				 * 若不存在，说明是首次启动，进入引导页；
+				 */
+				try {
+					// 获取本地存储中ddwbFlag标识
+					const value = uni.getStorageSync('ddwbFlag');
+					console.log('1111', value)
+					if (value) {
+						// ddwbFlag=true直接跳转到首页
+						// 查看用户是否登录过
+						const obj = uni.getStorageSync('ddwb');
+						if(obj){
+							if (obj.landOrgan.length > 0) {
+								uni.switchTab({
+									url: '../plantManage/plantManage'
+								});
+								uni.setStorage({
+									key: 'organId',
+									data: obj.landOrgan[0].organ.id,
+								})
+							} else {
+								uni.redirectTo({
+									url: '../plantManage/baseLand/chooseHandle'
+								});
+							}
+						}else{
+							uni.redirectTo({
+								url: '/pages/login/login'
+							});
+						}
+					} else {
+						// ddwbFlag!=true显示引导页
+						this.guidePages = true
+						uni.setStorage({
+							key: 'ddwbFlag',
+							data: true,
+							success() {
+								setTimeout(function() {
+									uni.redirectTo({
+										url: '/pages/login/login'
+									});
+								}, 3000)
+							}
+						});
+					}
+				} catch (e) {					
+					// error 
+					this.guidePages = true
+					uni.setStorage({
+						key: 'ddwbFlag',
+						data: true,
+						success() {
+							console.log('???')
+							setTimeout(function() {
+								uni.redirectTo({
+									url: '/pages/login/login'
+								});
+							}, 3000)
+						}
+					});
+				}
+			}
 		}
 	}
 </script>
@@ -28,6 +98,7 @@
 		width: 100%;
 		height: 100%;
 		padding: 0;
+		background: #fff;
 	}
 
 	.bg {

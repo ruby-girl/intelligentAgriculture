@@ -97,19 +97,22 @@
 				})
 			},
 			register() {
+				wx.login({
+				     success: res => {
+				       // 发送 res.code 到后台换取 openId, sessionKey, unionId
+										console.info(res.code)
+				     }
+				   })
+									return
 				if(!this.test()) return false
-				 // wx.login({
-				 //      success: res => {
-				 //        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-				 //      }
-				 //    })
+	
 				this.$apiYZX.loginReg(this.userInfo).then(res => {
 					if(res.data.code=='200'){
 						uni.showToast({
 						    title: '注册成功',
 							icon:'success',
 							success() {
-								uni.navigateTo({
+								uni.redirectTo({
 								    url: 'login'
 								});
 							}

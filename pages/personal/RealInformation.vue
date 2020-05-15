@@ -93,27 +93,27 @@
 						value: 2
 					},
 					{
-						name: '高中',
+						name: '中专/高中',
 						value: 3
 					},
 					{
-						name: '中专',
+						name: '专科',
 						value: 4
 					},
 					{
-						name: '大专',
+						name: '本科',
 						value: 5
 					},
 					{
-						name: '本科',
+						name: '硕士研究生',
 						value: 6
 					},
 					{
-						name: '硕士',
+						name: '博士研究生',
 						value: 7
 					},
 					{
-						name: '博士',
+						name: '博士后',
 						value: 8
 					}
 				],
@@ -143,6 +143,9 @@
 						_this.jy=_this.educationList.findIndex(item=>{
 								return item.value==res.data.data.education
 						})
+						if(_this.jy==-1){
+							_this.jy=0
+						}
 						_this.$apiYZX.provinces().then(res => {
 							let arr = []
 							res.data.data.forEach(item => {
@@ -289,7 +292,12 @@
 				if (!this.testInput()) return false;
 				this.getSelectValue()
 				this.$apiYZX.userPerfectInfo(this.userInfo).then(res => {
-
+					if(res.data.code==200){
+						uni.showToast({
+							title: '编辑成功',
+							icon: 'success',
+							})
+					}
 				})
 			},
 			getSelectValue(){//获取教育程度，所在区域的值

@@ -34,6 +34,9 @@
 		onLoad() {
 
 		},
+		onShow() {
+			uni.hideHomeButton()
+		},
 		methods: {
 			onInput(e) {
 				this.obj.account = e.detail.value
@@ -100,7 +103,6 @@
 							phone: res.data.data.user.phone,
 							name: res.data.data.user.name,
 							headPortrait: this.headPortrait,
-
 							landOrgan: res.data.data.user.organUsers
 						}
 
@@ -112,8 +114,6 @@
 									title: '登录成功',
 									icon: 'success',
 									success() {
-
-
 										if (obj.landOrgan.length > 0) {
 											uni.switchTab({
 												url: '../plantManage/plantManage'
@@ -124,11 +124,10 @@
 											})
 
 										} else {
-											uni.navigateTo({
+											uni.redirectTo({
 												url: '../plantManage/baseLand/chooseHandle'
 											});
 										}
-
 									}
 								})
 							}

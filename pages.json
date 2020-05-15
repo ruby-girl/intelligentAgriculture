@@ -10,19 +10,26 @@
 			}
 		
 		},{
+
+			"path": "pages/personal/personal",
+
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+			}
+		},
+		{
 			"path": "pages/plantManage/framManage/addFram",
 			"style": {
 				"navigationBarTitleText": "添加农事操作记录"
 			}
 		},{
-			"path": "pages/plantManage/framManage/framManage",
-			"style": {
-				"navigationBarTitleText": "农事记录"
-			}
-		},{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "登录"
+				"navigationBarTitleText": "登录",
+				"disableScroll": true
 			}
 		},
 		{
@@ -59,7 +66,8 @@
 			"style": {
 				"app-plus": {
 					"titleNView": false //禁用原生导航栏
-				}
+				},
+				"disableScroll": true
 			}
 		},
 	
@@ -98,15 +106,7 @@
 			"style": {
 				"navigationBarTitleText": "市集"
 			}
-		}, {
-			"path": "pages/personal/personal",
-			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#00AE66",
-				"navigationBarTextStyle": "white",
-				"disableScroll": true
-			}
-		}, {
+		},  {
 			"path": "pages/plantManage/batchManagement/list",
 			"style": {
 				"navigationBarTitleText": "批次管理",
