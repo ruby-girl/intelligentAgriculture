@@ -151,3 +151,11 @@ export const organUserWorkOrderManageGetById = (data) => {
 		data
 	})
 }
+// 巡查工单工单列表
+export const getFeedBackWorkOrdersList = (page,data) => {
+	return http.request({
+		url: 'api/organUserWorkOrderManage/getFeedBackWorkOrders/'+page,
+		method: 'get',
+		data
+	})
+}

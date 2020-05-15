@@ -97,13 +97,13 @@
 				})
 			},
 			register() {
-				wx.login({
-				     success: res => {
-				       // 发送 res.code 到后台换取 openId, sessionKey, unionId
-										console.info(res.code)
-				     }
-				   })
-									return
+				// wx.login({
+				//      success: res => {
+				//        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+				// 						console.info(res.code)
+				//      }
+				//    })
+
 				if(!this.test()) return false
 	
 				this.$apiYZX.loginReg(this.userInfo).then(res => {

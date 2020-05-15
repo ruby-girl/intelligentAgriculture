@@ -5,7 +5,7 @@
 			<ms-dropdown-menu>
 				<ms-dropdown-item v-model="value1" :list="timeList" :hasSlot="true" title="最近时间"></ms-dropdown-item>
 				<!-- <ms-dropdown-item v-model="value2" :list="list"></ms-dropdown-item> -->
-				<ms-dropdown-item v-model="value2" :list="typeList" :hasSlot="true" title="工单类型">
+				<ms-dropdown-item v-model="value2" :list="typeList" :hasSlot="true" title="工单状态">
 
 				</ms-dropdown-item>
 				<ms-dropdown-item v-model="value3" :hasSlot="true" title="工单批次" :list="orderList">
@@ -22,44 +22,18 @@
 
 		</view>
 
-		<scroll-view v-bind:style="{height:(windowHeight-10)+'px'}" class="list-container" scroll-y="true"
+		<scroll-view v-bind:style="{height:(windowHeight-60)+'px'}" class="list-container" scroll-y="true"
 		 :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper" @scrolltolower="loadingData">
 			<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.id)">
-				<view v-if="item.workOrderType==1">				
-					<view class="flex justify-content-flex-justify align-items-center">
-						<view>
-							<image src="/static/plant/icon_weeding@2x.png" class="imgIcon"></image>						
-							<text class="order-title">{{item.farmWorkItemName}}</text>
-							<text>来自工单</text>
-						</view>
-						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
-						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
-					</view>
-					<view class="flex align-items-center">				
-						<view>开始时间：{{item.scheduledStartTime}}</view>
-					</view>
-					<view class="flex align-items-center">				
-						<view>结束时间：{{item.scheduledEndTime}}</view>
-					</view>
-					<view class="flex align-items-center">				
-						<view>作物：{{item.breedName}}</view>
-					</view>
-					<view class="flex align-items-center">				
-						<view>地块：<text v-for="li in item.landParcels" :key="li.id">{{li.name}}</text></view>
-					</view>
-					<view class="flex align-items-center">				
-						<view>种植方案：{{item.plantingPlanName}}</view>
-					</view>
-				</view>
-				<view v-else>
+				<view>
 					<view class="flex justify-content-flex-justify align-items-center">
 						<view>
 							<image src="/static/plant/icon_workorde@2x.png" class="imgIcon"></image>
 							<text class="order-title">{{item.farmWorkItemName}}</text>
 							<text>来自巡查 {{item.executiontime==null?'':item.executiontime}}</text>
 						</view>
-						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
-						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
+						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">已处理</view>
+						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>待处理</view>
 					</view>
 					<view>{{item.feedbackContent==null?'':item.feedbackContent}}</view>
 					<view class="flex align-items-center">				
@@ -75,6 +49,8 @@
 			</view>
 			<view class="loading-more">{{contentdown}}</view>
 		</scroll-view>
+		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin:0 15px" @click="toadd">
+			添加巡查工单</button>
 	</view>
 </template>
 
@@ -107,40 +83,33 @@
 					{
 						text: '近一年',
 						value: 3
-					}		
+					}
 				],
 				orderList: [],
 				typeList: [
 					{
 						text: '全部',
 						value: ''
-					},{
-						text: '批次工单',
+					},
+					{
+						text: '待处理',
 						value: 1
 					},
 					{
-						text: '巡查工单',
+						text: '已处理',
 						value: 2
-					}		
+					}
 				],
 				value1: '',
 				value2: '',
 				value3: '',
 				tabs: [{
-						id: '',
-						name: '全部'
-					},
-					{
-						id: 3,
-						name: '未开始'
-					},
-					{
 						id: 1,
-						name: '待处理'
-					},
+						name: '我发起的'
+					},				
 					{
 						id: 2,
-						name: '已处理'
+						name: '全基地的'
 					},
 				],
 				TabCur: 1,
@@ -154,8 +123,8 @@
 				listObj: {
 					plantingBatchId: '', //批次ID
 					timeType: '', //时间
-					workOrderStatus: 1, //工单状态
-					workOrderType: '' //工单类型
+					workOrderStatus: '', //工单状态
+					initiatorId:''//发起人
 				},
 				page: 1,
 				windowHeight: 300,
@@ -172,7 +141,7 @@
 				this.getData()
 			},
 			value2(val,oldValue){
-				this.listObj.workOrderType=val
+				this.listObj.workOrderStatus=val
 				this.newsList=[]
 				this.getData()
 			},
@@ -184,14 +153,14 @@
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			this.TabCur = option.type
-			this.obj.baseId = option.baseId
+			this.obj.baseId = uni.getStorageSync('baseId');
 			// 获取下拉数据--工单批次
 			let _this = this
 			uni.getStorage({
 				key: 'organUserId',
 				success: function(res) {
 					_this.obj.organUserId = res.data
+					_this.listObj.initiatorId= res.data
 					_this.$apiYZX.getWorkOrderManage(_this.obj).then(res => {
 						let obj = {
 							text: '全部',
@@ -204,7 +173,7 @@
 								value: item.id
 							}
 							_this.orderList.push(obj)
-						})					
+						})
 					})
 					_this.getData()
 				}
@@ -215,15 +184,6 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
-			getworkOrderStatus(state){
-				if(state==3){
-					return '未开始'
-				}else if(state==1){
-					return '处理'
-				}else{
-					return '已处理'
-				}
-			},
 			scrolltoupper() {
 				console.info('下拉')
 			},
@@ -239,7 +199,7 @@
 				let obj = { ...this.listObj,
 					...this.obj
 				}
-				this.$apiYZX.getWorkOrderManageList(this.page, obj).then(res => {
+				this.$apiYZX.getFeedBackWorkOrdersList(this.page, obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.data)
 					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0
@@ -258,7 +218,11 @@
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
-				this.listObj.workOrderStatus=e.currentTarget.dataset.id;
+				if(e.currentTarget.dataset.id==1){
+					this.listObj.initiatorId=this.obj.organUserId
+				}else{
+					this.listObj.initiatorId=''
+				}
 				this.page=1
 				this.loadingType=1
 				this.newsList=[]
@@ -276,7 +240,8 @@
 				uni.navigateTo({
 					url: '/pages/plantManage/framManage/addFram?workOrderId=' + id +'&plantingBatchId='+plantingBatchId
 				});
-			}
+			},
+			toadd(){}
 		}
 	}
 </script>
