@@ -19,7 +19,7 @@
 		<view class="section">
 			<label ><b>基地管理</b></label>
 			<view class="cu-list grid col-3 no-border" >
-				<view class="cu-item" v-for="(item,index) in cuIconList" :key="index" >
+				<view class="cu-item" v-for="(item,index) in cuIconList" :key="index" @click="toPlant(item.url)">
 			           <view class="cu-img">
 						   <image :src="item.imgUrl" style="height: 100%;" ></image>
 						   
@@ -72,17 +72,21 @@
 					cuIconList: [{
 						cuIcon: 'cardboardfill',
 					    imgUrl:'/static/service/icon_basemanagement@2x.png',
+						url:'',
 						name: '基地信息'
 					}, {
 						cuIcon: 'recordfill',
 					     imgUrl:'/static/service/icon_environmentalmonitoring@2x.png',
+						 url:'',
 						name: '环控基站'
 					}, {
 						cuIcon: 'picfill',
 						imgUrl:'/static/service/icon_plantinspection@2x.png',
+						url:'/pages/service/plantInspections',
 						name: '种植巡查'
 					}, {
 						cuIcon: 'noticefill',
+						url:'',
 					   imgUrl:'/static/service/icon_Financialbudget@2x.png',
 						name: '财务预算'
 					}]
@@ -90,13 +94,19 @@
 			
 		},
 		onLoad() {
-			this.TowerSwiper('swiperList');
+			// this.TowerSwiper('swiperList');
 			// 初始化towerSwiper 传已有的数组名即可
 		},
 		methods: {
 			downSelect() {
 				this.isShow = !this.isShow
 			},
+			toPlant(url){
+				if(!url) return
+				uni.navigateTo({
+				    url:url
+				});
+			}
 		}
 	}
 </script>

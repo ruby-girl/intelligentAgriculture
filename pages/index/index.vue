@@ -32,7 +32,6 @@
 				try {
 					// 获取本地存储中ddwbFlag标识
 					const value = uni.getStorageSync('ddwbFlag');
-					console.log('1111', value)
 					if (value) {
 						// ddwbFlag=true直接跳转到首页
 						// 查看用户是否登录过
@@ -78,7 +77,6 @@
 						key: 'ddwbFlag',
 						data: true,
 						success() {
-							console.log('???')
 							setTimeout(function() {
 								uni.redirectTo({
 									url: '/pages/login/login'

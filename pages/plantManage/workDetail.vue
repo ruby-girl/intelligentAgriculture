@@ -33,8 +33,8 @@
 							<t-th>人员类型</t-th>
 							<t-th>人工(亩)</t-th>
 							<t-th>工价<br />(元/人/田)</t-th>
-							<t-th>农资费用</t-th>
-							<t-th>设备费用</t-th>
+							<t-th>面积(亩)</t-th>
+							<t-th>费用(元)</t-th>
 						</t-tr>
 						<t-tr v-for="item in personResourcesBudget" :key="item.id">
 							<t-td>{{ item.name }}</t-td>
@@ -132,8 +132,8 @@
 							<t-th>人员类型</t-th>
 							<t-th>人工(亩)</t-th>
 							<t-th>工价<br />(元/人/田)</t-th>
-							<t-th>农资费用</t-th>
-							<t-th>设备费用</t-th>
+							<t-th>面积(亩)</t-th>
+							<t-th>费用(元)</t-th>
 						</t-tr>
 						<t-tr v-for="item in personResources" :key="item.id">
 							<t-td>{{ item.name }}</t-td>

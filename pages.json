@@ -7,7 +7,7 @@
 			"navigationBarBackgroundColor": "#29B982",
 			"navigationBarTextStyle": "white"
 		}
-	
+
 	},{
 			"path": "pages/plantManage/framManage/addFram",
 			"style": {
@@ -21,8 +21,9 @@
 			}
 		},{
 
-			"path": "pages/personal/personal",
 
+		{
+			"path": "pages/personal/personal",
 			"style": {
 				"navigationBarTitleText": "我的",
 				"navigationBarBackgroundColor": "#00AE66",
@@ -50,6 +51,12 @@
 			"path": "pages/plantManage/baseLand/addBaseLand",
 			"style": {
 				"navigationBarTitleText": "创建基地"
+			}
+		},
+		{
+			"path": "pages/service/plantInspections",
+			"style": {
+				"navigationBarTitleText": "种植巡查"
 			}
 		},
 
@@ -212,7 +219,7 @@
 
 		"list": [{
 			"name": "测试", //模式名称
-			"path": "pages/login/login", //启动页面，必选
+			"path": "pages/service/service", //启动页面，必选
 			"query": "" //启动参数，在页面的onLoad函数里面得到
 		}]
 
