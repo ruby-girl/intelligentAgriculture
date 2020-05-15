@@ -33,7 +33,7 @@
 							<text>来自工单</text>
 						</view>
 						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
-						<view style="color:red" v-else @tap.stop='goAddUrl(item.id)'>处理</view>
+						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
 					</view>
 					<view class="flex align-items-center">				
 						<view>开始时间：{{item.scheduledStartTime}}</view>
@@ -59,7 +59,7 @@
 							<text>来自巡查 {{item.executiontime==null?'':item.executiontime}}</text>
 						</view>
 						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
-						<view style="color:red" v-else @tap.stop='goAddUrl(item.id)'>处理</view>
+						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
 					</view>
 					<view>{{item.feedbackContent==null?'':item.feedbackContent}}</view>
 					<view class="flex align-items-center">				
@@ -265,9 +265,10 @@
 				});
 			},
 			/* 跳转 添加农事 */
-			goAddUrl(id) {
+			goAddUrl(id,plantingBatchId) {
+					
 				uni.navigateTo({
-					url: '/pages/plantManage/addFram?id=' + id
+					url: '/pages/plantManage/framManage/addFram?workOrderId=' + id +'&plantingBatchId='+plantingBatchId
 				});
 			}
 		}
