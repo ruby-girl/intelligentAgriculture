@@ -143,3 +143,50 @@ export const addFarmWorkBase = (data) => {
 		data,
 	})
 }
+
+
+/* 添加农事记录 第二步 添加人工 */
+export const addPersonResources = (data) => {
+	return http.request({
+		url: 'api/personResources/',
+		method: 'POST',
+		data,
+	})
+}
+
+/* 添加农事记录 第二步 添加农资 */
+export const addSuppliessResources = (data) => {
+	return http.request({
+		url: 'api/suppliess/',
+		method: 'POST',
+		data,
+	})
+}
+
+/* 添加农事记录 第二步 添加设备 */
+export const addEquitmenResources = (data) => {
+	return http.request({
+		url: 'api/equitmenResources/',
+		method: 'POST',
+		data,
+	})
+}
+
+
+/* 添加农事记录 第二步 生产厂家 */
+export const getSuppliersCompany = (data) => {
+	return http.request({
+		url: 'api/suppliers/',
+		method: 'GET',
+		data,
+	})
+}
+
+/* 添加农事记录 第二步 单位 */
+export const getSuppliersUnits = (data) => {
+	return http.request({
+		url: 'api/units/',
+		method: 'GET',
+		data,
+	})
+}

@@ -16,6 +16,11 @@
 				"navigationBarTitleText": "添加农事操作记录"
 			}
 		},{
+			"path": "pages/plantManage/framManage/framManage",
+			"style": {
+				"navigationBarTitleText": "农事记录"
+			}
+		},{
 			"path": "pages/plantManage/plantManage",
 			"style": {
 				"navigationBarTitleText": "种植管理",
