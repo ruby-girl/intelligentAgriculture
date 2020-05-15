@@ -67,7 +67,8 @@
 		</view>
 
 
-        <second-model v-if="stepsNum == 1"></second-model>
+        <second-model v-if="stepsNum == 1" :workOrderId="params.workOrderId"
+		 :plantingBatchId="params.plantingBatchId" :acreage="acreage" :farmWorkRecordId="farmWorkRecordId"></second-model>
 
 
 
@@ -93,29 +94,35 @@
 				}, {
 					name: '农事信息'
 				}],
-				stepsNum:1,
+				stepsNum:0,
 				plantingBatchValue: '',
 				farmWorkItemValue: '',
 				params: {
 					"baseId": uni.getStorageSync('baseId'),
 					"executionUserId": uni.getStorageSync('organUserId'),
 					"farmWorkRecordPicsStr": "",
-					"plantingBatchId": 0,
-					"price": 0,
-					"workOrderId": 3
-				}
+					"plantingBatchId":'',
+					"price": '',
+					"workOrderId": ''
+				},
+				farmWorkRecordId:'',
+				acreage:''
 			};
 		},
-		onLoad() {
-			this.initSelect()
+		onLoad(option) {
+	
+			this.initSelect();
+			this.params.workOrderId  = Number(option.workOrderId);
+			this.params.plantingBatchId  =  Number(option.plantingBatchId);
+			
 		},
 		methods: {
 			NumSteps() {
-				console.log(this.params)
-
 				this.$api.addFarmWorkBase(this.params).then(res => {
+					this.farmWorkRecordId =res.data.data.farmWorkRecordId;
+					this.acreage =res.data.data.acreageCount;
 					this.stepsNum = this.stepsNum == this.numList.length - 1 ? 0 : this.stepsNum + 1
-				})
+				});
 			},
 			farmWorkRecordPicsStrValue(e) {
 				this.params.farmWorkRecordPicsStr = e.detail.value

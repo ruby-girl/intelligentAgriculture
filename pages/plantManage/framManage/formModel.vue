@@ -44,7 +44,7 @@
 						面积（亩）
 
 					</view>
-					<input placeholder="请输入" disabled  name="input"></input>
+					<input placeholder="请输入" disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -52,7 +52,7 @@
 						费用合计
 
 					</view>
-					<input placeholder="请输入" disabled  name="input"></input>
+					<input placeholder="请输入" disabled :value="item.personFeeCount" name="input"></input>
 				</view>
 			</view>
 
@@ -120,7 +120,7 @@
 
 					</view>
 
-					<input placeholder="请输入" @input="changeInput2($event,'suppliesCount',index)" name="input"></input>
+					<input placeholder="请输入" @input="changeInput2($event,'unitArea',index)" name="input"></input>
 
 				</view>
 				<view class="cu-form-group ">
@@ -141,19 +141,13 @@
 
 
 					</view>
-					<input placeholder="请输入" @input="changeInput2($event,'acreageCount',index)" name="input"></input>
+					<input placeholder="请输入" disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
-
-
-
 						费用
-
-
-
 					</view>
-					<input placeholder="请输入" @input="changeInput2($event,'suppliesFeeCount',index)" name="input"></input>
+					<input placeholder="请输入" disabled :value="item.suppliesFeeCount" name="input"></input>
 				</view>
 
 			</view>
@@ -193,13 +187,13 @@
 					<view class="title">
 						面积（亩）
 					</view>
-					<input placeholder="请输入" @input="changeInput3($event,'acreageCount',index)" name="input"></input>
+					<input placeholder="请输入" disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
 						费用
 					</view>
-					<input placeholder="请输入" @input="changeInput3($event,'feeCount',index)" name="input"></input>
+					<input placeholder="请输入" disabled :value="item.feeCount" name="input"></input>
 				</view>
 			</view>
 
@@ -219,13 +213,14 @@
 		components: {
 			neilModal
 		},
+		props: ['workOrderId', 'plantingBatchId', 'farmWorkRecordId','acreage'],
 		data() {
 			return {
-				ttt: '',
+			
 				showModel: false,
-				picker: [],
+		
 				personList: [],
-				
+
 				nowDeletePersonIndex: '',
 				nowName: '',
 
@@ -235,7 +230,7 @@
 				unitSelval: '',
 				unitSelectList: [],
 
-				equitmenList: []
+				equitmenList: [],
 
 			};
 		},
@@ -272,15 +267,15 @@
 					"name": "",
 					"labour": '',
 					"labourCost": '',
-					"acreageCount": '',
+					"acreageCount": this.acreage,
 					"personFeeCount": '',
 					"farmWorkRecordId": 1,
-					"workOrderId": 3
+					"workOrderId": this.workOrderId
 				}
 				this.personList.push(obj)
 			},
 			/* 删除人工 */
-			personDelete(name,index) {
+			personDelete(name, index) {
 				this.showModel = true;
 				this.nowName = name;
 				this.nowDeletePersonIndex = index;
@@ -298,12 +293,12 @@
 					"name": "",
 					"supplierName": "",
 					"unit": "",
-					"suppliesCount": "",
+					"unitArea": "",
 					"price": "",
-					"acreageCount": "",
+					"acreageCount": this.acreage,
 					"suppliesFeeCount": "",
 					"farmWorkRecordId": 1,
-					"workOrderId": 3
+					"workOrderId": this.workOrderId
 				}
 				this.suppliesList.push(obj)
 
@@ -321,32 +316,63 @@
 				let obj = {
 					"name": "",
 					"price": "",
-					"acreageCount": "",
+					"acreageCount": this.acreage,
 					"feeCount": "",
 					"farmWorkRecordId": 1,
-					"workOrderId": 3
+					"workOrderId": this.workOrderId
 				}
 				this.equitmenList.push(obj)
 			},
 
 			/* 人工输入框数据 */
 			changeInput(e, v, index) {
-				if(v == 'labour'){
-					
+				let acreage = Number(this.acreage);
+				if (v == 'labour' && this.personList[index]['labourCost']) {
+
+					let labour = e.detail.value;
+					let labourCost = this.personList[index]['labourCost'];
+					this.personList[index]['personFeeCount'] = acreage * labour * labourCost
+
 				}
-				if(v == 'labourCost'){
-					
+				if (v == 'labourCost' && this.personList[index]['labour']) {
+
+
+					let labour = this.personList[index]['labour'];
+
+					let labourCost = e.detail.value;
+					this.personList[index]['personFeeCount'] = acreage * labour * labourCost
+
+
+
 				}
-				
+
 				this.personList[index][v] = e.detail.value;
 
 			},
 			/* 农资  输入框数据 */
 			changeInput2(e, v, index) {
+				let acreage = Number(this.acreage);
+				if (v == 'unitArea' && this.suppliesList[index]['price']) {
+					let unitArea = e.detail.value;
+					let price = this.suppliesList[index]['price'];
+					this.suppliesList[index]['suppliesFeeCount'] = acreage * unitArea * price
+				}
+				if (v == 'price' && this.suppliesList[index]['unitArea']) {
+					let unitArea = this.suppliesList[index]['unitArea'];
+					let price = e.detail.value;
+					this.suppliesList[index]['suppliesFeeCount'] = acreage * unitArea * price
+				}
 				this.suppliesList[index][v] = e.detail.value;
 			},
 			/* 设备  输入框数据 */
 			changeInput3(e, v, index) {
+				let acreage = Number(this.acreage);
+				if (v == 'price') {
+
+					let price = e.detail.value;
+					this.equitmenList[index]['feeCount'] = acreage * price
+
+				}
 				this.equitmenList[index][v] = e.detail.value;
 			},
 
