@@ -81,11 +81,14 @@
 					</navigator>
 				</view>
 				<view>
+					<navigator :url="'/pages/plantManage/framManage/framManage?baseId='+baseId">
+					
 					<view>
 						<image src="/static/plant/icon_farming@2x.png" class="icon" />
 
 					</view>
 					<text>农事管理</text>
+					</navigator>
 				</view>
 
 			</view>

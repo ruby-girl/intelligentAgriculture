@@ -1,14 +1,14 @@
 <!-- 添加农事 -->
 <template>
 	<view class="add-fram">
-		<view class="bg-white padding">
+		<!-- <view class="bg-white padding">
 			<view class="cu-steps">
 				<view class="cu-item" :class="index>stepsNum?'':'text-blue'" v-for="(item,index) in numList" :key="index">
 					<text class="num" :class="index==2?'err':''" :data-index="index + 1"></text> {{item.name}}
 				</view>
 			</view>
-		</view>
-		<view v-if="stepsNum == 0">
+		</view> -->
+		<view >
 			<view class="section">
 				<view class="label">
 					<label><text class="line"></text><text class="fb">基础信息</text></label>
@@ -63,12 +63,12 @@
 					<textarea maxlength="-1" @input="farmWorkRecordPicsStrValue" placeholder="请输入反馈内容"></textarea>
 				</view>
 			</view>
-			<button class="cu-btn block bg-green  lg" @tap="NumSteps">下一步</button>
+			<!-- <button class="cu-btn block bg-green  lg" @tap="NumSteps">下一步</button> -->
 		</view>
 
 
-        <second-model v-if="stepsNum == 1" :workOrderId="params.workOrderId"
-		 :plantingBatchId="params.plantingBatchId" :acreage="acreage" :farmWorkRecordId="farmWorkRecordId"></second-model>
+        <second-model :workOrderId="params.workOrderId"
+		 :plantingBatchId="params.plantingBatchId" :formObj="params"></second-model>
 
 
 
@@ -105,8 +105,7 @@
 					"price": '',
 					"workOrderId": ''
 				},
-				farmWorkRecordId:'',
-				acreage:''
+			
 			};
 		},
 		onLoad(option) {

@@ -135,6 +135,15 @@ export const getFarmWorkSelect = (data) => {
 	})
 }
 
+/* 获取 添加农事记录 --默认人工农资设备信息 */
+export const getFarmWorkTabelList = (data) => {
+	return http.request({
+		url: 'api/organUserFarmWorkRecordManage/getResourceByWorkOrderId/',
+		method: 'GET',
+		data,
+	})
+}
+
 /* 添加农事记录 第一步 */
 export const addFarmWorkBase = (data) => {
 	return http.request({
@@ -186,6 +195,16 @@ export const getSuppliersCompany = (data) => {
 export const getSuppliersUnits = (data) => {
 	return http.request({
 		url: 'api/units/',
+		method: 'GET',
+		data,
+	})
+}
+
+
+/* 农事记录列表 */
+export const getFarmWorkList = (data) => {
+	return http.request({
+		url: 'api/organUserFarmWorkRecordManage/getByExecutionUserId/'+data.pageNo,
 		method: 'GET',
 		data,
 	})

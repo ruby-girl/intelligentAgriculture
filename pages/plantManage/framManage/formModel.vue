@@ -17,18 +17,18 @@
 						{{index+1}}.人工
 					</view>
 					<veiw>
-						<text class="iconfont iconquxiao imgIcon " @click="personDelete('personList',index)"></text>
+						<text class="iconfont iconquxiao imgIcon "  @click="personDelete('personList',index)"></text>
 					</veiw>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title"> 人员类型 </view>
-					<input placeholder="请输入" @input="changeInput($event,'name',index)" name="input"></input>
+					<input placeholder="请输入" :value="item.name" @input="changeInput($event,'name',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
 						人工（亩）
 					</view>
-					<input placeholder="请输入" type="digit" @input="changeInput($event,'labour',index)" name="input"></input>
+					<input placeholder="请输入" type="digit" :value="item.labour" @input="changeInput($event,'labour',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -36,7 +36,7 @@
 						工价（元）
 
 					</view>
-					<input placeholder="请输入" type="digit" @input="changeInput($event,'labourCost',index)" name="input"></input>
+					<input placeholder="请输入" type="digit" :value="item.labourCost" @input="changeInput($event,'labourCost',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -44,7 +44,7 @@
 						面积（亩）
 
 					</view>
-					<input placeholder="请输入" disabled :value="acreage" name="input"></input>
+					<input  disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -52,7 +52,7 @@
 						费用合计
 
 					</view>
-					<input placeholder="请输入" disabled :value="item.personFeeCount" name="input"></input>
+					<input  disabled :value="item.personFeeCount" name="input"></input>
 				</view>
 			</view>
 
@@ -82,7 +82,7 @@
 					<view class="title">
 						资料名称
 					</view>
-					<input placeholder="请输入" @input="changeInput2($event,'name',index)" name="input"></input>
+					<input placeholder="请输入"  :value="item.name" @input="changeInput2($event,'name',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -90,10 +90,9 @@
 						生产厂家
 
 					</view>
-					<picker @change="companyChange($event,'supplierName',index)" range-key="name" :value="companySelval" :range="companySelectList">
+					<picker @change="companyChange($event,'supplierName',index)" range-key="name" :value="item.supplierName" :range="companySelectList">
 						<view class="picker">
-							{{companySelval?companySelectList[companySelval].name:'请选择'}}
-
+							{{item.supplierName}}
 
 						</view>
 					</picker>
@@ -104,9 +103,9 @@
 						单位
 
 					</view>
-					<picker @change="unitsChange($event,'unit',index)" range-key="name" :value="unitSelval" :range="unitSelectList">
+					<picker @change="unitsChange($event,'unit',index)" range-key="name" :value="item.unit" :range="unitSelectList">
 						<view class="picker">
-							{{unitSelval?unitSelectList[unitSelval].name:'请选择'}}
+							{{item.unit}}
 
 
 						</view>
@@ -120,7 +119,7 @@
 
 					</view>
 
-					<input placeholder="请输入" @input="changeInput2($event,'unitArea',index)" name="input"></input>
+					<input placeholder="请输入" :value="item.unitArea"  @input="changeInput2($event,'unitArea',index)" name="input"></input>
 
 				</view>
 				<view class="cu-form-group ">
@@ -131,7 +130,7 @@
 
 
 					</view>
-					<input placeholder="请输入" @input="changeInput2($event,'price',index)" name="input"></input>
+					<input placeholder="请输入" :value="item.price"  @input="changeInput2($event,'price',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -141,13 +140,13 @@
 
 
 					</view>
-					<input placeholder="请输入" disabled :value="acreage" name="input"></input>
+					<input  disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
 						费用
 					</view>
-					<input placeholder="请输入" disabled :value="item.suppliesFeeCount" name="input"></input>
+					<input  disabled :value="item.suppliesFeeCount" name="input"></input>
 				</view>
 
 			</view>
@@ -175,25 +174,25 @@
 					<view class="title">
 						设备名称
 					</view>
-					<input placeholder="请输入" @input="changeInput3($event,'name',index)" name="input"></input>
+					<input placeholder="请输入" :value="item.name" @input="changeInput3($event,'name',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
 						每亩收费（元）
 					</view>
-					<input placeholder="请输入" @input="changeInput3($event,'price',index)" name="input"></input>
+					<input placeholder="请输入" :value="item.price" @input="changeInput3($event,'price',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
 						面积（亩）
 					</view>
-					<input placeholder="请输入" disabled :value="acreage" name="input"></input>
+					<input  disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
 						费用
 					</view>
-					<input placeholder="请输入" disabled :value="item.feeCount" name="input"></input>
+					<input  disabled :value="item.feeCount" name="input"></input>
 				</view>
 			</view>
 
@@ -213,53 +212,72 @@
 		components: {
 			neilModal
 		},
-		props: ['workOrderId', 'plantingBatchId', 'farmWorkRecordId','acreage'],
+		props: ['workOrderId', 'plantingBatchId', 'formObj'],
 		data() {
 			return {
-			
+
 				showModel: false,
-		
+
 				personList: [],
 
 				nowDeletePersonIndex: '',
 				nowName: '',
 
 				suppliesList: [],
-				companySelval: '',
-				companySelectList: [],
+				companySelval: 1,
+				companySelectList: [{name:'公司1',id:1},{name:'公司2',id:2}],
 				unitSelval: '',
 				unitSelectList: [],
 
 				equitmenList: [],
-
+				farmWorkRecordId: '',
+				acreage: 0
 			};
 		},
 		created() {
-			this.initSelect()
+			let _this = this;
+			this.initSelect();
+			 setTimeout(function () {
+			      _this.initData()
+			    }, 500);
 		},
 		methods: {
+			initData() {
+				this.$api.getFarmWorkTabelList({workOrderId:this.formObj.workOrderId,plantingBatchId:this.plantingBatchId}).then(res=>{
+				   this.acreage = res.data.data.acreageCount || 0;
+				   this.equitmenList = res.data.data.equipmentResources;
+				   this.personList = res.data.data.personResources;
+				   this.suppliesList = res.data.data.suppliesResources;
+					
+				})
+			},
 			initSelect() {
 				this.$api.getSuppliersCompany().then(res => {
-					this.companySelectList = res.data.data
+					this.companySelectList = res.data.data;
 				})
 				this.$api.getSuppliersUnits().then(res => {
-					this.unitSelectList = res.data.data
+					this.unitSelectList = res.data.data;
 				})
 			},
 			saveForm() {
-				this.$api.addPersonResources(this.personList).then(res => {})
-				this.$api.addSuppliessResources(this.suppliesList).then(res => {})
-				this.$api.addEquitmenResources(this.equitmenList).then(res => {});
-				wx.showToast({
-					title: '成功',
-					icon: 'success',
-					duration: 2000
+				let obj = {
+					"baseId": uni.getStorageSync('baseId'),
+					"executionUserId": uni.getStorageSync('organUserId'),
+					"farmWorkRecordPicsStr": this.formObj.farmWorkRecordPicsStr,
+					"plantingBatchId": this.formObj.plantingBatchId,
+					"price": this.formObj.price,
+					"workOrderId": this.formObj.workOrderId,
+					equipmentResources: this.equitmenList,
+					personResources: this.personList,
+					suppliesResources: this.suppliesList,
+				}
+				this.$api.addFarmWorkBase(this.obj).then(res => {
+
+					// this.farmWorkRecordId =res.data.data.farmWorkRecordId;
+					// this.acreage =res.data.data.acreageCount;
+					// this.stepsNum = this.stepsNum == this.numList.length - 1 ? 0 : this.stepsNum + 1
+
 				});
-				wx.navigateTo({
-					url: '../plantManage/framManage/framManage'
-				})
-
-
 			},
 			/* 人工 */
 			personAdd() {
@@ -292,6 +310,7 @@
 				let obj = {
 					"name": "",
 					"supplierName": "",
+					"supplierCode":'',
 					"unit": "",
 					"unitArea": "",
 					"price": "",
@@ -308,6 +327,7 @@
 				this.suppliesList[i][n] = this.companySelectList[e.detail.value].name
 			},
 			unitsChange(e, n, i) {
+				console.log(11)
 				this.unitSelval = e.detail.value
 				this.suppliesList[i][n] = this.unitSelectList[e.detail.value].name
 			},
