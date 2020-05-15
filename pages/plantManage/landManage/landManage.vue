@@ -18,7 +18,7 @@
 					</view>
 					<view class=" display-flex justify-content-flex-justify" style="flex: 1;">
 						<view>
-							<view>地块总数：{{resultData.landParcelCount}}</view>
+							<view>地块总数：{{resultData.landCount}}</view>
 							<view>地块总面积：{{resultData.acreages}}亩</view>
 						</view>
 						<view class="tc">
@@ -88,7 +88,10 @@
 				listData: [],
 				item1: 0,
 				user: {},
-				resultData:{},
+				resultData:{
+					acreages:'',
+					landCount:''
+				},
 				longitude:'',
 				latitude:'',
 				
@@ -120,6 +123,8 @@
 			});
 			this.param.baseId = option.baseId
 	       this.param.organUserId = uni.getStorageSync('organUserId');
+		   this.resultData.acreages =  option.acreages
+		   this.resultData.landCount =  option.landCount
 		},
 		onShow(){
 		
