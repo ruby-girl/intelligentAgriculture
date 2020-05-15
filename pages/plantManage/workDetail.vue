@@ -109,11 +109,11 @@
 					<view><text class="cr3 mr10">上传照片
 						</text>
 						<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll">
-							<image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-							<image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-							<image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-							<image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
-							<image src="/static/timg.jpg" lazy-load="true" mode="aspectFill"></image>
+							<image @click="showImgFunc('../../static/logo.png')" src="../../static/logo.png" lazy-load="true" mode="aspectFill"></image>
+							<image @click="showImgFunc('../../static/logo.png')" src="../../static/logo.png" lazy-load="true" mode="aspectFill"></image>
+							<image @click="showImgFunc('../../static/logo.png')" src="../../static/logo.png" lazy-load="true" mode="aspectFill"></image>
+							<image @click="showImgFunc('../../static/logo.png')" src="../../static/logo.png" lazy-load="true" mode="aspectFill"></image>
+							<image @click="showImgFunc('../../static/logo.png')" src="../../static/logo.png" lazy-load="true" mode="aspectFill"></image>
 						</scroll-view>
 					</view>
 					<view><text class="cr3 mr10">
@@ -181,6 +181,17 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-modal" :class="showImg?'show':''">
+			<view class="cu-dialog">
+				<view class="bg-img" :style="{'backgroundImage': 'url('+imgUrl+')','height':200+'px'}">
+					<view class="cu-bar justify-end text-white">
+						<view class="action" @tap="hideModal">
+							<text class="cuIcon-close "></text>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
 		<navigator :url="'/pages/plantManage/workeMethod?id='+id">
 			<button class="cu-btn block bg-green  lg" v-if="resultData.workOrderStatus == 1">立即处理</button>
 		</navigator>
@@ -215,6 +226,7 @@
 					},
 
 				],
+				showImg:false,
 				resultData: {},
 				personResourcesBudget: [],
 				equipmentResourcesBudget: [],
@@ -222,7 +234,8 @@
 				personResources: [],
 				equipmentResources: [],
 				suppliesResources: [],
-				id: ''
+				id: '',
+				imgUrl:''
 			};
 		},
 		onLoad(option) {
@@ -233,6 +246,13 @@
 
 		},
 		methods: {
+			showImgFunc(url){
+				this.showImg=true
+				this.imgUrl=url
+			},
+			hideModal(){
+				this.showImg=false
+			},
 			initData(id) {
 				this.$api.getByWorkId({
 					id: id
