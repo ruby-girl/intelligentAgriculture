@@ -19,17 +19,9 @@
 			"style": {
 				"navigationBarTitleText": "农事操作记录"
 			}
-		},{
-
-
+		},
 		{
-			"path": "pages/personal/personal",
-			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#00AE66",
-				"navigationBarTextStyle": "white",
-				"disableScroll": true
-			}
+			"path":"pages/personal/personal",			"style": {				"navigationBarTitleText": "我的",				"navigationBarBackgroundColor": "#00AE66",				"navigationBarTextStyle": "white",				"disableScroll": true			}
 		},
 	{
 			"path": "pages/login/login",
