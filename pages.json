@@ -51,6 +51,12 @@
 				"navigationBarTitleText": "种植巡查"
 			}
 		},
+		{
+			"path": "pages/service/addPlantInspections",
+			"style": {
+				"navigationBarTitleText": "添加巡查工单"
+			}
+		},
 
 		{
 			"path": "pages/plantManage/landManage/addLand",
@@ -161,6 +167,10 @@
 		}
 	    ,{
             "path" : "pages/plantManage/framManage/formModel",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/service/selectBatch",
             "style" : {}
         }
     ],

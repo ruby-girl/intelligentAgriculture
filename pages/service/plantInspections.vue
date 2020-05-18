@@ -30,7 +30,6 @@
 						<view>
 							<image src="/static/plant/icon_workorde@2x.png" class="imgIcon"></image>
 							<text class="order-title">{{item.farmWorkItemName}}</text>
-							<text>来自巡查 {{item.executiontime==null?'':item.executiontime}}</text>
 						</view>
 						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">已处理</view>
 						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>待处理</view>
@@ -241,7 +240,11 @@
 					url: '/pages/plantManage/framManage/addFram?workOrderId=' + id +'&plantingBatchId='+plantingBatchId
 				});
 			},
-			toadd(){}
+			toadd(){
+				uni.navigateTo({
+					url: '/pages/service/addPlantInspections'
+				});
+			}
 		}
 	}
 </script>

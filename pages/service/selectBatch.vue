@@ -3,7 +3,7 @@
 		<view class="cu-bar search solid-bottom">
 			<view class="search-form radius">
 				<text class="cuIcon-search"></text>
-				<input @focus="InputFocus" @blur="InputBlur" v-model="obj.name" :adjust-position="false" type="text" placeholder="搜索种植计划名称"
+				<input @blur="InputBlur"  :adjust-position="false" type="text" placeholder="搜索种植批次名称"
 				 confirm-type="search"></input>
 			</view>
 		</view>
@@ -15,7 +15,7 @@
 					{{item.name}}
 				</view>
 				<view class="small-txt text-gray">
-					{{item.description}}
+					种植户：{{item.userName}}
 				</view>
 			</view>
 			<view class="loading-more">{{contentdown}}</view>
@@ -38,12 +38,13 @@
 				contentdown: '',
 				windowHeight:500,
 				obj:{
-					baseId:'',
-					breedId:'',
+					baseId:'',				
 					name:''
 				},
-				plantingTime:'',
-				landId:''
+				name:'',
+				content:'',
+				id:'',
+				title:''
 			}
 		},
 		onLoad: function(options) {
@@ -52,14 +53,14 @@
 			uni.getStorage({
 				key: 'baseId',
 				success: function(res) {
-					_this.obj.breedId=options.breed					
-					_this.plantingTime=options.plantingTime	
-					_this.landId=options.landId
 					_this.obj.baseId=res.data
 					_this.getData()
 				}
 			});
+			this.title=options.title
+			this.content=options.content
 			this.loadingData = throttle(this.loadingData, 2000);
+			
 		},
 		onReachBottom: function() {},
 		methods: {
@@ -83,7 +84,7 @@
 				this.getData()
 			},
 			getData() {
-				this.$apiYZX.pagingCriteriaQuery(this.page,this.obj).then(res => {
+				this.$apiYZX.plantingBatchsQuery(this.page,this.obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.data)
 					if(this.page==1&&this.newsList.length==0){
 						this.loadingType = 0
@@ -102,10 +103,8 @@
 				})
 			},
 			toAdd(name,id){
-				console.log(this.obj)
 				uni.redirectTo({
-				    url: 'addBatch?breed='+this.obj.breedId+'&plantingTime='+this.plantingTime+'&landId='+this.landId+'&planName='+
-					name+'&planId='+id
+				    url: 'addPlantInspections?name='+name+'&id='+id+'&title='+this.title+'&content='+this.content
 			})
 			}
 		}

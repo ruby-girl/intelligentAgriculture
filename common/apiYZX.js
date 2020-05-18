@@ -159,3 +159,21 @@ export const getFeedBackWorkOrdersList = (page,data) => {
 		data
 	})
 }
+
+// 种植批次模糊查询分页
+export const plantingBatchsQuery = (page,data) => {
+	return http.request({
+		url: 'api/organUserPlantingBatchManage/appletCriteriaQuery/'+page,
+		method: 'get',
+		data
+	})
+}
+
+// 添加巡视工单
+export const addOrganUserWorkOrderManage = (data) => {
+	return http.request({
+		url: 'api/organUserWorkOrderManage/',
+		method: 'post',
+		data
+	})
+}
