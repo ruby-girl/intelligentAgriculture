@@ -98,13 +98,13 @@
 			</view> -->
 
 		</view>
-		<view class="second" v-if="resultData.workOrderStatus == 2">
+		<view class="second" v-if="resultData.workOrderStatus == 0">
 			<view class="mb20">
 				<label><text class="line"></text>执行信息</label>
 				<view class="content">
 					<view><text class="cr3 mr10">
 							执行时间
-						</text> <text>批次工单</text>
+						</text> <text>{{resultData.executiontime}}</text>
 					</view>
 					<view><text class="cr3 mr10">上传照片
 						</text>
@@ -118,12 +118,12 @@
 					</view>
 					<view><text class="cr3 mr10">
 							备注信息
-						</text>sdfasdfasdfasd</view>
+						</text>{{resultData.remark}}</view>
 				</view>
 			</view>
 			<view class="mb20 two">
 			
-				<label><text class="line"></text>人资物料费用预算</label>
+				<label><text class="line"></text>執行人资物料费用预算</label>
 				<view class="content">
 					<view class="f13" v-if="personResources.length>0">人资费用</view>
 			
@@ -192,9 +192,10 @@
 				</view>
 			</view>
 		</view>
-		<navigator :url="'/pages/plantManage/workeMethod?id='+id">
-			<button class="cu-btn block bg-green  lg" v-if="resultData.workOrderStatus == 1">立即处理</button>
+		<navigator :url="'/pages/plantManage/framManage/addFram?workOrderId='+id+'&plantingBatchId='+resultData.plantingBatchId+'&status='+resultData.workOrderStatus">
+			<button class="cu-btn block bg-green  lg" >{{resultData.workOrderStatus == 1?'立即处理':'修改記錄'}}</button>
 		</navigator>
+		
 	</view>
 </template>
 
