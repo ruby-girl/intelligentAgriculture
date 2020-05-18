@@ -58,11 +58,14 @@
 					<text>预警提醒</text>
 				</view>
 				<view>
+						<navigator url="/pages/plantManage/batchManagement/list">
+					
 					<view>
 						<image src="/static/plant/icon_batch@2x.png" class="icon" />
 
 					</view>
 					<text>批次管理</text>
+						</navigator>
 				</view>
 				<view>
 					<navigator :url="'/pages/plantManage/landManage/landManage?baseId='+baseId+'&acreages='+resultData.acreages+'&landCount='+resultData.landParcelCount">
