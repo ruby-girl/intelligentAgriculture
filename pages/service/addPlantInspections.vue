@@ -40,10 +40,10 @@
 				key: 'baseId',
 				success: function(res) {
 					_this.obj.baseId = res.data
-					_this.obj.plantingBatchName = option.name
-					_this.obj.plantingBatchId = option.id
-					_this.obj.feedbackContent = option.content
-					_this.obj.name = option.title
+					_this.obj.plantingBatchName = option.name||''
+					_this.obj.plantingBatchId = option.id||''
+					_this.obj.feedbackContent = option.content||''
+					_this.obj.name = option.title||''
 
 				}
 			});
@@ -67,7 +67,7 @@
 					_this.obj.feedbackContent = e.detail.value
 				}, 0)
 			},
-			toList() {
+			toList() {			
 				uni.navigateTo({
 					url: 'selectBatch?id=' + this.obj.plantingBatchId + '&name=' + this.obj.plantingBatchName + '&title=' + this.obj
 						.name +

@@ -1,6 +1,10 @@
 <!-- 待处理 -->
 <template>
 	<view class="workOrder">
+		<view style="position: relative;">
+			
+			<refresh ref="refresh" @isRefresh='isRefresh'></refresh>
+		</view>
 		<view class="top">
 			<ms-dropdown-menu>
 				<ms-dropdown-item v-model="value1" :list="timeList" :hasSlot="true" title="最近时间"></ms-dropdown-item>
@@ -21,33 +25,32 @@
 			</scroll-view>
 
 		</view>
-
-		<scroll-view v-bind:style="{height:(windowHeight-60)+'px'}" class="list-container" scroll-y="true"
-		 :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper" @scrolltolower="loadingData">
-			<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.id)">
-				<view>
-					<view class="flex justify-content-flex-justify align-items-center">
-						<view>
-							<image src="/static/plant/icon_workorde@2x.png" class="imgIcon"></image>
-							<text class="order-title">{{item.farmWorkItemName}}</text>
+		
+		<view class="" @touchstart="refreshStart" @touchmove="refreshMove" @touchend="refreshEnd">
+			<scroll-view v-bind:style="{height:(windowHeight-60)+'px'}" class="list-container" scroll-y="true"
+			 :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper" @scrolltolower="loadingData">
+				<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.id)">
+					<view>
+						<view class="flex justify-content-flex-justify align-items-center">
+							<view>
+								<image src="/static/plant/icon_workorde@2x.png" class="imgIcon"></image>
+								<text class="order-title">{{item.name}}</text>
+							</view>
+							<view style="color:#00AE66" v-if="item.workOrderStatus!==1">已处理</view>
+							<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>待处理</view>
 						</view>
-						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">已处理</view>
-						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>待处理</view>
-					</view>
-					<view>{{item.feedbackContent==null?'':item.feedbackContent}}</view>
-					<view class="flex align-items-center">				
-						<view>发起人：{{item.initiatorName}}</view>
-					</view>
-					<view class="flex align-items-center">				
-						<view>地块：<text v-for="li in item.landParcels" :key="li.id">{{li.name}}</text></view>
-					</view>
-					<view class="flex align-items-center">				
-						<view>种植方案：{{item.plantingPlanName}}</view>
+						<view>内容：{{item.feedbackContent==null?'':item.feedbackContent}}阿达地方萨法萨法按时发斯蒂芬啊发顺丰安抚安抚安抚爱的发声发萨法萨法萨法按时</view>
+						<view>批次：{{item.plantingBatchName==null?'':item.plantingBatchName}}</view>
+						<view class="flex align-items-center justify-content-flex-justify">				
+							<view>创建人：{{item.initiatorName||''}}&nbsp;&nbsp;{{item.creDate||''}}</view>
+							<view v-if="obj.organUserId==item.initiatorId&&item.workOrderStatus==1" style="color:red" @click.stop='delOrganUserWorkOrderManage(item.id)'>删除</view>
+						</view>
 					</view>
 				</view>
-			</view>
-			<view class="loading-more">{{contentdown}}</view>
-		</scroll-view>
+				<view class="loading-more">{{contentdown}}</view>
+			</scroll-view>
+		</view>
+		
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin:0 15px" @click="toadd">
 			添加巡查工单</button>
 	</view>
@@ -59,10 +62,12 @@
 	} from "@/utils/index.js"
 	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
 	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
+	import refresh from '@/components/refresh/refresh.vue'
 	export default {
 		components: {
 			msDropdownMenu,
-			msDropdownItem
+			msDropdownItem,
+			refresh
 		},
 		data() {
 			return {
@@ -92,11 +97,11 @@
 					},
 					{
 						text: '待处理',
-						value: 1
+						value: '1'
 					},
 					{
 						text: '已处理',
-						value: 2
+						value: '0'
 					}
 				],
 				value1: '',
@@ -136,18 +141,15 @@
 		watch:{
 			value1(val,oldValue){
 				this.listObj.timeType=val
-				this.newsList=[]
-				this.getData()
+				this.initData()
 			},
 			value2(val,oldValue){
 				this.listObj.workOrderStatus=val
-				this.newsList=[]
-				this.getData()
+				this.initData()
 			},
 			value3(val,oldValue){
 				this.listObj.plantingBatchId=val
-				this.newsList=[]
-				this.getData()
+				this.initData()
 			}
 		},
 		onLoad(option) {
@@ -183,6 +185,44 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			// 刷新touch监听
+			refreshStart(e) {
+				this.$refs.refresh.refreshStart(e);
+			},
+			refreshMove(e){
+				this.$refs.refresh.refreshMove(e);
+			},
+			refreshEnd(e) {
+				this.$refs.refresh.refreshEnd(e);
+			},
+			isRefresh(){
+				let _this=this
+					setTimeout(() => {
+						
+						_this.$refs.refresh.endAfter() //刷新结束调用
+						_this.initData()
+					}, 200)
+			},
+			initData(){
+				this.newsList=[]
+				this.page=1
+				this.loadingType=1
+				this.getData()
+			},
+			delOrganUserWorkOrderManage(id){//删除
+			 let _this=this
+				this.$apiYZX.delOrganUserWorkOrderManage(id).then(res=>{
+					if(res.data.code==200){
+						uni.showToast({
+							title: '删除成功',
+							duration: 2000,
+							success() {
+								_this.initData()
+							}
+						});
+					}
+				})
+			},
 			scrolltoupper() {
 				console.info('下拉')
 			},
@@ -222,10 +262,7 @@
 				}else{
 					this.listObj.initiatorId=''
 				}
-				this.page=1
-				this.loadingType=1
-				this.newsList=[]
-				this.getData()
+				this.initData()
 			},
 			/* 跳转 查看详情 */
 			toUrl(id) {
