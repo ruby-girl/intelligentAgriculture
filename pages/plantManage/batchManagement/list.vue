@@ -1,8 +1,9 @@
 <template>
+	<!-- 批次管理列表 -->
 	<view class="container">
 		<scroll-view class="bg-white nav">
 			<view class="flex text-center">
-				<view class="cu-item flex-sub" :class="item.value==TabCur?'text-orange cur':''" v-for="(item,index) in tab" :key="index"
+				<view class="cu-item flex-sub" :class="item.value===TabCur?'text-orange cur':''" v-for="(item,index) in tab" :key="index"
 				 @tap="tabSelect" :data-id="item.value">
 					{{item.name}}
 				</view>
@@ -51,7 +52,7 @@
 	export default {
 		data() {
 			return {
-				TabCur: 2,
+				TabCur: '2',
 				scrollLeft: 0,
 				tab: [{
 					name: '进行中',
@@ -92,10 +93,9 @@
 				}
 			});
 			uni.getStorage({
-				key: 'ddwb',
+				key: 'organUserId',
 				success: function(res) {			
-					// _this.obj.userId = res.data.userid
-					_this.obj.organUserId = 1
+					_this.obj.organUserId = res.data
 					_this.getData()
 				}
 			});

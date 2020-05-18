@@ -13,7 +13,7 @@
 			</ms-dropdown-menu>
 			<scroll-view scroll-x class="bg-white nav">
 				<view class="flex text-center">
-					<view class="cu-item flex-sub" :class="item.id==TabCur?'text-green cur':''" v-for="(item,index) in tabs" :key="index"
+					<view class="cu-item flex-sub" :class="item.id===TabCur?'text-green cur':''" v-for="(item,index) in tabs" :key="index"
 					 @tap="tabSelect" :data-id="item.id">
 						{{item.name}}
 					</view>
@@ -29,10 +29,10 @@
 					<view class="flex justify-content-flex-justify align-items-center">
 						<view>
 							<image src="/static/plant/icon_weeding@2x.png" class="imgIcon"></image>						
-							<text class="order-title">{{item.farmWorkItemName}}</text>
+							<text class="order-title">{{item.name}}</text>
 							<text>来自工单</text>
 						</view>
-						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
+						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">已处理</view>
 						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
 					</view>
 					<view class="flex align-items-center">				
@@ -55,10 +55,10 @@
 					<view class="flex justify-content-flex-justify align-items-center">
 						<view>
 							<image src="/static/plant/icon_workorde@2x.png" class="imgIcon"></image>
-							<text class="order-title">{{item.farmWorkItemName}}</text>
+							<text class="order-title">{{item.name}}</text>
 							<text>来自巡查 {{item.executiontime==null?'':item.executiontime}}</text>
 						</view>
-						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">{{getworkOrderStatus(item.workOrderStatus)}}</view>
+						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">已处理</view>
 						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
 					</view>
 					<view>{{item.feedbackContent==null?'':item.feedbackContent}}</view>
@@ -130,20 +130,17 @@
 						id: '',
 						name: '全部'
 					},
+				
 					{
-						id: 3,
-						name: '未开始'
-					},
-					{
-						id: 1,
+						id: '1',
 						name: '待处理'
 					},
 					{
-						id: 2,
+						id: '0',
 						name: '已处理'
 					},
 				],
-				TabCur: 1,
+				TabCur: '1',
 				newsList: [],
 				baseId: '',
 				obj: {
@@ -215,15 +212,6 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
-			getworkOrderStatus(state){
-				if(state==3){
-					return '未开始'
-				}else if(state==1){
-					return '处理'
-				}else{
-					return '已处理'
-				}
-			},
 			scrolltoupper() {
 				console.info('下拉')
 			},
