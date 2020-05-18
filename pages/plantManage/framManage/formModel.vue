@@ -212,7 +212,7 @@
 		components: {
 			neilModal
 		},
-		props: ['workOrderId', 'plantingBatchId', 'formObj'],
+		props: ['workOrderId', 'plantingBatchId', 'formObj','status'],
 		data() {
 			return {
 
@@ -225,7 +225,7 @@
 
 				suppliesList: [],
 				companySelval: 1,
-				companySelectList: [{name:'公司1',id:1},{name:'公司2',id:2}],
+				companySelectList: [],
 				unitSelval: '',
 				unitSelectList: [],
 
@@ -235,25 +235,31 @@
 			};
 		},
 		
-		onLoad() {
+		created() {
 			let _this = this;
 			this.initSelect();
-			if(this.formObj.workOrderId){
+		
+		
 				setTimeout(function () {
 				     _this.initData()
 				   }, 500);
-			}
+				  
+			
 			
 		},
 		methods: {
 			initData() {
-				this.$api.getFarmWorkTabelList({workOrderId:this.formObj.workOrderId,plantingBatchId:this.plantingBatchId}).then(res=>{
+					if(this.formObj.workOrderId){
+					
+				    this.$api.getFarmWorkTabelList({workOrderId:this.formObj.workOrderId,plantingBatchId:this.plantingBatchId}).then(res=>{
 				   this.acreage = res.data.data.acreageCount || 0;
 				   this.equitmenList = res.data.data.equipmentResources;
 				   this.personList = res.data.data.personResources;
 				   this.suppliesList = res.data.data.suppliesResources;
 					
 				})
+				
+				}
 			},
 			initSelect() {
 				this.$api.getSuppliersCompany().then(res => {
@@ -264,19 +270,36 @@
 				})
 			},
 			saveForm() {
+				
+			
 				let obj = {
 					"baseId": uni.getStorageSync('baseId'),
 					"executionUserId": uni.getStorageSync('organUserId'),
-					"farmWorkRecordPicsStr": this.formObj.farmWorkRecordPicsStr,
+					"remark": this.formObj.remark,
 					"plantingBatchId": this.formObj.plantingBatchId,
+					"farmWorkItemId": this.formObj.farmWorkItemId,
 					"price": this.formObj.price,
 					"workOrderId": this.formObj.workOrderId,
 					equipmentResources: this.equitmenList,
 					personResources: this.personList,
 					suppliesResources: this.suppliesList,
 				}
-				this.$api.addFarmWorkBase(this.obj).then(res => {
-
+					console.log(obj)
+					
+				this.$api.addFarmWorkBase(obj).then(res => {
+                 uni.showToast({
+						title: '提交成功',
+						icon: 'success',
+						success() {
+							uni.navigateBack({
+								delta:1
+							})
+						// uni.navigateTo({
+						// 	url: '/pages/plantManage/workDetail?id=' + id
+						// });
+							
+						}
+						})
 					// this.farmWorkRecordId =res.data.data.farmWorkRecordId;
 					// this.acreage =res.data.data.acreageCount;
 					// this.stepsNum = this.stepsNum == this.numList.length - 1 ? 0 : this.stepsNum + 1
@@ -291,7 +314,7 @@
 					"labourCost": '',
 					"acreageCount": this.acreage,
 					"personFeeCount": '',
-					"farmWorkRecordId": 1,
+			
 					"workOrderId": this.workOrderId
 				}
 				this.personList.push(obj)
@@ -313,14 +336,14 @@
 			suppliesAdd() {
 				let obj = {
 					"name": "",
-					"supplierName": "",
-					"supplierCode":'',
-					"unit": "",
+					"supplierName":this.companySelectList?this.companySelectList[0].name:'' ,
+					"supplierCode":this.companySelectList?this.companySelectList[0].id:'',
+					"unit": this.unitSelectList?this.unitSelectList[0].name:'',
 					"unitArea": "",
 					"price": "",
 					"acreageCount": this.acreage,
 					"suppliesFeeCount": "",
-					"farmWorkRecordId": 1,
+				
 					"workOrderId": this.workOrderId
 				}
 				this.suppliesList.push(obj)
@@ -342,7 +365,7 @@
 					"price": "",
 					"acreageCount": this.acreage,
 					"feeCount": "",
-					"farmWorkRecordId": 1,
+				
 					"workOrderId": this.workOrderId
 				}
 				this.equitmenList.push(obj)

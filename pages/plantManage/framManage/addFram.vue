@@ -18,10 +18,10 @@
 					<view class="title">
 						种植批次
 					</view>
-					<picker @change="batchChange" range-key="name" :value="plantingBatchValue" :range="batchData">
+					<picker @change="batchChange" range-key="name" :value="params.plantingBatchName" :range="batchData">
 						<view class="picker">
 
-							{{plantingBatchValue?batchData[plantingBatchValue].name:'请选择'}}
+						{{params.plantingBatchName}}
 
 						</view>
 					</picker>
@@ -30,9 +30,9 @@
 					<view class="title">
 						操作类型
 					</view>
-					<picker @change="farmChange" range-key="name" :value="farmWorkItemValue" :range="farmData">
+					<picker @change="farmChange" range-key="name" :value="params.farmWorkItemName" :range="farmData">
 						<view class="picker">
-							{{farmWorkItemValue?farmData[farmWorkItemValue].name:'请选择'}}
+							{{params.farmWorkItemName}}
 						</view>
 					</picker>
 				</view>
@@ -60,7 +60,7 @@
 				</view>
 				<view class="cu-form-group align-start">
 					<view class="title">反馈内容</view>
-					<textarea maxlength="-1" @input="farmWorkRecordPicsStrValue" placeholder="请输入反馈内容"></textarea>
+					<textarea maxlength="-1" @input="farmWorkRecordPicsStrValue" :value="params.remark" placeholder="请输入反馈内容"></textarea>
 				</view>
 			</view>
 			<!-- <button class="cu-btn block bg-green  lg" @tap="NumSteps">下一步</button> -->
@@ -68,7 +68,7 @@
 
 
         <second-model :workOrderId="params.workOrderId"
-		 :plantingBatchId="params.plantingBatchId" :formObj="params"></second-model>
+		 :plantingBatchId="params.plantingBatchId"  :status="status" :formObj="params"></second-model>
 
 
 
@@ -100,20 +100,29 @@
 				params: {
 					"baseId": uni.getStorageSync('baseId'),
 					"executionUserId": uni.getStorageSync('organUserId'),
-					"farmWorkRecordPicsStr": "",
+					"farmWorkItemId":'',
+					"farmWorkItemName":'',
+					"remark": "",
 					"plantingBatchId":'',
+					"plantingBatchName":'',
 					"price": '',
 					"workOrderId": ''
 				},
+				status:1,
+				ttt:5
 			
 			};
 		},
 		onLoad(option) {
-	
-			this.initSelect();
+			let _this =  this;
+			this.$nextTick(function(){
+					_this.initSelect();
+			})
+		
 			this.params.workOrderId  = Number(option.workOrderId);
 			this.params.plantingBatchId  =  Number(option.plantingBatchId);
-			
+			this.status =  option.status
+		
 		},
 		methods: {
 			// NumSteps() {
@@ -124,7 +133,7 @@
 			// 	});
 			// },
 			farmWorkRecordPicsStrValue(e) {
-				this.params.farmWorkRecordPicsStr = e.detail.value
+				this.params.remark = e.detail.value
 			},
 			initSelect() {
 
@@ -142,6 +151,24 @@
 				this.$api.getFarmWorkItems().then(res => {
 					this.farmData = res.data.data
 				})
+				/* 編輯獲取基本信息*/
+				
+				if(this.status == 0){
+									   this.$api.getByWorkId({
+									   	id:this.params.workOrderId
+									   }).then(res => {
+										 
+										   this.params.remark = res.data.data.remark;
+										 
+										   this.params.plantingBatchId = res.data.data.plantingBatchId || this.batchData[0].id;
+										    this.params.plantingBatchName = res.data.data.plantingBatchName || this.batchData[0].name;
+										   this.params.farmWorkItemId = res.data.data.farmWorkItemId || this.farmData[0].id;
+										    this.params.farmWorkItemName = res.data.data.farmWorkItemName || this.farmData[0].name;
+										   this.params.price = res.data.data.price || '';
+										   
+									  
+									   });
+				}
 			},
 			ChooseImage() {
 				uni.chooseImage({
@@ -180,12 +207,15 @@
 			batchChange(e) {
 
 				this.plantingBatchValue = e.detail.value
-				this.params.plantingBatchId = this.batchData[this.plantingBatchValue].id
+				this.params.plantingBatchId = this.batchData[this.plantingBatchValue].id;
+				this.params.plantingBatchName = this.batchData[this.plantingBatchValue].name;
 
 			},
 			farmChange(e) {
+	
 				this.farmWorkItemValue = e.detail.value;
 				this.params.farmWorkItemId = this.farmData[this.farmWorkItemValue].id
+				this.params.farmWorkItemName = this.farmData[this.farmWorkItemValue].name
 
 			},
 		}
