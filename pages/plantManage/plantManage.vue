@@ -1,41 +1,34 @@
 <!-- 种植管理  已有基地-->
 <template>
 	<view class="plant">
+
 		<view class="plant-top">
 
 			<view class="flex-top">
-				<view class="name">{{resultData.userName}}的土地信息</view>
-				<view class="section right">
-					<view @click="downSelect">
-						<text>{{selectValue.name}}</text>
+				<view class="name">{{resultData.organUserName}}的土地信息</view>
+				<ms-dropdown-menu>
+					<ms-dropdown-item :title="selectValueName" v-model="selectValue" :list="allBaseLand" :hasSlot="true">
 
-						<text class="iconfont iconfanhui" :class="{'degimg':isShow}"></text>
-					</view>
-				</view>
-
-
-			</view>
-
-			<view class="select-model" :class="{'showModel':isShow}">
-				<view v-for="(item,index) in allBaseLand" :key='index' class="select-li" @click="selectedFun(item.id)">{{item.organ.name}}</view>
+					</ms-dropdown-item>
+				</ms-dropdown-menu>
 			</view>
 			<view class="plant-top-content flex-top">
 				<view class="item">
 					<view>
-						<text class="fb">{{resultData.acreages}}</text><text>亩</text>
+						<text class="fb">{{resultData.acreages || '-'}}</text><text>亩</text>
 					</view>
 					<view>土地总面积</view>
 				</view>
 				<view class="item">
 					<view>
-						<text class="fb">{{resultData.landParcelCount}}</text><text>块</text>
+						<text class="fb">{{resultData.landParcelCount || '-'}}</text><text>块</text>
 					</view>
 					<view>总地块数量 </view>
 				</view>
 
 				<view class="item">
 					<view>
-						<text class="fb">{{resultData.plantingBatchs.length}}</text><text>批</text>
+						<text class="fb">{{resultData.plantingBatchs.length || '-'}}</text><text>批</text>
 					</view>
 					<view>种植中批次</view>
 				</view>
@@ -82,12 +75,12 @@
 				</view>
 				<view>
 					<navigator :url="'/pages/plantManage/framManage/framManage?baseId='+baseId">
-					
-					<view>
-						<image src="/static/plant/icon_farming@2x.png" class="icon" />
 
-					</view>
-					<text>农事管理</text>
+						<view>
+							<image src="/static/plant/icon_farming@2x.png" class="icon" />
+
+						</view>
+						<text>农事管理</text>
 					</navigator>
 				</view>
 
@@ -95,7 +88,7 @@
 			<label class="title">种植中批次</label>
 			<view style="overflow-y: auto;height: 70%;">
 
-				<view>
+				<view v-if="resultData.plantingBatchs.length>0">
 					<view v-for="(item, index) in resultData.plantingBatchs" :key="index" class="item-view">
 
 						<view class="item-title">{{item.name}}</view>
@@ -126,73 +119,103 @@
 
 					</view>
 				</view>
+				<view v-else class="null-data">
+					
+					暂无数据
+				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
+	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
 	export default {
-
+		components: {
+			msDropdownMenu,
+			msDropdownItem
+		},
 		data() {
 			return {
-				array: ['美国', '中国', '巴西', '日本'],
 				isShow: false,
 				allBaseLand: [],
-				selectValue: {},
+				selectValue: '',
+				selectValueName: '',
 				baseId: '',
 				orgId: '',
 				userId: '',
-				resultData:{}
+				resultData: {}
 
 			};
 		},
 		onLoad() {
-
-
-
-		},
-		onReady() {
-		
 			const obj = uni.getStorageSync('ddwb');
-			this.allBaseLand = obj.landOrgan;
+
 			this.userId = obj.userid
-			if (obj.landOrgan.length > 0) {
-				this.selectValue = obj.landOrgan[0].organ
-				this.orgId = obj.landOrgan[0].organ.id
-			}
-			/* 种植中批次 */
-			this.$nextTick(function() {
-				this.initData()
-			})
+			this.initSelect()
 
 		},
+		watch: {
+
+			selectValue(val, oldValue) {
+
+				if (oldValue) {
+					let _this = this
+					this.selectValue = val;
+					this.initData(val)
+					this.resultData = {}
+					this.allBaseLand.forEach((a) => {
+						if (a.value == val) {
+							_this.selectValueName = a.text
+						}
+					})
+			 }
+			},
+		},
+		onReady() {},
 		methods: {
-			initData() {
-			
+			initSelect() {
+				let _this = this;
+				this.$api.getJoinOkList({
+					userId: this.userId
+				}).then(res => {
+
+					res.data.data.forEach((item) => {
+						let obj = {
+							text: item.name,
+							value: item.id
+						}
+						_this.allBaseLand.push(obj)
+					})
+					this.selectValue = res.data.data[0].id
+					this.selectValueName = res.data.data[0].name
+					this.orgId = res.data.data[0].id
+					this.initData(this.orgId)
+				})
+			},
+			initData(orgId) {
+
+
 				this.$api.getPagingCriteriaQuery({
 					userId: this.userId,
-					organId: this.orgId,
+					organId: orgId,
 				}).then(res => {
 					this.resultData = res.data.data
 					uni.setStorage({
-						key:'baseId',
-						data:res.data.data.baseId
+						key: 'baseId',
+						data: res.data.data.baseId
 					});
 					uni.setStorage({
-						key:'organUserId',
-						data:res.data.data.organUserId
+						key: 'organUserId',
+						data: res.data.data.organUserId
 					});
 					this.baseId = res.data.data.baseId
-			
+
 				})
-			},
-			downSelect() {
-				this.isShow = !this.isShow
-			},
-			selectedFun(item) {
 
 			}
+
 		}
 	}
 </script>
@@ -231,11 +254,14 @@
 
 		.plant-top {
 			height: 20vh;
-
-			color: #FFFFFF;
 			background: linear-gradient(top, rgba(41, 185, 130, 1), rgba(45, 187, 87, 1));
 			;
 			padding: 0px 16rpx;
+
+			/deep/ .dropdown-item__selected {
+				background-color: transparent;
+				color: #fff;
+			}
 
 			.iconfont {
 				display: inline-block;
@@ -255,6 +281,9 @@
 
 				.name {
 					font-size: 17px;
+					color: #FFFFFF;
+					padding-top: 20rpx;
+					box-sizing: border-box;
 				}
 
 			}
@@ -264,6 +293,7 @@
 				text-align: right;
 				font-size: 12px;
 				line-height: 22px;
+				color: #FFFFFF;
 
 				.fb {
 					font-size: 20px;
@@ -323,6 +353,7 @@
 				margin-top: 50rpx;
 				display: inline-block;
 				margin-bottom: 5px;
+				text-indent: 10rpx;
 			}
 
 			.item-title {
@@ -353,5 +384,9 @@
 
 		}
 
+	}
+	.null-data{
+		text-align: center;
+		color: #999;
 	}
 </style>

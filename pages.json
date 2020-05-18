@@ -9,6 +9,20 @@
 		}
 
 	},{
+		"path": "pages/plantManage/baseLand/joinBaseLand",
+		"style": {
+			"navigationBarTitleText": "基地列表",
+			"disableScroll": false
+		
+		}
+	
+	},{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"disableScroll": true
+			}
+		},{
 			"path": "pages/plantManage/framManage/addFram",
 			"style": {
 				"navigationBarTitleText": "添农事操作记录"
@@ -20,24 +34,17 @@
 				"navigationBarTitleText": "农事操作记录"
 			}
 		},{
-
-
-		{
+		
 			"path": "pages/personal/personal",
 			"style": {
 				"navigationBarTitleText": "我的",
 				"navigationBarBackgroundColor": "#00AE66",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
-			}
+			
+		}
 		},
-	{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "登录",
-				"disableScroll": true
-			}
-		},
+
 		{
 			"path": "pages/plantManage/baseLand/chooseHandle",
 			"style": {

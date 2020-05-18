@@ -116,13 +116,13 @@
 			
 		},
 		methods: {
-			NumSteps() {
-				this.$api.addFarmWorkBase(this.params).then(res => {
-					this.farmWorkRecordId =res.data.data.farmWorkRecordId;
-					this.acreage =res.data.data.acreageCount;
-					this.stepsNum = this.stepsNum == this.numList.length - 1 ? 0 : this.stepsNum + 1
-				});
-			},
+			// NumSteps() {
+			// 	this.$api.addFarmWorkBase(this.params).then(res => {
+			// 		this.farmWorkRecordId =res.data.data.farmWorkRecordId;
+			// 		this.acreage =res.data.data.acreageCount;
+			// 		this.stepsNum = this.stepsNum == this.numList.length - 1 ? 0 : this.stepsNum + 1
+			// 	});
+			// },
 			farmWorkRecordPicsStrValue(e) {
 				this.params.farmWorkRecordPicsStr = e.detail.value
 			},

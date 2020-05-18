@@ -209,3 +209,32 @@ export const getFarmWorkList = (data) => {
 		data,
 	})
 }
+
+
+/* 基地列表 */
+export const getBaseLandPage = (data) => {
+	return http.request({
+		url: 'api/organs/pageNotByUserId/'+data.pageNo,
+		method: 'GET',
+		data,
+	})
+}
+
+/* 加入基地 */
+export const joinBaseInfo = (data) => {
+	return http.request({
+		url: 'api/appletBases/joinBaseInfo',
+		method: 'POST',
+		data,
+	})
+}
+
+
+/* 获取已加入基地列表 */
+export const getJoinOkList = (data) => {
+	return http.request({
+		url: 'api/organs/getByUserId',
+		method: 'GET',
+		data,
+	})
+}

@@ -234,12 +234,16 @@
 				acreage: 0
 			};
 		},
-		created() {
+		
+		onLoad() {
 			let _this = this;
 			this.initSelect();
-			 setTimeout(function () {
-			      _this.initData()
-			    }, 500);
+			if(this.formObj.workOrderId){
+				setTimeout(function () {
+				     _this.initData()
+				   }, 500);
+			}
+			
 		},
 		methods: {
 			initData() {
