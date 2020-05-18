@@ -119,6 +119,11 @@
 			"style": {
 				"navigationBarTitleText": "服务管理"
 			}
+		},{
+			"path": "pages/service/selectBatch",
+			"style": {
+				"navigationBarTitleText": "选择种植批次"
+			}
 		}, {
 			"path": "pages/fair/fair",
 			"style": {
