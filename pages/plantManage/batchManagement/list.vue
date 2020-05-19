@@ -23,7 +23,7 @@
 				</view>
 				<view class="flex align-items-center">
 					<img src="@/static/plant/icon_date@2x.png" alt="">
-					<view>种植年份：{{item.plantingTime}}</view>
+					<view>种植年份：{{item.plantingTime||''}}</view>
 				</view>
 				<view class="flex align-items-center">
 					<img src="@/static/plant/icon_land@2x.png" alt="">

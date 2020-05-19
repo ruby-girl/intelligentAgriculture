@@ -177,3 +177,10 @@ export const addOrganUserWorkOrderManage = (data) => {
 		data
 	})
 }
+// 删除，多个删除用,隔开
+export const delOrganUserWorkOrderManage = (data) => {
+	return http.request({
+		url: 'api/organUserWorkOrderManage/'+data,
+		method: 'DELETE'
+	})
+}

@@ -41,7 +41,7 @@
 				<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 			</view>
 		</view>
-		<button :disabled="disabled" @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg" style="margin:40px 20px 0 20px">
+		<button :disabled="disabled" @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg" style="margin:40px 20px 20px 20px">
 			新建批次</button>
 	</view>
 </template>
