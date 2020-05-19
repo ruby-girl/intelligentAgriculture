@@ -1,9 +1,9 @@
 <template>
 	<view class='refreshBox' :style="isTranform">
-		<view class='refresh' :style="isZoom" class="animationSmall">
-			<!-- <view class='refreshWord' v-if="isEnd == 0"></view> -->
+		<view class='refresh' :style="isZoom" :class="isEnd==2?'animationSmall':''">
+			
 			<view class='refreshCirle animation'></view>
-			<!-- <image class='iconYes' src='@/static/loading.png' v-if="isEnd==2">加载中...</image> -->
+			
 		</view>
 	</view>
 </template>
