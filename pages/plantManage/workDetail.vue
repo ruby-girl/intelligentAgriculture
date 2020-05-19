@@ -123,7 +123,7 @@
 			</view>
 			<view class="mb20 two">
 			
-				<label><text class="line"></text>執行人资物料费用预算</label>
+				<label><text class="line"></text>执行人资物料费用</label>
 				<view class="content">
 					<view class="f13" v-if="personResources.length>0">人资费用</view>
 			
@@ -192,8 +192,8 @@
 				</view>
 			</view>
 		</view>
-		<navigator :url="'/pages/plantManage/framManage/addFram?workOrderId='+id+'&plantingBatchId='+resultData.plantingBatchId+'&status='+resultData.workOrderStatus">
-			<button class="cu-btn block bg-green  lg" >{{resultData.workOrderStatus == 1?'立即处理':'修改記錄'}}</button>
+		<navigator :url="'/pages/plantManage/framManage/addFram?workOrderId='+id+'&workOrderStatus='+resultData.workOrderStatus">
+			<button class="cu-btn block bg-green  lg" >{{resultData.workOrderStatus == 1?'立即处理':'修改'}}</button>
 		</navigator>
 		
 	</view>
@@ -239,7 +239,12 @@
 				imgUrl:''
 			};
 		},
+		onShow() {
+			console.log(this)
+			console.log(22222)
+		},
 		onLoad(option) {
+
 			this.id = option.id;
 			console.log('??????')
 			/* 基础信息 */
@@ -255,13 +260,14 @@
 				this.showImg=false
 			},
 			initData(id) {
-				this.$api.getByWorkId({
-					id: id
-				}).then(res => {
-					this.resultData = res.data.data
-				});
+				// this.$api.getByWorkId({
+				// 	id: id
+				// }).then(res => {
+				// 	this.resultData = res.data.data
+				// });
 				console.log('asd')
 				this.$apiYZX.organUserWorkOrderManageGetById({id:id}).then(res=>{				
+					this.resultData =  res.data.data
 					    //人资personResourcesBudget;
 						 //设备 equipmentResourcesBudget;
 					    //农资suppliesResourcesBudget;

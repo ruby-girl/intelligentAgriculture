@@ -1,7 +1,13 @@
 <!-- 基地列表 -->
 <template>
 	<view class="baseLand-list">
- 
+ <view class="cu-bar search solid-bottom">
+ 	<view class="search-form radius">
+ 		<text class="cuIcon-search"></text>
+ 		<input @blur="InputBlur"  :adjust-position="false" type="text" placeholder="请输入基地名称(至少三个字)"
+ 		 confirm-type="search"></input>
+ 	</view>
+ </view>
 		<scroll-view v-bind:style="{height:(windowHeight)+'px'}" class="list-container" scroll-y="true"
 		 :refresher-triggered="triggered" refresher-enabled="true" :refresher-threshold="100" @scrolltoupper="scrolltoupper" @scrolltolower="loadingData">
 		<view class="display-flex justify-content-flex-justify item-list" v-for="(item,index) in listData" :key='index'>
@@ -33,7 +39,8 @@
 				windowHeight: 300,
 				params:{
 					pageNo:1,
-					userId:uni.getStorageSync('ddwb').userid
+					userId:uni.getStorageSync('ddwb').userid,
+					organName:''
 				},
 				listData:[],
 				joinParam:{
@@ -53,6 +60,14 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods:{
+			InputBlur(e){
+				if(this.params.organName==e.detail.value) return false
+				this.params.organName = e.detail.value
+				this.params.pageNo=1
+				this.loadingType = 0
+				this.listData=[]
+				this.initData()
+			},
 			scrolltoupper() {
 				alert()
 				console.info('下拉')
@@ -112,7 +127,9 @@
 
 <style lang="scss">
    .baseLand-list{
-	
+	    .search-form{
+			background-color: #ffffff;
+		}
 	   .item-list{
 		      padding: 30rpx;
 		   background-color: #FFFFFF;

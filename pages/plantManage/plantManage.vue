@@ -1,18 +1,22 @@
 <!-- 种植管理  已有基地-->
 <template>
 	<view class="plant">
-
+	
 		<view class="plant-top">
 
 			<view class="flex-top">
 				<view class="name">{{resultData.organUserName}}的土地信息</view>
+
+			</view>
+			<view class="display-flex justify-content-flex-end">
 				<ms-dropdown-menu>
 					<ms-dropdown-item :title="selectValueName" v-model="selectValue" :list="allBaseLand" :hasSlot="true">
 
 					</ms-dropdown-item>
 				</ms-dropdown-menu>
 			</view>
-			<view class="plant-top-content flex-top">
+
+			<view class="plant-top-content display-flex justify-content-flex-justify">
 				<view class="item">
 					<view>
 						<text class="fb">{{resultData.acreages || '-'}}</text><text>亩</text>
@@ -58,14 +62,14 @@
 					<text>预警提醒</text>
 				</view>
 				<view>
-						<navigator url="/pages/plantManage/batchManagement/list">
-					
-					<view>
-						<image src="/static/plant/icon_batch@2x.png" class="icon" />
+					<navigator url="/pages/plantManage/batchManagement/list">
 
-					</view>
-					<text>批次管理</text>
-						</navigator>
+						<view>
+							<image src="/static/plant/icon_batch@2x.png" class="icon" />
+
+						</view>
+						<text>批次管理</text>
+					</navigator>
 				</view>
 				<view>
 					<navigator :url="'/pages/plantManage/landManage/landManage?baseId='+baseId+'&acreages='+resultData.acreages+'&landCount='+resultData.landParcelCount">
@@ -123,7 +127,7 @@
 					</view>
 				</view>
 				<view v-else class="null-data">
-					
+
 					暂无数据
 				</view>
 			</view>
@@ -132,6 +136,7 @@
 </template>
 
 <script>
+
 	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
 	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
 	export default {
@@ -148,17 +153,23 @@
 				baseId: '',
 				orgId: '',
 				userId: '',
-				resultData: {}
+				resultData: {},
 
 			};
 		},
 		onLoad() {
+					let _this = this;
+			
 			const obj = uni.getStorageSync('ddwb');
 
 			this.userId = obj.userid
 			this.initSelect()
+	
+
+			
 
 		},
+		
 		watch: {
 
 			selectValue(val, oldValue) {
@@ -173,11 +184,12 @@
 							_this.selectValueName = a.text
 						}
 					})
-			 }
+				}
 			},
 		},
 		onReady() {},
 		methods: {
+			
 			initSelect() {
 				let _this = this;
 				this.$api.getJoinOkList({
@@ -264,6 +276,7 @@
 			/deep/ .dropdown-item__selected {
 				background-color: transparent;
 				color: #fff;
+				padding: 0;
 			}
 
 			.iconfont {
@@ -279,20 +292,19 @@
 			}
 
 			.flex-top {
-				display: flex;
-				justify-content: space-between;
+
 
 				.name {
-					font-size: 17px;
+					font-size: 16px;
 					color: #FFFFFF;
-					padding-top: 20rpx;
+					line-height: normal;
 					box-sizing: border-box;
 				}
 
 			}
 
 			.plant-top-content {
-				margin-top: 26rpx;
+				margin-top: 20rpx;
 				text-align: right;
 				font-size: 12px;
 				line-height: 22px;
@@ -388,7 +400,8 @@
 		}
 
 	}
-	.null-data{
+
+	.null-data {
 		text-align: center;
 		color: #999;
 	}

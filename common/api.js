@@ -214,7 +214,7 @@ export const getFarmWorkList = (data) => {
 /* 基地列表 */
 export const getBaseLandPage = (data) => {
 	return http.request({
-		url: 'api/organs/pageNotByUserId/'+data.pageNo,
+		url: 'api/organs/pageNotByUserIdAndName/'+data.pageNo,
 		method: 'GET',
 		data,
 	})

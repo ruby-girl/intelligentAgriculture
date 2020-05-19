@@ -8,7 +8,7 @@
 				</view>
 			</view>
 		</view> -->
-		<view >
+		<view>
 			<view class="section">
 				<view class="label">
 					<label><text class="line"></text><text class="fb">基础信息</text></label>
@@ -21,7 +21,7 @@
 					<picker @change="batchChange" range-key="name" :value="params.plantingBatchName" :range="batchData">
 						<view class="picker">
 
-						{{params.plantingBatchName}}
+							{{params.plantingBatchName?params.plantingBatchName:'请选择'}}
 
 						</view>
 					</picker>
@@ -32,7 +32,7 @@
 					</view>
 					<picker @change="farmChange" range-key="name" :value="params.farmWorkItemName" :range="farmData">
 						<view class="picker">
-							{{params.farmWorkItemName}}
+							{{params.farmWorkItemName?params.farmWorkItemName:'请选择'}}
 						</view>
 					</picker>
 				</view>
@@ -59,25 +59,50 @@
 					</view>
 				</view>
 				<view class="cu-form-group align-start">
-					<view class="title">反馈内容</view>
-					<textarea maxlength="-1" @input="farmWorkRecordPicsStrValue" :value="params.remark" placeholder="请输入反馈内容"></textarea>
+					<view class="title">备注信息</view>
+					<textarea maxlength="-1" @input="farmWorkRecordPicsStrValue" name="nickname" :value="params.remark" placeholder="请输入反馈内容"></textarea>
+				</view>
+				
+				<view>
+					<view class="display-flex justify-content-flex-justify">
+						<view @tap="playVoice">
+							<text class="cuIcon-video f20"></text> <text class="cr2" style="margin: 0 10px;">新录音</text> <text class="f12 cr3">{{voiceTime}}秒</text>
+						</view>
+						<view>
+							<text class="cuIcon-close" @click="closeVoice"></text>
+						</view>
+
+					</view>
+					<button @touchstart="startRecord" @touchend="endRecord" class="cu-btn block  lg line-gray" style="margin: 5px 0;">
+						<text class="iconfont iconyuyin- f20" style="margin-right: 10px;"> </text>
+						<template v-if="isRecord">
+							录音中...
+						</template>
+						<template v-else>
+							按住说话,松开结束
+						</template>
+					</button>
 				</view>
 			</view>
 			<!-- <button class="cu-btn block bg-green  lg" @tap="NumSteps">下一步</button> -->
 		</view>
 
 
-        <second-model :workOrderId="params.workOrderId"
-		 :plantingBatchId="params.plantingBatchId"  :status="status" :formObj="params"></second-model>
+		<second-model :workOrderId="params.workOrderId" :plantingBatchId="params.plantingBatchId" :status="status" :formObj="params"
+		 :personResources="personResources" :equipmentResources="equipmentResources" :suppliesResources="suppliesResources"></second-model>
 
 
 
 
 
-</view>
+	</view>
 </template>
 
 <script>
+	const recorderManager = wx.getRecorderManager();
+	const innerAudioContext = wx.createInnerAudioContext();
+	
+	innerAudioContext.autoplay = true;
 	import secondModel from '../framManage/formModel'
 	export default {
 		components: {
@@ -85,7 +110,7 @@
 		},
 		data() {
 			return {
-		
+
 				batchData: [],
 				farmData: [],
 				imgList: [],
@@ -94,37 +119,123 @@
 				}, {
 					name: '农事信息'
 				}],
-				stepsNum:0,
+				stepsNum: 0,
 				plantingBatchValue: '',
 				farmWorkItemValue: '',
 				params: {
 					"baseId": uni.getStorageSync('baseId'),
 					"executionUserId": uni.getStorageSync('organUserId'),
-					"farmWorkItemId":'',
-					"farmWorkItemName":'',
+					"farmWorkItemId": '',
+					"farmWorkItemName": '',
 					"remark": "",
-					"plantingBatchId":'',
-					"plantingBatchName":'',
+					"plantingBatchId": '',
+					"plantingBatchName": '',
 					"price": '',
 					"workOrderId": ''
 				},
-				status:1,
-				ttt:5
-			
+				status: 1,
+				ttt: 5,
+				personResources: [],
+				equipmentResources: [],
+				suppliesResources: [],
+				
+				voicePath: "",
+				
+				isRecord: false, // 记录状态,录音中或者是未开始
+				
+				intervalTime: 0,
+				
+				timer: null,
+				voiceTime:0
+
 			};
 		},
 		onLoad(option) {
-			let _this =  this;
-			this.$nextTick(function(){
-					_this.initSelect();
+			let _this = this;
+			
+			/* 录音 */
+			uni.authorize({
+				scope: 'scope.userLocation',
+				success() {
+					recorderManager.onStop(function(res) {
+						_this.voicePath = res.tempFilePath;	
+						_this.voiceTime = res.duration
+					});
+				}
 			})
+			
+			this.params.workOrderId = Number(option.workOrderId);
+			//this.params.plantingBatchId = Number(option.data.plantingBatchId);
+			this.status = option.workOrderStatus;
+			this.$nextTick(function() {
+				_this.initSelect();
+
+
+			})
+		},
+		computed: {
+			intIntervalTime() {
+				// 用于显示整数的秒数
 		
-			this.params.workOrderId  = Number(option.workOrderId);
-			this.params.plantingBatchId  =  Number(option.plantingBatchId);
-			this.status =  option.status
-		
+				return Math.round(this.intervalTime);
+			}
 		},
 		methods: {
+			startRecord() {
+					
+				this.timer = setInterval(() => {
+					this.intervalTime += 0.5;
+			
+					if (this.intervalTime >= 0.5 && !this.isRecord) {
+						//如果用户录制的时间太短,就不会去开启录音, 因为有个bug: recorderManager.stop()在短时间内开启在关闭的话,实际上他还在不停地录音,不知道你们有没有遇到过
+						this.isRecord = true;
+			
+						this.intervalTime = 0;
+			
+						recorderManager.start({
+							format: "mp3"
+						});
+					}
+				}, 300);
+			},
+			
+			endRecord() {
+				if (this.intervalTime <= 0.5) {
+					uni.showToast({
+						title: '录音太短了',
+						icon: 'none',
+						})
+				
+				}
+			
+				clearInterval(this.timer);
+			
+				if (this.isRecord) {
+					// setTimeout(() => {
+						recorderManager.stop();
+			
+						this.isRecord = false;
+			
+					// 	console.log(this.isRecord);
+					// }, 200); //延迟小段时间停止录音, 更好的体验
+				}
+			},
+			
+			playVoice() {
+				console.log("播放录音");
+			
+				if (this.voicePath) {
+					innerAudioContext.src = this.voicePath;
+			
+					innerAudioContext.play();
+				}
+			},
+			closeVoice(){
+					clearInterval(this.timer);
+					this.voicePath ='';
+					this.voiceTime = 0;
+					
+			},
 			// NumSteps() {
 			// 	this.$api.addFarmWorkBase(this.params).then(res => {
 			// 		this.farmWorkRecordId =res.data.data.farmWorkRecordId;
@@ -135,8 +246,28 @@
 			farmWorkRecordPicsStrValue(e) {
 				this.params.remark = e.detail.value
 			},
-			initSelect() {
+			initData() {
+				this.$apiYZX.organUserWorkOrderManageGetById({
+					id: this.params.workOrderId
+				}).then(res => {
+					this.params.remark = res.data.data.remark;
 
+					this.params.plantingBatchId = res.data.data.plantingBatchId || this.batchData[0].id;
+					this.params.plantingBatchName = res.data.data.plantingBatchName || this.batchData[0].name;
+					this.params.farmWorkItemId = res.data.data.farmWorkItemId || this.farmData[0].id;
+					this.params.farmWorkItemName = res.data.data.farmWorkItemName || this.farmData[0].name;
+					this.params.price = res.data.data.price || '';
+					//人资personResourcesBudget;
+					//设备 equipmentResourcesBudget;
+					//农资suppliesResourcesBudget;
+
+					this.personResources = res.data.data.personResources
+					this.equipmentResources = res.data.data.equipmentResources
+					this.suppliesResources = res.data.data.suppliesResources
+				})
+
+			},
+			initSelect() {
 
 				let obj = {
 					baseId: uni.getStorageSync('baseId'),
@@ -151,24 +282,30 @@
 				this.$api.getFarmWorkItems().then(res => {
 					this.farmData = res.data.data
 				})
-				/* 編輯獲取基本信息*/
-				
-				if(this.status == 0){
-									   this.$api.getByWorkId({
-									   	id:this.params.workOrderId
-									   }).then(res => {
-										 
-										   this.params.remark = res.data.data.remark;
-										 
-										   this.params.plantingBatchId = res.data.data.plantingBatchId || this.batchData[0].id;
-										    this.params.plantingBatchName = res.data.data.plantingBatchName || this.batchData[0].name;
-										   this.params.farmWorkItemId = res.data.data.farmWorkItemId || this.farmData[0].id;
-										    this.params.farmWorkItemName = res.data.data.farmWorkItemName || this.farmData[0].name;
-										   this.params.price = res.data.data.price || '';
-										   
-									  
-									   });
+				// 编辑获取信息
+				if (this.status == 0) {
+					this.initData();
 				}
+				/* 編輯獲取基本信息*/
+
+				// if (this.status == 0) {
+				// 	console.log(11111)
+				// 	this.$api.getByWorkId({
+				// 		id: this.params.workOrderId
+				// 	}).then(res => {
+				// 		debugger
+
+				// 		this.params.remark = res.data.data.remark;
+
+				// 		this.params.plantingBatchId = res.data.data.plantingBatchId || this.batchData[0].id;
+				// 		this.params.plantingBatchName = res.data.data.plantingBatchName || this.batchData[0].name;
+				// 		this.params.farmWorkItemId = res.data.data.farmWorkItemId || this.farmData[0].id;
+				// 		this.params.farmWorkItemName = res.data.data.farmWorkItemName || this.farmData[0].name;
+				// 		this.params.price = res.data.data.price || '';
+
+
+				// 	});
+				// }
 			},
 			ChooseImage() {
 				uni.chooseImage({
@@ -212,7 +349,7 @@
 
 			},
 			farmChange(e) {
-	
+
 				this.farmWorkItemValue = e.detail.value;
 				this.params.farmWorkItemId = this.farmData[this.farmWorkItemValue].id
 				this.params.farmWorkItemName = this.farmData[this.farmWorkItemValue].name

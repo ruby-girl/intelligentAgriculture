@@ -212,7 +212,7 @@
 		components: {
 			neilModal
 		},
-		props: ['workOrderId', 'plantingBatchId', 'formObj','status'],
+		props: ['workOrderId', 'plantingBatchId', 'formObj','status','suppliesResources','personResources','equipmentResources'],
 		data() {
 			return {
 
@@ -249,17 +249,29 @@
 		},
 		methods: {
 			initData() {
-					if(this.formObj.workOrderId){
-					
-				    this.$api.getFarmWorkTabelList({workOrderId:this.formObj.workOrderId,plantingBatchId:this.plantingBatchId}).then(res=>{
-				   this.acreage = res.data.data.acreageCount || 0;
-				   this.equitmenList = res.data.data.equipmentResources;
-				   this.personList = res.data.data.personResources;
-				   this.suppliesList = res.data.data.suppliesResources;
-					
-				})
 				
+			
+					if(this.formObj.workOrderId){
+						
+					    this.$api.getFarmWorkTabelList({workOrderId:this.formObj.workOrderId,plantingBatchId:this.plantingBatchId}).then(res=>{
+					   this.acreage = res.data.data.acreageCount || 0;
+					   /* 编辑 */
+					   	if(this.status == 0){
+							this.equitmenList = this.equipmentResources;
+							this.personList = this.personResources;
+							this.suppliesList = this.suppliesResources;
+						}else{
+							this.equitmenList = res.data.data.equipmentResources;
+							this.personList = res.data.data.personResources;
+							this.suppliesList = res.data.data.suppliesResources;
+						}
+				
+						
+					})
+					
+					
 				}
+					
 			},
 			initSelect() {
 				this.$api.getSuppliersCompany().then(res => {
@@ -275,33 +287,41 @@
 				let obj = {
 					"baseId": uni.getStorageSync('baseId'),
 					"executionUserId": uni.getStorageSync('organUserId'),
-					"remark": '121212121231',
-					"plantingBatchId": 7,
-					"farmWorkItemId": 5,
+					"remark": this.formObj.remark,
+					"plantingBatchId": this.formObj.plantingBatchId,
+					"farmWorkItemId": this.formObj.farmWorkItemId,
 					"price": this.formObj.price,
 					"workOrderId": this.formObj.workOrderId,
 					equipmentResources: this.equitmenList,
 					personResources: this.personList,
 					suppliesResources: this.suppliesList,
-				}		
+				}	
+					
+				if(!this.formObj.plantingBatchId){
+					  uni.showToast({title:"请选择种植批次", icon:"none"});
+					  return;
+				}
+				if(!this.formObj.farmWorkItemId){
+					  uni.showToast({title:"请选择操作类型", icon:"none"});
+					  return;
+				}
 				this.$api.addFarmWorkBase(obj).then(res => {
                  uni.showToast({
 						title: '提交成功',
 						icon: 'success',
 						success() {
 							uni.navigateBack({
-								delta:1
+								delta:1,
+								success(){
+									let page = getCurrentPages().pop(); //跳转页面成功之后
+									if (!page) return;
+									page.onLoad({id:obj.workOrderId}); //如果页面存在，则重新刷新页面
+									}							
 							})
-						// uni.navigateTo({
-						// 	url: '/pages/plantManage/workDetail?id=' + id
-						// });
-							
+					
 						}
 						})
-					// this.farmWorkRecordId =res.data.data.farmWorkRecordId;
-					// this.acreage =res.data.data.acreageCount;
-					// this.stepsNum = this.stepsNum == this.numList.length - 1 ? 0 : this.stepsNum + 1
-
+				
 				});
 			},
 			/* 人工 */
