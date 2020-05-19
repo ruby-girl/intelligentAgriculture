@@ -1,4 +1,4 @@
-<!-- 待处理 -->
+<!-- 工单列表 -->
 <template>
 	<view class="workOrder">
 		<view class="top">
@@ -23,7 +23,10 @@
 		</view>
 
 		<scroll-view v-bind:style="{height:(windowHeight-10)+'px'}" class="list-container" scroll-y="true"
-		 :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper" @scrolltolower="loadingData">
+		 refresher-enabled="true"
+		  refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+		  @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+		  @scrolltolower="loadingData">
 			<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.id)">
 				<view v-if="item.workOrderType==1">				
 					<view class="flex justify-content-flex-justify align-items-center">
@@ -160,6 +163,7 @@
 				newsList: [],
 				loadingType: 0,
 				triggered: false,
+				_freshing: false
 			};
 		},
 		watch:{
@@ -212,6 +216,32 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			onPulling() {},
+			onRefresh() {
+				if (this._freshing) return;
+				this._freshing = true;
+				if (!this.triggered){//界面下拉触发，triggered可能不是true，要设为true  
+					this.triggered = true;
+				}
+				let _this=this
+				setTimeout(() => {
+					this.triggered = false; //触发onRestore，并关闭刷新图标
+					this._freshing = false;
+					_this.page=1
+					_this.loadingType=1
+					_this.newsList=[]
+					_this.contentdown=''
+					_this.getData()		
+				}, 1000)
+			},
+			onRestore() {
+				this.triggered = false; // 需要重置
+				this._freshing = false
+			},
+			onAbort() {
+				this.triggered = false; //触发onRestore，并关闭刷新图标
+				this._freshing = false;
+			},
 			scrolltoupper() {
 				console.info('下拉')
 			},
@@ -229,13 +259,17 @@
 				}
 				this.$apiYZX.getWorkOrderManageList(this.page, obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.data)
-					if (this.page == 1 && this.newsList.length == 0) {
+					if(this.page==1&&this.newsList.length==0){
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1) {
+					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length<3){
 						this.contentdown = ''
 						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length) {
+					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length>2){
+						this.contentdown = '无更多数据'
+						this.loadingType = 0
+					}
+					else if (res.data.data.rowCount == this.newsList.length) {
 						this.loadingType = 0
 						this.contentdown = '无更多数据'
 					} else {
@@ -250,6 +284,7 @@
 				this.page=1
 				this.loadingType=1
 				this.newsList=[]
+				this.contentdown = ''
 				this.getData()
 			},
 			/* 跳转 查看详情 */

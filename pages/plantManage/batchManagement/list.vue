@@ -150,8 +150,11 @@
 					if(this.page==1&&this.newsList.length==0){
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
-					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1){
+					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length<3){
 						this.contentdown = ''
+						this.loadingType = 0
+					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length>2){
+						this.contentdown = '无更多数据'
 						this.loadingType = 0
 					}
 					else if (res.data.data.rowCount == this.newsList.length) {
@@ -203,6 +206,7 @@
 	.loading-more {
 		text-align: center;
 		color: #ddd;
+		padding-bottom: 50rpx;
 	}
 
 	.scroll-container {
