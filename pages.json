@@ -1,6 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-	{
+{
 		"path": "pages/plantManage/plantManage",
 		"style": {
 			"navigationBarTitleText": "种植管理",
@@ -8,7 +8,7 @@
 			"navigationBarTextStyle": "white"
 		}
 
-	},{
+	},	{
         "path": "pages/plantManage/baseLand/joinBaseLand",
         "style": {
           "navigationBarTitleText": "基地列表",
@@ -124,12 +124,14 @@
 			"style": {
 				"navigationBarTitleText": "选择种植批次"
 			}
-		}, {
+		},
+		{
 			"path": "pages/fair/fair",
 			"style": {
 				"navigationBarTitleText": "市集"
 			}
-		},  {
+		},
+		{
 			"path": "pages/plantManage/batchManagement/list",
 			"style": {
 				"navigationBarTitleText": "批次管理",
@@ -200,12 +202,14 @@
 		"color": "#999999",
 		"selectedColor": "#00AE66",
 		"backgroundColor": "#F7F7F7",
-		"list": [{
-			"pagePath": "pages/message/message",
-			"text": "消息",
-			"iconPath": "static/tab/tab_icon_messag_def@2x.png",
-			"selectedIconPath": "static/tab/tab_icon_messag_pre@2x.png"
-		}, {
+		"list": [
+		// 	{
+		// 	"pagePath": "pages/message/message",
+		// 	"text": "消息",
+		// 	"iconPath": "static/tab/tab_icon_messag_def@2x.png",
+		// 	"selectedIconPath": "static/tab/tab_icon_messag_pre@2x.png"
+		// }, 
+		{
 			"pagePath": "pages/plantManage/plantManage",
 			"text": "种植管理",
 
@@ -217,13 +221,14 @@
 
 			"iconPath": "static/tab/tab_icon_service_def@2x.png",
 			"selectedIconPath": "static/tab/tab_icon_service_pre@2x.png"
-		}, {
-			"pagePath": "pages/fair/fair",
-			"text": "市集",
-
-			"iconPath": "static/tab/tab_icon_fair_def@2x.png",
-			"selectedIconPath": "static/tab/tab_icon_fair_pre@2x.png"
-		}, {
+		}, 
+		// {
+		// 	"pagePath": "pages/fair/fair",
+		// 	"text": "市集",
+		// 	"iconPath": "static/tab/tab_icon_fair_def@2x.png",
+		// 	"selectedIconPath": "static/tab/tab_icon_fair_pre@2x.png"
+		// }, 
+		{
 			"pagePath": "pages/personal/personal",
 			"text": "我的",
 			"iconPath": "static/tab/tab_icon_mine_def@2x.png",
