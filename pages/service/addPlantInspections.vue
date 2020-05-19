@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<!-- 新增巡查工单 -->
 		<view class="cu-form-group">
 			<input placeholder="请输入反馈标题" v-model="obj.name" ref="titleInput" name="input" @input="titleInput"></input>
 		</view>
