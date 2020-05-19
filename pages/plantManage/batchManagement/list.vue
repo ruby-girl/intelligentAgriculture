@@ -10,8 +10,11 @@
 			</view>
 		</scroll-view>
 
-		<scroll-view v-bind:style="{height:(windowHeight-135)+'px'}" class="scroll-container" scroll-y="true"
-		 :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper" @scrolltolower="loadingData">
+		<scroll-view v-bind:style="{height:(windowHeight-135)+'px'}" class="scroll-container"
+		scroll-y="true" refresher-enabled="true"
+		 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+		 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+		 @scrolltolower="loadingData">
 			<view class="list-item" v-for="item in newsList" :key="item">
 				<view class="flex align-items-center">
 					<img src="@/static/plant/icon_plant@2x.png" alt="">
@@ -76,7 +79,9 @@
 					baseId: '',
 					organUserId:'',
 					plantingBatchStatus:2
-				}
+				},
+				triggered: false,
+				_freshing: false
 			}
 		},
 		onLoad: function() {
@@ -102,6 +107,32 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			onPulling() {},
+			onRefresh() {
+				if (this._freshing) return;
+				this._freshing = true;
+				if (!this.triggered){//界面下拉触发，triggered可能不是true，要设为true  
+					this.triggered = true;
+				}
+				let _this=this
+				setTimeout(() => {
+					this.triggered = false; //触发onRestore，并关闭刷新图标
+					this._freshing = false;
+					_this.page=1
+					_this.loadingType=1
+					_this.newsList=[]
+					_this.contentdown=''
+					_this.getData()		
+				}, 1000)
+			},
+			onRestore() {
+				this.triggered = false; // 需要重置
+				this._freshing = false
+			},
+			onAbort() {
+				this.triggered = false; //触发onRestore，并关闭刷新图标
+				this._freshing = false;
+			},
 			scrolltoupper() {
 				console.info('下拉')
 			},
@@ -142,6 +173,7 @@
 				this.obj.plantingBatchStatus=e.currentTarget.dataset.id;
 				this.page=1
 				this.loadingType=1
+				this.contentdown=''
 				this.newsList=[]
 				this.getData()
 			}

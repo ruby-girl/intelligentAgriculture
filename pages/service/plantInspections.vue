@@ -1,9 +1,9 @@
-<!-- 待处理 -->
+<!-- 巡查工单列表 -->
 <template>
 	<view class="workOrder">
 		<view style="position: relative;">
-			
-			<refresh ref="refresh" @isRefresh='isRefresh'></refresh>
+
+			<!-- <refresh ref="refresh" @isRefresh='isRefresh'></refresh> -->
 		</view>
 		<view class="top">
 			<ms-dropdown-menu>
@@ -25,10 +25,12 @@
 			</scroll-view>
 
 		</view>
-		
-		<view class="" @touchstart="refreshStart" @touchmove="refreshMove" @touchend="refreshEnd">
-			<scroll-view v-bind:style="{height:(windowHeight-60)+'px'}" class="list-container" scroll-y="true"
-			 :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper" @scrolltolower="loadingData">
+
+		<view class="">
+			<scroll-view v-bind:style="{height:(windowHeight-60)+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
+			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+			 @scrolltolower="loadingData">
 				<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.id)">
 					<view>
 						<view class="flex justify-content-flex-justify align-items-center">
@@ -41,16 +43,16 @@
 						</view>
 						<view>内容：{{item.feedbackContent==null?'':item.feedbackContent}}阿达地方萨法萨法按时发斯蒂芬啊发顺丰安抚安抚安抚爱的发声发萨法萨法萨法按时</view>
 						<view>批次：{{item.plantingBatchName==null?'':item.plantingBatchName}}</view>
-						<view class="flex align-items-center justify-content-flex-justify">				
+						<view class="flex align-items-center justify-content-flex-justify">
 							<view>创建人：{{item.initiatorName||''}}&nbsp;&nbsp;{{item.creDate||''}}</view>
 							<view v-if="obj.organUserId==item.initiatorId&&item.workOrderStatus==1" style="color:red" @click.stop='delOrganUserWorkOrderManage(item.id)'>删除</view>
 						</view>
 					</view>
 				</view>
-				<view class="loading-more">{{contentdown}}</view>
+				<view class="loading-more">{{contentdown}}</view>		
 			</scroll-view>
 		</view>
-		
+
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin:0 15px" @click="toadd">
 			添加巡查工单</button>
 	</view>
@@ -71,8 +73,7 @@
 		},
 		data() {
 			return {
-				timeList: [
-					{
+				timeList: [{
 						text: '全部',
 						value: ''
 					},
@@ -90,8 +91,7 @@
 					}
 				],
 				orderList: [],
-				typeList: [
-					{
+				typeList: [{
 						text: '全部',
 						value: ''
 					},
@@ -110,7 +110,7 @@
 				tabs: [{
 						id: 1,
 						name: '我发起的'
-					},				
+					},
 					{
 						id: 2,
 						name: '全基地的'
@@ -128,40 +128,41 @@
 					plantingBatchId: '', //批次ID
 					timeType: '', //时间
 					workOrderStatus: '', //工单状态
-					initiatorId:''//发起人
+					initiatorId: '' //发起人
 				},
 				page: 1,
+				moreHeight: 30,
 				windowHeight: 300,
 				contentdown: '',
 				newsList: [],
 				loadingType: 0,
 				triggered: false,
+				_freshing: false
 			};
 		},
-		watch:{
-			value1(val,oldValue){
-				this.listObj.timeType=val
+		watch: {
+			value1(val, oldValue) {
+				this.listObj.timeType = val
 				this.initData()
 			},
-			value2(val,oldValue){
-				this.listObj.workOrderStatus=val
+			value2(val, oldValue) {
+				this.listObj.workOrderStatus = val
 				this.initData()
 			},
-			value3(val,oldValue){
-				this.listObj.plantingBatchId=val
+			value3(val, oldValue) {
+				this.listObj.plantingBatchId = val
 				this.initData()
 			}
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.obj.baseId = uni.getStorageSync('baseId');
-			// 获取下拉数据--工单批次
 			let _this = this
 			uni.getStorage({
 				key: 'organUserId',
 				success: function(res) {
 					_this.obj.organUserId = res.data
-					_this.listObj.initiatorId= res.data
+					_this.listObj.initiatorId = res.data
 					_this.$apiYZX.getWorkOrderManage(_this.obj).then(res => {
 						let obj = {
 							text: '全部',
@@ -185,34 +186,40 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
-			// 刷新touch监听
-			refreshStart(e) {
-				this.$refs.refresh.refreshStart(e);
-			},
-			refreshMove(e){
-				this.$refs.refresh.refreshMove(e);
-			},
-			refreshEnd(e) {
-				this.$refs.refresh.refreshEnd(e);
-			},
-			isRefresh(){
+			onPulling() {},
+			onRefresh() {
+				if (this._freshing) return;
+				this._freshing = true;
+				if (!this.triggered){//界面下拉触发，triggered可能不是true，要设为true  
+					this.triggered = true;
+				}
 				let _this=this
-					setTimeout(() => {
-						
-						_this.$refs.refresh.endAfter() //刷新结束调用
-						_this.initData()
-					}, 200)
+				setTimeout(() => {
+					this.triggered = false; //触发onRestore，并关闭刷新图标
+					this._freshing = false;
+					_this.initData()				
+				}, 1000)
 			},
-			initData(){
-				this.newsList=[]
-				this.page=1
-				this.loadingType=1
+			onRestore() {
+				this.triggered = false; // 需要重置
+				this._freshing = false
+			},
+			onAbort() {
+				this.triggered = false; //触发onRestore，并关闭刷新图标
+				this._freshing = false;
+			},
+			initData() {
+				this.newsList = []
+				this.page = 1
+				this.loadingType = 1
+				this.contentdown=''
 				this.getData()
 			},
-			delOrganUserWorkOrderManage(id){//删除
-			 let _this=this
-				this.$apiYZX.delOrganUserWorkOrderManage(id).then(res=>{
-					if(res.data.code==200){
+			
+			delOrganUserWorkOrderManage(id) { //删除
+				let _this = this
+				this.$apiYZX.delOrganUserWorkOrderManage(id).then(res => {
+					if (res.data.code == 200) {
 						uni.showToast({
 							title: '删除成功',
 							duration: 2000,
@@ -243,24 +250,28 @@
 					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
+						this.moreHeight = this.windowHeight - 40
 					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1) {
 						this.contentdown = ''
 						this.loadingType = 0
+						this.moreHeight = 30
 					} else if (res.data.data.rowCount == this.newsList.length) {
 						this.loadingType = 0
 						this.contentdown = '无更多数据'
+						this.moreHeight = 30
 					} else {
 						this.contentdown = '上拉加载更多'
 						this.loadingType = 1
+						this.moreHeight = 30
 					}
 				})
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
-				if(e.currentTarget.dataset.id==1){
-					this.listObj.initiatorId=this.obj.organUserId
-				}else{
-					this.listObj.initiatorId=''
+				if (e.currentTarget.dataset.id == 1) {
+					this.listObj.initiatorId = this.obj.organUserId
+				} else {
+					this.listObj.initiatorId = ''
 				}
 				this.initData()
 			},
@@ -271,13 +282,13 @@
 				});
 			},
 			/* 跳转 添加农事 */
-			goAddUrl(id,plantingBatchId) {
-					
+			goAddUrl(id, plantingBatchId) {
+
 				uni.navigateTo({
-					url: '/pages/plantManage/framManage/addFram?workOrderId=' + id +'&plantingBatchId='+plantingBatchId
+					url: '/pages/plantManage/framManage/addFram?workOrderId=' + id + '&plantingBatchId=' + plantingBatchId
 				});
 			},
-			toadd(){
+			toadd() {
 				uni.navigateTo({
 					url: '/pages/service/addPlantInspections'
 				});
@@ -326,8 +337,12 @@
 			height: 18px;
 			margin-right: 20rpx;
 			position: relative;
-			top:3px;
+			top: 3px;
 		}
+	}
+.loading-more {
+		text-align: center;
+		color: #ddd;
 	}
 	.content {
 		padding: 30rpx;
@@ -353,15 +368,13 @@
 			margin-right: 10px;
 		}
 	}
-	.order-title{
+
+	.order-title {
 		margin-right: 10px;
-		&+text{
-			color:#999;
+
+		&+text {
+			color: #999;
 			font-size: 12px;
 		}
-	}
-	.loading-more {
-		text-align: center;
-		color: #ddd;
 	}
 </style>
