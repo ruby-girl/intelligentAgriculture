@@ -275,17 +275,15 @@
 				let obj = {
 					"baseId": uni.getStorageSync('baseId'),
 					"executionUserId": uni.getStorageSync('organUserId'),
-					"remark": this.formObj.remark,
-					"plantingBatchId": this.formObj.plantingBatchId,
-					"farmWorkItemId": this.formObj.farmWorkItemId,
+					"remark": '121212121231',
+					"plantingBatchId": 7,
+					"farmWorkItemId": 5,
 					"price": this.formObj.price,
 					"workOrderId": this.formObj.workOrderId,
 					equipmentResources: this.equitmenList,
 					personResources: this.personList,
 					suppliesResources: this.suppliesList,
-				}
-					console.log(obj)
-					
+				}		
 				this.$api.addFarmWorkBase(obj).then(res => {
                  uni.showToast({
 						title: '提交成功',
