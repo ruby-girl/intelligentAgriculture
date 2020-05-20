@@ -2,8 +2,13 @@
 
 <template>
 	<view class="workOrder ">
-		<view class="content">
-
+		<scroll-view v-bind:style="{height:(windowHeight-10)+'px'}" class="content" scroll-y="true"
+		 refresher-enabled="true"
+		  @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+		  @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+		  @scrolltolower="loadingData">
+		
+	
 			<view class="item" v-for="(item,index) in listData" :key="index" :class="{'showModel':isMoreArr.indexOf(item)>=0}">
 				<view>
 					<image src="/static/plant/icon_fertilization@2x.png" class="imgIcon"></image>
@@ -22,7 +27,7 @@
 				</view>
 				<view class="textHidden">
 					<text class="cr3 ">
-						备注信息：</text>{{item.farmWorkRecordPicsStr}}
+						备注信息：</text>{{item.remark}}
 				</view>
 				<view class="content-table">
 					<view class="f13" v-if="item.personResources.length>0">人资费用</view>
@@ -86,8 +91,11 @@
 
 				</text>
 			</view>
+	
 
-		</view>
+		
+			<view class="loading-more">{{contentdown}}</view>
+		</scroll-view>
 		<navigator url="/pages/plantManage/framManage/addFram">
 		
     
@@ -99,6 +107,9 @@
 </template>
 
 <script>
+	import {
+		throttle
+	} from "@/utils/index.js"
 	import tTable from '@/components/t-table/t-table.vue';
 	import tTh from '@/components/t-table/t-th.vue';
 	import tTr from '@/components/t-table/t-tr.vue';
@@ -118,19 +129,85 @@
 				params:{
 					executionUserId :uni.getStorageSync('organUserId'),
 					pageNo:1
-				}
+				},
+				windowHeight: 0,
+				contentdown: '',
+				loadingType: 0,
+				triggered: false,
+				_freshing: false
 
 			};
 		},
-		created() {
-
-	this.initData()
+		onLoad: function() {
+			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
+				this.initData()
 		},
+		mounted() {
+
 		
+			this.loadingData = throttle(this.loadingData, 2000);
+		},
+	
+	
 		methods: {
+			onPulling() {},
+			onRefresh() {
+				if (this._freshing) return;
+				this._freshing = true;
+				if (!this.triggered){//界面下拉触发，triggered可能不是true，要设为true  
+					this.triggered = true;
+				}
+				let _this=this
+				setTimeout(() => {
+					this.triggered = false; //触发onRestore，并关闭刷新图标
+					this._freshing = false;
+					_this.params.pageNo=1
+					_this.loadingType=1
+					_this.listData=[]
+					_this.contentdown=''
+					_this.initData()		
+				}, 1000)
+			},
+			onRestore() {
+				this.triggered = false; // 需要重置
+				this._freshing = false
+			},
+			onAbort() {
+				this.triggered = false; //触发onRestore，并关闭刷新图标
+				this._freshing = false;
+			},
+			scrolltoupper() {
+				console.info('下拉')
+			},
+			loadingData(e) {
+		
+				if (this.loadingType) {
+					this.params.pageNo++
+					this.contentdown = '加载中...'
+					this.initData()
+				}
+			},
 			initData(){
 				this.$api.getFarmWorkList(this.params).then(res=>{
-					this.listData =  res.data.data.data
+		
+					this.listData = this.listData.concat(res.data.data.data)
+					if(this.params.pageNo==1&&this.listData.length==0){
+						this.loadingType = 0
+						this.contentdown = '暂无数据'
+					}else if(res.data.data.rowCount == this.listData.length&&this.params.pageNo==1&&this.listData.length<3){
+						this.contentdown = ''
+						this.loadingType = 0
+					}else if(res.data.data.rowCount == this.listData.length&&this.params.pageNo==1&&this.listData.length>2){
+						this.contentdown = '无更多数据'
+						this.loadingType = 0
+					}
+					else if (res.data.data.rowCount == this.listData.length) {
+						this.loadingType = 0
+						this.contentdown = '无更多数据'
+					} else {
+						this.contentdown = '上拉加载更多'
+						this.loadingType = 1
+					}
 					
 				})
 			},
@@ -156,13 +233,13 @@
 .cu-btn{
 			width: 90%;
 			margin: 0 auto;
-			margin-top: 60rpx;
-			margin-bottom: 100rpx;
+			margin-top: 40rpx;
+		
 		}
 	.content {
-		padding: 30rpx;
-		background-color: #ffffff;
-		overflow-y: auto;
+		
+	
+		height: calc(100vh - 150rpx);
 		position: relative;
 	
        .content-table{
@@ -189,16 +266,16 @@
 				
 			
 		.item {
-			
+				background-color: #ffffff;
 			line-height: 30rpx;
-			padding-top: 30rpx;
-			padding-bottom: 60rpx;
+		
 			margin-bottom: 30rpx;
 			height: 160px;
 			overflow: hidden;
 			transition: height .3s;
 			position: relative;
-			border-bottom: 1px solid #D8D8D8;
+		    padding: 30rpx 30rpx 60rpx;
+
 
 			.flex {
 				margin-bottom: 20rpx;
@@ -229,6 +306,10 @@
 			width: 40rpx;
 			height: 40rpx;
 			margin-right: 10px;
+		}
+		.loading-more {
+			text-align: center;
+			color: #ddd;
 		}
 		
 	}
