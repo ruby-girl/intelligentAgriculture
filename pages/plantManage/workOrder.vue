@@ -22,35 +22,34 @@
 
 		</view>
 
-		<scroll-view v-bind:style="{height:(windowHeight-10)+'px'}" class="list-container" scroll-y="true"
-		 refresher-enabled="true"
-		  refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
-		  @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
-		  @scrolltolower="loadingData">
+		<scroll-view v-bind:style="{height:(windowHeight-10)+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
+		 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+		 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+		 @scrolltolower="loadingData">
 			<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.id)">
-				<view v-if="item.workOrderType==1">				
+				<view v-if="item.workOrderType==1">
 					<view class="flex justify-content-flex-justify align-items-center">
 						<view>
-							<image src="/static/plant/icon_weeding@2x.png" class="imgIcon"></image>						
+							<image src="/static/plant/icon_weeding@2x.png" class="imgIcon"></image>
 							<text class="order-title">{{item.name}}</text>
 							<text>来自工单</text>
 						</view>
 						<view style="color:#00AE66" v-if="item.workOrderStatus!==1">已处理</view>
 						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
 					</view>
-					<view class="flex align-items-center">				
+					<view class="flex align-items-center">
 						<view>开始时间：{{item.scheduledStartTime}}</view>
 					</view>
-					<view class="flex align-items-center">				
+					<view class="flex align-items-center">
 						<view>结束时间：{{item.scheduledEndTime}}</view>
 					</view>
-					<view class="flex align-items-center">				
+					<view class="flex align-items-center">
 						<view>作物：{{item.breedName}}</view>
 					</view>
-					<view class="flex align-items-center">				
+					<view class="flex align-items-center">
 						<view>地块：<text v-for="li in item.landParcels" :key="li.id">{{li.name}}</text></view>
 					</view>
-					<view class="flex align-items-center">				
+					<view class="flex align-items-center">
 						<view>种植方案：{{item.plantingPlanName}}</view>
 					</view>
 				</view>
@@ -65,13 +64,13 @@
 						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
 					</view>
 					<view>{{item.feedbackContent==null?'':item.feedbackContent}}</view>
-					<view class="flex align-items-center">				
+					<view class="flex align-items-center">
 						<view>发起人：{{item.initiatorName}}</view>
 					</view>
-					<view class="flex align-items-center">				
+					<view class="flex align-items-center">
 						<view>地块：<text v-for="li in item.landParcels" :key="li.id">{{li.name}}</text></view>
 					</view>
-					<view class="flex align-items-center">				
+					<view class="flex align-items-center">
 						<view>种植方案：{{item.plantingPlanName}}</view>
 					</view>
 				</view>
@@ -94,8 +93,7 @@
 		},
 		data() {
 			return {
-				timeList: [
-					{
+				timeList: [{
 						text: '全部',
 						value: ''
 					},
@@ -110,21 +108,20 @@
 					{
 						text: '近一年',
 						value: 3
-					}		
+					}
 				],
 				orderList: [],
-				typeList: [
-					{
+				typeList: [{
 						text: '全部',
 						value: ''
-					},{
+					}, {
 						text: '批次工单',
 						value: 1
 					},
 					{
 						text: '巡查工单',
 						value: 2
-					}		
+					}
 				],
 				value1: '',
 				value2: '',
@@ -133,7 +130,7 @@
 						id: '',
 						name: '全部'
 					},
-				
+
 					{
 						id: '1',
 						name: '待处理'
@@ -166,26 +163,28 @@
 				_freshing: false
 			};
 		},
-		watch:{
-			value1(val,oldValue){
-				this.listObj.timeType=val
-				this.newsList=[]
+		watch: {
+			value1(val, oldValue) {
+				this.listObj.timeType = val
+				this.newsList = []
 				this.getData()
 			},
-			value2(val,oldValue){
-				this.listObj.workOrderType=val
-				this.newsList=[]
+			value2(val, oldValue) {
+				this.listObj.workOrderType = val
+				this.newsList = []
 				this.getData()
 			},
-			value3(val,oldValue){
-				this.listObj.plantingBatchId=val
-				this.newsList=[]
+			value3(val, oldValue) {
+				this.listObj.plantingBatchId = val
+				this.newsList = []
 				this.getData()
 			}
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.TabCur = option.type
+			if (this.TabCur == 1) this.listObj.workOrderStatus = '1';
+			else this.listObj.workOrderStatus = '0';
 			this.obj.baseId = option.baseId
 			// 获取下拉数据--工单批次
 			let _this = this
@@ -205,7 +204,7 @@
 								value: item.id
 							}
 							_this.orderList.push(obj)
-						})					
+						})
 					})
 					_this.getData()
 				}
@@ -220,18 +219,18 @@
 			onRefresh() {
 				if (this._freshing) return;
 				this._freshing = true;
-				if (!this.triggered){//界面下拉触发，triggered可能不是true，要设为true  
+				if (!this.triggered) { //界面下拉触发，triggered可能不是true，要设为true  
 					this.triggered = true;
 				}
-				let _this=this
+				let _this = this
 				setTimeout(() => {
 					this.triggered = false; //触发onRestore，并关闭刷新图标
 					this._freshing = false;
-					_this.page=1
-					_this.loadingType=1
-					_this.newsList=[]
-					_this.contentdown=''
-					_this.getData()		
+					_this.page = 1
+					_this.loadingType = 1
+					_this.newsList = []
+					_this.contentdown = ''
+					_this.getData()
 				}, 1000)
 			},
 			onRestore() {
@@ -259,17 +258,16 @@
 				}
 				this.$apiYZX.getWorkOrderManageList(this.page, obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.data)
-					if(this.page==1&&this.newsList.length==0){
+					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
-					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length<3){
+					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
 						this.contentdown = ''
 						this.loadingType = 0
-					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length>2){
+					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
 						this.contentdown = '无更多数据'
 						this.loadingType = 0
-					}
-					else if (res.data.data.rowCount == this.newsList.length) {
+					} else if (res.data.data.rowCount == this.newsList.length) {
 						this.loadingType = 0
 						this.contentdown = '无更多数据'
 					} else {
@@ -280,10 +278,10 @@
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
-				this.listObj.workOrderStatus=e.currentTarget.dataset.id;
-				this.page=1
-				this.loadingType=1
-				this.newsList=[]
+				this.listObj.workOrderStatus = e.currentTarget.dataset.id;
+				this.page = 1
+				this.loadingType = 1
+				this.newsList = []
 				this.contentdown = ''
 				this.getData()
 			},
@@ -294,10 +292,10 @@
 				});
 			},
 			/* 跳转 添加农事 */
-			goAddUrl(id,plantingBatchId) {
-					
+			goAddUrl(id, plantingBatchId) {
+
 				uni.navigateTo({
-					url: '/pages/plantManage/framManage/addFram?workOrderId=' + id +'&plantingBatchId='+plantingBatchId
+					url: '/pages/plantManage/framManage/addFram?workOrderId=' + id + '&plantingBatchId=' + plantingBatchId
 				});
 			}
 		}
@@ -344,9 +342,10 @@
 			height: 18px;
 			margin-right: 20rpx;
 			position: relative;
-			top:3px;
+			top: 3px;
 		}
 	}
+
 	.content {
 		padding: 30rpx;
 		overflow-y: auto;
@@ -371,13 +370,16 @@
 			margin-right: 10px;
 		}
 	}
-	.order-title{
+
+	.order-title {
 		margin-right: 10px;
-		&+text{
-			color:#999;
+
+		&+text {
+			color: #999;
 			font-size: 12px;
 		}
 	}
+
 	.loading-more {
 		text-align: center;
 		color: #ddd;

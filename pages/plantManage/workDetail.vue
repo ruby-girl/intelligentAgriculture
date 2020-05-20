@@ -7,7 +7,7 @@
 				<view class="content">
 					<view><text class="cr3">
 							工单类型
-						</text> <text>批次工单</text>
+						</text> <text>{{resultData.workOrderType==2?'巡查工单':'批次工单'}}</text>
 						<text class="cr" :style="{'float':'right','color':resultData.workOrderStatus ==1?'red':'#00AE66'}">{{resultData.workOrderStatus === 1?"待处理" :"已处理" }}</text>
 					</view>
 					<view><text class="cr3">批次信息
