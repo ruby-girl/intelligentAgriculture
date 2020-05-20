@@ -1,10 +1,10 @@
 <!-- 服务管理 -->
 <template>
 	<view class="service-model">
-		<view class="section title">
+		<!-- <view class="section title">
 			<text @click="downSelect">00000 <image src="/static/plant/img001.png" class="imgSize" :class="{'degimg':isShow}"></image></text>
 
-		</view>
+		</view> -->
 		<view class="select-model" :class="{'showModel':isShow}">
 			<view v-for="item in 5" class="select-li" @click="selectedFun(item)">{{item}}</view>
 		</view>
@@ -69,27 +69,31 @@
 				}],
 				isShow: false,
 			
-					cuIconList: [{
-						cuIcon: 'cardboardfill',
-					    imgUrl:'/static/service/icon_basemanagement@2x.png',
-						url:'',
-						name: '基地信息'
-					}, {
-						cuIcon: 'recordfill',
-					     imgUrl:'/static/service/icon_environmentalmonitoring@2x.png',
-						 url:'',
-						name: '环控基站'
-					}, {
+					cuIconList: [
+					// 	{
+					// 	cuIcon: 'cardboardfill',
+					//     imgUrl:'/static/service/icon_basemanagement@2x.png',
+					// 	url:'',
+					// 	name: '基地信息'
+					// }, {
+					// 	cuIcon: 'recordfill',
+					//      imgUrl:'/static/service/icon_environmentalmonitoring@2x.png',
+					// 	 url:'',
+					// 	name: '环控基站'
+					// },
+					{
 						cuIcon: 'picfill',
 						imgUrl:'/static/service/icon_plantinspection@2x.png',
 						url:'/pages/service/plantInspections',
 						name: '种植巡查'
-					}, {
-						cuIcon: 'noticefill',
-						url:'',
-					   imgUrl:'/static/service/icon_Financialbudget@2x.png',
-						name: '财务预算'
-					}]
+					},
+					// {
+					// 	cuIcon: 'noticefill',
+					// 	url:'',
+					//    imgUrl:'/static/service/icon_Financialbudget@2x.png',
+					// 	name: '财务预算'
+					// },
+					]
 			};
 			
 		},
@@ -129,11 +133,10 @@
 			
 		}
 		.section{
+			padding: 30rpx;
 			background-color: #fff;
 		
-			label{
-				padding: 0px 30rpx;
-			}
+		 
 	
 		}
 	}

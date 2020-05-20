@@ -322,16 +322,17 @@ this.$nextTick(function() {
 					});
 					return;
 				}
+				
+				
 				this.$api.addFarmWorkBase(obj).then(res => {
 					uni.showToast({
 						title: '提交成功',
 						icon: 'success',
 						success() {
-							uni.navigateTo({
-							    url: '/pages/plantManage/workOrder?type=2&baseId='+uni.getStorageSync('baseId')
-							});
-							
-
+						uni.navigateTo({
+						    url: '/pages/plantManage/workOrder?type=0&baseId='+uni.getStorageSync('baseId')
+						});
+						
 						}
 					})
 

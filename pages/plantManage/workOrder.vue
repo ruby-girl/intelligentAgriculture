@@ -38,6 +38,9 @@
 						<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>处理</view>
 					</view>
 					<view class="flex align-items-center">
+						<view>批次名称：{{item.plantingBatchName}}</view>
+					</view>
+					<view class="flex align-items-center">
 						<view>开始时间：{{item.scheduledStartTime}}</view>
 					</view>
 					<view class="flex align-items-center">
@@ -181,6 +184,7 @@
 			}
 		},
 		onLoad(option) {
+			console.log(option)
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.TabCur = option.type
 			if (this.TabCur == 1) this.listObj.workOrderStatus = '1';
