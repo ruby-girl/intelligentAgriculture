@@ -12,6 +12,27 @@
 			<input disabled="true" v-model="obj.plantingBatchName" class="form-input-left" placeholder="请选择种植批次" name="input"></input>
 			<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 		</view>
+		<view class="cu-bar bg-white margin-top uploader-border">
+			<view class="action">
+				上传图片
+			</view>
+			<view class="action">
+				{{imgList.length}}/4
+			</view>
+		</view>
+		<view class="cu-form-group">
+			<view class="grid col-4 grid-square flex-sub">
+				<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
+					<image :src="imgList[index]" mode="aspectFill"></image>
+					<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
+						<text class='cuIcon-close'></text>
+					</view>
+				</view>
+				<view class="solids" @tap="ChooseImage" v-if="imgList.length<4">
+					<text class='cuIcon-cameraadd'></text>
+				</view>
+			</view>
+		</view>
 		<view style="width: 100%;">
 			<button @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg add-btn">
 				新建巡查工单</button>
@@ -32,7 +53,8 @@
 					plantingBatchId: '', //批次ID
 					plantingBatchName: '' ,//批次名称
 					initiatorId:''
-				}
+				},
+				imgList:[]
 			};
 		},
 		onLoad(option) {
@@ -56,6 +78,39 @@
 			})
 		},
 		methods: {
+			ChooseImage() {
+				uni.chooseImage({
+					count: 4, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: (res) => {
+						if (this.imgList.length != 0) {
+							this.imgList = this.imgList.concat(res.tempFilePaths)
+						} else {
+							this.imgList = res.tempFilePaths
+						}
+					}
+				});
+			},
+			ViewImage(e) {
+				uni.previewImage({
+					urls: this.imgList,
+					current: e.currentTarget.dataset.url
+				});
+			},
+			DelImg(e) {
+				uni.showModal({
+					title: '召唤师',
+					content: '确定要删除该图片吗？',
+					cancelText: '再想想',
+					confirmText: '确定',
+					success: res => {
+						if (res.confirm) {
+							this.imgList.splice(e.currentTarget.dataset.index, 1)
+						}
+					}
+				})
+			},
 			titleInput(e) {
 				let _this = this
 				setTimeout(() => {
@@ -120,8 +175,15 @@
 	.add-btn {
 		width: 90%;
 		left: 5%;
-		top: 500rpx;
+		top: 800rpx;
 		position: absolute;
-
+	}
+	.uploader-border{
+		border-top:1px solid #eee;
+		margin-top: 0;
+	}
+	.action{
+		color:#333;
+		font-size: 30rpx !important;
 	}
 </style>

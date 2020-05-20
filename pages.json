@@ -189,6 +189,12 @@
             "path" : "pages/plantManage/framManage/formModel",
             "style" : {}
         }
+        ,{
+            "path" : "pages/service/plantInspectionsDetail",
+            "style": {
+            	"navigationBarTitleText": "工单详情"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

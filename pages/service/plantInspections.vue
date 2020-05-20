@@ -45,7 +45,7 @@
 						<view>批次：{{item.plantingBatchName==null?'':item.plantingBatchName}}</view>
 						<view class="flex align-items-center justify-content-flex-justify">
 							<view>创建人：{{item.initiatorName||''}}&nbsp;&nbsp;{{item.creDate||''}}</view>
-							<view v-if="obj.organUserId==item.initiatorId&&item.workOrderStatus==1" style="color:red" @click.stop='delOrganUserWorkOrderManage(item.id)'>删除</view>
+							<!-- <view v-if="obj.organUserId==item.initiatorId&&item.workOrderStatus==1" style="color:red" @click.stop='delOrganUserWorkOrderManage(item.id)'>删除</view> -->
 						</view>
 					</view>
 				</view>
@@ -79,15 +79,15 @@
 					},
 					{
 						text: '近一周',
-						value: 1
+						value: '1'
 					},
 					{
 						text: '近一个月',
-						value: 2
+						value: '2'
 					},
 					{
 						text: '近一年',
-						value: 3
+						value: '3'
 					}
 				],
 				orderList: [],
@@ -278,7 +278,7 @@
 			/* 跳转 查看详情 */
 			toUrl(id) {
 				uni.navigateTo({
-					url: '/pages/plantManage/workDetail?id=' + id
+					url: '/pages/service/plantInspectionsDetail?id=' + id
 				});
 			},
 			/* 跳转 添加农事 */
