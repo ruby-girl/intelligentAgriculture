@@ -239,16 +239,16 @@
 		},
 
 		created() {
-			let _this = this;
+			let  _this = this;
 		
 
 this.$nextTick(function() {
 		_this.initSelect();
-		_this.initData()
+	
 })
-			// setTimeout(function() {
-			
-			// }, 700);
+			setTimeout(function() {
+				_this.initData()
+			}, 700);
 
 
 
@@ -256,12 +256,12 @@ this.$nextTick(function() {
 		methods: {
 			initData() {
 
-
 				if (this.formObj.workOrderId) {
+					
 
 					this.$api.getFarmWorkTabelList({
 						workOrderId: this.formObj.workOrderId,
-						plantingBatchId: this.plantingBatchId
+						plantingBatchId: this.formObj.plantingBatchId
 					}).then(res => {
 						this.acreage = res.data.data.acreageCount || 0;
 						/* 编辑 */
