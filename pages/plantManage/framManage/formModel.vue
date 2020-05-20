@@ -327,16 +327,10 @@ this.$nextTick(function() {
 						title: '提交成功',
 						icon: 'success',
 						success() {
-							uni.navigateBack({
-								delta: 1,
-								success() {
-									let page = getCurrentPages().pop(); //跳转页面成功之后
-									if (!page) return;
-									page.onLoad({
-										id: obj.workOrderId
-									}); //如果页面存在，则重新刷新页面
-								}
-							})
+							uni.navigateTo({
+							    url: '/pages/plantManage/workOrder?type=2&baseId='+uni.getStorageSync('baseId')
+							});
+							
 
 						}
 					})
