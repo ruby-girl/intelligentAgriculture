@@ -54,7 +54,7 @@
 		</view>
 
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin:0 15px" @click="toadd">
-			添加巡查工单</button>
+			新建巡查工单</button>
 	</view>
 </template>
 

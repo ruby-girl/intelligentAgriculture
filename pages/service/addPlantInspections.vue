@@ -14,7 +14,7 @@
 		</view>
 		<view style="width: 100%;">
 			<button @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg add-btn">
-				新建批次</button>
+				新建巡查工单</button>
 		</view>
 	</view>
 </template>
@@ -75,7 +75,18 @@
 						'&content=' + this.obj.feedbackContent
 				});
 			},
+			test(){
+				if(!this.obj.name||!this.obj.feedbackContent||!this.obj.plantingBatchId){
+					uni.showToast({
+						title: '请完整填写信息',
+						icon: 'none'
+					})
+					return false
+				}
+				return true
+			},
 			addFunc(){
+				if(!this.test()) return;
 				this.$apiYZX.addOrganUserWorkOrderManage(this.obj).then(res=>{
 					if(res.data.code==200){
 						uni.showToast({

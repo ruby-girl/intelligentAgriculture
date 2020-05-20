@@ -9,7 +9,7 @@
 		</view>
 		<view class="border-bottom">
 			<view><text class="red">*</text><text class="text-margin">身份证号</text></view>
-			<input placeholder="请输入身份证号" v-model="userInfo.idcard" name="input"></input>
+			<input placeholder="请输入身份证号"  v-model="userInfo.idcard" name="input"></input>
 		</view>
 		<view class="border-bottom">
 			<view><text class="text-margin">邮箱地址</text></view>
@@ -129,22 +129,22 @@
 				areacode: ''
 			}
 		},
-		onLoad() {		
+		onLoad() {
 			let _this = this
 			uni.getStorage({
 				key: 'ddwb',
 				success: function(res) {
 					_this.$apiYZX.getUserById(res.data.userid).then(res => {
-						_this.userInfo = res.data.data 
+						_this.userInfo = res.data.data
 						// 根据code设置省市县默认值 
 						_this.provincecode = res.data.data.provincecode
 						_this.citycode = res.data.data.citycode
 						_this.areacode = res.data.data.areacode
-						_this.jy=_this.educationList.findIndex(item=>{
-								return item.value==res.data.data.education
+						_this.jy = _this.educationList.findIndex(item => {
+							return item.value == res.data.data.education
 						})
-						if(_this.jy==-1){
-							_this.jy=0
+						if (_this.jy == -1) {
+							_this.jy = 0
 						}
 						_this.$apiYZX.provinces().then(res => {
 							let arr = []
@@ -157,17 +157,16 @@
 							})
 							_this.multiArray[0] = arr;
 							let code;
-							if(_this.provincecode){
+							if (_this.provincecode) {
 								_this.getByProvinceCode(_this.provincecode)
-							}else{
+							} else {
 								_this.getByProvinceCode(res.data.data[0].code)
 							}
-							
+
 						})
 					})
 				}
 			});
-
 		},
 		methods: {
 			getByProvinceCode(code) {
@@ -290,21 +289,29 @@
 			},
 			submitFunc() {
 				if (!this.testInput()) return false;
+				let test = this.isCardID(this.userInfo.idcard);
+				if (!test) {
+					uni.showToast({
+						title: '请填写正确的身份证号码',
+						icon: 'none'
+					});
+					return false;
+				}
 				this.getSelectValue()
 				this.$apiYZX.userPerfectInfo(this.userInfo).then(res => {
-					if(res.data.code==200){
+					if (res.data.code == 200) {
 						uni.showToast({
 							title: '编辑成功',
 							icon: 'success',
-							})
+						})
 					}
 				})
 			},
-			getSelectValue(){//获取教育程度，所在区域的值
-				let item=this.educationList.filter((item,i)=>{
-					return i==this.jy
+			getSelectValue() { //获取教育程度，所在区域的值
+				let item = this.educationList.filter((item, i) => {
+					return i == this.jy
 				})
-				this.userInfo.education=item[0].value
+				this.userInfo.education = item[0].value
 				let code1 = this.multiArray[0].filter((item, i) => {
 					return i == this.multiIndex[0]
 				})
@@ -312,15 +319,15 @@
 					return i == this.multiIndex[1]
 				})
 				let code3 = this.multiArray[2].filter((item, i) => {
-					return i == this.multiIndex[2] 
+					return i == this.multiIndex[2]
 				})
-				this.userInfo.provincecode=code1[0].id
-				this.userInfo.citycode=code2[0].id
-				this.userInfo.areacode=code3[0].id
+				this.userInfo.provincecode = code1[0].id
+				this.userInfo.citycode = code2[0].id
+				this.userInfo.areacode = code3[0].id
 			},
 			testInput() { //验证输入框内容
-				this.userInfo.idcardfront = '23'
-				this.userInfo.idcardreverse = '12'
+				this.userInfo.idcardfront = '23' //身份证照片
+				this.userInfo.idcardreverse = '12' //身份证照片
 				if (!this.userInfo.name || !this.userInfo.idcard || !this.userInfo.idcardfront || !this.userInfo.idcardreverse) {
 					uni.showToast({
 						title: '请填写完整信息',
@@ -328,7 +335,20 @@
 					})
 					return false
 				}
+
 				return true
+			},
+			isCardID(sId) {
+				var iSum = 0;
+				if (!/^\d{17}(\d|x)$/i.test(sId)) return false;
+				sId = sId.replace(/x$/i, "a");
+				if (aCity[parseInt(sId.substr(0, 2))] == null) return false;
+				var sBirthday = sId.substr(6, 4) + "-" + Number(sId.substr(10, 2)) + "-" + Number(sId.substr(12, 2));
+				var d = new Date(sBirthday.replace(/-/g, "/"));
+				if (sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate())) return false;
+				for (var i = 17; i >= 0; i--) iSum += (Math.pow(2, i) % 11) * parseInt(sId.charAt(17 - i), 11);
+				if (iSum % 11 != 1) return false;
+				return true;
 			}
 		}
 	}
