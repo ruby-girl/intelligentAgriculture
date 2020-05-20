@@ -85,7 +85,6 @@
 			}
 		},
 		onLoad: function() {
-
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			//页面一加载时请求一次数据
 		},
@@ -167,7 +166,7 @@
 				})
 			},
 			toadd() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: 'addBatch'
 				})
 			},

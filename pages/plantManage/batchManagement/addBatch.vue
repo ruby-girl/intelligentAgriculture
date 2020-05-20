@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<!-- 添加批次 -->
 		<title-item title="基础信息" />
 		<view class="container-input">
 			<form>
@@ -91,8 +92,7 @@
 						success: function(res) {
 							_this.obj.userId = res.data 				
 							_this.postData.userId = res.data
-							_this.getByUserIdAndBaseId()
-							_this.getBreedsAll(option)
+							_this.getByUserIdAndBaseId().then(_this.getBreedsAll(option))					
 						}
 					})
 				}
@@ -124,12 +124,15 @@
 						let index = this.breedList.findIndex((item, i) => {
 							return item.id == breed
 						})
-						if (index == -1) index = 0
+						if (index == -1){
+							index = 0
+						}
 						this.breed = index
 					}
 				})
 			},
 			getByUserIdAndBaseId() { //获取用户地块
+			return new Promise((resolve, reject) => {
 				this.$apiYZX.getByUserIdAndBaseId(this.obj).then(res => {
 					res.data.data.forEach((item, i) => {
 						res.data.data[i].isChecked = false
@@ -142,7 +145,10 @@
 						})
 						this.disabled = true
 					}
+					resolve()
 				})
+			})
+				
 			},
 			setAction(i) {
 				this.landList[i].isChecked = !this.landList[i].isChecked
@@ -156,7 +162,7 @@
 				this.postData.landParcelIds = ids.join()
 			},
 			toPlan() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: 'selectPlan?breed=' + this.postData.breedId + '&plantingTime=' + this.date + '&landId=' + this.landId +
 						'&planName=' +
 						this.planName + '&planId=' + this.postData.plantingPlanId
@@ -191,7 +197,6 @@
 				return true
 			},
 			addFunc() {
-				console.info(this.postData)
 				if (!this.test()) return
 				this.$apiYZX.addPlantingBatchs(this.postData).then(res => {
 					if (res.data.code == '200') {
