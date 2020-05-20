@@ -17,7 +17,7 @@
 						{{index+1}}.人工
 					</view>
 					<veiw>
-						<text class="iconfont iconquxiao imgIcon "  @click="personDelete('personList',index)"></text>
+						<text class="iconfont iconquxiao imgIcon " @click="personDelete('personList',index)"></text>
 					</veiw>
 				</view>
 				<view class="cu-form-group ">
@@ -36,7 +36,8 @@
 						工价（元）
 
 					</view>
-					<input placeholder="请输入" type="digit" :value="item.labourCost" @input="changeInput($event,'labourCost',index)" name="input"></input>
+					<input placeholder="请输入" type="digit" :value="item.labourCost" @input="changeInput($event,'labourCost',index)"
+					 name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -44,7 +45,7 @@
 						面积（亩）
 
 					</view>
-					<input  disabled :value="acreage" name="input"></input>
+					<input disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -52,7 +53,7 @@
 						费用合计
 
 					</view>
-					<input  disabled :value="item.personFeeCount" name="input"></input>
+					<input disabled :value="item.personFeeCount" name="input"></input>
 				</view>
 			</view>
 
@@ -82,7 +83,7 @@
 					<view class="title">
 						资料名称
 					</view>
-					<input placeholder="请输入"  :value="item.name" @input="changeInput2($event,'name',index)" name="input"></input>
+					<input placeholder="请输入" :value="item.name" @input="changeInput2($event,'name',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -119,7 +120,7 @@
 
 					</view>
 
-					<input placeholder="请输入" :value="item.unitArea"  @input="changeInput2($event,'unitArea',index)" name="input"></input>
+					<input placeholder="请输入" :value="item.unitArea" @input="changeInput2($event,'unitArea',index)" name="input"></input>
 
 				</view>
 				<view class="cu-form-group ">
@@ -130,7 +131,7 @@
 
 
 					</view>
-					<input placeholder="请输入" :value="item.price"  @input="changeInput2($event,'price',index)" name="input"></input>
+					<input placeholder="请输入" :value="item.price" @input="changeInput2($event,'price',index)" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
@@ -140,13 +141,13 @@
 
 
 					</view>
-					<input  disabled :value="acreage" name="input"></input>
+					<input disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
 						费用
 					</view>
-					<input  disabled :value="item.suppliesFeeCount" name="input"></input>
+					<input disabled :value="item.suppliesFeeCount" name="input"></input>
 				</view>
 
 			</view>
@@ -186,13 +187,13 @@
 					<view class="title">
 						面积（亩）
 					</view>
-					<input  disabled :value="acreage" name="input"></input>
+					<input disabled :value="acreage" name="input"></input>
 				</view>
 				<view class="cu-form-group ">
 					<view class="title">
 						费用
 					</view>
-					<input  disabled :value="item.feeCount" name="input"></input>
+					<input disabled :value="item.feeCount" name="input"></input>
 				</view>
 			</view>
 
@@ -212,7 +213,9 @@
 		components: {
 			neilModal
 		},
-		props: ['workOrderId', 'plantingBatchId', 'formObj','status','suppliesResources','personResources','equipmentResources'],
+		props: ['workOrderId', 'plantingBatchId', 'formObj', 'status', 'suppliesResources', 'personResources',
+			'equipmentResources'
+		],
 		data() {
 			return {
 
@@ -234,44 +237,47 @@
 				acreage: 0
 			};
 		},
-		
+
 		created() {
 			let _this = this;
 			this.initSelect();
-		
-		
-				setTimeout(function () {
-				     _this.initData()
-				   }, 500);
-				  
-			
-			
+
+
+			setTimeout(function() {
+				_this.initData()
+			}, 500);
+
+
+
 		},
 		methods: {
 			initData() {
-				
-			
-					if(this.formObj.workOrderId){
-						
-					    this.$api.getFarmWorkTabelList({workOrderId:this.formObj.workOrderId,plantingBatchId:this.plantingBatchId}).then(res=>{
-					   this.acreage = res.data.data.acreageCount || 0;
-					   /* 编辑 */
-					   	if(this.status == 0){
+
+
+				if (this.formObj.workOrderId) {
+
+					this.$api.getFarmWorkTabelList({
+						workOrderId: this.formObj.workOrderId,
+						plantingBatchId: this.plantingBatchId
+					}).then(res => {
+						this.acreage = res.data.data.acreageCount || 0;
+						/* 编辑 */
+						if (this.status == 0) {
 							this.equitmenList = this.equipmentResources;
 							this.personList = this.personResources;
 							this.suppliesList = this.suppliesResources;
-						}else{
+						} else {
 							this.equitmenList = res.data.data.equipmentResources;
 							this.personList = res.data.data.personResources;
 							this.suppliesList = res.data.data.suppliesResources;
 						}
-				
-						
+
+
 					})
-					
-					
+
+
 				}
-					
+
 			},
 			initSelect() {
 				this.$api.getSuppliersCompany().then(res => {
@@ -282,46 +288,56 @@
 				})
 			},
 			saveForm() {
-				
-			
+
+
 				let obj = {
 					"baseId": uni.getStorageSync('baseId'),
 					"executionUserId": uni.getStorageSync('organUserId'),
 					"remark": this.formObj.remark,
 					"plantingBatchId": this.formObj.plantingBatchId,
+					"plantingBatchName": this.formObj.plantingBatchName,
 					"farmWorkItemId": this.formObj.farmWorkItemId,
+					"farmWorkItemName": this.formObj.farmWorkItemName,
 					"price": this.formObj.price,
 					"workOrderId": this.formObj.workOrderId,
 					equipmentResources: this.equitmenList,
 					personResources: this.personList,
 					suppliesResources: this.suppliesList,
-				}	
-					
-				if(!this.formObj.plantingBatchId){
-					  uni.showToast({title:"请选择种植批次", icon:"none"});
-					  return;
 				}
-				if(!this.formObj.farmWorkItemId){
-					  uni.showToast({title:"请选择操作类型", icon:"none"});
-					  return;
+
+				if (!this.formObj.plantingBatchId) {
+					uni.showToast({
+						title: "请选择种植批次",
+						icon: "none"
+					});
+					return;
+				}
+				if (!this.formObj.farmWorkItemId) {
+					uni.showToast({
+						title: "请选择操作类型",
+						icon: "none"
+					});
+					return;
 				}
 				this.$api.addFarmWorkBase(obj).then(res => {
-                 uni.showToast({
+					uni.showToast({
 						title: '提交成功',
 						icon: 'success',
 						success() {
 							uni.navigateBack({
-								delta:1,
-								success(){
+								delta: 1,
+								success() {
 									let page = getCurrentPages().pop(); //跳转页面成功之后
 									if (!page) return;
-									page.onLoad({id:obj.workOrderId}); //如果页面存在，则重新刷新页面
-									}							
+									page.onLoad({
+										id: obj.workOrderId
+									}); //如果页面存在，则重新刷新页面
+								}
 							})
-					
+
 						}
-						})
-				
+					})
+
 				});
 			},
 			/* 人工 */
@@ -332,7 +348,7 @@
 					"labourCost": '',
 					"acreageCount": this.acreage,
 					"personFeeCount": '',
-			
+
 					"workOrderId": this.workOrderId
 				}
 				this.personList.push(obj)
@@ -354,14 +370,14 @@
 			suppliesAdd() {
 				let obj = {
 					"name": "",
-					"supplierName":this.companySelectList?this.companySelectList[0].name:'' ,
-					"supplierCode":this.companySelectList?this.companySelectList[0].id:'',
-					"unit": this.unitSelectList?this.unitSelectList[0].name:'',
+					"supplierName": this.companySelectList ? this.companySelectList[0].name : '',
+					"supplierCode": this.companySelectList ? this.companySelectList[0].id : '',
+					"unit": this.unitSelectList ? this.unitSelectList[0].name : '',
 					"unitArea": "",
 					"price": "",
 					"acreageCount": this.acreage,
 					"suppliesFeeCount": "",
-				
+
 					"workOrderId": this.workOrderId
 				}
 				this.suppliesList.push(obj)
@@ -383,7 +399,7 @@
 					"price": "",
 					"acreageCount": this.acreage,
 					"feeCount": "",
-				
+
 					"workOrderId": this.workOrderId
 				}
 				this.equitmenList.push(obj)

@@ -146,7 +146,8 @@
 				intervalTime: 0,
 				
 				timer: null,
-				voiceTime:0
+				voiceTime:0,
+				execuResultData:{},
 
 			};
 		},
@@ -250,20 +251,22 @@
 				this.$apiYZX.organUserWorkOrderManageGetById({
 					id: this.params.workOrderId
 				}).then(res => {
-					this.params.remark = res.data.data.remark;
-
-					this.params.plantingBatchId = res.data.data.plantingBatchId || this.batchData[0].id;
-					this.params.plantingBatchName = res.data.data.plantingBatchName || this.batchData[0].name;
-					this.params.farmWorkItemId = res.data.data.farmWorkItemId || this.farmData[0].id;
-					this.params.farmWorkItemName = res.data.data.farmWorkItemName || this.farmData[0].name;
-					this.params.price = res.data.data.price || '';
+					let resdata = res.data.data.farmWorkRecordVO;
+					//this.execuResultData = res.data.data.farmWorkRecordVO;
+					console.log(resdata)
+					this.params.remark = resdata.remark;
+					this.params.plantingBatchId = resdata.plantingBatchId || this.batchData[0].id;
+					this.params.plantingBatchName = resdata.plantingBatchName || this.batchData[0].name;
+					this.params.farmWorkItemId = resdata.farmWorkItemId || this.farmData[0].id;
+					this.params.farmWorkItemName = resdata.farmWorkItemName || this.farmData[0].name;
+					this.params.price = resdata.price || '';
 					//人资personResourcesBudget;
 					//设备 equipmentResourcesBudget;
 					//农资suppliesResourcesBudget;
 
-					this.personResources = res.data.data.personResources
-					this.equipmentResources = res.data.data.equipmentResources
-					this.suppliesResources = res.data.data.suppliesResources
+					this.personResources = resdata.personResources
+					this.equipmentResources = resdata.equipmentResources
+					this.suppliesResources = resdata.suppliesResources
 				})
 
 			},

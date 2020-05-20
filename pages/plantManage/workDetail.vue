@@ -104,7 +104,7 @@
 				<view class="content">
 					<view><text class="cr3 mr10">
 							执行时间
-						</text> <text>{{resultData.executiontime}}</text>
+						</text> <text>{{execuResultData.executiontime}}</text>
 					</view>
 					<view><text class="cr3 mr10">上传照片
 						</text>
@@ -118,16 +118,16 @@
 					</view>
 					<view><text class="cr3 mr10">
 							备注信息
-						</text>{{resultData.remark}}</view>
+						</text>{{execuResultData.remark}}</view>
 				</view>
 			</view>
 			<view class="mb20 two">
 			
 				<label><text class="line"></text>执行人资物料费用</label>
 				<view class="content">
-					<view class="f13" v-if="personResources.length>0">人资费用</view>
+					<view class="f13" v-if="execuResultData.personResources.length>0">人资费用</view>
 			
-					<t-table border-color="#E1E1E1" v-if="personResources.length>0">
+					<t-table border-color="#E1E1E1" v-if="execuResultData.personResources.length>0">
 						<t-tr class="bg-tr">
 							<t-th>人员类型</t-th>
 							<t-th>人工(亩)</t-th>
@@ -135,7 +135,7 @@
 							<t-th>面积(亩)</t-th>
 							<t-th>费用(元)</t-th>
 						</t-tr>
-						<t-tr v-for="item in personResources" :key="item.id">
+						<t-tr v-for="item in execuResultData.personResources" :key="item.id">
 							<t-td>{{ item.name }}</t-td>
 							<t-td>{{ item.labour }}</t-td>
 							<t-td>{{ item.labourCost }}</t-td>
@@ -143,8 +143,8 @@
 							<t-td>{{ item.personFeeCount }}</t-td>
 						</t-tr>
 					</t-table>
-					<view class="f13" v-if="equipmentResources.length>0">设备费用</view>
-					<t-table border-color="#E1E1E1" v-if="equipmentResources.length>0">
+					<view class="f13" v-if="execuResultData.equipmentResources.length>0">设备费用</view>
+					<t-table border-color="#E1E1E1" v-if="execuResultData.equipmentResources.length>0">
 						<t-tr class="bg-tr">
 							<t-th>人员类型</t-th>
 							<t-th>每亩费用(元)</t-th>
@@ -152,7 +152,7 @@
 							<t-th>费用(元)</t-th>
 			
 						</t-tr>
-						<t-tr v-for="item in equipmentResources" :key="item.id">
+						<t-tr v-for="item in execuResultData.equipmentResources" :key="item.id">
 							<t-td>{{ item.name }}</t-td>
 							<t-td>{{ item.price }}</t-td>
 							<t-td>{{ item.acreageCount }}</t-td>
@@ -160,9 +160,9 @@
 			
 						</t-tr>
 					</t-table>
-					<view class="f13" v-if="suppliesResources.length>0">农资费用</view>
+					<view class="f13" v-if="execuResultData.suppliesResources.length>0">农资费用</view>
 			
-					<t-table border-color="#E1E1E1" v-if="suppliesResources.length>0">
+					<t-table border-color="#E1E1E1" v-if="execuResultData.suppliesResources.length>0">
 						<t-tr class="bg-tr">
 							<t-th>农资名称</t-th>
 							<t-th>农资名称</t-th>
@@ -170,7 +170,7 @@
 							<t-th>面积(亩)</t-th>
 							<t-th>费用(元)</t-th>
 						</t-tr>
-						<t-tr v-for="item in suppliesResources" :key="item.id">
+						<t-tr v-for="item in execuResultData.suppliesResources" :key="item.id">
 							<t-td>{{ item.name }}</t-td>
 							<t-td>{{ item.supplierName }}</t-td>
 							<t-td>{{ item.unitArea }}</t-td>
@@ -232,6 +232,7 @@
 				personResourcesBudget: [],
 				equipmentResourcesBudget: [],
 				suppliesResourcesBudget: [],
+				execuResultData:{},
 				personResources: [],
 				equipmentResources: [],
 				suppliesResources: [],
@@ -271,12 +272,13 @@
 					    //人资personResourcesBudget;
 						 //设备 equipmentResourcesBudget;
 					    //农资suppliesResourcesBudget;
-						this.personResourcesBudget=res.data.data.personResourcesBudget
-						this.equipmentResourcesBudget=res.data.data.equipmentResourcesBudget
-						this.suppliesResourcesBudget=res.data.data.suppliesResourcesBudget
-						this.personResources=res.data.data.personResources
-						this.equipmentResources=res.data.data.equipmentResources
-						this.suppliesResources=res.data.data.suppliesResources
+						this.personResourcesBudget=res.data.data.personResources
+						this.equipmentResourcesBudget=res.data.data.equipmentResources
+						this.suppliesResourcesBudget=res.data.data.suppliesResources
+						this.execuResultData = res.data.data.farmWorkRecordVO
+						// this.personResources=res.data.data.personResources
+						// this.equipmentResources=res.data.data.equipmentResources
+						// this.suppliesResources=res.data.data.suppliesResources
 				})
 			}
 
