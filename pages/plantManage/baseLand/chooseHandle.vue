@@ -11,8 +11,10 @@
 			才能进行进一步的种植管理。</view>
 		<navigator url='/pages/plantManage/baseLand/addBaseLand'>
 			<button class="cu-btn block bg-green  lg">创建基地</button>
+				</navigator>
+				<navigator url='/pages/plantManage/baseLand/joinBaseLand'>	
 			<button class="cu-btn block lg line-green">加入基地</button>
-		</navigator>
+			</navigator>
 
 
 

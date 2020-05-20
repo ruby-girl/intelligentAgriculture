@@ -24,9 +24,9 @@
 			return {
 				title: 'Hello',
 				obj: {
-					account: '',
+					account: '18681612674',
 					captcha: '',
-					password: ''
+					password: 'aa123456'
 				},
 				headPortrait: ''
 			}

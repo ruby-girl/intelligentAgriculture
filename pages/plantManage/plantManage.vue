@@ -157,19 +157,17 @@
 
 			};
 		},
-		onLoad() {
-					let _this = this;
+		onShow() {
 			
+			let _this = this;	
 			const obj = uni.getStorageSync('ddwb');
-
 			this.userId = obj.userid
 			this.initSelect()
-	
-
-			
 
 		},
-		
+		onPullDownRefresh:function(){
+		   this.initSelect()
+		 },
 		watch: {
 
 			selectValue(val, oldValue) {
@@ -187,7 +185,7 @@
 				}
 			},
 		},
-		onReady() {},
+		
 		methods: {
 			
 			initSelect() {
@@ -226,7 +224,7 @@
 						data: res.data.data.organUserId
 					});
 					this.baseId = res.data.data.baseId
-
+                  uni.stopPullDownRefresh();
 				})
 
 			}

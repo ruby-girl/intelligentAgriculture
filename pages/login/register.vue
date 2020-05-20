@@ -103,7 +103,7 @@
 										console.info(res.code)
 				     }
 				   })
-				return
+				//return
 				if(!this.test()) return false
 	
 				this.$apiYZX.loginReg(this.userInfo).then(res => {

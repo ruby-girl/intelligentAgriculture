@@ -152,6 +152,7 @@
 			};
 		},
 		onLoad(option) {
+		
 			let _this = this;
 			
 			/* 录音 */
@@ -166,7 +167,7 @@
 			})
 			
 			this.params.workOrderId = Number(option.workOrderId);
-			//this.params.plantingBatchId = Number(option.data.plantingBatchId);
+			this.params.plantingBatchId = Number(option.plantingBatchId);
 			this.status = option.workOrderStatus;
 			this.$nextTick(function() {
 				_this.initSelect();

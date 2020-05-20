@@ -240,12 +240,15 @@
 
 		created() {
 			let _this = this;
-			this.initSelect();
+		
 
-
-			setTimeout(function() {
-				_this.initData()
-			}, 500);
+this.$nextTick(function() {
+		_this.initSelect();
+		_this.initData()
+})
+			// setTimeout(function() {
+			
+			// }, 700);
 
 
 
