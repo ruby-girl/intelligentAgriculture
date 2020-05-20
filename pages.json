@@ -135,7 +135,6 @@
 			"path": "pages/plantManage/batchManagement/list",
 			"style": {
 				"navigationBarTitleText": "批次管理",
-				"enablePullDownRefresh": true,
 				"disableScroll": true
 			}
 		}

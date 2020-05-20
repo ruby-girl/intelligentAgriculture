@@ -247,22 +247,22 @@
 				}
 				this.$apiYZX.getFeedBackWorkOrdersList(this.page, obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.data)
-					if (this.page == 1 && this.newsList.length == 0) {
+					if(this.page==1&&this.newsList.length==0){
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
-						this.moreHeight = this.windowHeight - 40
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1) {
+					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length<3){
 						this.contentdown = ''
 						this.loadingType = 0
-						this.moreHeight = 30
-					} else if (res.data.data.rowCount == this.newsList.length) {
+					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length>2){
+						this.contentdown = '无更多数据'
+						this.loadingType = 0
+					}
+					else if (res.data.data.rowCount == this.newsList.length) {
 						this.loadingType = 0
 						this.contentdown = '无更多数据'
-						this.moreHeight = 30
 					} else {
 						this.contentdown = '上拉加载更多'
 						this.loadingType = 1
-						this.moreHeight = 30
 					}
 				})
 			},
@@ -343,6 +343,7 @@
 .loading-more {
 		text-align: center;
 		color: #ddd;
+		padding-bottom: 50rpx;
 	}
 	.content {
 		padding: 30rpx;

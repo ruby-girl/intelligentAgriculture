@@ -80,6 +80,7 @@
 				this.obj.name = e.detail.value
 				this.page=1
 				this.loadingType = 0
+				this.contentdown = ''
 				this.newsList=[]
 				this.getData()
 			},
@@ -89,11 +90,14 @@
 					if(this.page==1&&this.newsList.length==0){
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
-					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1){
+					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length<3){
 						this.contentdown = ''
 						this.loadingType = 0
+					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length>2){
+						this.contentdown = '无更多数据'
+						this.loadingType = 0
 					}
-					else if (res.data.data.rowCount == this.newsList.length&&this.page!==1) {
+					else if (res.data.data.rowCount == this.newsList.length) {
 						this.loadingType = 0
 						this.contentdown = '无更多数据'
 					} else {
@@ -128,6 +132,6 @@
 	.loading-more {
 		text-align: center;
 		color: #ddd;
-		padding:15px 0 30px 0;
+		padding:15px 0 50rpx 0;
 	}
 </style>
