@@ -5,7 +5,7 @@
 		<view class="drawMap">
 
 
-			<map id="map" :longitude="longitude" enable-satellite="true" :polygons="polygons" :latitude="latitude" scale="15"
+			<map id="map" :longitude="longitude" enable-satellite="true" :polygons="polygons" :latitude="latitude" scale="12"
 			 show-location style="width: 100%; height: 100%;">
 
 			</map>
@@ -47,7 +47,7 @@
 						</view>
 						<view>
 							<navigator :url='"/pages/plantManage/landManage/addLand?landId="+item.id'>
-								<text class="iconfont iconxiugaixiang" style="font-size: 30px;    vertical-align: middle;"></text><text>编辑</text>
+								<text class="iconfont " style="font-size: 30px;    vertical-align: middle;">&#xe615;</text><text>编辑</text>
 							</navigator>
 						</view>
 

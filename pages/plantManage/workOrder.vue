@@ -30,6 +30,7 @@
 				<view v-if="item.workOrderType==1">
 					<view class="flex justify-content-flex-justify align-items-center">
 						<view>
+					
 							<image src="/static/plant/icon_weeding@2x.png" class="imgIcon"></image>
 							<text class="order-title">{{item.name}}</text>
 							<text>来自工单</text>

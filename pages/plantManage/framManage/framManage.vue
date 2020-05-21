@@ -96,12 +96,15 @@
 		
 			<view class="loading-more">{{contentdown}}</view>
 		</scroll-view>
-		<navigator url="/pages/plantManage/framManage/addFram">
-		
-    
-		   <button class="cu-btn block bg-green  lg">添加农事记录</button>
-		   
-	   </navigator>
+		<view class="add-fram-btn"> 
+			<navigator url="/pages/plantManage/framManage/addFram">
+					
+			    
+					   <button class="cu-btn block bg-green  lg">添加农事记录</button>
+					   
+			</navigator>
+		</view>
+	
 
 	</view>
 </template>
@@ -230,16 +233,11 @@
 		justify-content: space-between;
 	}
 
-.cu-btn{
-			width: 90%;
-			margin: 0 auto;
-			margin-top: 40rpx;
-		
-		}
+
 	.content {
 		
 	
-		height: calc(100vh - 150rpx);
+		height: calc(100vh - 100rpx);
 		position: relative;
 	
        .content-table{
@@ -262,6 +260,7 @@
 		   	margin-bottom: 30rpx;
 			color: #E1E1E1;
 		   }
+		   
 	   }
 				
 			
@@ -312,5 +311,18 @@
 			color: #ddd;
 		}
 		
+	}
+	.add-fram-btn{
+		position: fixed;
+	
+		z-index: 111;
+		width: 93%;
+	margin:auto;
+	left:0;
+	right:0;
+
+	bottom: 40rpx;
+	
+
 	}
 </style>

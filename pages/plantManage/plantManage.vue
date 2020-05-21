@@ -4,9 +4,9 @@
 	
 		<view class="plant-top">
 
-			<view class="flex-top">
+			<view class="flex-top" v-if="resultData.organUserName">
 	
-				<view class="name">{{resultData.organUserName}}的土地信息</view>
+				<view class="name">{{resultData.organUserName || '-'}}的土地信息</view>
 
 			</view>
 			<view class="display-flex justify-content-flex-end">

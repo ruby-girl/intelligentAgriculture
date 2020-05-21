@@ -1,6 +1,6 @@
 {
-    "name" : "item",
-    "appid" : "",
+    "name" : "测试2",
+    "appid" : "__UNI__4DDDB35",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -42,7 +42,8 @@
             "ios" : {},
             /* SDK配置 */
             "sdkConfigs" : {
-                "maps" : {}
+                "maps" : {},
+                "ad" : {}
             }
         }
     },
@@ -50,12 +51,12 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx346f8913c8a9c6ae",
+        "appid" : "wx5adf8b3cd837ec61",
         "setting" : {
             "urlCheck" : true,
             "es6" : true,
-            "postcss" : false,
-            "minified" : true
+            "postcss" : true,
+            "minified" : false
         },
         "usingComponents" : true,
         "permission" : {

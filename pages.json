@@ -89,14 +89,6 @@
 		},
 
 		{
-			"path": "pages/service/landDetail",
-			"style": {}
-		},
-
-
-
-
-		{
 			"path": "pages/plantManage/workDetail",
 			"style": {
 				"navigationBarTitleText": "工单详情"
@@ -131,12 +123,7 @@
 				"navigationBarTitleText": "选择种植批次"
 			}
 		},
-		{
-			"path": "pages/fair/fair",
-			"style": {
-				"navigationBarTitleText": "市集"
-			}
-		},
+	
 		{
 			"path": "pages/plantManage/batchManagement/list",
 			"style": {

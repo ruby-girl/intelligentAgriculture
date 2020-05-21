@@ -8,7 +8,6 @@ import validate from '@/utils/graceChecker.js'
 import store from './store'
 
 import uniPopup from './components/uni-popup/uni-popup.vue';
-
 Vue.component('uni-popup', uniPopup);
 import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom', cuCustom)

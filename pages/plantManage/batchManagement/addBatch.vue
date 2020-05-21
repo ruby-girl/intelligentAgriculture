@@ -22,7 +22,8 @@
 				<view class="cu-form-group">
 					<view class="title">种苗企业</view>
 					<input disabled="true" class="form-input-left" placeholder="请选择种苗企业" name="input"></input>
-					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
+					<view class="iconfont right-jt">&#xe738;</view>
+					
 				</view>
 			</form>
 		</view>
@@ -39,7 +40,7 @@
 			<view class="cu-form-group container-input" @click="toPlan">
 				<view class="title">种植计划</view>
 				<input disabled="true" v-model="planName" class="form-input-left" placeholder="请选择种植计划" name="input"></input>
-				<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
+				<view class="iconfont right-jt">&#xe738;</view>
 			</view>
 		</view>
 		<button :disabled="disabled" @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg" style="margin:40px 20px 20px 20px">
@@ -238,8 +239,9 @@
 	}
 
 	.right-jt {
-		transform: rotate(180deg);
-		width: 16px;
+	   font-size: 23px;
+	   color: #828282;
+	
 	}
 
 	.item-border {

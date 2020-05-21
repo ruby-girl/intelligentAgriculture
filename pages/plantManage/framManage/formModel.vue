@@ -5,8 +5,8 @@
 				<label><text class="line"></text><text class="fb">人工（{{personList.length}}） </text></label>
 				<view class="display-flex">
 
-					<view class="cr">
-						<image src="/static/plant/icon_add@2x.png" class="imgIcon" @click="personAdd"></image> 添加
+					<view class="cr" @click="personAdd">
+						<view class="cuIcon-roundadd imgIcon" style="font-size: 20px;"></view>添加
 					</view>
 				</view>
 			</view>
@@ -62,10 +62,10 @@
 			<view class="label display-flex  justify-content-flex-justify">
 				<label><text class="line"></text><text class="fb">农资（{{suppliesList.length}}） </text></label>
 				<view class="display-flex">
-
-					<view class="cr">
-						<image src="/static/plant/icon_add@2x.png" class="imgIcon" @click="suppliesAdd"></image> 添加
+					<view class="cr" @click="suppliesAdd">
+						<view class="cuIcon-roundadd imgIcon" style="font-size: 20px;"></view>添加
 					</view>
+
 				</view>
 			</view>
 			<view v-for="(item,index) in suppliesList" :key='index' class="item-border">
@@ -156,10 +156,10 @@
 			<view class="label display-flex  justify-content-flex-justify">
 				<label><text class="line"></text><text class="fb">设备（{{equitmenList.length}}） </text></label>
 				<view class="display-flex">
-
-					<view class="cr">
-						<image src="/static/plant/icon_add@2x.png" class="imgIcon" @click="equitmenAdd"></image> 添加
+					<view class="cr" @click="equitmenAdd">
+						<view class="cuIcon-roundadd imgIcon" style="font-size: 20px;"></view>添加
 					</view>
+
 				</view>
 			</view>
 			<view v-for="(item,index) in equitmenList" :key='index' class="item-border">
@@ -239,13 +239,13 @@
 		},
 
 		created() {
-			let  _this = this;
-		
+			let _this = this;
 
-this.$nextTick(function() {
-		_this.initSelect();
-	
-})
+
+			this.$nextTick(function() {
+				_this.initSelect();
+
+			})
 			setTimeout(function() {
 				_this.initData()
 			}, 700);
@@ -257,7 +257,7 @@ this.$nextTick(function() {
 			initData() {
 
 				if (this.formObj.workOrderId) {
-					
+
 
 					this.$api.getFarmWorkTabelList({
 						workOrderId: this.formObj.workOrderId,
@@ -322,17 +322,17 @@ this.$nextTick(function() {
 					});
 					return;
 				}
-				
-				
+
+
 				this.$api.addFarmWorkBase(obj).then(res => {
 					uni.showToast({
 						title: '提交成功',
 						icon: 'success',
 						success() {
-						uni.navigateTo({
-						    url: '/pages/plantManage/workOrder?type=0&baseId='+uni.getStorageSync('baseId')
-						});
-						
+							uni.navigateTo({
+								url: '/pages/plantManage/workOrder?type=0&baseId=' + uni.getStorageSync('baseId')
+							});
+
 						}
 					})
 
@@ -472,10 +472,9 @@ this.$nextTick(function() {
 
 		.imgIcon {
 			display: inline-block;
-			width: 40rpx;
-			height: 40rpx;
-			vertical-align: text-bottom;
-			color: #333333;
+			vertical-align: middle;
+			margin-right: 3px;
+			color: #00AE66;
 		}
 
 		.section {

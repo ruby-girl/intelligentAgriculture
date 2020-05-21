@@ -11,7 +11,7 @@
 			<form>
 				<view class="cu-form-group" @click="toRealInformmation">
 					<view class="title">实名信息</view>
-					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
+					<view class="iconfont right-jt">&#xe738;</view>
 				</view>
 				<!-- <view class="cu-form-group">
 					<view class="title">意见反馈</view>
@@ -23,7 +23,8 @@
 				</view> -->
 				<view class="cu-form-group">
 					<view class="title">关于我们</view>
-					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
+					<view class="iconfont right-jt">&#xe738;</view>
+					
 				</view>
 			</form>
 		</view>
@@ -108,7 +109,8 @@
 	}
 
 	.right-jt {
-		transform: rotate(180deg);
+		font-size: 23px;
+		color: #828282;
 		width: 16px;
 	}
 </style>

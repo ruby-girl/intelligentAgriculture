@@ -36,8 +36,9 @@
 						</view>
 					</picker>
 				</view>
-             <image src=" http://localhost:8090/api/showImg/baseinfo/77340f7a-2090-414f-a3ad-2852925f5887.png"></image>
-				<view class="cu-bar bg-white margin-top">
+<!--             <image src="/api/showImg/baseinfo/77340f7a-2090-414f-a3ad-2852925f5887.png"></image>
+ -->				
+                <view class="cu-bar bg-white margin-top">
 					<view class="action">
 						上传图片
 					</view>
@@ -74,7 +75,7 @@
 
 					</view>
 					<button @touchstart="startRecord" @touchend="endRecord" class="cu-btn block  lg line-gray" style="margin: 5px 0;">
-						<text class="iconfont iconyuyin- f20" style="margin-right: 10px;"> </text>
+						<text class="iconfont]f20" style="margin-right: 10px;"> &#xe7bd;</text>
 						<template v-if="isRecord">
 							录音中...
 						</template>
