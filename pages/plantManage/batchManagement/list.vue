@@ -17,23 +17,23 @@
 		 @scrolltolower="loadingData">
 			<view class="list-item" v-for="item in newsList" :key="item">
 				<view class="flex align-items-center">
-					<img src="@/static/plant/icon_plant@2x.png" alt="">
+					<text class="iconfont iconchumiaoqi color-green"></text>
 					<view>作物：{{item.breedName}}</view>
 				</view>
 				<view class="flex align-items-center">
-					<img src="@/static/plant/icon_plan@2x.png" alt="">
+					<text class="iconfont iconjihuagongzuo color-green"></text>
 					<view>种植计划：{{item.plantingPlanName}}</view>
 				</view>
 				<view class="flex align-items-center">
-					<img src="@/static/plant/icon_date@2x.png" alt="">
+					<text class="iconfont iconrili color-green"></text>
 					<view>种植年份：{{item.plantingTime||''}}</view>
 				</view>
 				<view class="flex align-items-center">
-					<img src="@/static/plant/icon_land@2x.png" alt="">
+					<text class="iconfont icondikuai color-green"></text>
 					<view>地块数量：{{item.landParcelCount}}</view>
 				</view>
 				<view class="flex align-items-center">
-					<img src="@/static/plant/icon_area@2x.png" alt="">
+					<text class="iconfont iconmianji color-green"></text>
 					<view>地块面积：{{item.acreages}}亩</view>
 				</view>
 			</view>
@@ -218,10 +218,11 @@
 		background: #fff;
 		padding: 30rpx;
 		margin:20rpx 8rpx 30rpx 8rpx;
-		img {
-			width: 18px;
-			height: 18px;
+		.iconfont {
 			margin-right: 20rpx;
+		}
+		.icondikuai{
+			font-size: 14px;
 		}
 	}
 </style>
