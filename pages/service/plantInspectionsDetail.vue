@@ -15,7 +15,7 @@
 					<view><text class="cr3">巡查时间
 						</text>{{resultData.creDate || '-'}}</view>
 					<view><text class="cr3">批次信息
-						</text>{{resultData.plantingBatchName || '-'}}</view>
+						</text>{{resultData.plantingBatchName=='null'?'-':resultData.plantingBatchName}}</view>
 					<view><text class="cr3">
 							反馈内容
 						</text>{{resultData.feedbackContent || '-'}}</view>
