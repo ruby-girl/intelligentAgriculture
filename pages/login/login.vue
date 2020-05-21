@@ -31,9 +31,7 @@
 				headPortrait: ''
 			}
 		},
-		onLoad() {
-
-		},
+		onLoad() {},
 		onShow() {
 			uni.hideHomeButton()
 		},

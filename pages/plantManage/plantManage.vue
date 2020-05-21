@@ -5,6 +5,7 @@
 		<view class="plant-top">
 
 			<view class="flex-top">
+	
 				<view class="name">{{resultData.organUserName}}的土地信息</view>
 
 			</view>

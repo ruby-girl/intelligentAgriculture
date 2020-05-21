@@ -1,20 +1,20 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-{
+		{
+			"path": "pages/index/index", //首页
+			"style": {
+				"app-plus": {
+					"titleNView": false //禁用原生导航栏
+				},
+				"disableScroll": true
+			}
+		},
+	{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
-		},{
-		"path": "pages/plantManage/plantManage",
-		"style": {
-			"navigationBarTitleText": "种植管理",
-			"navigationBarBackgroundColor": "#29B982",
-			"navigationBarTextStyle": "white",
-			"enablePullDownRefresh": true
-		}
-
-	},	{
+		},	{
         "path": "pages/plantManage/baseLand/joinBaseLand",
         "style": {
           "navigationBarTitleText": "基地列表",
@@ -23,6 +23,15 @@
         }
 
       },{
+		"path": "pages/plantManage/plantManage",
+		"style": {
+			"navigationBarTitleText": "种植管理",
+			"navigationBarBackgroundColor": "#29B982",
+			"navigationBarTextStyle": "white",
+			"enablePullDownRefresh": true
+		}
+
+	},{
 			"path": "pages/plantManage/framManage/addFram",
 			"style": {
 				"navigationBarTitleText": "添农事操作记录"
@@ -85,16 +94,7 @@
 		},
 
 
-		{
-			"path": "pages/index/index", //首页
-			"style": {
-				"app-plus": {
-					"titleNView": false //禁用原生导航栏
-				},
-				"disableScroll": true
-			}
-		},
-	
+
 
 		{
 			"path": "pages/plantManage/workDetail",
