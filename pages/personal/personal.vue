@@ -13,21 +13,21 @@
 					<view class="title">实名信息</view>
 					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 				</view>
-				<view class="cu-form-group">
+				<!-- <view class="cu-form-group">
 					<view class="title">意见反馈</view>
 					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 				</view>
 				<view class="cu-form-group">
 					<view class="title">内容推送</view>
 					<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="#e54d42"></switch>
-				</view>
+				</view> -->
 				<view class="cu-form-group">
-					<view class="title">设置</view>
+					<view class="title">关于我们</view>
 					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
 				</view>
 			</form>
 		</view>
-		<button @click="toLogin" class="cu-btn block line-green lg" style="width:90%;margin:50rpx auto">退出</button>
+		<button @click="toLogin" class="cu-btn block line-green lg" style="width:90%;margin:100rpx auto">退出</button>
 	</view>
 </template>
 
@@ -93,7 +93,7 @@
 	}
 
 	.container-input {
-		padding: 0 25rpx;
+		padding: 0 30rpx;
 		padding-top: 130rpx;
 		z-index: -11;
 		background: #fff;
