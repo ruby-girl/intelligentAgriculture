@@ -49,45 +49,32 @@
 			<view class="flex">
 				<view>
 					<navigator :url="'/pages/plantManage/workOrder?type=1&baseId='+baseId">
-						<view>
-							<image src="/static/plant/icon_pending@2x.png" class="icon" />
-						</view>
+					
+						<view class="iconfont cr f20">&#xe60e;</view>
 						<text>待处理</text>
 					</navigator>
 				</view>
 				<view>
-					<view>
-						<image src="/static/plant/icon_warning@2x.png" class="icon" />
-
-					</view>
+				  <view class="iconfont cr f20">&#xe60c;</view>
 					<text>预警提醒</text>
 				</view>
 				<view>
 					<navigator url="/pages/plantManage/batchManagement/list">
 
-						<view>
-							<image src="/static/plant/icon_batch@2x.png" class="icon" />
-
-						</view>
+						  <view class="iconfont cr f20">&#xe60d;</view>
 						<text>批次管理</text>
 					</navigator>
 				</view>
 				<view>
 					<navigator :url="'/pages/plantManage/landManage/landManage?baseId='+baseId+'&acreages='+resultData.acreages+'&landCount='+resultData.landParcelCount">
-						<view>
-							<image src="/static/plant/icon_plot@2x.png" class="icon" />
-
-						</view>
+						  <view class="iconfont cr f20">&#xe60a;</view>
 						<text>地块管理</text>
 					</navigator>
 				</view>
 				<view>
 					<navigator :url="'/pages/plantManage/framManage/framManage?baseId='+baseId">
 
-						<view>
-							<image src="/static/plant/icon_farming@2x.png" class="icon" />
-
-						</view>
+						 <view class="iconfont cr f20">&#xe60b;</view>
 						<text>农事管理</text>
 					</navigator>
 				</view>
@@ -272,6 +259,7 @@
 			}
 
 			.iconfont {
+		
 				display: inline-block;
 				margin-left: 3px;
 				transform: rotate(-90deg);

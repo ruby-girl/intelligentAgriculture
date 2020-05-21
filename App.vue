@@ -16,12 +16,12 @@
 </script>
 
 <style>
-	@import "colorui/main.css";
 	@import url("static/iconfont/iconfont.css");
+	@import "colorui/main.css";
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 	@import './common/uni.css';
-
+	
 	/*每个页面公共css */
 	.display-flex {
 		display: -webkit-box;

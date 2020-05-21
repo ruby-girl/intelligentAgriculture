@@ -64,13 +64,10 @@
 	} from "@/utils/index.js"
 	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
 	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
-	import refresh from '@/components/refresh/refresh.vue'
 	export default {
 		components: {
 			msDropdownMenu,
-			msDropdownItem,
-			refresh
-		},
+			msDropdownItem		},
 		data() {
 			return {
 				timeList: [{
