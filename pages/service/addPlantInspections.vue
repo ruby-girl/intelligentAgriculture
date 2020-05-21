@@ -48,13 +48,13 @@
 				obj: {
 					name: '',
 					baseId: '',
-					workOrderType: 1,//1未处理
+					workOrderType: 1, //1未处理
 					feedbackContent: '', //巡查内容
 					plantingBatchId: '', //批次ID
-					plantingBatchName: '' ,//批次名称
-					initiatorId:''
+					plantingBatchName: '', //批次名称
+					initiatorId: ''
 				},
-				imgList:[]
+				imgList: []
 			};
 		},
 		onLoad(option) {
@@ -63,17 +63,17 @@
 				key: 'baseId',
 				success: function(res) {
 					_this.obj.baseId = res.data
-					_this.obj.plantingBatchName = option.name||''
-					_this.obj.plantingBatchId = option.id||''
-					_this.obj.feedbackContent = option.content||''
-					_this.obj.name = option.title||''
+					_this.obj.plantingBatchName = option.name || ''
+					_this.obj.plantingBatchId = option.id || ''
+					_this.obj.feedbackContent = option.content || ''
+					_this.obj.name = option.title || ''
 
 				}
 			});
 			uni.getStorage({
 				key: 'organUserId',
 				success: function(res) {
-					_this.obj.initiatorId = res.data 						
+					_this.obj.initiatorId = res.data
 				}
 			})
 		},
@@ -92,6 +92,33 @@
 						}
 					}
 				});
+			},
+			fileUpload(tempFilePath) {
+				var that = this; //坑1： this需要这么处理
+				wx.uploadFile({
+					url: url地址, //app.ai_api.File.file
+					filePath: tempFilePath, //文件路径  这里是mp3文件
+					name: 'file', //随意
+					header: {
+						'Content-Type': 'multipart/form-data',
+						'Authorization': wx.getStorageSync("access_token"), //如果需要token的话要传
+					},
+					formData: {
+						method: 'POST' //请求方式
+					},
+					success(res) {
+						var data = JSON.parse(res.data) // 坑2：与wx.request不同的是，upload返回的是字符串格式，需要字符串对象化
+						if (data.code == 200) {
+							that.fileTrans(data.data.id); //执行接口函数 语音文件转文字
+						} else {
+							console.log('上传失败')
+							wx.showToast({
+								title: res.message,
+								icon: 'none'
+							})
+						}
+					}
+				})
 			},
 			ViewImage(e) {
 				uni.previewImage({
@@ -124,15 +151,15 @@
 					_this.obj.feedbackContent = e.detail.value
 				}, 0)
 			},
-			toList() {			
+			toList() {
 				uni.navigateTo({
 					url: 'selectBatch?id=' + this.obj.plantingBatchId + '&name=' + this.obj.plantingBatchName + '&title=' + this.obj
 						.name +
 						'&content=' + this.obj.feedbackContent
 				});
 			},
-			test(){
-				if(!this.obj.name||!this.obj.feedbackContent||!this.obj.plantingBatchId){
+			test() {
+				if (!this.obj.name || !this.obj.feedbackContent || !this.obj.plantingBatchId) {
 					uni.showToast({
 						title: '请完整填写信息',
 						icon: 'none'
@@ -141,10 +168,10 @@
 				}
 				return true
 			},
-			addFunc(){
-				if(!this.test()) return;
-				this.$apiYZX.addOrganUserWorkOrderManage(this.obj).then(res=>{
-					if(res.data.code==200){
+			addFunc() {
+				if (!this.test()) return;
+				this.$apiYZX.addOrganUserWorkOrderManage(this.obj).then(res => {
+					if (res.data.code == 200) {
 						uni.showToast({
 							title: '添加成功',
 							duration: 2000,
@@ -179,12 +206,14 @@
 		top: 800rpx;
 		position: absolute;
 	}
-	.uploader-border{
-		border-top:1px solid #eee;
+
+	.uploader-border {
+		border-top: 1px solid #eee;
 		margin-top: 0;
 	}
-	.action{
-		color:#333;
+
+	.action {
+		color: #333;
 		font-size: 30rpx !important;
 	}
 </style>
