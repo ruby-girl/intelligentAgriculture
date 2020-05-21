@@ -95,9 +95,9 @@
 			<label class="title">种植中批次</label>
 			<view style="overflow-y: auto;height: 70%;">
 
-				<view v-if="resultData.plantingBatchs.length>0">
+				<view v-if="resultData.plantingBatchs.length>0" >
 					<view v-for="(item, index) in resultData.plantingBatchs" :key="index" class="item-view">
-
+<navigator :url="'/pages/plantManage/workOrder?type=&baseId='+baseId">
 						<view class="item-title">{{item.name}}</view>
 						<view style="padding: 10px 0;">
 							<view class="inline content">
@@ -123,7 +123,7 @@
 							</view>
 
 						</view>
-
+</navigator>
 					</view>
 				</view>
 				<view v-else class="null-data">
@@ -158,18 +158,15 @@
 			};
 		},
 		onShow() {
-			
 			let _this = this;	
 			const obj = uni.getStorageSync('ddwb');
 			this.userId = obj.userid
 			this.initSelect()
-
 		},
 		onPullDownRefresh:function(){
 		   this.initSelect()
 		 },
 		watch: {
-
 			selectValue(val, oldValue) {
 
 				if (oldValue) {
@@ -187,13 +184,11 @@
 		},
 		
 		methods: {
-			
 			initSelect() {
 				let _this = this;
 				this.$api.getJoinOkList({
 					userId: this.userId
 				}).then(res => {
-
 					res.data.data.forEach((item) => {
 						let obj = {
 							text: item.name,
@@ -208,8 +203,6 @@
 				})
 			},
 			initData(orgId) {
-
-
 				this.$api.getPagingCriteriaQuery({
 					userId: this.userId,
 					organId: orgId,
@@ -224,7 +217,7 @@
 						data: res.data.data.organUserId
 					});
 					this.baseId = res.data.data.baseId
-                  uni.stopPullDownRefresh();
+                    uni.stopPullDownRefresh();
 				})
 
 			}

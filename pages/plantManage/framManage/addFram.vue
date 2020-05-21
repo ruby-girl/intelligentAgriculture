@@ -36,7 +36,7 @@
 						</view>
 					</picker>
 				</view>
-
+             <image src=" http://localhost:8090/api/showImg/baseinfo/77340f7a-2090-414f-a3ad-2852925f5887.png"></image>
 				<view class="cu-bar bg-white margin-top">
 					<view class="action">
 						上传图片
@@ -312,18 +312,66 @@
 				// }
 			},
 			ChooseImage() {
-				uni.chooseImage({
-					count: 4, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['album'], //从相册选择
-					success: (res) => {
-						if (this.imgList.length != 0) {
-							this.imgList = this.imgList.concat(res.tempFilePaths)
-						} else {
-							this.imgList = res.tempFilePaths
-						}
-					}
-				});
+				   let that = this
+				    wx.chooseImage   ({
+				      count: 1,
+				      sizeType: ['original', 'compressed'],
+				      sourceType: ['album'],
+				      success: (res) => {
+				        let URL =  'https://vanke.xunying.me/file/img/upload'
+				        wx.uploadFile({
+				          url: URL,
+				          filePath: res.tempFilePaths[0],
+				          name: 'file',
+				          formData: { type: 'headImg' },
+				          success: function (res1) {
+							  console.log(res1)
+				            // let val = JSON.parse(res1.data)
+				            // that.setData({
+				            //   ['baseInfo.headImg']: val.data.value
+				            // })
+				          }
+				        })
+				      }
+				    })
+				// wx.chooseImage({
+				// 	count: 4, //默认9
+				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				// 	sourceType: ['album'], //从相册选择
+				//   success (res) {
+				//     const tempFilePaths = res.tempFilePaths
+				// 	// if (this.imgList.length != 0) {
+				// 	// 	this.imgList = this.imgList.concat(res.tempFilePaths)
+				// 	// } else {
+				// 	// 	this.imgList = res.tempFilePaths
+				// 	// }
+				//     wx.uploadFile({
+				//       url: 'http://localhost:8090/api/uploadFile/baseinfo/imgs', //仅为示例，非真实的接口地址
+				//       filePath: tempFilePaths[0],
+				//       name: 'file',
+				//       formData: {
+				//         'user': 'test'
+				//       },
+				//       success (res){
+				// 		  console.log(res)
+				//         const data = res.data
+				//         //do something
+				//       }
+				//     })
+				//   }
+				// })
+				// uni.chooseImage({
+				// 	count: 4, //默认9
+				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				// 	sourceType: ['album'], //从相册选择
+				// 	success: (res) => {
+				// 		if (this.imgList.length != 0) {
+				// 			this.imgList = this.imgList.concat(res.tempFilePaths)
+				// 		} else {
+				// 			this.imgList = res.tempFilePaths
+				// 		}
+				// 	}
+				// });
 			},
 			ViewImage(e) {
 				uni.previewImage({
@@ -331,6 +379,7 @@
 					current: e.currentTarget.dataset.url
 				});
 			},
+			/*  http://localhost:8090/api/uploadFile/baseinfo/imgs */
 			DelImg(e) {
 				uni.showModal({
 					title: '删除',
