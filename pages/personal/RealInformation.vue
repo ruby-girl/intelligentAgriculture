@@ -134,7 +134,9 @@
 			uni.getStorage({
 				key: 'ddwb',
 				success: function(res) {
+					console.log('res.data.userid',res.data.userid)
 					_this.$apiYZX.getUserById(res.data.userid).then(res => {
+						console.info(res)
 						_this.userInfo = res.data.data
 						// 根据code设置省市县默认值 
 						_this.provincecode = res.data.data.provincecode

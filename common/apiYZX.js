@@ -3,6 +3,7 @@ import http from '@/utils/request.js'
 //设置请求结束后拦截器
 http.interceptor.response = (response) => {
 	uni.hideLoading();
+	console.info(response)
 	if(response.data.code!==200){
 		uni.showToast({
 		    title: response.data.msg,

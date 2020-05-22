@@ -3,7 +3,7 @@
 		<view class="shu-box">
 		</view>
 		<view class="title-txt">
-			{{title}}
+			{{title}}  
 		</view>
 	</view>
 </template>
@@ -11,6 +11,7 @@
 <script>
 	export default {
 		props:['title'],
+		name: "TileItem",
 		data(){
 			return{
 				

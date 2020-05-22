@@ -1,7 +1,14 @@
 <template>
 	<view>
 		<!-- 添加批次 -->
-		<title-item title="基础信息" />
+		<!-- <title-item title="基础信息" /> -->
+		<view class="flex align-items-center title-height">
+			<view class="shu-box">
+			</view>
+			<view class="title-txt">
+				基础信息
+			</view>
+		</view>
 		<view class="container-input">
 			<form>
 				<view class="cu-form-group breed-select">
@@ -28,7 +35,14 @@
 			</form>
 		</view>
 		<view class="item-border">
-			<title-item title="地块" />
+			<!-- <title-item title="地块" /> -->
+			<view class="flex align-items-center title-height">
+				<view class="shu-box">
+				</view>
+				<view class="title-txt">
+					地块
+				</view>
+			</view>
 			<view class="flex flex-wrap container-input">
 				<view v-bind:class="{'btn-box':true,'btn-box-action':item.isChecked}" @click="setAction(i)" :key="i" v-for="(item,i) in landList">
 					{{item.name}}
@@ -36,7 +50,14 @@
 			</view>
 		</view>
 		<view class="item-border">
-			<title-item title="种植计划" />
+			<!-- <title-item title="种植计划" /> -->
+			<view class="flex align-items-center title-height">
+				<view class="shu-box">
+				</view>
+				<view class="title-txt">
+					种植计划
+				</view>
+			</view>
 			<view class="cu-form-group container-input" @click="toPlan">
 				<view class="title">种植计划</view>
 				<input disabled="true" v-model="planName" class="form-input-left" placeholder="请选择种植计划" name="input"></input>
@@ -44,16 +65,12 @@
 			</view>
 		</view>
 		<button :disabled="disabled" @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg" style="margin:40px 20px 20px 20px">
-			新建批次</button>
+			新建批次</button> 
 	</view>
 </template>
 
 <script>
-	import TitleItem from "@/components/title-item/TitleItem.vue"
 	export default {
-		components: {
-			TitleItem
-		},
 		data() {
 			return {
 				index: '',
@@ -141,7 +158,7 @@
 					this.landList = res.data.data
 					if (this.landList.length < 1) {
 						uni.showToast({
-							title: '未地块信息，无法添加批次',
+							title: '无地块信息，无法添加批次',
 							icon: 'none'
 						})
 						this.disabled = true
@@ -274,5 +291,22 @@
 		padding-right: 0;
 		line-height: 20px;
 		text-align: right;
+	}
+	.title-txt{
+		font-size: 17px;
+		font-weight: bold;
+		
+	}
+	.shu-box{
+		height:20px;
+		width:4px;
+		background: #00AE66;
+		margin-right: 20rpx;
+	}
+	.title-height{
+		height:90rpx;
+		padding: 30rpx;
+		border-bottom: 1px solid #eee;
+		background: #fff;
 	}
 </style>
