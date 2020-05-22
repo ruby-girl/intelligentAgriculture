@@ -9,9 +9,16 @@
 			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">密码</text></view>
 			<input placeholder="请输入登录密码" @input="onPwdInput" type="password" name="inputs"></input>
 		</view>
+		<!-- #ifdef MP-WEIXIN -->
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
 		 lang="zh_CN" @getuserinfo="onGotUserInfo">
 			登录</button>
+		<!-- #endif -->
+		<!-- #ifdef APP-PLUS||H5 -->
+		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx"
+		 lang="zh_CN" @click="userLogin">
+			登录</button>
+		<!-- #endif -->
 		<view class="flex justify-content-flex-justify color-green">
 			<text @click="toRegister">注册新用户</text>
 			<text @click="toRetypePassword">忘记密码</text>
@@ -33,7 +40,7 @@
 		},
 		onLoad() {},
 		onShow() {
-			uni.hideHomeButton()
+			// uni.hideHomeButton()
 		},
 		methods: {
 			onInput(e) {

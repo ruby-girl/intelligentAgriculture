@@ -19,7 +19,7 @@
 			this.loadExecution()
 		},
 		onShow() {
-			uni.hideHomeButton()
+			// uni.hideHomeButton()
 		},
 		methods: {
 			loadExecution: function() {
