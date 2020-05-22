@@ -166,9 +166,12 @@
 				})
 			},
 			toadd() {
-				uni.redirectTo({
-					url: 'addBatch'
+				uni.navigateTo({
+					url:'addBatch'
 				})
+				// uni.redirectTo({
+				// 	url: 'addBatch'
+				// })
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;

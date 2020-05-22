@@ -24,7 +24,7 @@
 			return {
 				title: 'Hello',
 				obj: {
-					account: '',
+					phone: '',
 					captcha: '',
 					password: ''
 				},
@@ -37,7 +37,7 @@
 		},
 		methods: {
 			onInput(e) {
-				this.obj.account = e.detail.value
+				this.obj.phone = e.detail.value
 			},
 			onPwdInput(e) {
 				this.obj.password = e.detail.value

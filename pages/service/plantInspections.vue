@@ -41,7 +41,7 @@
 							<view style="color:#00AE66" v-if="item.workOrderStatus!==1">已处理</view>
 							<view style="color:red" v-else @tap.stop='goAddUrl(item.id,item.plantingBatchId)'>待处理</view>
 						</view>
-						<view>内容：{{item.feedbackContent==null?'-':item.feedbackContent}}阿达地方萨法萨法按时发斯蒂芬啊发顺丰安抚安抚安抚爱的发声发萨法萨法萨法按时</view>
+						<view>内容：{{item.feedbackContent==null?'-':item.feedbackContent}}</view>
 						<view>批次：{{item.plantingBatchName==null?'-':item.plantingBatchName}}</view>
 						<view class="flex align-items-center justify-content-flex-justify">
 							<view>创建人：{{item.initiatorName||'-'}}&nbsp;&nbsp;{{item.creDate||''}}</view>

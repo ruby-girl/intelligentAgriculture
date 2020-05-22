@@ -90,14 +90,14 @@
 						<view style="padding: 10px 0;">
 							<view class="inline content">
 								<view class="f20">
-									{{item.landParcels.length}}
+									{{item.landParcelCount}}
 								</view>
 								<view class="cr2 f12">地块数量</view>
 							</view>
 							<view class="inline line"></view>
 							<view class="inline content">
 								<view class="f20">
-									?
+									{{item.notExcuteCount}}
 								</view>
 								<view class="cr2 f12">待处理</view>
 							</view>
@@ -105,7 +105,7 @@
 							<view class="inline line"></view>
 							<view class="inline content">
 								<view class="f20">
-									{{item.breed.name}}
+									{{item.breedName}}
 								</view>
 								<view class="cr2 f12">种植品种</view>
 							</view>

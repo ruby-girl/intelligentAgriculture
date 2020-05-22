@@ -27,6 +27,17 @@
 			return {
 
 			};
+		},
+		onShow() {
+			if(uni.getStorageSync('baseId')){
+			  uni.switchTab({
+			  	url: '/pages/plantManage/plantManage'
+			  });	
+			}
+			
+		},
+		methods:{
+			
 		}
 	}
 </script>

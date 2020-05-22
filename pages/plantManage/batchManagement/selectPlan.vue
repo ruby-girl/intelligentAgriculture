@@ -88,7 +88,7 @@
 					this.newsList = this.newsList.concat(res.data.data.data)
 					if(this.page==1&&this.newsList.length==0){
 						this.loadingType = 0
-						this.contentdown = '暂无数据'
+						this.contentdown = '该作物暂无种植计划'
 					}else if(res.data.data.rowCount == this.newsList.length&&this.page==1&&this.newsList.length<3){
 						this.contentdown = ''
 						this.loadingType = 0

@@ -33,7 +33,7 @@
 			return {
 				title: 'Hello',
 				userInfo: {
-					account: '',
+					name: '',
 					phone: '',
 					captcha: '',
 					password: '',
@@ -49,7 +49,7 @@
 		},
 		methods: {
 			accountInput(e){
-				this.userInfo.account = e.detail.value
+				this.userInfo.name = e.detail.value
 			},
 			phoneInput(e){
 				this.userInfo.phone = e.detail.value
@@ -121,7 +121,7 @@
 				})
 			},
 			test() {
-				if(!this.userInfo.account || !this.userInfo.phone || !this.userInfo.captcha || !this.userInfo.password || !this.userInfo
+				if(!this.userInfo.name || !this.userInfo.phone || !this.userInfo.captcha || !this.userInfo.password || !this.userInfo
 					.passwordComfirm) {		
 					uni.showToast({
 						title: '请输入完整信息',
