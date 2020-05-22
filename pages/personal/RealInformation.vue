@@ -15,7 +15,7 @@
 			<view><text class="text-margin">邮箱地址</text></view>
 			<input placeholder="请输入邮箱地址" v-model="userInfo.email" name="input"></input>
 		</view>
-		<view class="border-bottom">
+		<view class="border-bottom">		
 			<view><text class="red">*</text><text class="text-margin">教育程度</text></view>
 			<view class="cu-form-group">
 				<picker @change="pickerChange($event)" :value="jy" :range="educationList" range-key="name">
@@ -134,9 +134,7 @@
 			uni.getStorage({
 				key: 'ddwb',
 				success: function(res) {
-					console.log('res.data.userid',res.data.userid)
 					_this.$apiYZX.getUserById(res.data.userid).then(res => {
-						console.info(res)
 						_this.userInfo = res.data.data
 						// 根据code设置省市县默认值 
 						_this.provincecode = res.data.data.provincecode

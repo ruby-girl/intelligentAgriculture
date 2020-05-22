@@ -31,8 +31,11 @@ export default {
 		options.baseUrl = options.baseUrl || _this.config.baseUrl
 		options.dataType = options.dataType || _this.config.dataType
 		options.url = options.baseUrl + options.url
-		
-		options.data = options.data || {}
+		if(options.method=='get'){
+			options.data = options.data || {}
+		}else{
+			options.data = JSON.stringify(options.data) || {}
+		}
 		options.method = options.method || _this.config.method
 		//TODO 加密数据	
 		//TODO 数据签名

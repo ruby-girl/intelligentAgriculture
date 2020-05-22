@@ -17,7 +17,7 @@
 		<!-- #ifdef APP-PLUS||H5 -->
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx"
 		 lang="zh_CN" @click="userLogin">
-			登录2</button>
+			登录</button>
 		<!-- #endif -->
 		<view class="flex justify-content-flex-justify color-green">
 			<text @click="toRegister">注册新用户</text>

@@ -3,7 +3,6 @@ import http from '@/utils/request.js'
 //设置请求结束后拦截器
 http.interceptor.response = (response) => {
 	uni.hideLoading();
-	console.info(response)
 	if(response.data.code!==200){
 		uni.showToast({
 		    title: response.data.msg,
@@ -56,7 +55,7 @@ export const provinces = (data) => {
 // 获取市
 export const getByProvinceCode = (data) => {
 	return http.request({
-		url: 'api/citys/getByProvinceCode/',
+		url: 'api/citys/getByProvinceCode',
 		method: 'get',
 		data,
 	})
@@ -73,8 +72,7 @@ export const getByCityCode = (data) => {
 export const getUserById = (data) => {
 	return http.request({
 		url: 'api/users/'+data,
-		method: 'get',
-		data,
+		method: 'get'	
 	})
 }
 // 完善用户信息
@@ -144,7 +142,8 @@ export const getWorkOrderManageList = (page,data) => {
 		method: 'get',
 		data
 	})
-}// 通过id获取数据（组合设备、农资、人资和设备资源、农资资源、人资资源信息）
+}
+// 通过id获取数据（组合设备、农资、人资和设备资源、农资资源、人资资源信息）
 export const organUserWorkOrderManageGetById = (data) => {
 	return http.request({
 		url: 'api/organUserWorkOrderManage/getById',
