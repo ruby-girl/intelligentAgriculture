@@ -56,18 +56,18 @@
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="imgList.length<1">
+						<view class="solids" @tap="ChooseImage(1)" v-if="imgList.length<1">
 							<text class='cuIcon-cameraadd'></text>
 						</view>
 					</view>
 					<view class="grid col-2 grid-square flex-sub">
-						<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
-							<image :src="imgList[index]" mode="aspectFill"></image>
+						<view class="bg-img" v-for="(item,index) in imgListIdCard" :key="index" @tap="ViewImage" :data-url="imgListIdCard[index]">
+							<image :src="imgListIdCard[index]" mode="aspectFill"></image>
 							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="imgList.length<1">
+						<view class="solids" @tap="ChooseImage(2)" v-if="imgListIdCard.length<1">
 							<text class='cuIcon-cameraadd'></text>
 						</view>
 					</view>
@@ -122,11 +122,13 @@
 				multiIndex: [],
 				multiIndexsave: [],
 				imgList: [],
+				imgListIdCard:[],
 				userInfo: {},
 				init: true,
 				provincecode: '',
 				citycode: '',
-				areacode: ''
+				areacode: '',
+				imgUrl:getApp().globalData.imgUrl
 			}
 		},
 		onLoad() {
@@ -218,30 +220,41 @@
 					}
 				})
 			},
-			ChooseImage() {
+			ChooseImage(n) {
 				uni.chooseImage({
-					count: 4, //默认9
+					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
-						const tempFilePaths = res.tempFilePaths;
-						if (this.imgList.length != 0) {
-							this.imgList = this.imgList.concat(res.tempFilePaths)
+						// const tempFilePaths = res.tempFilePaths;
+						// if (this.imgList.length != 0) {
+						// 	this.imgList = this.imgList.concat(res.tempFilePaths)
 
-						} else {
-							this.imgList = res.tempFilePaths
-						}
-						uni.uploadFile({
-							url: 'http://192.168.101.30:8088/uploadFile/userIdcardUpload', //仅为示例，非真实的接口地址
-							filePath: tempFilePaths[0],
-							name: 'file',
-							formData: {
-								'files': 'test'
-							},
-							success: (uploadFileRes) => {
-								console.log(uploadFileRes.data);
-							}
-						});
+						// } else {
+						// 	this.imgList = res.tempFilePaths
+						// }
+						let that=this
+						 let URL =  getApp().globalData.baseUrl+'/uploadFile/plantingUpload';
+				        wx.uploadFile({
+				          url: URL,
+				          filePath: res.tempFilePaths[0],
+				          name: 'files',
+				          //formData: { type: 'headImg' },
+				          success: function (resData) {		  
+							  let data =  JSON.parse(resData.data).data
+							  if (data&&n==1) {
+							  			that.imgList = that.imgList.concat(data)
+							  		} else {
+							  			that.imgList = res.tempFilePaths
+									  }
+									  if (data&&n==2) {
+							  			that.imgListIdCard = that.imgListIdCard.concat(data)
+							  		} else {
+							  			that.imgListIdCard = res.tempFilePaths
+									  }
+				            
+				          }
+				        })
 					}
 				});
 			},

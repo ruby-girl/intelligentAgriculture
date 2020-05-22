@@ -54,7 +54,8 @@
 					plantingBatchName: '', //批次名称
 					initiatorId: ''
 				},
-				imgList: []
+				imgList: [],
+				imgUrl:getApp().globalData.imgUrl
 			};
 		},
 		onLoad(option) {
@@ -80,45 +81,28 @@
 		methods: {
 			ChooseImage() {
 				uni.chooseImage({
-					count: 4, //默认9
+					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
-						console.log(res)
-						if (this.imgList.length != 0) {
-							this.imgList = this.imgList.concat(res.tempFilePaths)
-						} else {
-							this.imgList = res.tempFilePaths
-						}
+						let that=this
+						 let URL =  getApp().globalData.baseUrl+'/uploadFile/plantingUpload';
+				        wx.uploadFile({
+				          url: URL,
+				          filePath: res.tempFilePaths[0],
+				          name: 'files',
+				          //formData: { type: 'headImg' },
+				          success: function (resData) {		  
+							  let data =  JSON.parse(resData.data).data
+							  if (data) {
+							  			that.imgList = that.imgList.concat(data)
+							  		} else {
+							  			that.imgList = res.tempFilePaths
+										}
+				          }
+				        })
 					}
 				});
-			},
-			fileUpload(tempFilePath) {
-				var that = this; //坑1： this需要这么处理
-				wx.uploadFile({
-					url: url地址, //app.ai_api.File.file
-					filePath: tempFilePath, //文件路径  这里是mp3文件
-					name: 'file', //随意
-					header: {
-						'Content-Type': 'multipart/form-data',
-						'Authorization': wx.getStorageSync("access_token"), //如果需要token的话要传
-					},
-					formData: {
-						method: 'POST' //请求方式
-					},
-					success(res) {
-						var data = JSON.parse(res.data) // 坑2：与wx.request不同的是，upload返回的是字符串格式，需要字符串对象化
-						if (data.code == 200) {
-							that.fileTrans(data.data.id); //执行接口函数 语音文件转文字
-						} else {
-							console.log('上传失败')
-							wx.showToast({
-								title: res.message,
-								icon: 'none'
-							})
-						}
-					}
-				})
 			},
 			ViewImage(e) {
 				uni.previewImage({
