@@ -20,7 +20,7 @@
 				<text class="iconfont iconziyuan1 cr"></text><text class="cr2">{{item.provinceName}}-{{item.cityName}}-{{item.areaName}}</text>
 			</view>
 			<view>
-				<button class="cu-btn  line-green" @click="joinFun(item.organId)"> 加入</button>
+				<button class="cu-btn  line-green" @click="joinFun(item.id)"> 加入</button>
 			</view>
 			
 		</view>

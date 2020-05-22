@@ -119,7 +119,13 @@
 									title: '登录成功',
 									icon: 'success',
 									success() {
-										if (obj.landOrgan.length > 0) {
+										console.log(obj.landOrgan.length)
+										if (obj.landOrgan.length == 0) {
+									uni.redirectTo({
+										url: '../plantManage/baseLand/chooseHandle'
+									});
+
+										} else {
 											uni.switchTab({
 												url: '../plantManage/plantManage'
 											});
@@ -127,11 +133,7 @@
 												key: 'organId',
 												data: obj.landOrgan[0].organ.id,
 											})
-
-										} else {
-											uni.redirectTo({
-												url: '../plantManage/baseLand/chooseHandle'
-											});
+											
 										}
 									}
 								})

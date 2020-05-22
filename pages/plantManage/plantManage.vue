@@ -1,39 +1,39 @@
 <!-- 种植管理  已有基地-->
 <template>
+
 	<view class="plant">
 	
-		<view class="plant-top">
+		<view class="plant-top" v-if="resultData">
 
 			<view class="flex-top" v-if="resultData.organUserName">
-	
+
 				<view class="name">{{resultData.organUserName || '-'}}的土地信息</view>
 
 			</view>
-			<view class="display-flex justify-content-flex-end">
-				<ms-dropdown-menu>
-					<ms-dropdown-item :title="selectValueName" v-model="selectValue" :list="allBaseLand" :hasSlot="true">
-
-					</ms-dropdown-item>
-				</ms-dropdown-menu>
-			</view>
+	<view class="display-flex justify-content-flex-end">
+			<ms-dropdown-menu>
+				<ms-dropdown-item :title="selectValueName" v-model="selectValue" :list="allBaseLand" :hasSlot="true">
+				</ms-dropdown-item>
+			</ms-dropdown-menu>
+		</view>
 
 			<view class="plant-top-content display-flex justify-content-flex-justify">
 				<view class="item">
 					<view>
-						<text class="fb">{{resultData.acreages || '-'}}</text><text>亩</text>
+						<text class="fb">{{resultData.acreages || 0 }}</text><text>亩</text>
 					</view>
 					<view>土地总面积</view>
 				</view>
 				<view class="item">
 					<view>
-						<text class="fb">{{resultData.landParcelCount || '-'}}</text><text>块</text>
+						<text class="fb">{{resultData.landParcelCount || 0}}</text><text>块</text>
 					</view>
 					<view>总地块数量 </view>
 				</view>
 
 				<view class="item">
 					<view>
-						<text class="fb">{{resultData.plantingBatchs.length || '-'}}</text><text>批</text>
+						<text class="fb">{{resultData.plantingBatchs?resultData.plantingBatchs.length: 0 || 0}}</text><text>批</text>
 					</view>
 					<view>种植中批次</view>
 				</view>
@@ -43,38 +43,38 @@
 
 		</view>
 
-		<view class="plant-item ">
+		<view class="plant-item " v-if="resultData">
 			<view class="cark" style="    left: 60rpx;"></view>
 			<view class="cark cark-right"></view>
 			<view class="flex">
 				<view>
 					<navigator :url="'/pages/plantManage/workOrder?type=1&baseId='+baseId">
-					
+
 						<view class="iconfont cr f20">&#xe60e;</view>
 						<text>待处理</text>
 					</navigator>
 				</view>
 				<view>
-				  <view class="iconfont cr f20">&#xe60c;</view>
+					<view class="iconfont cr f20">&#xe60c;</view>
 					<text>预警提醒</text>
 				</view>
 				<view>
 					<navigator url="/pages/plantManage/batchManagement/list">
 
-						  <view class="iconfont cr f20">&#xe60d;</view>
+						<view class="iconfont cr f20">&#xe60d;</view>
 						<text>批次管理</text>
 					</navigator>
 				</view>
 				<view>
 					<navigator :url="'/pages/plantManage/landManage/landManage?baseId='+baseId+'&acreages='+resultData.acreages+'&landCount='+resultData.landParcelCount">
-						  <view class="iconfont cr f20">&#xe60a;</view>
+						<view class="iconfont cr f20">&#xe60a;</view>
 						<text>地块管理</text>
 					</navigator>
 				</view>
 				<view>
 					<navigator :url="'/pages/plantManage/framManage/framManage?baseId='+baseId">
 
-						 <view class="iconfont cr f20">&#xe60b;</view>
+						<view class="iconfont cr f20">&#xe60b;</view>
 						<text>农事管理</text>
 					</navigator>
 				</view>
@@ -83,35 +83,35 @@
 			<label class="title">种植中批次</label>
 			<view style="overflow-y: auto;height: 70%;">
 
-				<view v-if="resultData.plantingBatchs.length>0" >
+				<view v-if="resultData.plantingBatchs">
 					<view v-for="(item, index) in resultData.plantingBatchs" :key="index" class="item-view">
-<navigator :url="'/pages/plantManage/workOrder?type=&baseId='+baseId">
-						<view class="item-title">{{item.name}}</view>
-						<view style="padding: 10px 0;">
-							<view class="inline content">
-								<view class="f20">
-									{{item.landParcelCount}}
+						<navigator :url="'/pages/plantManage/workOrder?type=&baseId='+baseId">
+							<view class="item-title">{{item.name}}</view>
+							<view style="padding: 10px 0;">
+								<view class="inline content">
+									<view class="f20">
+										{{item.landParcelCount}}
+									</view>
+									<view class="cr2 f12">地块数量</view>
 								</view>
-								<view class="cr2 f12">地块数量</view>
-							</view>
-							<view class="inline line"></view>
-							<view class="inline content">
-								<view class="f20">
-									{{item.notExcuteCount}}
+								<view class="inline line"></view>
+								<view class="inline content">
+									<view class="f20">
+										{{item.notExcuteCount}}
+									</view>
+									<view class="cr2 f12">待处理</view>
 								</view>
-								<view class="cr2 f12">待处理</view>
-							</view>
 
-							<view class="inline line"></view>
-							<view class="inline content">
-								<view class="f20">
-									{{item.breedName}}
+								<view class="inline line"></view>
+								<view class="inline content">
+									<view class="f20">
+										{{item.breedName}}
+									</view>
+									<view class="cr2 f12">种植品种</view>
 								</view>
-								<view class="cr2 f12">种植品种</view>
-							</view>
 
-						</view>
-</navigator>
+							</view>
+						</navigator>
 					</view>
 				</view>
 				<view v-else class="null-data">
@@ -120,11 +120,12 @@
 				</view>
 			</view>
 		</view>
+	
+	
 	</view>
 </template>
 
 <script>
-
 	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
 	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
 	export default {
@@ -146,14 +147,14 @@
 			};
 		},
 		onShow() {
-			let _this = this;	
+			let _this = this;
 			const obj = uni.getStorageSync('ddwb');
 			this.userId = obj.userid
 			this.initSelect()
 		},
-		onPullDownRefresh:function(){
-		   this.initSelect()
-		 },
+		onPullDownRefresh: function() {
+			this.initSelect()
+		},
 		watch: {
 			selectValue(val, oldValue) {
 
@@ -170,7 +171,7 @@
 				}
 			},
 		},
-		
+
 		methods: {
 			initSelect() {
 				let _this = this;
@@ -205,7 +206,7 @@
 						data: res.data.data.organUserId
 					});
 					this.baseId = res.data.data.baseId
-                    uni.stopPullDownRefresh();
+					uni.stopPullDownRefresh();
 				})
 
 			}
@@ -259,7 +260,7 @@
 			}
 
 			.iconfont {
-		
+
 				display: inline-block;
 				margin-left: 3px;
 				transform: rotate(-90deg);

@@ -40,13 +40,13 @@
 
 
 			<view class="">
-				<scroll-view v-bind:style="{height:(windowHeight-60)+'px'}"  scroll-y="true"
+				<scroll-view v-bind:style="{height:windowHeight+'px'}"  scroll-y="true"
 				 refresher-enabled="true"
 				   @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 				  @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 				  @scrolltolower="loadingData">
 				
-				<view class=" list-model" v-for="(item, index) in 5" :key="index">
+				<view class=" list-model" v-for="(item, index) in listData" :key="index">
 					<view class="label display-flex justify-content-flex-justify">
 						<view>
 							<text class="line"></text><text style="font-size: 34rpx;">{{item.name}}</text>
@@ -69,6 +69,7 @@
 
 					</view>
 				</view>
+				<view class="loading-more">{{contentdown}}</view>
 </scroll-view>
 			</view>
 
@@ -92,7 +93,7 @@
 	export default {
 		data() {
 			return {
-				param: {
+				params: {
 					baseId: '',
 					pageNo: 1,
 					organUserId: ''
@@ -118,7 +119,7 @@
 		},
 		onLoad(option) {
 			let _this = this
-				this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
+				this.windowHeight = uni.getSystemInfoSync().windowHeight/2+50 // 屏幕的高度
 			uni.getLocation({
 				type: 'wgs84',
 				success: function(res) {
@@ -141,8 +142,8 @@
 
 				}
 			});
-			this.param.baseId = option.baseId
-			this.param.organUserId = uni.getStorageSync('organUserId');
+			this.params.baseId = option.baseId
+			this.params.organUserId = uni.getStorageSync('organUserId');
 			this.resultData.acreages = option.acreages
 			this.resultData.landCount = option.landCount
 		},
@@ -176,7 +177,7 @@
 					_this.loadingType=1
 					_this.listData=[]
 					_this.contentdown=''
-					_this.initData()		
+					_this.initList()		
 				}, 1000)
 			},
 			onRestore() {
@@ -191,18 +192,18 @@
 				console.info('下拉')
 			},
 			loadingData(e) {
-
+             
 				if (this.loadingType) {
+	
 					this.params.pageNo++
 					this.contentdown = '加载中...'
-					this.initData()
+					this.initList()
 				}
+				
 			},
 			initList() {
 				let _this =  this;
-				this.$api.getLandparcelsList(this.param).then(res => {
-
-			
+				this.$api.getLandparcelsList(this.params).then(res => {
 					this.listData = this.listData.concat(res.data.data.data)
 					if(this.params.pageNo==1&&this.listData.length==0){
 						this.loadingType = 0
@@ -253,10 +254,10 @@
 	.drawMap {
 		width: 100vw;
 		height: 30vh;
+	
 	}
 
 	.draw-content {
-
 		height: 70vh;
 		position: relative;
 
@@ -298,6 +299,7 @@
 			box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
 			border-radius: 6px;
 			position: relative;
+			z-index: 9999;
 
 			top: -50rpx;
 
@@ -339,5 +341,10 @@
 
 		}
 
+	}
+	.loading-more {
+		text-align: center;
+		color: #ddd;
+		padding-bottom: 10px;
 	}
 </style>

@@ -16,14 +16,19 @@
 			}
 		},
 		onLoad() {
-			this.loadExecution()
+			//this.loadExecution()
 		},
 		onShow() {
+			setTimeout(function() {
+				uni.redirectTo({
+					url: '/pages/login/login'
+				});
+			}, 2000)
 			// uni.hideHomeButton()
 		},
 		methods: {
 			loadExecution: function() {
-				console.log('12323')
+		
 				/**
 				 * 获取本地存储中ddwbFlag的值
 				 * 若存在，说明不是首次启动，直接进入首页；
@@ -32,6 +37,7 @@
 				try {
 					// 获取本地存储中ddwbFlag标识
 					const value = uni.getStorageSync('ddwbFlag');
+					console.log(value)
 					if (value) {
 						// ddwbFlag=true直接跳转到首页
 						// 查看用户是否登录过

@@ -63,7 +63,8 @@
 				this.switchB = e.detail.value
 			},
 			toLogin(){//测试跳转批次
-				uni.removeStorageSync('ddwb');
+				 uni.clearStorageSync();
+		
 				uni.redirectTo({
 				    url: '/pages/login/login'
 				});
