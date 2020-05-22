@@ -266,10 +266,10 @@
 			},
 			DelImg(e) {
 				uni.showModal({
-					title: '召唤师',
-					content: '确定要删除这段回忆吗？',
-					cancelText: '再看看',
-					confirmText: '再见',
+					title: '删除',
+					content: '确定要删除此图片吗？',
+					cancelText: '取消',
+					confirmText: '确定',
 					success: res => {
 						if (res.confirm) {
 							this.imgList.splice(e.currentTarget.dataset.index, 1)

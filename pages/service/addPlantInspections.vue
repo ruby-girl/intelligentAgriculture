@@ -112,9 +112,9 @@
 			},
 			DelImg(e) {
 				uni.showModal({
-					title: '召唤师',
-					content: '确定要删除该图片吗？',
-					cancelText: '再想想',
+					title: '删除',
+					content: '确定要删除此图片吗？',
+					cancelText: '取消',
 					confirmText: '确定',
 					success: res => {
 						if (res.confirm) {
