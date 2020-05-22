@@ -20,6 +20,7 @@ export default {
 		response: null
 	}, 
 	request(options) {
+	
 		let _this =  this;
 		uni.showLoading({
 		    title: '加载中',
@@ -31,7 +32,7 @@ export default {
 		options.baseUrl = options.baseUrl || _this.config.baseUrl
 		options.dataType = options.dataType || _this.config.dataType
 		options.url = options.baseUrl + options.url
-		if(options.method=='get'){
+		if(options.method=='get' || options.method=='GET'){
 			options.data = options.data || {}
 		}else{
 			options.data = JSON.stringify(options.data) || {}
