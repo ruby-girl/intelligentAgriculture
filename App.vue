@@ -20,7 +20,7 @@
 </script>
 
 <style>
-	@import url("static/iconfont/iconfont.css");
+	@import "./static/iconfont/iconfont.css";
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 	@import './common/uni.css';
