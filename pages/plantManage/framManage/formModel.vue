@@ -214,7 +214,7 @@
 			neilModal
 		},
 		props: ['workOrderId', 'plantingBatchId', 'formObj', 'status', 'suppliesResources', 'personResources',
-			'equipmentResources'
+			'equipmentResources','imgList'
 		],
 		data() {
 			return {
@@ -292,7 +292,7 @@
 			},
 			saveForm() {
 
-
+            
 				let obj = {
 					"baseId": uni.getStorageSync('baseId'),
 					"executionUserId": uni.getStorageSync('organUserId'),
@@ -301,12 +301,13 @@
 					"plantingBatchName": this.formObj.plantingBatchName,
 					"farmWorkItemId": this.formObj.farmWorkItemId,
 					"farmWorkItemName": this.formObj.farmWorkItemName,
-					"price": this.formObj.price,
 					"workOrderId": this.formObj.workOrderId,
+					 farmWorkRecordPicsStr:this.imgList?this.imgList.join(','):'',
 					equipmentResources: this.equitmenList,
 					personResources: this.personList,
 					suppliesResources: this.suppliesList,
 				}
+				
 
 				if (!this.formObj.plantingBatchId) {
 					uni.showToast({
@@ -475,6 +476,8 @@
 			vertical-align: middle;
 			margin-right: 3px;
 			color: #00AE66;
+			line-height: 1;
+
 		}
 
 		.section {

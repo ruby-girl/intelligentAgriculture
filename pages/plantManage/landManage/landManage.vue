@@ -40,7 +40,13 @@
 
 
 			<view class="">
-				<view class=" list-model" v-for="(item, index) in listData" :key="index">
+				<scroll-view v-bind:style="{height:(windowHeight-60)+'px'}"  scroll-y="true"
+				 refresher-enabled="true"
+				   @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+				  @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+				  @scrolltolower="loadingData">
+				
+				<view class=" list-model" v-for="(item, index) in 5" :key="index">
 					<view class="label display-flex justify-content-flex-justify">
 						<view>
 							<text class="line"></text><text style="font-size: 34rpx;">{{item.name}}</text>
@@ -63,7 +69,7 @@
 
 					</view>
 				</view>
-
+</scroll-view>
 			</view>
 
 			<view>
@@ -80,6 +86,9 @@
 </template>
 
 <script>
+	import {
+		throttle
+	} from "@/utils/index.js"
 	export default {
 		data() {
 			return {
@@ -98,12 +107,18 @@
 				},
 				longitude: '',
 				latitude: '',
-				polygons: []
+				polygons: [],
+				windowHeight: 300,
+				contentdown: '',
+				loadingType: 0,
+				triggered: false,
+				_freshing: false
 
 			}
 		},
 		onLoad(option) {
 			let _this = this
+				this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			uni.getLocation({
 				type: 'wgs84',
 				success: function(res) {
@@ -131,6 +146,9 @@
 			this.resultData.acreages = option.acreages
 			this.resultData.landCount = option.landCount
 		},
+		mounted() {
+			this.loadingData = throttle(this.loadingData, 2000);
+		},
 		onShow() {
 
 			this.$nextTick(function() {
@@ -142,12 +160,68 @@
 
 
 		},
-		methods: {
+		methods: {	onPulling() {},
+			onRefresh() {
+			
+				if (this._freshing) return;
+				this._freshing = true;
+				if (!this.triggered){//界面下拉触发，triggered可能不是true，要设为true  
+					this.triggered = true;
+				}
+				let _this=this
+				setTimeout(() => {
+					this.triggered = false; //触发onRestore，并关闭刷新图标
+					this._freshing = false;
+					_this.params.pageNo=1
+					_this.loadingType=1
+					_this.listData=[]
+					_this.contentdown=''
+					_this.initData()		
+				}, 1000)
+			},
+			onRestore() {
+				this.triggered = false; // 需要重置
+				this._freshing = false
+			},
+			onAbort() {
+				this.triggered = false; //触发onRestore，并关闭刷新图标
+				this._freshing = false;
+			},
+			scrolltoupper() {
+				console.info('下拉')
+			},
+			loadingData(e) {
+
+				if (this.loadingType) {
+					this.params.pageNo++
+					this.contentdown = '加载中...'
+					this.initData()
+				}
+			},
 			initList() {
 				let _this =  this;
 				this.$api.getLandparcelsList(this.param).then(res => {
 
-					this.listData = res.data.data.data;
+			
+					this.listData = this.listData.concat(res.data.data.data)
+					if(this.params.pageNo==1&&this.listData.length==0){
+						this.loadingType = 0
+						this.contentdown = '暂无数据'
+					}else if(res.data.data.rowCount == this.listData.length&&this.params.pageNo==1&&this.listData.length<3){
+						this.contentdown = ''
+						this.loadingType = 0
+					}else if(res.data.data.rowCount == this.listData.length&&this.params.pageNo==1&&this.listData.length>2){
+						this.contentdown = '无更多数据'
+						this.loadingType = 0
+					}
+					else if (res.data.data.rowCount == this.listData.length) {
+						this.loadingType = 0
+						this.contentdown = '无更多数据'
+					} else {
+						this.contentdown = '上拉加载更多'
+						this.loadingType = 1
+					}
+					
 					let mapdata = res.data.data.data
 					let arr = []
 					 let reg=new RegExp('path','g')

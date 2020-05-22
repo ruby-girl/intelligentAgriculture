@@ -11,6 +11,10 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+		globalData:{
+			imgUrl:'http://192.168.101.30:8088/showImg/planting/',
+			baseUrl:'http://192.168.101.30:8088'
 		}
 	}
 </script>

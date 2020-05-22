@@ -36,8 +36,9 @@
 						</view>
 					</picker>
 				</view>
-<!--             <image src="/api/showImg/baseinfo/77340f7a-2090-414f-a3ad-2852925f5887.png"></image>
- -->				
+				
+           
+				
                 <view class="cu-bar bg-white margin-top">
 					<view class="action">
 						上传图片
@@ -49,7 +50,7 @@
 				<view class="cu-form-group">
 					<view class="grid col-4 grid-square flex-sub">
 						<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
-							<image :src="imgList[index]" mode="aspectFill"></image>
+							<image :src="imgUrl+imgList[index]" mode="aspectFill"></image>
 							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 								<text class='cuIcon-close'></text>
 							</view>
@@ -64,7 +65,7 @@
 					<textarea maxlength="-1" @input="farmWorkRecordPicsStrValue" name="nickname" :value="params.remark" placeholder="请输入反馈内容"></textarea>
 				</view>
 				
-				<view>
+				<!-- <view>
 					<view class="display-flex justify-content-flex-justify">
 						<view @tap="playVoice">
 							<text class="cuIcon-video f20"></text> <text class="cr2" style="margin: 0 10px;">新录音</text> <text class="f12 cr3">{{voiceTime}}秒</text>
@@ -83,14 +84,14 @@
 							按住说话,松开结束
 						</template>
 					</button>
-				</view>
+				</view> -->
 			</view>
 			<!-- <button class="cu-btn block bg-green  lg" @tap="NumSteps">下一步</button> -->
 		</view>
 
 
 		<second-model :workOrderId="params.workOrderId" :plantingBatchId="params.plantingBatchId" :status="status" :formObj="params"
-		 :personResources="personResources" :equipmentResources="equipmentResources" :suppliesResources="suppliesResources"></second-model>
+		 :personResources="personResources"  :imgList="imgList" :equipmentResources="equipmentResources" :suppliesResources="suppliesResources"></second-model>
 
 
 
@@ -131,7 +132,7 @@
 					"remark": "",
 					"plantingBatchId": '',
 					"plantingBatchName": '',
-					"price": '',
+					"farmWorkRecordPicsStr": '',
 					"workOrderId": ''
 				},
 				status: 1,
@@ -149,11 +150,13 @@
 				timer: null,
 				voiceTime:0,
 				execuResultData:{},
+				imgUrl:getApp().globalData.imgUrl
 
 			};
 		},
 		onLoad(option) {
 		
+		  
 			let _this = this;
 			
 			/* 录音 */
@@ -261,7 +264,14 @@
 					this.params.plantingBatchName = resdata.plantingBatchName || this.batchData[0].name;
 					this.params.farmWorkItemId = resdata.farmWorkItemId || this.farmData[0].id;
 					this.params.farmWorkItemName = resdata.farmWorkItemName || this.farmData[0].name;
-					this.params.price = resdata.price || '';
+					if(resdata.farmWorkRecordPics){
+						resdata.farmWorkRecordPics.forEach((a)=>{
+							this.imgList.push(a.path)
+						})
+					}
+					
+					
+					this.params.farmWorkRecordPicsStr =this.imgList.join(',')
 					//人资personResourcesBudget;
 					//设备 equipmentResourcesBudget;
 					//农资suppliesResourcesBudget;
@@ -291,26 +301,7 @@
 				if (this.status == 0) {
 					this.initData();
 				}
-				/* 編輯獲取基本信息*/
-
-				// if (this.status == 0) {
-				// 	console.log(11111)
-				// 	this.$api.getByWorkId({
-				// 		id: this.params.workOrderId
-				// 	}).then(res => {
-				// 		debugger
-
-				// 		this.params.remark = res.data.data.remark;
-
-				// 		this.params.plantingBatchId = res.data.data.plantingBatchId || this.batchData[0].id;
-				// 		this.params.plantingBatchName = res.data.data.plantingBatchName || this.batchData[0].name;
-				// 		this.params.farmWorkItemId = res.data.data.farmWorkItemId || this.farmData[0].id;
-				// 		this.params.farmWorkItemName = res.data.data.farmWorkItemName || this.farmData[0].name;
-				// 		this.params.price = res.data.data.price || '';
-
-
-				// 	});
-				// }
+				
 			},
 			ChooseImage() {
 				   let that = this
@@ -319,18 +310,22 @@
 				      sizeType: ['original', 'compressed'],
 				      sourceType: ['album'],
 				      success: (res) => {
-				        let URL =  'https://vanke.xunying.me/file/img/upload'
+				        let URL =  getApp().globalData.baseUrl+'/uploadFile/plantingUpload';
 				        wx.uploadFile({
 				          url: URL,
 				          filePath: res.tempFilePaths[0],
-				          name: 'file',
-				          formData: { type: 'headImg' },
-				          success: function (res1) {
-							  console.log(res1)
-				            // let val = JSON.parse(res1.data)
-				            // that.setData({
-				            //   ['baseInfo.headImg']: val.data.value
-				            // })
+				          name: 'files',
+				          //formData: { type: 'headImg' },
+				          success: function (resData) {
+							
+						  
+							  let data =  JSON.parse(resData.data).data
+							  if (data) {
+							  			that.imgList = that.imgList.concat(data)
+							  		} else {
+							  			that.imgList = res.tempFilePaths
+							  		}
+				            
 				          }
 				        })
 				      }
