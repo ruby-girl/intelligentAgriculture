@@ -46,6 +46,7 @@
 			};
 		},
 		onLoad() {
+			console.log('加载了')
 			let _this=this
 			uni.getStorage({
 			key: 'ddwb',
