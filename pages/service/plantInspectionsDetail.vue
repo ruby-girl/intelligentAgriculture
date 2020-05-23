@@ -40,9 +40,9 @@
 		data() {
 			return {
 				resultData: {},
-				imgUrl: '',
+				imgUrl:getApp().globalData.imgUrl,
 				id: '',
-				imgList:['../../static/logo.png','../../static/logo.png','../../static/user-bg.png']
+				imgList:[]
 			};
 		},
 
@@ -61,10 +61,14 @@
 				});
 			},
 			initData(id) {
+				let _this=this
 				this.$apiYZX.organUserWorkOrderManageGetById({
 					id: id
 				}).then(res => {
 					this.resultData = res.data.data
+					this.imgList=res.data.data.wordOrderPics.map((item=>{
+						return _this.imgUrl+item.path
+					}))
 				})
 			}
 		}

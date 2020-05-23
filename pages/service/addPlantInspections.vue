@@ -22,7 +22,7 @@
 		</view>
 		<view class="cu-form-group">
 			<view class="grid col-4 grid-square flex-sub">
-				<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
+				<view class="bg-img" v-for="(item,index) in imgList" :key="index"  :data-url="imgList[index]">
 					<image :src="imgList[index]" mode="aspectFill"></image>
 					<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 						<text class='cuIcon-close'></text>
@@ -52,9 +52,11 @@
 					feedbackContent: '', //巡查内容
 					plantingBatchId: '', //批次ID
 					plantingBatchName: '', //批次名称
-					initiatorId: ''
+					initiatorId: '',
+					wordOrderPicStr:''//图片
 				},
 				imgList: [],
+				imgArr:[],
 				imgUrl:getApp().globalData.imgUrl
 			};
 		},
@@ -95,10 +97,11 @@
 				          success: function (resData) {		  
 							  let data =  JSON.parse(resData.data).data
 							  if (data) {
-							  			that.imgList = that.imgList.concat(data)
-							  		} else {
-							  			that.imgList = res.tempFilePaths
-										}
+							  		that.imgList = that.imgList.concat(that.imgUrl+data)
+									that.imgArr.push(data)
+							  	} else {
+							  		that.imgList = res.tempFilePaths
+								}
 				          }
 				        })
 					}
@@ -118,7 +121,7 @@
 					confirmText: '确定',
 					success: res => {
 						if (res.confirm) {
-							this.imgList.splice(e.currentTarget.dataset.index, 1)
+							this.imgArr.splice(e.currentTarget.dataset.index, 1)
 						}
 					}
 				})
@@ -136,7 +139,7 @@
 				}, 0)
 			},
 			toList() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: 'selectBatch?id=' + this.obj.plantingBatchId + '&name=' + this.obj.plantingBatchName + '&title=' + this.obj
 						.name +
 						'&content=' + this.obj.feedbackContent
@@ -154,6 +157,7 @@
 			},
 			addFunc() {
 				if (!this.test()) return;
+				this.obj.wordOrderPicStr=this.imgArr.join();
 				this.$apiYZX.addOrganUserWorkOrderManage(this.obj).then(res => {
 					if (res.data.code == 200) {
 						uni.showToast({
