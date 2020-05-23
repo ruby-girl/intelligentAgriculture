@@ -300,10 +300,9 @@
 			}
 
 			.plant-top-content {
-				margin-top: 20rpx;
 				text-align: right;
 				font-size: 12px;
-				line-height: 22px;
+				line-height: 20px;
 				color: #FFFFFF;
 
 				.fb {

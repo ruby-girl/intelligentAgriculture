@@ -59,6 +59,20 @@
 			}
 			});
 		},
+		onShow() {
+			console.log('加载了')
+			let _this=this
+			uni.getStorage({
+			key: 'ddwb',
+			success: function (res) { 
+				_this.user= {			
+					name: res.data.name || '',
+					phone:res.data.phone||'',
+					headPortrait:res.data.headPortrait
+				}
+			}
+			});
+		},
 		methods: {
 			toRealInformmation(){
 				uni.navigateTo({
