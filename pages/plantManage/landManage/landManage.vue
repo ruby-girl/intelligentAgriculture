@@ -2,16 +2,16 @@
 <template>
 	<view>
 
-		<view class="drawMap">
+		<!-- <view class="drawMap">
 			<map id="map" :longitude="longitude" enable-satellite="true" :polygons="polygons" :latitude="latitude" scale="12"
 			 show-location style="width: 100%; height: 100%;">
 
 			</map>
-		</view>
+		</view> -->
 		<view class="draw-content" >
 			<view class="cark" style="left: 90rpx;"></view>
 			<view class="cark cark-right"></view>
-			<view style="background-color: #fff;padding: 0px 30rpx;">
+			<view style="padding: 0px 30rpx; margin-bottom: 10px;">
 				<view class="item-top display-flex ">
 					<view class="left">
 						<view class="cu-avatar lg round" v-bind:style="{'backgroundImage':'url('+user.headPortrait+')'}"></view>
@@ -37,7 +37,7 @@
 			</view>
 
 			<view class="">
-				<scroll-view v-bind:style="{height:windowHeight+'px'}"  scroll-y="true"
+				<scroll-view v-bind:style="{height:windowHeight-85+'px'}"  scroll-y="true"
 				 refresher-enabled="true"
 				   @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 				  @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
@@ -111,16 +111,16 @@
 		},
 		onLoad(option) {
 			let _this = this
-				this.windowHeight = uni.getSystemInfoSync().windowHeight/2+50 // 屏幕的高度
-			uni.getLocation({
-				type: 'gcj02',
-				success: function(res) {
+				this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
+			// uni.getLocation({
+			// 	type: 'gcj02',
+			// 	success: function(res) {
 
-					_this.latitude = res.latitude
-					_this.longitude = res.longitude
+			// 		_this.latitude = res.latitude
+			// 		_this.longitude = res.longitude
 
-				}
-			});
+			// 	}
+			// });
 
 
 			uni.getStorage({
@@ -250,7 +250,7 @@
 	}
 
 	.draw-content {
-		height: 70vh;
+		height: 100vh;
 		position: relative;
 
 		.cu-avatar {
@@ -290,11 +290,7 @@
 			background-color: #fff;
 			box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
 			border-radius: 6px;
-			position: relative;
-			z-index: 9999;
-
-			top: -50rpx;
-
+			margin-top: 30rpx;
 			.left {
 				border-right: 1px solid #dcdcdc;
 				padding-right: 30rpx;

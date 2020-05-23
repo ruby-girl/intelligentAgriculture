@@ -16,8 +16,7 @@
 			// imgUrl:'http://47.108.83.178/byapi/showImg/planting/',
 			// baseUrl:'http://47.108.83.178/byapi/'
 		// imgUrl:'http://192.168.101.30:8088/showImg/planting/',
-		// baseUrl:'http://192.168.101.30:8088',
-		
+		// baseUrl:'http://192.168.101.30:8088/',
 		imgUrl:'https://bysk.scddwb.com/byapi/showImg/planting/',
 		baseUrl:'https://bysk.scddwb.com/byapi/'
 		}
