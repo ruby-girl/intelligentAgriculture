@@ -3,7 +3,7 @@
 	<view class="container">
 		<scroll-view class="bg-white nav">
 			<view class="flex text-center">
-				<view class="cu-item flex-sub" :class="item.value===TabCur?'text-orange cur':''" v-for="(item,index) in tab" :key="index"
+				<view class="cu-item flex-sub" :class="item.value===TabCur?'text-green cur':''" v-for="(item,index) in tab" :key="index"
 				 @tap="tabSelect" :data-id="item.value">
 					{{item.name}}
 				</view>
