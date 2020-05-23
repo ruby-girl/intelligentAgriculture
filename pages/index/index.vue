@@ -16,14 +16,14 @@
 			}
 		},
 		onLoad() {
-			//this.loadExecution()
+			this.loadExecution()
 		},
 		onShow() {
-			setTimeout(function() {
-				uni.redirectTo({
-					url: '/pages/login/login'
-				});
-			}, 2000)
+			// setTimeout(function() {
+			// 	uni.redirectTo({
+			// 		url: '/pages/login/login'
+			// 	});
+			// }, 2000)
 			// uni.hideHomeButton()
 		},
 		methods: {
@@ -37,24 +37,20 @@
 				try {
 					// 获取本地存储中ddwbFlag标识
 					const value = uni.getStorageSync('ddwbFlag');
-					console.log(value)
 					if (value) {
 						// ddwbFlag=true直接跳转到首页
 						// 查看用户是否登录过
 						const obj = uni.getStorageSync('ddwb');
 						if(obj){
+							uni.switchTab({
+								url: '../plantManage/plantManage'
+							});
 							if (obj.landOrgan.length > 0) {
-								uni.switchTab({
-									url: '../plantManage/plantManage'
-								});
+								
 								uni.setStorage({
 									key: 'organId',
 									data: obj.landOrgan[0].organ.id,
 								})
-							} else {
-								uni.redirectTo({
-									url: '../plantManage/baseLand/chooseHandle'
-								});
 							}
 						}else{
 							uni.redirectTo({
