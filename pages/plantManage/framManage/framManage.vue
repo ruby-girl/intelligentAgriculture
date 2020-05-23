@@ -2,7 +2,7 @@
 
 <template>
 	<view class="workOrder ">
-		<scroll-view v-bind:style="{height:(windowHeight-10)+'px'}" class="content" scroll-y="true"
+		<scroll-view v-bind:style="{height:(windowHeight-80)+'px'}" class="content" scroll-y="true"
 		 refresher-enabled="true"
 		  @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 		  @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
@@ -23,12 +23,18 @@
 					<text class="cr3 ">执行时间：</text>{{item.executiontime}}
 				</view>
 				<view class="textHidden">
-					<text class="cr3 ">上传图片：</text>
-				</view>
-				<view class="textHidden">
 					<text class="cr3 ">
 						备注信息：</text>{{item.remark}}
 				</view>
+				<view class="textHidden">
+					<text class="cr3 ">上传图片：</text>
+					<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll">
+						<image v-for="(img,index) in item.farmWorkRecordPics"  @click="showImgFunc(imgUrl+img.path)" :src="imgUrl+img.path" lazy-load="true" mode="aspectFill">
+							
+						</image>
+						</scroll-view>
+				</view>
+			
 				<view class="content-table">
 					<view class="f13" v-if="item.personResources.length>0">人资费用</view>
 							
@@ -104,7 +110,17 @@
 					   
 			</navigator>
 		</view>
-	
+	<view class="cu-modal" :class="showImg?'show':''">
+		<view class="cu-dialog">
+			<view class="bg-img" :style="{'backgroundImage': 'url('+showImgUrl+')','height':200+'px'}">
+				<view class="cu-bar justify-end text-white">
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close "></text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
 
 	</view>
 </template>
@@ -137,7 +153,10 @@
 				contentdown: '',
 				loadingType: 0,
 				triggered: false,
-				_freshing: false
+				_freshing: false,
+				showImg:false,
+				imgUrl:getApp().globalData.imgUrl,
+				showImgUrl:''
 
 			};
 		},
@@ -190,6 +209,13 @@
 					this.initData()
 				}
 			},
+			showImgFunc(url){
+				this.showImg=true
+				this.showImgUrl=url
+			},
+			hideModal(){
+				this.showImg=false
+			},
 			initData(){
 				this.$api.getFarmWorkList(this.params).then(res=>{
 		
@@ -235,7 +261,22 @@
 
 
 	.content {
+		.scroll-view_H {
+			padding: 20rpx 0;
+			height: 140rpx;
+			white-space: nowrap;
+			box-sizing: content-box;
+			width: calc(100vw - 60rpx);
 		
+			image {
+				display: inline-block;
+				width: 200rpx;
+				height: 100%;
+				margin-right: 10rpx;
+				border-radius: 3px;
+		
+			}
+		}
 	
 		height: calc(100vh - 100rpx);
 		position: relative;
@@ -269,7 +310,7 @@
 			line-height: 30rpx;
 		
 			margin-bottom: 30rpx;
-			height: 160px;
+			height: 130px;
 			overflow: hidden;
 			transition: height .3s;
 			position: relative;

@@ -49,7 +49,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="grid col-4 grid-square flex-sub">
-						<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
+						<view class="bg-img" v-for="(item,index) in imgList" :key="index"  :data-url="imgList[index]">
 							<image :src="imgUrl+imgList[index]" mode="aspectFill"></image>
 							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
 								<text class='cuIcon-close'></text>
@@ -135,16 +135,16 @@
 		  
 			let _this = this;
 			
-			/* 录音 */
-			uni.authorize({
-				scope: 'scope.userLocation',
-				success() {
-					recorderManager.onStop(function(res) {
-						_this.voicePath = res.tempFilePath;	
-						_this.voiceTime = res.duration
-					});
-				}
-			})
+			// /* 录音 */
+			// uni.authorize({
+			// 	scope: 'scope.userLocation',
+			// 	success() {
+			// 		recorderManager.onStop(function(res) {
+			// 			_this.voicePath = res.tempFilePath;	
+			// 			_this.voiceTime = res.duration
+			// 		});
+			// 	}
+			// })
 			
 			this.params.workOrderId = Number(option.workOrderId);
 			this.params.plantingBatchId = Number(option.plantingBatchId);
@@ -242,6 +242,7 @@
 				
 			},
 			ViewImage(e) {
+				console.log(e)
 				uni.previewImage({
 					urls: this.imgList,
 					current: e.currentTarget.dataset.url
