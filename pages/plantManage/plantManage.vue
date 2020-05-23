@@ -157,7 +157,6 @@
 				userId: '',
 				resultData: {},
 				isBaseLand:-1
-
 			};
 		},
 		onShow() {
