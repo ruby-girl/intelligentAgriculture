@@ -28,11 +28,12 @@
 			};
 		},
 		onShow() {
-			if(uni.getStorageSync('baseId')){
-			  uni.switchTab({
-			  	url: '/pages/plantManage/plantManage'
-			  });	
-			}
+			// console.log(uni.getStorageSync('baseId'))
+			// if(uni.getStorageSync('baseId')){
+			//   uni.switchTab({
+			//   	url: '/pages/plantManage/plantManage'
+			//   });	
+			// }
 			
 		},
 		methods:{
@@ -49,9 +50,8 @@
 	.choose-land {
 		background-color: #fff;
 		padding: 30rpx;
-		height: calc(100vh - 70rpx);
+	    height: 100vh;
 		overflow: hidden;
-
 		.cu-btn {
 
 			margin-top: 50rpx;

@@ -191,7 +191,7 @@
 				</view>
 			</view>
 		</view>
-		<navigator :url="'/pages/plantManage/framManage/addFram?workOrderId='+id+'&workOrderStatus='+resultData.workOrderStatus">
+		<navigator :url="'/pages/plantManage/framManage/addFram?workOrderId='+id+'&workOrderStatus='+resultData.workOrderStatus+'&plantingBatchId='+resultData.plantingBatchId">
 			<button class="cu-btn block bg-green  lg" >{{resultData.workOrderStatus == 1?'立即处理':'修改'}}</button>
 		</navigator>
 		
@@ -248,7 +248,7 @@
 		onLoad(option) {
 
 			this.id = option.id;
-			console.log('??????')
+	
 			/* 基础信息 */
 			this.initData(option.id);
 

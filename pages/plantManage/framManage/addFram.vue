@@ -65,28 +65,8 @@
 					<textarea maxlength="-1" @input="farmWorkRecordPicsStrValue" name="nickname" :value="params.remark" placeholder="请输入反馈内容"></textarea>
 				</view>
 				
-				<!-- <view>
-					<view class="display-flex justify-content-flex-justify">
-						<view @tap="playVoice">
-							<text class="cuIcon-video f20"></text> <text class="cr2" style="margin: 0 10px;">新录音</text> <text class="f12 cr3">{{voiceTime}}秒</text>
-						</view>
-						<view>
-							<text class="cuIcon-close" @click="closeVoice"></text>
-						</view>
-
-					</view>
-					<button @touchstart="startRecord" @touchend="endRecord" class="cu-btn block  lg line-gray" style="margin: 5px 0;">
-						<text class="iconfont]f20" style="margin-right: 10px;"> &#xe7bd;</text>
-						<template v-if="isRecord">
-							录音中...
-						</template>
-						<template v-else>
-							按住说话,松开结束
-						</template>
-					</button>
-				</view> -->
 			</view>
-			<!-- <button class="cu-btn block bg-green  lg" @tap="NumSteps">下一步</button> -->
+	
 		</view>
 
 
@@ -101,10 +81,6 @@
 </template>
 
 <script>
-	const recorderManager = wx.getRecorderManager();
-	const innerAudioContext = wx.createInnerAudioContext();
-	
-	innerAudioContext.autoplay = true;
 	import secondModel from '../framManage/formModel'
 	export default {
 		components: {
@@ -179,76 +155,9 @@
 
 			})
 		},
-		computed: {
-			intIntervalTime() {
-				// 用于显示整数的秒数
-		
-				return Math.round(this.intervalTime);
-			}
-		},
+	
 		methods: {
-			startRecord() {
-					
-				this.timer = setInterval(() => {
-					this.intervalTime += 0.5;
 			
-					if (this.intervalTime >= 0.5 && !this.isRecord) {
-						//如果用户录制的时间太短,就不会去开启录音, 因为有个bug: recorderManager.stop()在短时间内开启在关闭的话,实际上他还在不停地录音,不知道你们有没有遇到过
-						this.isRecord = true;
-			
-						this.intervalTime = 0;
-			
-						recorderManager.start({
-							format: "mp3"
-						});
-					}
-				}, 300);
-			},
-			
-			endRecord() {
-				if (this.intervalTime <= 0.5) {
-					uni.showToast({
-						title: '录音太短了',
-						icon: 'none',
-						})
-				
-				}
-			
-				clearInterval(this.timer);
-			
-				if (this.isRecord) {
-					// setTimeout(() => {
-						recorderManager.stop();
-			
-						this.isRecord = false;
-			
-					// 	console.log(this.isRecord);
-					// }, 200); //延迟小段时间停止录音, 更好的体验
-				}
-			},
-			
-			playVoice() {
-				console.log("播放录音");
-			
-				if (this.voicePath) {
-					innerAudioContext.src = this.voicePath;
-			
-					innerAudioContext.play();
-				}
-			},
-			closeVoice(){
-					clearInterval(this.timer);
-					this.voicePath ='';
-					this.voiceTime = 0;
-					
-			},
-			// NumSteps() {
-			// 	this.$api.addFarmWorkBase(this.params).then(res => {
-			// 		this.farmWorkRecordId =res.data.data.farmWorkRecordId;
-			// 		this.acreage =res.data.data.acreageCount;
-			// 		this.stepsNum = this.stepsNum == this.numList.length - 1 ? 0 : this.stepsNum + 1
-			// 	});
-			// },
 			farmWorkRecordPicsStrValue(e) {
 				this.params.remark = e.detail.value
 			},
@@ -330,44 +239,7 @@
 				        })
 				      }
 				    })
-				// wx.chooseImage({
-				// 	count: 4, //默认9
-				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-				// 	sourceType: ['album'], //从相册选择
-				//   success (res) {
-				//     const tempFilePaths = res.tempFilePaths
-				// 	// if (this.imgList.length != 0) {
-				// 	// 	this.imgList = this.imgList.concat(res.tempFilePaths)
-				// 	// } else {
-				// 	// 	this.imgList = res.tempFilePaths
-				// 	// }
-				//     wx.uploadFile({
-				//       url: 'http://localhost:8090/api/uploadFile/baseinfo/imgs', //仅为示例，非真实的接口地址
-				//       filePath: tempFilePaths[0],
-				//       name: 'file',
-				//       formData: {
-				//         'user': 'test'
-				//       },
-				//       success (res){
-				// 		  console.log(res)
-				//         const data = res.data
-				//         //do something
-				//       }
-				//     })
-				//   }
-				// })
-				// uni.chooseImage({
-				// 	count: 4, //默认9
-				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-				// 	sourceType: ['album'], //从相册选择
-				// 	success: (res) => {
-				// 		if (this.imgList.length != 0) {
-				// 			this.imgList = this.imgList.concat(res.tempFilePaths)
-				// 		} else {
-				// 			this.imgList = res.tempFilePaths
-				// 		}
-				// 	}
-				// });
+				
 			},
 			ViewImage(e) {
 				uni.previewImage({

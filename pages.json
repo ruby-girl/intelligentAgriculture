@@ -54,15 +54,6 @@
 		}
 		},
 		{
-			"path": "pages/plantManage/baseLand/chooseHandle",
-			"style": {
-				"navigationBarTitleText": "种植管理"
-			}
-		}
-
-
-		,
-		{
 			"path": "pages/plantManage/baseLand/addBaseLand",
 			"style": {
 				"navigationBarTitleText": "创建基地"

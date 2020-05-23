@@ -120,15 +120,20 @@
 									icon: 'success',
 									success() {
 										console.log(obj.landOrgan.length)
+										uni.switchTab({
+											url: '../plantManage/plantManage'
+										});
+										uni.setStorage({
+											key: 'organId',
+											data: obj.landOrgan[0].organ.id,
+										})
+										
 										if (obj.landOrgan.length == 0) {
-									uni.redirectTo({
-										url: '../plantManage/baseLand/chooseHandle'
-									});
+									// uni.redirectTo({
+									// 	url: '../plantManage/baseLand/chooseHandle'
+									// });
 
 										} else {
-											uni.switchTab({
-												url: '../plantManage/plantManage'
-											});
 											uni.setStorage({
 												key: 'organId',
 												data: obj.landOrgan[0].organ.id,
