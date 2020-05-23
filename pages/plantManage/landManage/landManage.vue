@@ -3,8 +3,6 @@
 	<view>
 
 		<view class="drawMap">
-
-
 			<map id="map" :longitude="longitude" enable-satellite="true" :polygons="polygons" :latitude="latitude" scale="12"
 			 show-location style="width: 100%; height: 100%;">
 
@@ -37,7 +35,6 @@
 
 				</view>
 			</view>
-
 
 			<view class="">
 				<scroll-view v-bind:style="{height:windowHeight+'px'}"  scroll-y="true"
@@ -78,11 +75,6 @@
 			</view>
 		</view>
 
-
-
-
-
-
 	</view>
 </template>
 
@@ -121,7 +113,7 @@
 			let _this = this
 				this.windowHeight = uni.getSystemInfoSync().windowHeight/2+50 // 屏幕的高度
 			uni.getLocation({
-				type: 'wgs84',
+				type: 'gcj02',
 				success: function(res) {
 
 					_this.latitude = res.latitude
