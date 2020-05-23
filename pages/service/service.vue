@@ -9,10 +9,15 @@
 			<!-- <view class="section title">
 				<text @click="downSelect">00000 <image src="/static/plant/img001.png" class="imgSize" :class="{'degimg':isShow}"></image></text>
 		
-			</view> -->
-			<view class="select-model" :class="{'showModel':isShow}">
-				<view v-for="item in 5" class="select-li" @click="selectedFun(item)">{{item}}</view>
+			</view> -->			
+			<view  class="display-flex justify-content-flex-end">
+		
+				<ms-dropdown-menu>
+					<ms-dropdown-item :title="selectValueName" v-model="selectValue" :list="allBaseLand" :hasSlot="true">
+					</ms-dropdown-item>
+				</ms-dropdown-menu>
 			</view>
+			
 			<swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
 			 duration="500">
 		
@@ -43,8 +48,12 @@
 
 <script>
 	import chooseHandle from '@/components/chooseHandle.vue'
+	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
+	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
 	export default {
 		components: {
+			msDropdownMenu,
+			msDropdownItem,
 			chooseHandle
 		},
 		data() {
@@ -89,20 +98,38 @@
 					// 	name: '财务预算'
 					// },
 				],
-					isBaseLand: 0,
-					userId:''
+					isBaseLand:-1,
+					userId:'',
+					allBaseLand: [],
+					selectValue: '',
+					selectValueName: '',
+					orgId:''
 			};
 
 		},
-		onShow() {
-			const obj = uni.getStorageSync('ddwb');
-				this.userId = obj.userid
-			this.$api.getJoinOkList({
-				userId: this.userId
-			}).then(res => {
-					this.isBaseLand = res.data.data.length
-				})
+		watch: {
+			selectValue(val, oldValue) {
 		
+				if (oldValue) {
+					let _this = this
+					this.selectValue = val;
+					this.initData(val)
+					this.resultData = {}
+					this.allBaseLand.forEach((a) => {
+						if (a.value == val) {
+							_this.selectValueName = a.text
+						}
+					})
+				}
+			},
+		},
+		
+		onShow() {
+			let _this = this;
+			const obj = uni.getStorageSync('ddwb');
+			this.userId = obj.userid;
+			this.allBaseLand = [],
+			this.initSelect()	
 			// this.TowerSwiper('swiperList');
 			// 初始化towerSwiper 传已有的数组名即可
 		},
@@ -115,6 +142,44 @@
 				uni.navigateTo({
 					url: url
 				});
+			},
+			initSelect() {
+				let _this = this;
+				this.$api.getJoinOkList({
+					userId: this.userId
+				}).then(res => {
+				    this.isBaseLand = res.data.data.length;
+					res.data.data.forEach((item) => {
+						let obj = {
+							text: item.name,
+							value: item.id
+						}
+						_this.allBaseLand.push(obj)
+					});
+					this.selectValue = res.data.data[0].id
+					this.selectValueName = res.data.data[0].name
+					this.orgId = res.data.data[0].id
+					this.initData(this.orgId)
+				})
+			},
+			initData(orgId) {
+				this.$api.getPagingCriteriaQuery({
+					userId: this.userId,
+					organId: orgId,
+				}).then(res => {
+			
+					uni.setStorage({
+						key: 'baseId',
+						data: res.data.data.baseId
+					});
+					uni.setStorage({
+						key: 'organUserId',
+						data: res.data.data.organUserId
+					});
+					this.baseId = res.data.data.baseId
+					
+				})
+			
 			}
 		}
 	}
@@ -122,6 +187,12 @@
 
 <style lang="scss" scoped>
 	.service-model {
+		
+		/deep/ .dropdown-item__selected {
+			text-align: right;
+			background-color: transparent;
+			padding: 0;
+		}
 		.title {
 			text-align: right;
 			height: 100rpx;

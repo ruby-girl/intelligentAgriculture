@@ -32,7 +32,7 @@
 						<t-tr class="bg-tr">
 							<t-th>人员类型</t-th>
 							<t-th>人工(亩)</t-th>
-							<t-th>工价<br />(元/人/田)</t-th>
+							<t-th>工价(元)</t-th>
 							<t-th>面积(亩)</t-th>
 							<t-th>费用(元)</t-th>
 						</t-tr>
@@ -48,7 +48,7 @@
 
 					<t-table border-color="#E1E1E1">
 						<t-tr class="bg-tr">
-							<t-th>人员类型</t-th>
+							<t-th>设备名称</t-th>
 							<t-th>每亩费用(元)</t-th>
 							<t-th>面积(亩)</t-th>
 							<t-th>费用(元)</t-th>
@@ -67,8 +67,9 @@
 					<t-table border-color="#E1E1E1">
 						<t-tr class="bg-tr">
 							<t-th>农资名称</t-th>
-							<t-th>农资名称</t-th>
+							<t-th>农资厂家</t-th>
 							<t-th>每亩用量</t-th>
+							<t-th>单价</t-th>
 							<t-th>面积(亩)</t-th>
 							<t-th>费用(元)</t-th>
 						</t-tr>
@@ -76,6 +77,7 @@
 							<t-td>{{ item.name }}</t-td>
 							<t-td>{{ item.supplierName }}</t-td>
 							<t-td>{{ item.unitArea }}</t-td>
+							<t-td>{{ item.price }}</t-td>
 							<t-td>{{ item.acreageCount }}</t-td>
 							<t-td>{{ item.suppliesFeeCount }}</t-td>
 						</t-tr>
@@ -130,7 +132,7 @@
 						<t-tr class="bg-tr">
 							<t-th>人员类型</t-th>
 							<t-th>人工(亩)</t-th>
-							<t-th>工价<br />(元/人/田)</t-th>
+							<t-th>工价(元)</t-th>
 							<t-th>面积(亩)</t-th>
 							<t-th>费用(元)</t-th>
 						</t-tr>
@@ -145,7 +147,7 @@
 					<view class="f13" v-if="execuResultData.equipmentResources.length>0">设备费用</view>
 					<t-table border-color="#E1E1E1" v-if="execuResultData.equipmentResources.length>0">
 						<t-tr class="bg-tr">
-							<t-th>人员类型</t-th>
+							<t-th>设备名称</t-th>
 							<t-th>每亩费用(元)</t-th>
 							<t-th>面积(亩)</t-th>
 							<t-th>费用(元)</t-th>
@@ -164,8 +166,9 @@
 					<t-table border-color="#E1E1E1" v-if="execuResultData.suppliesResources.length>0">
 						<t-tr class="bg-tr">
 							<t-th>农资名称</t-th>
-							<t-th>农资名称</t-th>
+							<t-th>农资厂家</t-th>
 							<t-th>每亩用量</t-th>
+							<t-th>单价</t-th>
 							<t-th>面积(亩)</t-th>
 							<t-th>费用(元)</t-th>
 						</t-tr>
@@ -173,6 +176,7 @@
 							<t-td>{{ item.name }}</t-td>
 							<t-td>{{ item.supplierName }}</t-td>
 							<t-td>{{ item.unitArea }}</t-td>
+							<t-td>{{ item.price }}</t-td>
 							<t-td>{{ item.acreageCount }}</t-td>
 							<t-td>{{ item.suppliesFeeCount }}</t-td>
 						</t-tr>

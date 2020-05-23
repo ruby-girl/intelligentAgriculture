@@ -134,7 +134,7 @@
 
 				}
 			});
-			this.params.baseId = option.baseId
+			this.params.baseId = option.baseId || uni.getStorageSync('baseId')
 			this.params.organUserId = uni.getStorageSync('organUserId');
 			this.resultData.acreages = option.acreages
 			this.resultData.landCount = option.landCount
@@ -143,7 +143,10 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		onShow() {
-
+			
+			this.listData = [];
+			this.polygons = [];
+			
 			this.$nextTick(function() {
 				this.initList();
 			})
