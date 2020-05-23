@@ -66,7 +66,9 @@
             },
             "icons" : {
                 "android" : {
-                    "xxhdpi" : "C:/Users/Administrator/Desktop/微信图片_20200523111942.png"
+                    "xxhdpi" : "C:/Users/Administrator/Desktop/微信图片_20200523111942.png",
+                    "xhdpi" : "C:/Users/Administrator/Desktop/微信图片_20200523111942.png",
+                    "hdpi" : "C:/Users/Administrator/Desktop/微信图片_20200523111942.png"
                 }
             }
         }

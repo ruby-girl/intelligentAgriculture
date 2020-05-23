@@ -16,7 +16,7 @@
 	onLoad() {
 		
 		this.url = "https://bysk.scddwb.com/map/#/?userId=" + uni.getStorageSync('ddwb').userid + "&token=" + uni.getStorageSync('ddwb').token;
-		console.log(this.url);
+	
 	},
 	
 		
