@@ -1,6 +1,8 @@
 <template>
 	<view class="padding-login">
-		<view class="title">慧种植</view>
+		<view style="text-align: center;margin: 40rpx 0;">
+			<image class="logo-box" src="../../static/logo.png" mode="aspectFill"></image>
+		</view>
 		<view class="border-bottom">
 			<view><text class="iconfont iconipad color-green" style="font-size: 26px;"></text><text class="text-margin">手机</text></view>
 			<input @input="onInput" type="number" placeholder="请输入手机号码" name="input"></input>
@@ -42,6 +44,10 @@
 		onShow() {
 			// uni.hideHomeButton()
 		},
+		onBackPress(e) {  
+			// return true 表示禁止默认返回
+			return false
+		}, 
 		methods: {
 			onInput(e) {
 				this.obj.phone = e.detail.value
@@ -161,13 +167,14 @@
 		font-size: 15px;
 	}
 
-	.title {
-		font-size: 20px;
-		color: #00AE61;
-		font-weight: bold;
-		text-align: center;
-		padding: 62rpx 0 160rpx 0;
-	}
+	// .title {
+	// 	height:500rpx;
+	// 	width:500rpx;
+	// 	margin: 0 auto;
+	// 	background-image: url('@/static/logo.png');
+	// 	background-repeat: no-repeat;
+	// 	background-size: 100%;
+	// }
 
 	.border-bottom {
 		border-bottom: 1px solid #eee;
@@ -189,5 +196,10 @@
 
 	.color-green {
 		color: #00AE66;
+	}
+	.logo-box{
+		width:200rpx;
+		height:200rpx;
+		margin: 0 auto;
 	}
 </style>
