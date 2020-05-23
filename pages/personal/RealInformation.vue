@@ -311,13 +311,33 @@
 					return false;
 				}
 				this.getSelectValue()
+				let _this=this
 				this.$apiYZX.userPerfectInfo(this.userInfo).then(res => {
 					if (res.data.code == 200) {
+						let ddwb=uni.getStorageSync('ddwb')
+						if(ddwb.name!==this.userInfo.name){
+							ddwb.name=this.userInfo.name
+							uni.setStorage({
+								key: 'ddwb',
+								data: ddwb,
+								success() {
+									_this.toPersonel()
+								}
+							})
+						}else{
+							_this.toPersonel()
+						}
 						
-						uni.showToast({
-							title: '编辑成功',
-							icon: 'success',
-						})
+					}
+				})
+			},
+			toPersonel(){
+			uni.showToast({
+				title: '编辑成功',
+				icon: 'success',
+				success() {
+					uni.switchTab({
+						url: '../personal/personal'})
 					}
 				})
 			},
