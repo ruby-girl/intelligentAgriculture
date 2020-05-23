@@ -9,29 +9,34 @@
 				"disableScroll": true
 			}
 		},
-	{
+		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "登录"
+				"navigationBarTitleText": "登录",
+				"app-plus": {
+					"titleNView": {
+						"autoBackButton": "true"
+					}
+				}
 			}
-		},	{
-        "path": "pages/plantManage/baseLand/joinBaseLand",
-        "style": {
-          "navigationBarTitleText": "基地列表",
-          "disableScroll": false
+		}, {
+			"path": "pages/plantManage/baseLand/joinBaseLand",
+			"style": {
+				"navigationBarTitleText": "基地列表",
+				"disableScroll": false
 
-        }
+			}
 
-      },{
-		"path": "pages/plantManage/plantManage",
-		"style": {
-			"navigationBarTitleText": "种植管理",
-			"navigationBarBackgroundColor": "#29B982",
-			"navigationBarTextStyle": "white",
-			"enablePullDownRefresh": true
-		}
+		}, {
+			"path": "pages/plantManage/plantManage",
+			"style": {
+				"navigationBarTitleText": "种植管理",
+				"navigationBarBackgroundColor": "#29B982",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": true
+			}
 
-	},{
+		}, {
 			"path": "pages/plantManage/framManage/addFram",
 			"style": {
 				"navigationBarTitleText": "添农事操作记录"
@@ -42,7 +47,7 @@
 			"style": {
 				"navigationBarTitleText": "农事操作记录"
 			}
-		},{
+		}, {
 
 			"path": "pages/personal/personal",
 			"style": {
@@ -51,7 +56,7 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 
-		}
+			}
 		},
 		{
 			"path": "pages/plantManage/baseLand/addBaseLand",
@@ -108,13 +113,13 @@
 			"style": {
 				"navigationBarTitleText": "服务管理"
 			}
-		},{
+		}, {
 			"path": "pages/service/selectBatch",
 			"style": {
 				"navigationBarTitleText": "选择种植批次"
 			}
 		},
-	
+
 		{
 			"path": "pages/plantManage/batchManagement/list",
 			"style": {
@@ -145,7 +150,7 @@
 			}
 		}
 
-		,  {
+		, {
 			"path": "pages/login/register",
 			"style": {
 				"navigationBarTitleText": "注册"
@@ -162,18 +167,16 @@
 			"style": {
 				"navigationBarTitleText": "地块管理"
 			}
+		}, {
+			"path": "pages/plantManage/framManage/formModel",
+			"style": {}
+		}, {
+			"path": "pages/service/plantInspectionsDetail",
+			"style": {
+				"navigationBarTitleText": "工单详情"
+			}
 		}
-	    ,{
-            "path" : "pages/plantManage/framManage/formModel",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/service/plantInspectionsDetail",
-            "style": {
-            	"navigationBarTitleText": "工单详情"
-            }
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "代代为本",
@@ -187,37 +190,38 @@
 		"selectedColor": "#00AE66",
 		"backgroundColor": "#F7F7F7",
 		"list": [
-		// 	{
-		// 	"pagePath": "pages/message/message",
-		// 	"text": "消息",
-		// 	"iconPath": "static/tab/tab_icon_messag_def@2x.png",
-		// 	"selectedIconPath": "static/tab/tab_icon_messag_pre@2x.png"
-		// }, 
-		{
-			"pagePath": "pages/plantManage/plantManage",
-			"text": "种植管理",
+			// 	{
+			// 	"pagePath": "pages/message/message",
+			// 	"text": "消息",
+			// 	"iconPath": "static/tab/tab_icon_messag_def@2x.png",
+			// 	"selectedIconPath": "static/tab/tab_icon_messag_pre@2x.png"
+			// }, 
+			{
+				"pagePath": "pages/plantManage/plantManage",
+				"text": "种植管理",
 
-			"iconPath": "static/tab/tab_icon_plant_def@2x.png",
-			"selectedIconPath": "static/tab/tab_icon_plant_pre@2x.png"
-		}, {
-			"pagePath": "pages/service/service",
-			"text": "服务管理",
+				"iconPath": "static/tab/tab_icon_plant_def@2x.png",
+				"selectedIconPath": "static/tab/tab_icon_plant_pre@2x.png"
+			}, {
+				"pagePath": "pages/service/service",
+				"text": "服务管理",
 
-			"iconPath": "static/tab/tab_icon_service_def@2x.png",
-			"selectedIconPath": "static/tab/tab_icon_service_pre@2x.png"
-		}, 
-		// {
-		// 	"pagePath": "pages/fair/fair",
-		// 	"text": "市集",
-		// 	"iconPath": "static/tab/tab_icon_fair_def@2x.png",
-		// 	"selectedIconPath": "static/tab/tab_icon_fair_pre@2x.png"
-		// }, 
-		{
-			"pagePath": "pages/personal/personal",
-			"text": "我的",
-			"iconPath": "static/tab/tab_icon_mine_def@2x.png",
-			"selectedIconPath": "static/tab/tab_icon_mine_pre@2x.png"
-		}]
+				"iconPath": "static/tab/tab_icon_service_def@2x.png",
+				"selectedIconPath": "static/tab/tab_icon_service_pre@2x.png"
+			},
+			// {
+			// 	"pagePath": "pages/fair/fair",
+			// 	"text": "市集",
+			// 	"iconPath": "static/tab/tab_icon_fair_def@2x.png",
+			// 	"selectedIconPath": "static/tab/tab_icon_fair_pre@2x.png"
+			// }, 
+			{
+				"pagePath": "pages/personal/personal",
+				"text": "我的",
+				"iconPath": "static/tab/tab_icon_mine_def@2x.png",
+				"selectedIconPath": "static/tab/tab_icon_mine_pre@2x.png"
+			}
+		]
 	}
 	// "condition": { //模式配置，仅开发期间生效
 	// 	"current": 0, //当前激活的模式(list 的索引项)
