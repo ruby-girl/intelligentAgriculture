@@ -163,7 +163,7 @@
 			let _this = this;
 			const obj = uni.getStorageSync('ddwb');
 			this.userId = obj.userid;
-			this.allBaseLand = [],
+			this.allBaseLand = [];
 			this.initSelect()
 		},
 		onPullDownRefresh: function() {

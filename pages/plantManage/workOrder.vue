@@ -189,7 +189,7 @@
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.TabCur = option.type
 			if (this.TabCur == 1) this.listObj.workOrderStatus = '1';
-			else this.listObj.workOrderStatus = '0';
+			else this.listObj.workOrderStatus = '';
 			this.obj.baseId = option.baseId
 			// 获取下拉数据--工单批次
 			let _this = this
