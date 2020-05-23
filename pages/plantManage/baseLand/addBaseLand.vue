@@ -15,7 +15,7 @@
 		},
 	onLoad() {
 		
-		this.url = "http://192.168.101.32:8091//#/?userId=" + uni.getStorageSync('ddwb').userid + "&token=" + uni.getStorageSync('ddwb').token;
+		this.url = "http://map.scddwb.com/#/?userId=" + uni.getStorageSync('ddwb').userid + "&token=" + uni.getStorageSync('ddwb').token;
 		console.log(this.url);
 	},
 	

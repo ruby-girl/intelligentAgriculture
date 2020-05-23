@@ -1,8 +1,9 @@
 
 export default {
 	config: {
+		baseUrl: "https://bysk.scddwb.com/byapi/",
 		//baseUrl: "http://47.108.83.178/byapi/",
-		baseUrl: "http://192.168.101.30:8088",
+		//baseUrl: "http://192.168.101.30:8088",
 		header: {
 			 'Content-Type':'application/json',
 			 'Authorization':''
