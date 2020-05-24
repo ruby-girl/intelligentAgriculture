@@ -26,6 +26,12 @@
 			// }, 2000)
 			// uni.hideHomeButton()
 		},
+	onShareAppMessage(res) {
+	    return {
+	      title: '农事云',
+			  path: '/pages/index/index'
+	  }
+	},
 		methods: {
 			loadExecution: function() {
 		

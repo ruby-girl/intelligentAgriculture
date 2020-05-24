@@ -36,7 +36,7 @@
 		  	                 </scroll-view> 
 		  </view>
 		  </view>
-		  		<navigator :url="'/pages/plantManage/addFram?id='+id">	
+		  		<navigator  hover-class="none" :url="'/pages/plantManage/addFram?id='+id">	
 		  <button class="cu-btn block bg-green  lg">立即执行</button>
 		  </navigator>
 	</view>

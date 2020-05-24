@@ -44,6 +44,12 @@
 		onShow() {
 			// uni.hideHomeButton()
 		},
+		onShareAppMessage(res) {
+		    return {
+		      title: '农事云',
+				  path: '/pages/index/index'
+		  }
+		},
 		onBackPress(e) {  
 			// return true 表示禁止默认返回
 			return false

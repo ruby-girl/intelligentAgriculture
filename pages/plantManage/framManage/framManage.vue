@@ -103,7 +103,7 @@
 			<view class="loading-more">{{contentdown}}</view>
 		</scroll-view>
 		<view class="add-fram-btn"> 
-			<navigator url="/pages/plantManage/framManage/addFram">
+			<navigator  hover-class="none" url="/pages/plantManage/framManage/addFram">
 					
 			    
 					   <button class="cu-btn block bg-green  lg">添加农事记录</button>

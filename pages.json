@@ -179,7 +179,7 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "代代为本",
+		"navigationBarTitleText": "农事云",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 		// 下拉刷新

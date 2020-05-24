@@ -9,9 +9,15 @@
 		onShow: function() {
 			console.log('App Show')
 		},
+		onShareAppMessage(res) {
+		    return {
+		      title: '农事云'	    
+		  }
+		},
 		onHide: function() {
 			console.log('App Hide')
 		},
+		
 		globalData:{
 			// imgUrl:'http://47.108.83.178/byapi/showImg/planting/',
 			// baseUrl:'http://47.108.83.178/byapi/'

@@ -6,11 +6,8 @@
 		</view>
 		
 		<view class="service-model" v-if="isBaseLand!=0">
-			<!-- <view class="section title">
-				<text @click="downSelect">00000 <image src="/static/plant/img001.png" class="imgSize" :class="{'degimg':isShow}"></image></text>
-		
-			</view> -->			
-			<view  class="display-flex justify-content-flex-end">
+				
+			<view  class="display-flex justify-content-flex-end" style="margin: 20rpx 0;">
 		
 				<ms-dropdown-menu>
 					<ms-dropdown-item :title="selectValueName" v-model="selectValue" :list="allBaseLand" :hasSlot="true">
@@ -27,7 +24,7 @@
 				</swiper-item>
 			</swiper>
 			<view class="section">
-				<label><b>基地管理</b></label>
+				<label ><b style="margin-left: 30rpx;font-weight: bold;" >基地管理</b></label>
 				<view class="cu-list grid col-3 no-border">
 					<view class="cu-item" v-for="(item,index) in cuIconList" :key="index" @click="toPlant(item.url)">
 						<view class="cu-img">
@@ -74,29 +71,37 @@
 				isShow: false,
 
 				cuIconList: [
-					// 	{
-					// 	cuIcon: 'cardboardfill',
-					//     imgUrl:'/static/service/icon_basemanagement@2x.png',
-					// 	url:'',
-					// 	name: '基地信息'
-					// }, {
-					// 	cuIcon: 'recordfill',
-					//      imgUrl:'/static/service/icon_environmentalmonitoring@2x.png',
-					// 	 url:'',
-					// 	name: '环控基站'
-					// },
 					{
 						cuIcon: 'picfill',
 						imgUrl: '/static/service/icon_plantinspection@2x.png',
 						url: '/pages/service/plantInspections',
 						name: '种植巡查'
 					},
-					// {
-					// 	cuIcon: 'noticefill',
-					// 	url:'',
-					//    imgUrl:'/static/service/icon_Financialbudget@2x.png',
-					// 	name: '财务预算'
-					// },
+						{
+						cuIcon: 'cardboardfill',
+					    imgUrl:'/static/service/icon_basemanagement@2x.png',
+						url:'',
+						name: '基地信息'
+					},
+					{
+					 	cuIcon: 'recordfill',
+					      imgUrl:'/static/service/icon_environmentalmonitoring@2x.png',
+					 	 url:'',
+				 	name: '环控基站'
+					 },
+					
+					 {
+					 	cuIcon: 'noticefill',
+					 	url:'',
+					   imgUrl:'/static/service/icon_Financialbudget@2x.png',
+					 	name: '财务预算'
+					 },
+					 {
+					 	cuIcon: 'noticefill',
+					 	url:'',
+					   imgUrl:'/static/service/icon_detection@2x.png',
+					 	name: '检测管理'
+					 },
 				],
 					isBaseLand:-1,
 					userId:'',
@@ -123,7 +128,12 @@
 				}
 			},
 		},
-		
+		onShareAppMessage(res) {
+		    return {
+		      title: '农事云',
+			  path: '/pages/index/index'
+		  }
+		},
 		onShow() {
 			let _this = this;
 			const obj = uni.getStorageSync('ddwb');
@@ -138,10 +148,17 @@
 				this.isShow = !this.isShow
 			},
 			toPlant(url) {
-				if (!url) return
+				if(url){
 				uni.navigateTo({
 					url: url
-				});
+				});	
+				}else{
+					uni.showToast({
+						title:'开发中！',
+						icon:'none'
+					})
+				}
+				
 			},
 			initSelect() {
 				let _this = this;
@@ -212,7 +229,7 @@
 		}
 
 		.section {
-			padding: 30rpx;
+			padding: 30rpx 0;
 			background-color: #fff;
 
 

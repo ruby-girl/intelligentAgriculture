@@ -195,7 +195,7 @@
 				</view>
 			</view>
 		</view>
-		<navigator :url="'/pages/plantManage/framManage/addFram?workOrderId='+id+'&workOrderStatus='+resultData.workOrderStatus+'&plantingBatchId='+resultData.plantingBatchId">
+		<navigator hover-class="none" :url="'/pages/plantManage/framManage/addFram?workOrderId='+id+'&workOrderStatus='+resultData.workOrderStatus+'&plantingBatchId='+resultData.plantingBatchId">
 			<button class="cu-btn block bg-green  lg" >{{resultData.workOrderStatus == 1?'立即处理':'修改'}}</button>
 		</navigator>
 		

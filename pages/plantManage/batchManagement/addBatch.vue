@@ -28,8 +28,8 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">种苗企业</view>
-					<input disabled="true" class="form-input-left" placeholder="请选择种苗企业" name="input"></input>
-					<view class="iconfont right-jt">&#xe738;</view>
+					<input v-model="seedEnterpirse" class="form-input-left" placeholder="请輸入种苗企业" name="input"></input>
+					
 					
 				</view>
 			</form>
@@ -88,13 +88,16 @@
 				breedList: [], //作物列表
 				breed: '0', //作物值
 				planName: '',
+				seedEnterpirse:'',
 				postData: {
 					baseId: '',
 					userId: '',
 					breedId: '1', //作物值
 					plantingTime: '2020', //种植时间
 					landParcelIds: '', //地块
-					plantingPlanId: '' //种植计划
+					plantingPlanId: '' ,//种植计划
+					seedEnterpirse:''
+					
 				}
 			}
 		},
@@ -216,6 +219,7 @@
 			},
 			addFunc() {
 				if (!this.test()) return
+				this.postData.seedEnterpirse =  this.seedEnterpirse;
 				this.$apiYZX.addPlantingBatchs(this.postData).then(res => {
 					if (res.data.code == '200') {
 						uni.showToast({

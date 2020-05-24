@@ -59,6 +59,12 @@
 			}
 			});
 		},
+		onShareAppMessage(res) {
+		    return {
+		      title: '农事云',
+				  path: '/pages/index/index'
+		  }
+		},
 		onShow() {
 			console.log('加载了')
 			let _this=this

@@ -1,92 +1,97 @@
 <!-- 种植管理  已有基地-->
 <template>
-	<view>
+	<view style="background-color: #fff;height: 100vh;overflow-y: hidden;">
 		<view v-if="isBaseLand == 0">
 			<choose-handle></choose-handle>
 		</view>
-		
-			<view class="plant" v-if="isBaseLand>0">
-		
-				<view class="plant-top" v-if="resultData">
-		
-					<view class="flex-top" v-if="resultData.organUserName">
-		
-						<view class="name">{{resultData.organUserName || '-'}}的土地信息</view>
-		
-					</view>
-					<view class="display-flex justify-content-flex-end">
-						<ms-dropdown-menu>
-							<ms-dropdown-item :title="selectValueName" v-model="selectValue" :list="allBaseLand" :hasSlot="true">
-							</ms-dropdown-item>
-						</ms-dropdown-menu>
-					</view>
-		
-					<view class="plant-top-content display-flex justify-content-flex-justify">
-						<view class="item">
-							<view>
-								<text class="fb">{{resultData.acreages || 0 }}</text><text>亩</text>
-							</view>
-							<view>土地总面积</view>
-						</view>
-						<view class="item">
-							<view>
-								<text class="fb">{{resultData.landParcelCount || 0}}</text><text>块</text>
-							</view>
-							<view>总地块数量 </view>
-						</view>
-		
-						<view class="item">
-							<view>
-								<text class="fb">{{resultData.plantingBatchs?resultData.plantingBatchs.length: 0 || 0}}</text><text>批</text>
-							</view>
-							<view>种植中批次</view>
-						</view>
-		
-		
-					</view>
-		
+
+		<view class="plant" v-if="isBaseLand>0">
+
+			<view class="plant-top" v-if="resultData">
+
+				<view class="flex-top" v-if="resultData.organUserName">
+
+					<view class="name">{{resultData.organUserName || '-'}}的土地信息</view>
+
 				</view>
-		
-				<view class="plant-item " v-if="resultData">
+				<view class="display-flex justify-content-flex-end">
+					<ms-dropdown-menu>
+						<ms-dropdown-item :title="selectValueName" v-model="selectValue" :list="allBaseLand" :hasSlot="true">
+						</ms-dropdown-item>
+					</ms-dropdown-menu>
+				</view>
+
+				<view class="plant-top-content display-flex justify-content-flex-justify">
+					<view class="item">
+						<view>
+							<text class="fb">{{resultData.acreages || 0 }}</text><text>亩</text>
+						</view>
+						<view>土地总面积</view>
+					</view>
+					<view class="item">
+						<view>
+							<text class="fb">{{resultData.landParcelCount || 0}}</text><text>块</text>
+						</view>
+						<view>总地块数量 </view>
+					</view>
+
+					<view class="item">
+						<view>
+							<text class="fb">{{resultData.plantingBatchs?resultData.plantingBatchs.length: 0 || 0}}</text><text>批</text>
+						</view>
+						<view>种植中批次</view>
+					</view>
+
+
+				</view>
+
+			</view>
+
+			<view class="plant-item " v-if="resultData">
+				<view class="plant-item-top">
+
 					<view class="cark" style="    left: 60rpx;"></view>
 					<view class="cark cark-right"></view>
 					<view class="flex">
 						<view>
-							<navigator :url="'/pages/plantManage/workOrder?type=1&baseId='+baseId">
-		
+							<navigator  :url="'/pages/plantManage/workOrder?type=1&baseId='+baseId" hover-class="none">
+
 								<view class="iconfont cr f20">&#xe60e;</view>
 								<text>待处理</text>
 							</navigator>
 						</view>
-						<view>
+						<!-- <view>
 							<view class="iconfont cr f20">&#xe60c;</view>
 							<text>预警提醒</text>
-						</view>
+						</view> -->
 						<view>
-							<navigator url="/pages/plantManage/batchManagement/list">
-		
+							<navigator url="/pages/plantManage/batchManagement/list" hover-class="none">
+
 								<view class="iconfont cr f20">&#xe60d;</view>
 								<text>批次管理</text>
 							</navigator>
 						</view>
 						<view>
-							<navigator :url="'/pages/plantManage/landManage/landManage?baseId='+baseId+'&acreages='+resultData.acreages+'&landCount='+resultData.landParcelCount">
+							<navigator hover-class="none" :url="'/pages/plantManage/landManage/landManage?baseId='+baseId+'&acreages='+resultData.acreages+'&landCount='+resultData.landParcelCount">
 								<view class="iconfont cr f20">&#xe60a;</view>
 								<text>地块管理</text>
 							</navigator>
 						</view>
 						<view>
-							<navigator :url="'/pages/plantManage/framManage/framManage?baseId='+baseId">
-		
+							<navigator hover-class="none" :url="'/pages/plantManage/framManage/framManage?baseId='+baseId">
+
 								<view class="iconfont cr f20">&#xe60b;</view>
 								<text>农事管理</text>
 							</navigator>
 						</view>
-		
+
 					</view>
+				</view>
+
+				<view>
 					<label class="title">种植中批次</label>
-					<view style="overflow-y: auto;height: 70%;">
-		
+					<scroll-view scroll-y="true" class="scroll-height">
+
 						<view v-if="resultData.plantingBatchs">
 							<view v-for="(item, index) in resultData.plantingBatchs" :key="index" class="item-view">
 								<navigator :url="'/pages/plantManage/workOrder?type=&baseId='+baseId">
@@ -105,7 +110,7 @@
 											</view>
 											<view class="cr2 f12">待处理</view>
 										</view>
-		
+
 										<view class="inline line"></view>
 										<view class="inline content">
 											<view class="f20">
@@ -113,24 +118,28 @@
 											</view>
 											<view class="cr2 f12">种植品种</view>
 										</view>
-		
+
 									</view>
 								</navigator>
 							</view>
 						</view>
 						<view v-else class="null-data">
-		
+
 							暂无数据
 						</view>
-					</view>
+					</scroll-view>
 				</view>
-		
-		
+
+
+
 			</view>
-		
+
+
+		</view>
+
 	</view>
-	
-	
+
+
 
 </template>
 
@@ -156,15 +165,25 @@
 				orgId: '',
 				userId: '',
 				resultData: {},
-				isBaseLand:-1
+				isBaseLand: -1,
+				windowHeight: 300,
 			};
+		},
+		onLoad() {
+			this.windowHeight = uni.getSystemInfoSync().windowHeight / 2
 		},
 		onShow() {
 			let _this = this;
 			const obj = uni.getStorageSync('ddwb');
 			this.userId = obj.userid;
-			this.allBaseLand = [];
+
 			this.initSelect()
+		},
+		onShareAppMessage(res) {
+			return {
+				title: '农事云',
+				path: '/pages/index/index'
+			}
 		},
 		onPullDownRefresh: function() {
 			this.initSelect()
@@ -189,10 +208,11 @@
 		methods: {
 			initSelect() {
 				let _this = this;
+				this.allBaseLand = [];
 				this.$api.getJoinOkList({
 					userId: this.userId
 				}).then(res => {
-				    this.isBaseLand = res.data.data.length;
+					this.isBaseLand = res.data.data.length;
 					res.data.data.forEach((item) => {
 						let obj = {
 							text: item.name,
@@ -231,11 +251,14 @@
 </script>
 
 <style lang="scss" scoped>
-	
 	.plant {
 		.flex {
 			display: flex;
 			justify-content: space-between;
+		}
+
+		.scroll-height {
+			height: calc(75vh - 70px);
 		}
 
 		.select-model {
@@ -318,23 +341,27 @@
 		}
 
 		.plant-item {
-			box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
-			border-radius: 10px;
-			background-color: #fff;
-			margin: 0px 16px;
-			margin-top: -16px;
-			position: relative;
+
 			height: 78vh;
 			padding-bottom: 15px;
 
+			.plant-item-top {
 
+
+				margin: 0px 16px;
+				margin-top: -16px;
+				position: relative;
+			}
 
 			.flex {
+				background-color: #fff;
+				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
+				border-radius: 10px;
 				font-size: 12px;
 				text-align: center;
 				color: #666666;
 				padding: 30rpx 30rpx 20rpx 30rpx;
-				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
+
 
 			}
 
@@ -361,10 +388,10 @@
 			}
 
 			.title {
-				margin-top: 50rpx;
+				margin-top: 40rpx;
 				display: inline-block;
-				margin-bottom: 5px;
-				text-indent: 10rpx;
+
+				text-indent: 30rpx;
 			}
 
 			.item-title {
@@ -390,7 +417,9 @@
 
 			.item-view {
 				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
-				margin-bottom: 20px;
+
+				margin: 0rpx 30rpx 30rpx;
+				border-radius: 3px;
 			}
 
 		}

@@ -24,7 +24,7 @@
 							<view>地块总面积：{{resultData.acreages}}亩</view>
 						</view>
 						<view class="tc">
-							<navigator url="/pages/plantManage/landManage/addLand">
+							<navigator url="/pages/plantManage/landManage/addLand" hover-class="none">
 								<view class="tc"><text class="iconfont ">&#xe6c4;</text></view>
 								<view>添加地块</view>
 							</navigator>
