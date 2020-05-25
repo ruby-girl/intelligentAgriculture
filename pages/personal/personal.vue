@@ -2,12 +2,10 @@
 	<view>
 		<view class="bg-personal">
 			<view class="user-info text-center">
-				<!-- #ifdef MP-WEIXIN -->
-				<view class="cu-avatar lg round" v-bind:style="{'backgroundImage':'url('+user.headPortrait+')'}"></view>
-				<!-- #endif -->
-				<!-- #ifdef APP-PLUS||H5 -->
-				<view class="cu-avatar lg round" style="backgroundImage:url(../../static/plant/icon-test.png)"></view>
-				<!-- #endif -->		
+			
+				
+				<view class="cu-avatar lg round bg-head"></view>
+			
 				<view style="margin-top:20rpx" class="text-lg">{{user.name}}</view>
 				<text class="text-gray">{{user.phone}}</text>
 			</view>
@@ -115,7 +113,9 @@
 		background-repeat: no-repeat;
 		background-size: 100%;
 	}
-
+	.bg-head{
+		background-image: url('@/static/plant/icon-test.png');
+	}
 	.form-input-left {
 		text-align: right;
 	}
