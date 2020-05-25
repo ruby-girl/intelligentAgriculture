@@ -190,7 +190,7 @@
 			},
 			toPlan() {
 				console.info(this.postData)
-				uni.redirectTo({
+				uni.navigateTo({
 					url: 'selectPlan?breed=' + this.postData.breedId + '&plantingTime=' + this.date + '&landId=' + this.landId +
 						'&planName=' +
 						this.planName + '&planId=' + this.postData.plantingPlanId+'&name='+this.postData.name+'&seedEnterpirse='+this.postData.seedEnterpirse
