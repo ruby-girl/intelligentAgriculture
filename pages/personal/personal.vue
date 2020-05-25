@@ -1,22 +1,63 @@
 <template>
 	<view>
 		<view class="bg-personal">
-			<view class="user-info text-center">			
-			
-				<view style="margin-top:20rpx" class="text-lg">{{user.name}}</view>
-				<text class="text-gray">{{user.phone}}</text>
+			<view class="user-info text-center flex">
+				<view style="margin-top:20rpx" class="text-lg">
+					<image src="../../static/imgs/location.png" mode=""></image>
+				</view>
+				<view class="">
+					<text>名称</text>
+					<view class="text-gray">qwe</view>
+				</view>
+			</view>
+		</view>
+		<view class="flex justify-content-flex-justify positon-box">
+			<!-- 农场 -->
+			<view class="item-box">
+				<view class="flex justify-content-flex-justify item-jt">
+					<view class="title display-flex align-items-center">
+						<image src="../../static/imgs/warning.png" mode=""></image>我的农场
+					</view>
+					<image src="../../static/imgs/arrows.png" mode=""></image>
+				</view>
+				<view class="position-num">
+					20
+				</view>
+			</view>
+			<!-- 地块 -->
+			<view class="item-box">
+				<view class="flex justify-content-flex-justify item-jt">
+					<view class="title display-flex align-items-center">
+						<image src="../../static/imgs/warning.png" mode=""></image>我的地块
+					</view>
+					<image src="../../static/imgs/arrows.png" mode=""></image>
+				</view>
+				<view class="position-num">
+					20
+				</view>
 			</view>
 		</view>
 		<view class="container-input">
 			<form>
-				<view class="cu-form-group" @click="toRealInformmation">
-					<view class="title">实名信息</view>
-					<view class="iconfont right-jt">&#xe738;</view>
+				<view class="cu-form-group item-jt">
+					<view class="title display-flex align-items-center">
+						<image src="../../static/imgs/warning.png" mode=""></image>预警设置
+					</view>
+					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
-				<view class="cu-form-group">
-					<view class="title">关于我们</view>
-					<view class="iconfont right-jt">&#xe738;</view>
-					
+				<view class="cu-form-group item-jt">
+					<view class="title display-flex align-items-center">
+						<image src="../../static/imgs/tip.png" mode=""></image>版本更新
+					</view>
+					<text class="tip-text">当前1.0.0</text>
+
+				</view>
+				<view class="cu-form-group item-jt">
+					<view class="title display-flex align-items-center">
+						<image src="../../static/imgs/about.png" mode=""></image>关于我们
+					</view>
+					<image src="../../static/imgs/arrows.png" mode=""></image>
+				
 				</view>
 			</form>
 		</view>
@@ -29,55 +70,51 @@
 		data() {
 			return {
 				switchB: true,
-				user:{}
+				user: {}
 			};
 		},
 		onLoad() {
-			let _this=this
+			let _this = this
 			uni.getStorage({
-			key: 'ddwb',
-			success: function (res) { 
-				_this.user= {			
-					name: res.data.name || '',
-					phone:res.data.phone||'',
-					headPortrait:res.data.headPortrait
+				key: 'ddwb',
+				success: function(res) {
+					_this.user = {
+						name: res.data.name || '',
+						phone: res.data.phone || '',
+						headPortrait: res.data.headPortrait
+					}
 				}
-			}
 			});
 		},
 		onShareAppMessage(res) {
-		    return {
-		      title: '农事云',
-				  path: '/pages/index/index'
-		  }
+			return {
+				title: '农事云',
+				path: '/pages/index/index'
+			}
 		},
 		onShow() {
-			let _this=this
+			let _this = this
 			uni.getStorage({
-			key: 'ddwb',
-			success: function (res) { 
-				_this.user= {			
-					name: res.data.name || '',
-					phone:res.data.phone||'',
-					headPortrait:res.data.headPortrait
+				key: 'ddwb',
+				success: function(res) {
+					_this.user = {
+						name: res.data.name || '',
+						phone: res.data.phone || '',
+						headPortrait: res.data.headPortrait
+					}
 				}
-			}
 			});
 		},
 		methods: {
-			toRealInformmation(){
-				uni.navigateTo({
-				    url: 'realInformation'
-				});
-			},
+
 			changeSwitch(e) {
 				this.switchB = e.detail.value
 			},
-			toLogin(){//测试跳转批次
-				 uni.clearStorageSync();
-		
+			toLogin() { //测试跳转批次
+				uni.clearStorageSync();
+
 				uni.redirectTo({
-				    url: '/pages/login/login'
+					url: '/pages/login/login'
 				});
 			}
 		}
@@ -93,20 +130,47 @@
 	}
 
 	.user-info {
-		height: 320rpx;
 		margin: 0 30rpx;
 		padding: 40rpx;
-		// background-image: url('@/static/user-bg.png');
-		// background-repeat: no-repeat;
-		// background-size: 100%;
-	}
-	.bg-head{
-		background-image: url('@/static/plant/icon-test.png');
+
+		.text-lg image {
+			width: 50rpx;
+			height: 50rpx;
+		}
 	}
 	.form-input-left {
 		text-align: right;
 	}
-
+	.title>image{
+		width: 40rpx;
+		height: 40rpx;
+		margin-right: 5px;
+	}
+	.item-jt>image {
+		width: 20rpx;
+		height: 30rpx;
+	}
+	.tip-text{
+		color:#999999;
+		font-size: 14px;
+	}
+	.item-box{
+		width:40%;
+		background: #fff;
+		padding:15rpx;
+	}
+	.positon-box{
+		position: relative;
+		top: -30rpx;
+		z-index: 1011;
+		padding: 0 30rpx;
+		.position-num{
+			font-size: 28px;
+			font-weight: bold;
+			color:#49BA89;
+			text-align: center;
+		}
+	}
 	.container-input {
 		padding: 0 30rpx;
 		padding-top: 130rpx;

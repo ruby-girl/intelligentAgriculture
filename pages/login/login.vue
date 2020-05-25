@@ -17,6 +17,10 @@
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
 		 lang="zh_CN" @getuserinfo="userLogin">
 			登录</button> 
+			
+		<view class="auto-bottom">
+			注册即为同意<text class="agreement">《数农科技用户使用协议》</text>
+		</view>
 		
 	</view>
 </template>
@@ -100,6 +104,10 @@
 			},
 			userLogin() {
 				let that = this;
+				uni.switchTab({
+					url: '../personal/personal'
+				});
+				return
 				this.$apiYZX.test().then(res=>{
 					console.info('66666')
 				})
@@ -152,7 +160,7 @@
 		padding: 5px 0;
 
 		.uni-input-placeholder {
-			font-size: 14px;
+			font-size: 16px;
 		}
 
 		.iconfont {
@@ -178,5 +186,12 @@
 		margin: 80rpx 0;
 		font-size: 21px;
 		font-weight: bold;
+	}
+	.auto-bottom{
+		padding-top: 30vh;
+		text-align: center;
+		.agreement{
+			color:#0FD4FF;
+		}
 	}
 </style>
