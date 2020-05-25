@@ -184,3 +184,9 @@ export const delOrganUserWorkOrderManage = (data) => {
 		method: 'DELETE'
 	})
 }
+export const test = () => {
+	return http.request({
+		url: '/farm/2/select',
+		method: 'get'
+	})
+}

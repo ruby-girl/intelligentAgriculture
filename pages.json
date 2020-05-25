@@ -1,15 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index", //首页
-			"style": {
-				"app-plus": {
-					"titleNView": false //禁用原生导航栏
-				},
-				"disableScroll": true
-			}
-		},
-		{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录",
@@ -17,37 +8,12 @@
 					"titleNView": {
 						"autoBackButton": "true"
 					}
-				}
-			}
-		}, {
-			"path": "pages/plantManage/baseLand/joinBaseLand",
-			"style": {
-				"navigationBarTitleText": "基地列表",
-				"disableScroll": false
-
-			}
-
-		}, {
-			"path": "pages/plantManage/plantManage",
-			"style": {
-				"navigationBarTitleText": "种植管理",
-				"navigationBarBackgroundColor": "#29B982",
+				},
+				"navigationBarBackgroundColor": "#00AE66",
 				"navigationBarTextStyle": "white",
-				"enablePullDownRefresh": true
+				"disableScroll": true
 			}
-
-		}, {
-			"path": "pages/plantManage/framManage/addFram",
-			"style": {
-				"navigationBarTitleText": "添农事操作记录"
-			}
-		},
-		{
-			"path": "pages/plantManage/framManage/framManage",
-			"style": {
-				"navigationBarTitleText": "农事操作记录"
-			}
-		}, {
+		},{
 
 			"path": "pages/personal/personal",
 			"style": {
@@ -57,129 +23,21 @@
 				"disableScroll": true
 
 			}
-		},
-		{
-			"path": "pages/plantManage/baseLand/addBaseLand",
-			"style": {
-				"navigationBarTitleText": "创建基地"
-			}
-		},
-		{
-			"path": "pages/service/plantInspections",
-			"style": {
-				"navigationBarTitleText": "种植巡查"
-			}
-		},
-		{
-			"path": "pages/service/addPlantInspections",
-			"style": {
-				"navigationBarTitleText": "添加巡查工单"
-			}
-		},
+		},{
 
-		{
-			"path": "pages/plantManage/landManage/addLand",
-			"style": {
-				"navigationBarTitleText": "添加地块"
-			}
-		},
-
-		{
-			"path": "pages/plantManage/workDetail",
-			"style": {
-				"navigationBarTitleText": "工单详情"
-			}
-		},
-		{
-			"path": "pages/plantManage/workeMethod",
-			"style": {
-				"navigationBarTitleText": "工单操作方法"
-			}
-		},
-		{
-			"path": "pages/plantManage/workOrder",
-			"style": {
-				"navigationBarTitleText": "待处理"
-			}
-		},
-		{
 			"path": "pages/message/message",
 			"style": {
-				"navigationBarTitleText": "消息"
-			}
-		},
-		{
-			"path": "pages/service/service",
-			"style": {
-				"navigationBarTitleText": "服务管理"
-			}
-		}, {
-			"path": "pages/service/selectBatch",
-			"style": {
-				"navigationBarTitleText": "选择种植批次"
-			}
-		},
-
-		{
-			"path": "pages/plantManage/batchManagement/list",
-			"style": {
-				"navigationBarTitleText": "批次管理",
+				"navigationBarTitleText": "监测与预警",
+				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarTextStyle": "white",
 				"disableScroll": true
-			}
-		}
 
-		, {
-			"path": "pages/plantManage/batchManagement/addBatch",
-			"style": {
-				"navigationBarTitleText": "添加批次"
-			}
-		}, {
-			"path": "pages/plantManage/batchManagement/selectPlan",
-			"style": {
-				"navigationBarTitleText": "选择种植计划"
-			}
-		}, {
-			"path": "pages/plantManage/batchManagement/selectCompany",
-			"style": {
-				"navigationBarTitleText": "选择种苗企业"
-			}
-		}, {
-			"path": "pages/personal/realInformation",
-			"style": {
-				"navigationBarTitleText": "实名信息"
-			}
-		}
-
-		, {
-			"path": "pages/login/register",
-			"style": {
-				"navigationBarTitleText": "注册"
-			}
-		}, {
-			"path": "pages/login/retypePassword",
-			"style": {
-				"navigationBarTitleText": "找回密码"
-			}
-		}
-
-		, {
-			"path": "pages/plantManage/landManage/landManage",
-			"style": {
-				"navigationBarTitleText": "地块管理"
-			}
-		}, {
-			"path": "pages/plantManage/framManage/formModel",
-			"style": {}
-		}, {
-			"path": "pages/service/plantInspectionsDetail",
-			"style": {
-				"navigationBarTitleText": "工单详情"
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "农事云",
+		"navigationBarTitleText": "数农科技",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 		// 下拉刷新
@@ -190,36 +48,17 @@
 		"selectedColor": "#00AE66",
 		"backgroundColor": "#F7F7F7",
 		"list": [
-			// 	{
-			// 	"pagePath": "pages/message/message",
-			// 	"text": "消息",
-			// 	"iconPath": "static/tab/tab_icon_messag_def@2x.png",
-			// 	"selectedIconPath": "static/tab/tab_icon_messag_pre@2x.png"
-			// }, 
-			{
-				"pagePath": "pages/plantManage/plantManage",
-				"text": "种植管理",
-
-				"iconPath": "static/tab/tab_icon_plant_def@2x.png",
-				"selectedIconPath": "static/tab/tab_icon_plant_pre@2x.png"
-			}, {
-				"pagePath": "pages/service/service",
-				"text": "服务管理",
-
-				"iconPath": "static/tab/tab_icon_service_def@2x.png",
-				"selectedIconPath": "static/tab/tab_icon_service_pre@2x.png"
+				{
+				"pagePath": "pages/message/message",
+				"text": "监测与预警",
+				"iconPath": "static/imgs/detection.png",
+				"selectedIconPath": "static/imgs/detection-1.png"
 			},
-			// {
-			// 	"pagePath": "pages/fair/fair",
-			// 	"text": "市集",
-			// 	"iconPath": "static/tab/tab_icon_fair_def@2x.png",
-			// 	"selectedIconPath": "static/tab/tab_icon_fair_pre@2x.png"
-			// }, 
 			{
 				"pagePath": "pages/personal/personal",
 				"text": "我的",
-				"iconPath": "static/tab/tab_icon_mine_def@2x.png",
-				"selectedIconPath": "static/tab/tab_icon_mine_pre@2x.png"
+				"iconPath": "static/imgs/my.png",
+				"selectedIconPath": "static/imgs/my-1.png"
 			}
 		]
 	}

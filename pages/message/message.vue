@@ -1,7 +1,7 @@
 <!-- 消息列表 -->
 <template>
 	<view>
-		
+		asd 
 	</view>
 </template>
 

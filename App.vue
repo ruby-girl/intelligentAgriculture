@@ -30,7 +30,6 @@
 </script>
 
 <style>
-	@import "./static/iconfont/iconfont.css";
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 	@import './common/uni.css';

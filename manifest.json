@@ -1,5 +1,5 @@
 {
-    "name" : "农事云",
+    "name" : "数农科技",
     "appid" : "__UNI__4DDDB35",
     "description" : "",
     "versionName" : "1.0.0",
@@ -109,9 +109,9 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx491bb88fa453835f",
+        "appid" : "wx346f8913c8a9c6ae",
         "setting" : {
-            "urlCheck" : true,
+            "urlCheck" : false,
             "es6" : true,
             "postcss" : true,
             "minified" : false

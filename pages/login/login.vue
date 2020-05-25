@@ -1,30 +1,23 @@
 <template>
 	<view class="padding-login">
-		<view style="text-align: center;margin: 40rpx 0;">
-			<image class="logo-box" src="../../static/logo.png" mode="aspectFill"></image>
+		<view class="title-y">
+			欢迎登录/注册数农科技！
 		</view>
 		<view class="border-bottom">
-			<view><text class="iconfont iconipad color-green" style="font-size: 26px;"></text><text class="text-margin">手机</text></view>
-			<input @input="onInput" type="number" placeholder="请输入手机号码" name="input"></input>
+			<view class="cu-form-group">
+				<input @input="onInput" type="number" placeholder="请输入手机号码" name="input"></input>
+			</view>
 		</view>
 		<view class="border-bottom">
-			<view><text class="iconfont iconpassword color-green" style="font-size: 26px;"></text><text class="text-margin">密码</text></view>
-			<input placeholder="请输入登录密码" @input="onPwdInput" type="password" name="inputs"></input>
+			<view class="cu-form-group">
+				<input placeholder="请输入验证码"  name="input" @input="captchaInput"></input>
+				<button class='cu-btn line-green shadow' :disabled="disabled"  @click="codeClick">{{btnTitle}}{{txt}}</button>
+			</view>
 		</view>
-		<!-- #ifdef MP-WEIXIN -->
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
-		 lang="zh_CN" @getuserinfo="onGotUserInfo">
-			登录</button>
-		<!-- #endif -->
-		<!-- #ifdef APP-PLUS||H5 -->
-		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx"
-		 lang="zh_CN" @click="userLogin">
-			登录</button>
-		<!-- #endif -->
-		<view class="flex justify-content-flex-justify color-green">
-			<text @click="toRegister">注册新用户</text>
-			<text @click="toRetypePassword">忘记密码</text>
-		</view>
+		 lang="zh_CN" @getuserinfo="userLogin">
+			登录</button> 
+		
 	</view>
 </template>
 <script>
@@ -37,7 +30,11 @@
 					captcha: '',
 					password: ''
 				},
-				headPortrait: ''
+				headPortrait: '',
+				name:'',
+				disabled: false,
+				btnTitle: "获取验证码",
+				txt: ''
 			}
 		},
 		onLoad() {},
@@ -70,6 +67,7 @@
 							uni.getUserInfo({
 								success(res) {
 									_this.headPortrait = res.userInfo.avatarUrl
+									_this.name = res.userInfo.name
 									_this.userLogin()
 								},
 								fail() {
@@ -100,18 +98,12 @@
 					}
 				})
 			},
-			toRegister() {
-				uni.navigateTo({
-					url: 'register'
-				})
-			},
-			toRetypePassword() {
-				uni.navigateTo({
-					url: 'retypePassword'
-				})
-			},
 			userLogin() {
 				let that = this;
+				this.$apiYZX.test().then(res=>{
+					console.info('66666')
+				})
+				return
 				this.$apiYZX.login(this.obj).then(res => {
 					if (res.data.code == 200) {
 						let obj = {
@@ -120,11 +112,10 @@
 							phone: res.data.data.user.phone,
 							name: res.data.data.user.name,
 							headPortrait: this.headPortrait,
-							landOrgan: res.data.data.user.organUsers
 						}
 
 						uni.setStorage({
-							key: 'ddwb',
+							key: 'shunong',
 							data: obj,
 							success() {
 								uni.showToast({
@@ -135,23 +126,7 @@
 										uni.switchTab({
 											url: '../plantManage/plantManage'
 										});
-										uni.setStorage({
-											key: 'organId',
-											data: obj.landOrgan[0].organ.id,
-										})
-										
-										if (obj.landOrgan.length == 0) {
-									// uni.redirectTo({
-									// 	url: '../plantManage/baseLand/chooseHandle'
-									// });
-
-										} else {
-											uni.setStorage({
-												key: 'organId',
-												data: obj.landOrgan[0].organ.id,
-											})
-											
-										}
+								
 									}
 								})
 							}
@@ -172,16 +147,6 @@
 		margin-left: 5px;
 		font-size: 15px;
 	}
-
-	// .title {
-	// 	height:500rpx;
-	// 	width:500rpx;
-	// 	margin: 0 auto;
-	// 	background-image: url('@/static/logo.png');
-	// 	background-repeat: no-repeat;
-	// 	background-size: 100%;
-	// }
-
 	.border-bottom {
 		border-bottom: 1px solid #eee;
 		padding: 5px 0;
@@ -207,5 +172,11 @@
 		width:200rpx;
 		height:200rpx;
 		margin: 0 auto;
+	}
+	.title-y{
+		text-align: left;
+		margin: 80rpx 0;
+		font-size: 21px;
+		font-weight: bold;
 	}
 </style>

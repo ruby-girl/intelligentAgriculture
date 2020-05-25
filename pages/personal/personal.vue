@@ -1,13 +1,8 @@
 <template>
 	<view>
 		<view class="bg-personal">
-			<view class="user-info text-center">
-				<!-- #ifdef MP-WEIXIN -->
-				<view class="cu-avatar lg round" v-bind:style="{'backgroundImage':'url('+user.headPortrait+')'}"></view>
-				<!-- #endif -->
-				<!-- #ifdef APP-PLUS||H5 -->
-				<view class="cu-avatar lg round" style="backgroundImage:url(../../static/plant/icon-test.png)"></view>
-				<!-- #endif -->		
+			<view class="user-info text-center">			
+			
 				<view style="margin-top:20rpx" class="text-lg">{{user.name}}</view>
 				<text class="text-gray">{{user.phone}}</text>
 			</view>
@@ -18,14 +13,6 @@
 					<view class="title">实名信息</view>
 					<view class="iconfont right-jt">&#xe738;</view>
 				</view>
-				<!-- <view class="cu-form-group">
-					<view class="title">意见反馈</view>
-					<image class="right-jt" src="@/static/plant/nav_icon_back@2x.png" mode="widthFix">
-				</view>
-				<view class="cu-form-group">
-					<view class="title">内容推送</view>
-					<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="#e54d42"></switch>
-				</view> -->
 				<view class="cu-form-group">
 					<view class="title">关于我们</view>
 					<view class="iconfont right-jt">&#xe738;</view>
@@ -46,7 +33,6 @@
 			};
 		},
 		onLoad() {
-			console.log('加载了')
 			let _this=this
 			uni.getStorage({
 			key: 'ddwb',
@@ -66,7 +52,6 @@
 		  }
 		},
 		onShow() {
-			console.log('加载了')
 			let _this=this
 			uni.getStorage({
 			key: 'ddwb',
@@ -111,9 +96,9 @@
 		height: 320rpx;
 		margin: 0 30rpx;
 		padding: 40rpx;
-		background-image: url('@/static/user-bg.png');
-		background-repeat: no-repeat;
-		background-size: 100%;
+		// background-image: url('@/static/user-bg.png');
+		// background-repeat: no-repeat;
+		// background-size: 100%;
 	}
 
 	.form-input-left {
