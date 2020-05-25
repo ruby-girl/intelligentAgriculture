@@ -100,7 +100,9 @@
 		// background-repeat: no-repeat;
 		// background-size: 100%;
 	}
-
+	.bg-head{
+		background-image: url('@/static/plant/icon-test.png');
+	}
 	.form-input-left {
 		text-align: right;
 	}
