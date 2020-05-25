@@ -43,7 +43,9 @@
 					name:''
 				},
 				plantingTime:'',
-				landId:''
+				landId:'',
+				name:'',
+				seedEnterpirse:''
 			}
 		},
 		onLoad: function(options) {
@@ -55,6 +57,9 @@
 					_this.obj.breedId=options.breed					
 					_this.plantingTime=options.plantingTime	
 					_this.landId=options.landId
+					_this.name=options.nam
+					_this.name=options.name
+					_this.seedEnterpirse=options.seedEnterpirse
 					_this.obj.baseId=res.data
 					_this.getData()
 				}
@@ -109,7 +114,7 @@
 				console.log(this.obj)
 				uni.redirectTo({
 				    url: 'addBatch?breed='+this.obj.breedId+'&plantingTime='+this.plantingTime+'&landId='+this.landId+'&planName='+
-					name+'&planId='+id
+					name+'&planId='+id+'&name='+this.name+'&seedEnterpirse='+this.seedEnterpirse
 			})
 			}
 		}

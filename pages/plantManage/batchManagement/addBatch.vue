@@ -11,6 +11,10 @@
 		</view>
 		<view class="container-input">
 			<form>
+				<view class="cu-form-group">
+					<view class="title">批次名称</view>
+					<input v-model="postData.name" class="form-input-left" placeholder="请输入批次名称" name="input"></input>	
+				</view>
 				<view class="cu-form-group breed-select">
 					<view class="title">作物</view>
 					<picker @change="pickerChange($event)" :value="breed" :range="breedList" range-key="name">
@@ -28,7 +32,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">种苗企业</view>
-					<input v-model="seedEnterpirse" class="form-input-left" placeholder="请輸入种苗企业" name="input"></input>
+					<input v-model="postData.seedEnterpirse" class="form-input-left" placeholder="请輸入种苗企业" name="input"></input>
 					
 					
 				</view>
@@ -88,7 +92,6 @@
 				breedList: [], //作物列表
 				breed: '0', //作物值
 				planName: '',
-				seedEnterpirse:'',
 				postData: {
 					baseId: '',
 					userId: '',
@@ -96,8 +99,8 @@
 					plantingTime: '2020', //种植时间
 					landParcelIds: '', //地块
 					plantingPlanId: '' ,//种植计划
-					seedEnterpirse:''
-					
+					seedEnterpirse:'',
+					name:''
 				}
 			}
 		},
@@ -126,6 +129,9 @@
 					this.breedList = res.data.data
 					//选择计划后(跳转页面)回显数据
 					if (option.planName) {
+						this.postData.seedEnterpirse=option.seedEnterpirse
+						debugger
+						this.postData.name=option.name
 						this.planName = option.planName
 						this.postData.plantingPlanId = option.planId
 						this.date = option.plantingTime
@@ -183,10 +189,11 @@
 				this.postData.landParcelIds = ids.join()
 			},
 			toPlan() {
+				console.info(this.postData)
 				uni.redirectTo({
 					url: 'selectPlan?breed=' + this.postData.breedId + '&plantingTime=' + this.date + '&landId=' + this.landId +
 						'&planName=' +
-						this.planName + '&planId=' + this.postData.plantingPlanId
+						this.planName + '&planId=' + this.postData.plantingPlanId+'&name='+this.postData.name+'&seedEnterpirse='+this.postData.seedEnterpirse
 				});
 			},
 			DateChange(e) {
@@ -219,7 +226,6 @@
 			},
 			addFunc() {
 				if (!this.test()) return
-				this.postData.seedEnterpirse =  this.seedEnterpirse;
 				this.$apiYZX.addPlantingBatchs(this.postData).then(res => {
 					if (res.data.code == '200') {
 						uni.showToast({
