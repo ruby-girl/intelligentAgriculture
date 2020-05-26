@@ -14,9 +14,9 @@
 		<view class="flex justify-content-flex-justify positon-box">
 			<!-- 农场 -->
 			<view class="item-box">
-				<view class="flex justify-content-flex-justify item-jt">
+				<view class="flex justify-content-flex-justify item-jt align-items-center">
 					<view class="title display-flex align-items-center">
-						<image src="../../static/imgs/warning.png" mode=""></image>我的农场
+						<image src="../../static/imgs/farm-management.png" mode=""></image>我的农场
 					</view>
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
@@ -26,9 +26,9 @@
 			</view>
 			<!-- 地块 -->
 			<view class="item-box">
-				<view class="flex justify-content-flex-justify item-jt">
+				<view class="flex justify-content-flex-justify item-jt align-items-center">
 					<view class="title display-flex align-items-center">
-						<image src="../../static/imgs/warning.png" mode=""></image>我的地块
+						<image src="../../static/imgs/dikuai.png" mode=""></image>我的地块
 					</view>
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
@@ -147,17 +147,18 @@
 		margin-right: 5px;
 	}
 	.item-jt>image {
-		width: 20rpx;
-		height: 30rpx;
+		width: 14rpx;
+		height: 28rpx;
 	}
 	.tip-text{
 		color:#999999;
 		font-size: 14px;
 	}
 	.item-box{
-		width:40%;
+		width:45%;
 		background: #fff;
 		padding:15rpx;
+		border-radius: 6px;
 	}
 	.positon-box{
 		position: relative;
@@ -173,7 +174,6 @@
 	}
 	.container-input {
 		padding: 0 30rpx;
-		padding-top: 130rpx;
 		z-index: -11;
 		background: #fff;
 	}

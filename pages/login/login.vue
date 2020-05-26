@@ -10,18 +10,18 @@
 		</view>
 		<view class="border-bottom">
 			<view class="cu-form-group">
-				<input placeholder="请输入验证码"  name="input" @input="captchaInput"></input>
-				<button class='cu-btn line-green shadow' :disabled="disabled"  @click="codeClick">{{btnTitle}}{{txt}}</button>
+				<input placeholder="请输入验证码" name="input" @input="captchaInput"></input>
+				<button class='cu-btn line-green shadow' :disabled="disabled" @click="codeClick">{{btnTitle}}{{txt}}</button>
 			</view>
 		</view>
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
 		 lang="zh_CN" @getuserinfo="userLogin">
-			登录</button> 
-			
+			登录</button>
+
 		<view class="auto-bottom">
 			注册即为同意<text class="agreement">《数农科技用户使用协议》</text>
 		</view>
-		
+
 	</view>
 </template>
 <script>
@@ -35,7 +35,7 @@
 					password: ''
 				},
 				headPortrait: '',
-				name:'',
+				name: '',
 				disabled: false,
 				btnTitle: "获取验证码",
 				txt: ''
@@ -46,15 +46,15 @@
 			// uni.hideHomeButton()
 		},
 		onShareAppMessage(res) {
-		    return {
-		      title: '农事云',
-				  path: '/pages/index/index'
-		  }
+			return {
+				title: '农事云',
+				path: '/pages/index/index'
+			}
 		},
-		onBackPress(e) {  
+		onBackPress(e) {
 			// return true 表示禁止默认返回
 			return false
-		}, 
+		},
 		methods: {
 			onInput(e) {
 				this.obj.phone = e.detail.value
@@ -102,13 +102,45 @@
 					}
 				})
 			},
+			codeClick() {
+				//点击发送验证码		     
+				let _this = this
+				if (!this.obj.phone) {
+					uni.showToast({
+						title: '请输入手机号',
+						icon: 'none'
+					})
+					return
+				}
+				this.disabled = true
+				this.$apiYZX.captcha({
+					phone: this.obj.phone
+				}).then(res => {
+					if (res.data.state == 200) {
+						this.btnTitle = 60
+						this.txt = 'S秒后获取'
+						let timer = setInterval(function() {
+							if (_this.btnTitle == 1) {
+								clearInterval(timer)
+								_this.btnTitle = '获取验证码'
+								_this.txt = ''
+								_this.disabled = false
+							} else {
+								_this.btnTitle = _this.btnTitle - 1
+							}
+						}, 1000)
+					} else {
+						this.disabled = false
+					}
+				})
+			},
 			userLogin() {
 				let that = this;
 				uni.switchTab({
 					url: '../personal/personal'
 				});
 				return
-				this.$apiYZX.test().then(res=>{
+				this.$apiYZX.test().then(res => {
 					console.info('66666')
 				})
 				return
@@ -134,7 +166,7 @@
 										uni.switchTab({
 											url: '../plantManage/plantManage'
 										});
-								
+
 									}
 								})
 							}
@@ -155,6 +187,7 @@
 		margin-left: 5px;
 		font-size: 15px;
 	}
+
 	.border-bottom {
 		border-bottom: 1px solid #eee;
 		padding: 5px 0;
@@ -176,22 +209,26 @@
 	.color-green {
 		color: #00AE66;
 	}
-	.logo-box{
-		width:200rpx;
-		height:200rpx;
+
+	.logo-box {
+		width: 200rpx;
+		height: 200rpx;
 		margin: 0 auto;
 	}
-	.title-y{
+
+	.title-y {
 		text-align: left;
 		margin: 80rpx 0;
 		font-size: 21px;
 		font-weight: bold;
 	}
-	.auto-bottom{
+
+	.auto-bottom {
 		padding-top: 30vh;
 		text-align: center;
-		.agreement{
-			color:#0FD4FF;
+
+		.agreement {
+			color: #0FD4FF;
 		}
 	}
 </style>
