@@ -24,6 +24,22 @@
 
 			}
 		},{
+			"path": "pages/personal/myFarm",
+			"style": {
+				"navigationBarTitleText": "农场管理",
+				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+			}
+		},{
+			"path": "pages/personal/addMyFarm",
+			"style": {
+				"navigationBarTitleText": "添加农场",
+				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+			}
+		},{
 
 			"path": "pages/monitor/monitor",
 			"style": {

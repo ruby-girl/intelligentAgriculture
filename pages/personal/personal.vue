@@ -13,7 +13,7 @@
 		</view>
 		<view class="flex justify-content-flex-justify positon-box">
 			<!-- 农场 -->
-			<view class="item-box">
+			<view class="item-box" @click="toMyFarm">
 				<view class="flex justify-content-flex-justify item-jt align-items-center">
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/farm-management.png" mode=""></image>我的农场
@@ -110,9 +110,13 @@
 			changeSwitch(e) {
 				this.switchB = e.detail.value
 			},
-			toLogin() { //测试跳转批次
+			toMyFarm(){//跳转我的农场
+				uni.navigateTo({
+					url: 'myFarm'
+				});
+			},
+			toLogin() { //退出
 				uni.clearStorageSync();
-
 				uni.redirectTo({
 					url: '/pages/login/login'
 				});
