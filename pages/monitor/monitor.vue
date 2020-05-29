@@ -11,88 +11,31 @@
 				</view>
 			</scroll-view>
 		</view>
-
 		<view v-if="TabCur==1">
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
 			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 			 @scrolltolower="loadingData">
-				<view class="list-item" v-for="index in 10" :key="index" @tap="toUrl(index)">
-					<view>
-						<view class="flex  align-items-center justify-content-flex-justify">
-							<view class="flex  align-items-center">
-								<image src="../../static/imgs/location.png" mode=""></image>
-								<view class="item-title">
-									<view class="order-title">NO.00001</view>
-									<view class="order-title small-text">开心农场 </view>
-								</view>
-							</view>
-							<view class="state-box">
-								在线
-							</view>
-						</view>
-						<view class="box-margin flex justify-content-flex-justify align-items-center">
-							<view class="item-content-box">
-								<view class="item-num">
-									60%
-								</view>
-								<text class="small-text">冬瓜</text>
-							</view>
-							<view class="item-content-box">
-								<view class="item-num">
-									60%
-								</view>
-								<text class="small-text">冬瓜</text>
-							</view>
-							<view class="item-content-box">
-								<view class="item-num">
-									60%
-								</view>
-								<text class="small-text">冬瓜</text>
-							</view>
-						</view>
-						<view class="box-margin flex justify-content-flex-justify align-items-center">
-							<view class="item-content-box">
-								<view class="item-num">
-									60%
-								</view>
-								<text class="small-text">冬瓜</text>
-							</view>
-							<view class="item-content-box">
-								<view class="item-num">
-									60%
-								</view>
-								<text class="small-text">冬瓜阿萨德</text>
-							</view>
-							<view class="item-content-box">
-								<view class="item-num">
-									60%
-								</view>
-								<text class="small-text">冬瓜</text>
-							</view>
-						</view>
-					</view>
-					
+				<view class="list-item" v-for="(item,index) in list" :key="index" @tap="toUrl(item)">
+					<land-block :itemObject="item" />
 				</view>
 				<view class="loading-more">{{contentdown}}</view>
 			</scroll-view>
 		</view>
 		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else>
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-			<view class="cu-timeline">			
-				<view class="cu-item text-olive" v-for="i in 5">
-					<text class="small-text">2010-11-11</text>
-					<view class="flex justify-content-flex-justify align-items-center">
-						<view class="timeline-box">
-							<view>开心农场 NO.123123</view>
-							<view><text>温度45℃</text><text>温度45℃</text></view>
+				<view class="cu-timeline">
+					<view class="cu-item text-olive" v-for="i in 5">
+						<text class="small-text">2010-11-11</text>
+						<view class="flex justify-content-flex-justify align-items-center">
+							<view class="timeline-box">
+								<view>开心农场 NO.123123</view>
+								<view><text>温度45℃</text><text>温度45℃</text></view>
+							</view>
+							<button class="cu-btn bg-green">查看</button>
 						</view>
-						<button class="cu-btn bg-green">查看</button>
 					</view>
 				</view>
-				
-				
-			</view>
 			</scroll-view>
 		</view>
 	</view>
@@ -104,10 +47,12 @@
 	} from "@/utils/index.js"
 	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
 	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
+	import landBlock from '@/components/landBlock.vue'
 	export default {
 		components: {
 			msDropdownMenu,
-			msDropdownItem
+			msDropdownItem,
+			landBlock
 		},
 		data() {
 			return {
@@ -121,6 +66,13 @@
 						name: '预警（8）'
 					},
 				],
+				list: [{
+					name: 'asdasd'
+				}, {
+					name: 'asdasd'
+				}, {
+					name: 'asdasd'
+				}],
 				TabCur: 1,
 				newsList: [],
 				baseId: '',
@@ -271,23 +223,9 @@
 			z-index: 1;
 		}
 	}
-	.box-margin{
-		padding-top:10px;
-	}
-	.list-item {
-		box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.2);
-		border-radius: 6px;
-		background: #fff;
-		padding: 30rpx;
-		margin: 20rpx 8rpx 30rpx 8rpx;
 
-		image {
-			width: 28px;
-			height: 28px;
-			margin-right: 20rpx;
-			position: relative;
-			top: 3px;
-		}
+	.box-margin {
+		padding-top: 10px;
 	}
 
 	.loading-more {
@@ -296,60 +234,39 @@
 		padding-bottom: 50rpx;
 	}
 
-	.content {
-		padding: 30rpx;
-		overflow-y: auto;
-		position: relative;
-		padding-top: 200rpx;
-
-		.item {
-			padding: 30rpx;
-			line-height: 30rpx;
-			background: rgba(255, 255, 255, 1);
-			box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
-			margin-bottom: 30rpx;
-
-			.flex {
-				margin-bottom: 20rpx;
-			}
-		}
-
-		.imgIcon {
-			width: 40rpx;
-			height: 40rpx;
-			margin-right: 10px;
-		}
-	}
-
 	.order-title {
 		line-height: 20px;
 	}
-	.small-text{
-		color:#999999;
+
+	.small-text {
+		color: #999999;
 		font-size: 13px;
 	}
-	
+
 	.state-box {
 		position: relative;
 		right: -15px;
-		padding:3px 6px;
+		padding: 3px 6px;
 		border-top-left-radius: 15px;
 		border-bottom-left-radius: 15px;
 		background: #49BA89;
-		color:#fff;
+		color: #fff;
 	}
-	.item-content-box{
-		width:30%;
+
+	.item-content-box {
+		width: 30%;
 		text-align: center;
-		.item-num{
+
+		.item-num {
 			font-size: 18px;
 			font-weight: bold;
 		}
 	}
-	.timeline-box{
-		text{
-			color:red;
+
+	.timeline-box {
+		text {
+			color: red;
 		}
-		
+
 	}
 </style>

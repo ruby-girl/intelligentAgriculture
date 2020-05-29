@@ -36,8 +36,7 @@
 			"style": {
 				"navigationBarTitleText": "添加农场",
 				"navigationBarBackgroundColor": "#00AE66",
-				"navigationBarTextStyle": "white",
-				"disableScroll": true
+				"navigationBarTextStyle": "white"
 			}
 		},{
 
