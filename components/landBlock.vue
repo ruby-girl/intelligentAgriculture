@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="list-item">
 		<view class="flex  align-items-center justify-content-flex-justify">
 			<view class="flex  align-items-center">
 				<image class="land-img" src="../static/imgs/location.png" mode=""></image>
@@ -112,13 +112,18 @@
 		color:#999999;
 		font-size: 13px;
 	}
-	
+	.list-item{
+		background: #fff;
+		border-radius: 8px;
+		padding:20rpx;
+		margin-bottom: 20rpx;
+	}
 	.state-box {
 		position: relative;
-		right: -15px;
 		padding:3px 6px;
 		border-top-left-radius: 15px;
 		border-bottom-left-radius: 15px;
+		right:-20rpx;
 		background: #49BA89;
 		color:#fff;
 	}

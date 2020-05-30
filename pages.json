@@ -39,6 +39,13 @@
 				"navigationBarTextStyle": "white"
 			}
 		},{
+			"path": "pages/personal/detailFarm",
+			"style": {
+				"navigationBarTitleText": "我的农场",
+				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarTextStyle": "white"
+			}
+		},{
 
 			"path": "pages/monitor/monitor",
 			"style": {

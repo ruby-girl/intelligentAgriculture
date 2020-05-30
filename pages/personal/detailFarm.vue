@@ -11,18 +11,28 @@
 				</view>
 			</scroll-view>
 		</view>
+		<!-- 农场详情 -->
 		<view v-if="TabCur==1">
+			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
+
+				<view>
+					<map style="width:100%;height:300px;" :latitude="latitude" :longitude="longitude" :markers="covers"></map>
+				</view>
+
+			</scroll-view>
+		</view>
+		<view v-else-if="TabCur==2">
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
 			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 			 @scrolltolower="loadingData">
-				<view class="" v-for="(item,index) in list" :key="index" @tap="toUrl(item)">
+				<view class="list-item" v-for="(item,index) in list" :key="index" @tap="toUrl(item)">
 					<land-block :itemObject="item" />
 				</view>
 				<view class="loading-more">{{contentdown}}</view>
 			</scroll-view>
 		</view>
-		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else>
+		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else-if="TabCur==3">
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
 				<view class="cu-timeline">
 					<view class="cu-item text-olive" v-for="i in 5">
@@ -56,13 +66,27 @@
 		},
 		data() {
 			return {
+				latitude: 39.909,
+				longitude: 116.39742,
+				covers: [{
+					latitude: 39.909,
+					longitude: 116.39742
+					
+				}, {
+					latitude: 39.90,
+					longitude: 116.39
+					
+				}],
 				orderList: [],
 				tabs: [{
 						id: 1,
-						name: '监测信息'
+						name: '农场息'
+					}, {
+						id: 2,
+						name: '地块信息'
 					},
 					{
-						id: 2,
+						id: 3,
 						name: '预警（8）'
 					},
 				],

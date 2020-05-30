@@ -130,9 +130,9 @@
 					url: 'addMyFarm'
 				})
 			},
-			toDetail() { //跳转详情
+			toDetail() { //跳转我的农场详情
 				uni.navigateTo({
-					url: 'detailEquipment'
+					url: 'detailFarm'
 				})
 			},
 			delOrganUserWorkOrderManage(id) { //删除
