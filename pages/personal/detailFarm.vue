@@ -15,7 +15,7 @@
 		<view v-if="TabCur==1">
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
 
-				<view>
+				<view class="map-container">
 					<map style="width:100%;height:300px;" :latitude="latitude" :longitude="longitude" :markers="covers"></map>
 				</view>
 
@@ -292,5 +292,9 @@
 			color: red;
 		}
 
+	}
+	// 地图CSS
+	.map-container{
+		
 	}
 </style>
