@@ -1,22 +1,12 @@
-<!-- 农场详情 -->
+<!-- 生长监测 -->
 <template>
 	<view class="workOrder">
-		<view class="top">
-			<scroll-view scroll-x class="bg-white nav">
-				<view class="flex text-center">
-					<view class="cu-item flex-sub" :class="item.id==TabCur?'text-green cur':''" v-for="(item,index) in tabs" :key="index"
-					 @tap="tabSelect" :data-id="item.id">
-						{{item.name}}
-					</view>
-				</view>
-			</scroll-view>
-		</view>
-		<!-- 农场详情 -->
-		<view v-if="TabCur==1">
+		<view>
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
-
 				<view class="map-container">
-					<map style="width:100%;height:300px;" :latitude="latitude" :longitude="longitude" :markers="covers"></map>
+				
+					<video style="width:100%;height:600rpx;"  id="myVideo" src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
+					          enable-danmu danmu-btn controls></video>
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
 						<view class="detail-name">
 							<view><text style="font-weight: bold;font-size: 16px;">开心农场</text></view>
@@ -30,50 +20,76 @@
 						</view>
 					</view>
 					<view class="map-bottom-box">
-						<text style="font-weight: bold;font-size: 16px;">农场负责人</text>
-						<view class="flex align-items-center justify-content-flex-justify">
-							<view class="detail-name flex align-items-center" style="border:none;">
-								<image style="width: 30px;height: 30px;" src="../../static/imgs/deit.png" mode="aspectFill"></image>
-								<view style="line-height:18px;">
-									<view>样子西</view>
-									<view class="detail-small-txt">13696279917</view>
+						<view class="list-item">
+							<view class="flex  align-items-center justify-content-flex-justify">
+								<view class="flex  align-items-center">
+									<image class="land-img" src="../../static/imgs/location.png" mode=""></image>
+									<view class="item-title">
+										<view class="order-title">NO.00001</view>
+										<view class="order-title small-text">开心农场 </view>
+									</view>
+								</view>
+								<view class="state-box">
+									在线
 								</view>
 							</view>
-							<view class="detail-img">
-								<image style="width: 30px;height: 30px;" src="../../static/imgs/phone.png" mode="aspectFill"></image>
+							<view class="box-margin flex justify-content-flex-justify align-items-center">
+								<view class="item-content-box">
+									<view class="item-num">
+										60%
+									</view>
+									<text class="small-text">冬瓜</text>
+								</view>
+								<view class="item-content-box">
+									<view class="item-num">
+										60%
+									</view>
+									<text class="small-text">冬瓜</text>
+								</view>
+								<view class="item-content-box">
+									<view class="item-num">
+										60%
+									</view>
+									<text class="small-text">冬瓜</text>
+								</view>
 							</view>
+							<view class="box-margin flex justify-content-flex-justify align-items-center">
+								<view class="item-content-box">
+									<view class="item-num">
+										60%
+									</view>
+									<text class="small-text">冬瓜</text>
+								</view>
+								<view class="item-content-box">
+									<view class="item-num">
+										60%
+									</view>
+									<text class="small-text">冬瓜阿萨德</text>
+								</view>
+								<view class="item-content-box">
+									<view class="item-num">
+										60%
+									</view>
+									<text class="small-text">冬瓜</text>
+								</view>
+							</view>
+						   <view class="flex">
+							   <view class="map-bottom-tip">
+								   <image src="../../static/imgs/deit.png" mode="aspectFill"></image>
+								   <text>20人点赞</text>
+							   </view>
+							   <view class="map-bottom-tip">
+							   	  <image src="../../static/imgs/deit.png" mode="aspectFill"></image>
+							   	  <text>20人点赞</text>		   
+							   </view>
+						   </view>
 						</view>
 					</view>
 				</view>
 				<view class="farm-detail-box">
-					<view><text style="font-size: 16px;">农场介绍</text></view>
-					<view class="detail-small-txt">阿斯达四大阿萨德阿萨德阿萨阿斯达四大阿萨德阿萨德阿萨德阿斯达四大阿萨德阿萨德阿萨德阿斯达四大阿萨德阿萨德阿萨德德</view>
-				</view>
-			</scroll-view>
-		</view>
-		<view v-else-if="TabCur==2">
-			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
-			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
-			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
-			 @scrolltolower="loadingData">
-				<view class="list-item" v-for="(item,index) in list" :key="index" @tap="toUrl(item)">
-					<land-block :itemObject="item" />
-				</view>
-				<view class="loading-more">{{contentdown}}</view>
-			</scroll-view>
-		</view>
-		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else-if="TabCur==3">
-			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-				<view class="cu-timeline">
-					<view class="cu-item text-olive" v-for="i in 5" :key="i">
-						<text class="small-text">2010-11-11</text>
-						<view class="flex justify-content-flex-justify align-items-center">
-							<view class="timeline-box">
-								<view>开心农场 NO.123123</view>
-								<view><text>温度45℃</text><text>温度45℃</text></view>
-							</view>
-							<button class="cu-btn bg-green">查看</button>
-						</view>
+					<view><text style="font-size: 16px;">数据监测</text></view>
+					<view class="">
+						<line-chart ref="line" :opts="option" chartType="line" option/>
 					</view>
 				</view>
 			</scroll-view>
@@ -82,44 +98,23 @@
 </template>
 
 <script>
-	import {
-		throttle
-	} from "@/utils/index.js"
-	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
-	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
-	import landBlock from '@/components/landBlock.vue'
+	import LineChart from '@/components/u-charts/u-charts/component.vue';
 	export default {
-		components: {
-			msDropdownMenu,
-			msDropdownItem,
-			landBlock
+		components: {		
+			LineChart		
 		},
 		data() {
 			return {
-				latitude: 39.909,
-				longitude: 116.39742,
-				covers: [{
-					latitude: 39.909,
-					longitude: 116.39742
-
-				}, {
-					latitude: 39.90,
-					longitude: 116.39
-
-				}],
+				option:{
+					
+						//数字的图--折线图数据
+						categories: ['2012', '2013', '2014', '2015', '2016', '2017'],
+						series: [
+							{ name: '成交量A', data: [35, 8, 25, 37, 4, 20]}
+						]
+					
+				},
 				orderList: [],
-				tabs: [{
-						id: 1,
-						name: '农场息'
-					}, {
-						id: 2,
-						name: '地块信息'
-					},
-					{
-						id: 3,
-						name: '预警（8）'
-					},
-				],
 				list: [{
 					name: 'asdasd'
 				}, {
@@ -156,7 +151,6 @@
 			// this.getData()
 		},
 		mounted() {
-			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
 			onPulling() {},
@@ -255,11 +249,6 @@
 	page,
 	.workOrder {
 		background: #eee;
-
-		.list-container {
-			padding: 10rpx 0;
-			padding-top: 100rpx;
-		}
 	}
 	.flex {
 		display: flex;
@@ -354,7 +343,7 @@
 	}
     .map-top-box{
 		position: absolute;
-		top:0;
+		top:10rpx;
 		width:96%;
 		background: #fff;
 		padding:10rpx 20rpx;
@@ -363,18 +352,88 @@
 	}
 	 .map-bottom-box{
 		position: absolute;
-		bottom:15rpx;
+		bottom:-300rpx;
 		left:2%;
 		width:96%;
 		background: #fff;
 		padding:10rpx 20rpx;
 		border-radius: 4px;
+		image {
+				width: 28px;
+				height: 28px;
+				margin-right: 20rpx;
+				position: relative;
+				top: 3px;
+		}
+		.content {
+			padding: 30rpx;
+			overflow-y: auto;
+			position: relative;
+			padding-top: 200rpx;
+		
+			.item {
+				padding: 30rpx;
+				line-height: 30rpx;
+				background: rgba(255, 255, 255, 1);
+				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
+				margin-bottom: 30rpx;
+		
+				.flex {
+					margin-bottom: 20rpx;
+				}
+			}
+		
+			.imgIcon {
+				width: 40rpx;
+				height: 40rpx;
+				margin-right: 10px;
+			}
+		}
+		
+		.order-title {
+			line-height: 20px;
+		}
+		.small-text{
+			color:#999999;
+			font-size: 13px;
+		}
+		.list-item{
+			background: #fff;
+			border-radius: 8px;
+			margin-bottom: 20rpx;
+		}
+		.state-box {
+			position: relative;
+			padding:3px 6px;
+			border-top-left-radius: 15px;
+			border-bottom-left-radius: 15px;
+			right:-20rpx;
+			background: #49BA89;
+			color:#fff;
+		}
+		.item-content-box{
+			width:30%;
+			text-align: center;
+			.item-num{
+				font-size: 18px;
+				font-weight: bold;
+			}
+		}
 	}
 	.farm-detail-box{
 		padding: 20rpx 30rpx;
 		background: #fff;
-		.detail-small-txt{
-			text-indent:2em;
+		border-top: 360rpx solid #eee;
+	}
+	.map-bottom-tip{
+		width:50%;
+		text-align: center;
+		margin-top:5rpx;
+		color:#999;
+		image{
+			width:30rpx;
+			height:30rpx;
 		}
 	}
+	
 </style>

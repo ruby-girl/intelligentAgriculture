@@ -57,6 +57,16 @@
 			}
 		},{
 
+			"path": "pages/monitor/growthMonitoring",
+			"style": {
+				"navigationBarTitleText": "生长监测",
+				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+
+			}
+		},{
+
 			"path": "pages/equipmentManagement/equipmentManagement",
 			"style": {
 				"navigationBarTitleText": "设备管理",

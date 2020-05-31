@@ -25,7 +25,7 @@
 		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else>
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
 				<view class="cu-timeline">
-					<view class="cu-item text-olive" v-for="i in 5">
+					<view class="cu-item text-olive" v-for="i in 5" :key="i">
 						<text class="small-text">2010-11-11</text>
 						<view class="flex justify-content-flex-justify align-items-center">
 							<view class="timeline-box">
@@ -105,6 +105,12 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			toUrl(){//跳转监测详情
+			console.log('123')
+				uni.navigateTo({
+					url: 'growthMonitoring'
+				})
+			},
 			onPulling() {},
 			onRefresh() {
 				if (this._freshing) return;
