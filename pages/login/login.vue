@@ -15,9 +15,8 @@
 			</view>
 		</view>
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
-		 lang="zh_CN" @getuserinfo="userLogin">
+		 lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">
 			登录</button>
-
 		<view class="auto-bottom">
 			注册即为同意<text class="agreement">《数农科技用户使用协议》</text>
 		</view>
@@ -31,14 +30,17 @@
 				title: 'Hello',
 				obj: {
 					phone: '',
-					captcha: '',
-					password: ''
+					yzm: ''
 				},
 				headPortrait: '',
 				name: '',
 				disabled: false,
 				btnTitle: "获取验证码",
-				txt: ''
+				txt: '',
+				user:{
+					nickName:'',
+					avatarUrl:''
+				}
 			}
 		},
 		onLoad() {},
@@ -60,45 +62,32 @@
 				this.obj.phone = e.detail.value
 			},
 			onPwdInput(e) {
-				this.obj.password = e.detail.value
-			},
-			getSettingMes() {
-				let _this = this;
-				uni.getSetting({
-					success(res) {
-						if (res.authSetting['scope.userInfo']) {
-							// 用户信息已授权，获取用户信息
-							uni.getUserInfo({
-								success(res) {
-									_this.headPortrait = res.userInfo.avatarUrl
-									_this.name = res.userInfo.name
-									_this.userLogin()
-								},
-								fail() {
-									console.log("获取用户信息失败")
-								}
-							})
-						} else if (!res.authSetting['scope.userInfo']) {
-							console.log("需要点击按钮手动授权")
-						}
-					},
-					fail() {
-						console.log("获取已授权选项失败")
-					}
-				})
+				this.obj.yzm = e.detail.value
 			},
 			// 手动授权方法
 			onGotUserInfo(e) {
-				let _this = this;
-				// 获取用户信息
-				uni.getUserInfo({
-					// 获取信息成功
+				let _this=this
+				wx.login({
 					success(res) {
-						_this.headPortrait = res.userInfo.avatarUrl
-						_this.userLogin()
-					},
-					fail() {
-						console.log("获取用户信息失败");
+						if (res.code) {
+							//发起网络请求
+							var code = res.code
+							// 获取微信用户信息
+							wx.getUserInfo({
+								success: function(res) {
+									var userInfo = res.userInfo
+									_this.user.nickName = userInfo.nickName //昵称
+									_this.user.avatarUrl = userInfo.avatarUrl //头像
+									_this.userLogin()
+								},
+								fail: res => {
+									console.info('失败')
+									// 获取失败的去引导用户授权 
+								}
+							})
+						} else {
+
+						}
 					}
 				})
 			},
@@ -113,7 +102,7 @@
 					return
 				}
 				this.disabled = true
-				this.$apiYZX.captcha({
+				this.$api.captcha({
 					phone: this.obj.phone
 				}).then(res => {
 					if (res.data.state == 200) {
@@ -140,22 +129,17 @@
 					url: '../personal/personal'
 				});
 				return
-				this.$apiYZX.test().then(res => {
-					console.info('66666')
-				})
-				return
-				this.$apiYZX.login(this.obj).then(res => {
+				this.$api.login(this.obj).then(res => {
 					if (res.data.code == 200) {
 						let obj = {
-							token: res.data.data.token,
-							userid: res.data.data.user.id,
-							phone: res.data.data.user.phone,
-							name: res.data.data.user.name,
-							headPortrait: this.headPortrait,
+							token: res.data.data.token,					
+							nickName: this.user.nickName,
+							avatarUrl: this.user.avatarUrl,
+							phone: this.obj.phone,
 						}
 
 						uni.setStorage({
-							key: 'shunong',
+							key: 'userInfo',
 							data: obj,
 							success() {
 								uni.showToast({

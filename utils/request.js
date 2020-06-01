@@ -2,7 +2,7 @@
 export default {
 	config: {
 		//baseUrl: "https://bysk.scddwb.com/byapi/",
-		baseUrl: "http://70456937.ngrok.io/",
+		baseUrl: "https://e0e91dda8150.ngrok.io/",
 		//baseUrl: "http://192.168.101.30:8088/",
 		header: {
 			 'Content-Type':'application/json',
@@ -42,7 +42,7 @@ export default {
 		options.method = options.method || _this.config.method
 		//TODO 加密数据	
 		//TODO 数据签名
-		  options.header = {'Authorization':uni.getStorageSync('ddwb').token || ''}
+		  options.header = {'Authorization':uni.getStorageSync('shunong').token || ''}
 		return new Promise((resolve, reject) => {
 			let _config = null
 		

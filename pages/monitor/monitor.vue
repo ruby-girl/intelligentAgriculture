@@ -32,12 +32,13 @@
 								<view>开心农场 NO.123123</view>
 								<view><text>温度45℃</text><text>温度45℃</text></view>
 							</view>
-							<button class="cu-btn bg-green">查看</button>
+							<button class="cu-btn bg-green" @click="showPopup">查看</button>
 						</view>
 					</view>
 				</view>
 			</scroll-view>
 		</view>
+		<popup content='这是内容' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup"/>
 	</view>
 </template>
 
@@ -48,11 +49,13 @@
 	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
 	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
 	import landBlock from '@/components/landBlock.vue'
+	import popup from "@/components/neil-modal/neil-modal.vue"
 	export default {
 		components: {
 			msDropdownMenu,
 			msDropdownItem,
-			landBlock
+			landBlock,
+			popup
 		},
 		data() {
 			return {
@@ -94,7 +97,8 @@
 				newsList: [],
 				loadingType: 0,
 				triggered: false,
-				_freshing: false
+				_freshing: false,
+				popupShow:false
 			};
 		},
 		onLoad(option) {
@@ -105,6 +109,12 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			closePopup(){
+				this.popupShow=false
+			},
+			showPopup(){
+				this.popupShow=true
+			},
 			toUrl(){//跳转监测详情
 			console.log('123')
 				uni.navigateTo({

@@ -3,23 +3,32 @@
 	<view class="workOrder">
 		<view>
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
-				<view class="map-container">
+				<view class="map-container" :style="{'backgroundImage':'url('+imgUrl+')','backgroundRepeat': 'no-repeat',backgroundSize:'100%'}">
 				
-					<video style="width:100%;height:600rpx;"  id="myVideo" src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
-					          enable-danmu danmu-btn controls></video>
-					<view class="map-top-box flex align-items-center justify-content-flex-justify">
-						<view class="detail-name">
-							<view><text style="font-weight: bold;font-size: 16px;">开心农场</text></view>
-							<view class="detail-small-txt"><image style="width: 17px;height: 20px;" src="../../static/imgs/location-2.png" mode="aspectFill"></image>农场地址阿达收到</view>
+					<!-- <video style="width:100%;height:600rpx;"  id="myVideo" src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
+					          enable-danmu danmu-btn controls></video> -->
+					<view class="map-top-box flex align-items-center justify-content-flex-justify">		
+						<view class="map-top-item">
+							<view style="font-size: 15px;font-weight: bold;">10123</view>
+							<view class="small-text">剩余时间(天)</view>
 						</view>
-						<view class="detail-img">
-							<image src="../../static/imgs/deit.png" mode="aspectFill"></image>
-							<view>
-								编辑
-							</view>
+						<view class="map-top-item">
+							<view style="font-size: 15px;font-weight: bold;">10123</view>
+							<view class="small-text">已成长(天)</view>
+						</view>
+						<view class="map-top-item">
+							<view style="font-size: 15px;font-weight: bold;">01.28</view>
+							<view class="small-text">种植日期</view>
+						</view>
+						<view class="map-top-item">
+							<view style="font-size: 15px;font-weight: bold;">10%</view>
+							<view class="small-text">种植进度</view>
 						</view>
 					</view>
-					<view class="map-bottom-box">
+					<view  class="play-box">
+						<image src="../../static/imgs/play.png" mode=""></image>
+					</view>
+					<view class="map-bottom-box">					
 						<view class="list-item">
 							<view class="flex  align-items-center justify-content-flex-justify">
 								<view class="flex  align-items-center">
@@ -75,12 +84,12 @@
 							</view>
 						   <view class="flex">
 							   <view class="map-bottom-tip">
-								   <image src="../../static/imgs/deit.png" mode="aspectFill"></image>
+								   <image src="../../static/imgs/like.png" mode="aspectFill"></image>
 								   <text>20人点赞</text>
 							   </view>
 							   <view class="map-bottom-tip">
-							   	  <image src="../../static/imgs/deit.png" mode="aspectFill"></image>
-							   	  <text>20人点赞</text>		   
+							   	  <image src="../../static/imgs/code.png" mode="aspectFill"></image>
+							   	  <text>分享二维码</text>		   
 							   </view>
 						   </view>
 						</view>
@@ -88,6 +97,10 @@
 				</view>
 				<view class="farm-detail-box">
 					<view><text style="font-size: 16px;">数据监测</text></view>
+					<view>
+						<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">空气温度变化记录</text>
+						<text class="item-num" style="width:50%;text-align: right;display: inline-block;">最近7日数据</text>
+					</view>				
 					<view class="">
 						<line-chart ref="line" :opts="option" chartType="line" option/>
 					</view>
@@ -143,7 +156,8 @@
 				newsList: [],
 				loadingType: 0,
 				triggered: false,
-				_freshing: false
+				_freshing: false,
+				imgUrl:require('../../static/imgs/location.png')//冬瓜图片
 			};
 		},
 		onLoad(option) {
@@ -265,7 +279,7 @@
 	}
 
 	.box-margin {
-		padding-top: 10px;
+		padding-top: 5px;
 	}
 
 	.loading-more {
@@ -296,9 +310,9 @@
 	.item-content-box {
 		width: 30%;
 		text-align: center;
-
+		line-height: 18px;
 		.item-num {
-			font-size: 18px;
+			font-size: 16px;
 			font-weight: bold;
 		}
 	}
@@ -313,6 +327,7 @@
 	// 地图CSS
 	.map-container {
 		position: relative;
+		height:600rpx;
 	}
 	.detail-name{
 		width:75%;
@@ -431,9 +446,21 @@
 		margin-top:5rpx;
 		color:#999;
 		image{
-			width:30rpx;
-			height:30rpx;
+			width: 31rpx;
+			height: 27rpx;
 		}
 	}
-	
+	.map-top-item{
+		width:25%;
+		text-align: center;
+	}
+	.play-box{
+		width:100%;
+		text-align: right;
+		padding:400rpx 20rpx 10rpx 0;
+		image{
+			width:88rpx;
+			height:68rpx;
+		}
+	}
 </style>

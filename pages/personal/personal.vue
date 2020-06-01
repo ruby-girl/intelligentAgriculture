@@ -73,19 +73,6 @@
 				user: {}
 			};
 		},
-		onLoad() {
-			let _this = this
-			uni.getStorage({
-				key: 'ddwb',
-				success: function(res) {
-					_this.user = {
-						name: res.data.name || '',
-						phone: res.data.phone || '',
-						headPortrait: res.data.headPortrait
-					}
-				}
-			});
-		},
 		onShareAppMessage(res) {
 			return {
 				title: '农事云',
@@ -95,21 +82,21 @@
 		onShow() {
 			let _this = this
 			uni.getStorage({
-				key: 'ddwb',
+				key: 'userInfo',
 				success: function(res) {
+					_this.isLogin=true
 					_this.user = {
-						name: res.data.name || '',
+						nickName: res.data.nickName || '',
 						phone: res.data.phone || '',
-						headPortrait: res.data.headPortrait
+						avatarUrl: res.data.avatarUrl
 					}
+				},
+				fail: function() {
+					_this.isLogin=false
 				}
 			});
 		},
 		methods: {
-
-			changeSwitch(e) {
-				this.switchB = e.detail.value
-			},
 			toMyFarm(){//跳转我的农场
 				uni.navigateTo({
 					url: 'myFarm'
