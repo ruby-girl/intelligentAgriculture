@@ -3,11 +3,11 @@
 		<view class="bg-personal">
 			<view class="user-info text-center flex">
 				<view style="margin-top:20rpx" class="text-lg">
-					<image src="../../static/imgs/location.png" mode=""></image>
+					<image :src="user.avatarUrl" mode=""></image>
 				</view>
 				<view class="">
-					<text>名称</text>
-					<view class="text-gray">qwe</view>
+					<text>{{user.nickName}}</text>
+					<view class="text-gray">{{user.phone}}</view>
 				</view>
 			</view>
 		</view>
@@ -95,8 +95,14 @@
 					_this.isLogin=false
 				}
 			});
+			this.getCount()
 		},
 		methods: {
+			getCount(){
+				this.$api.count().then(res => {
+					
+				})
+			},
 			toMyFarm(){//跳转我的农场
 				uni.navigateTo({
 					url: 'myFarm'

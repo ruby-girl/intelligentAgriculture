@@ -29,3 +29,12 @@ export const captcha = (data) => {
 		data,
 	})
 }
+
+// 个人中心数据
+export const  count= (data) => {
+	return http.request({
+		url: 'massif/count',
+		method: 'get',
+		data,
+	})
+}

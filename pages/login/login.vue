@@ -125,14 +125,11 @@
 			},
 			userLogin() {
 				let that = this;
-				uni.switchTab({
-					url: '../personal/personal'
-				});
-				return
-				this.$api.login(this.obj).then(res => {
-					if (res.data.code == 200) {
+		
+				// this.$api.login(this.obj).then(res => {
+				// 	if (res.data.code == 200) {
 						let obj = {
-							token: res.data.data.token,					
+							// token: res.data.data.token,					
 							nickName: this.user.nickName,
 							avatarUrl: this.user.avatarUrl,
 							phone: this.obj.phone,
@@ -146,17 +143,16 @@
 									title: '登录成功',
 									icon: 'success',
 									success() {
-										console.log(obj.landOrgan.length)
 										uni.switchTab({
-											url: '../plantManage/plantManage'
+											url: '../personal/personal'
 										});
 
 									}
 								})
 							}
 						})
-					}
-				})
+				// 	}
+				// })
 			}
 		}
 	}
@@ -214,5 +210,8 @@
 		.agreement {
 			color: #0FD4FF;
 		}
+	}
+	.cu-form-group{
+		min-height:80rpx;
 	}
 </style>

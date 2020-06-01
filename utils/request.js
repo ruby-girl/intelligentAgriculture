@@ -2,7 +2,7 @@
 export default {
 	config: {
 		//baseUrl: "https://bysk.scddwb.com/byapi/",
-		baseUrl: "https://e0e91dda8150.ngrok.io/",
+		baseUrl: "https://9ebaef1c6d70.ngrok.io/",
 		//baseUrl: "http://192.168.101.30:8088/",
 		header: {
 			 'Content-Type':'application/json',
