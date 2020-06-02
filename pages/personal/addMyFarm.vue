@@ -76,7 +76,7 @@
 				</view>
 			</view>
 			<button :disabled="disabled" @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg" style="margin:40px 20px 20px 20px">
-				新建批次</button>
+				添加农场</button>
 		</scroll-view>
 	</view>
 </template>

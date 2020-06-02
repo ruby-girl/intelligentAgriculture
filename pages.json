@@ -9,7 +9,7 @@
 						"autoBackButton": "true"
 					}
 				},
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
@@ -18,7 +18,7 @@
 			"path": "pages/personal/personal",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 
@@ -27,7 +27,7 @@
 			"path": "pages/personal/myFarm",
 			"style": {
 				"navigationBarTitleText": "农场管理",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
@@ -35,14 +35,28 @@
 			"path": "pages/personal/addMyFarm",
 			"style": {
 				"navigationBarTitleText": "添加农场",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
 		},{
 			"path": "pages/personal/detailFarm",
 			"style": {
 				"navigationBarTitleText": "我的农场",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white"
+			}
+		},{
+			"path": "pages/personal/landManagement",
+			"style": {
+				"navigationBarTitleText": "地块管理",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white"
+			}
+		},{
+			"path": "pages/personal/addLand",
+			"style": {
+				"navigationBarTitleText": "添加地块",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
 		},{
@@ -50,7 +64,7 @@
 			"path": "pages/monitor/monitor",
 			"style": {
 				"navigationBarTitleText": "监测与预警",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 
@@ -60,7 +74,7 @@
 			"path": "pages/monitor/growthMonitoring",
 			"style": {
 				"navigationBarTitleText": "生长监测",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 
@@ -70,7 +84,7 @@
 			"path": "pages/equipmentManagement/equipmentManagement",
 			"style": {
 				"navigationBarTitleText": "设备管理",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
@@ -78,7 +92,7 @@
 			"path": "pages/equipmentManagement/addEquipment",
 			"style": {
 				"navigationBarTitleText": "添加设备",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
@@ -86,7 +100,7 @@
 			"path": "pages/equipmentManagement/detailEquipment",
 			"style": {
 				"navigationBarTitleText": "设备详情",
-				"navigationBarBackgroundColor": "#00AE66",
+				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
@@ -102,7 +116,7 @@
 	},
 	"tabBar": {
 		"color": "#999999",
-		"selectedColor": "#00AE66",
+		"selectedColor": "#17BB89",
 		"backgroundColor": "#F7F7F7",
 		"list": [
 				{

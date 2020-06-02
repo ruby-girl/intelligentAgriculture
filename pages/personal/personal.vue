@@ -25,7 +25,7 @@
 				</view>
 			</view>
 			<!-- 地块 -->
-			<view class="item-box">
+			<view class="item-box" @click="toLandManagement()">
 				<view class="flex justify-content-flex-justify item-jt align-items-center">
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/dikuai.png" mode=""></image>我的地块
@@ -99,13 +99,18 @@
 		},
 		methods: {
 			getCount(){
-				this.$api.count().then(res => {
+				// this.$api.count().then(res => {
 					
-				})
+				// })
 			},
 			toMyFarm(){//跳转我的农场
 				uni.navigateTo({
 					url: 'myFarm'
+				});
+			},
+			toLandManagement(){//跳转地块管理
+				uni.navigateTo({
+					url: 'landManagement'
 				});
 			},
 			toLogin() { //退出
@@ -118,10 +123,10 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.bg-personal {
 		height: 200rpx;
-		background: #00AE66;
+		background:#17BB89;
 		position: relative;
 		z-index: 1;
 	}
