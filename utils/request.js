@@ -2,11 +2,12 @@
 export default {
 	config: {
 		//baseUrl: "https://bysk.scddwb.com/byapi/",
-		baseUrl: "https://9ebaef1c6d70.ngrok.io/",
+		baseUrl: "https://bcdca265b40b.ngrok.io/",
 		//baseUrl: "http://192.168.101.30:8088/",
 		header: {
 			 'Content-Type':'application/json',
-			 'Authorization':''
+			 'Authorization':'',
+			 'token':''
 		},  
 		data: {},
 		method: "GET",
@@ -37,12 +38,12 @@ export default {
 		if(options.method=='get' || options.method=='GET'){
 			options.data = options.data || {}
 		}else{
-			options.data = JSON.stringify(options.data) || {}
+			options.data = options.data || {}
 		}
 		options.method = options.method || _this.config.method
 		//TODO 加密数据	
 		//TODO 数据签名
-		  options.header = {'Authorization':uni.getStorageSync('shunong').token || ''}
+		  options.header = {'token':uni.getStorageSync('userInfo').token || ''}
 		return new Promise((resolve, reject) => {
 			let _config = null
 		

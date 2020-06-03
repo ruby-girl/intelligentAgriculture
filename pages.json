@@ -1,6 +1,15 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/personal/personal",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+
+			}
+		},{
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录",
@@ -12,16 +21,6 @@
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
-			}
-		},{
-
-			"path": "pages/personal/personal",
-			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#17BB89",
-				"navigationBarTextStyle": "white",
-				"disableScroll": true
-
 			}
 		},{
 			"path": "pages/personal/myFarm",

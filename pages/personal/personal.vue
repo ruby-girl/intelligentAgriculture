@@ -21,7 +21,7 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					20
+					{{nums.farmCount}}
 				</view>
 			</view>
 			<!-- 地块 -->
@@ -33,7 +33,7 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					20
+					{{nums.massifCount}}
 				</view>
 			</view>
 		</view>
@@ -70,7 +70,8 @@
 		data() {
 			return {
 				switchB: true,
-				user: {}
+				nums: {},
+				user:{}
 			};
 		},
 		onShareAppMessage(res) {
@@ -99,9 +100,9 @@
 		},
 		methods: {
 			getCount(){
-				// this.$api.count().then(res => {
-					
-				// })
+				this.$api.massifCount().then(res => {
+					this.nums=res.data.data
+				})
 			},
 			toMyFarm(){//跳转我的农场
 				uni.navigateTo({

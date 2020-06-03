@@ -3,7 +3,7 @@ import http from '@/utils/request.js'
 //设置请求结束后拦截器
 http.interceptor.response = (response) => {
 	uni.hideLoading();
-	if(response.data.state!==200){
+	if(response.statusCode!=200){
 		uni.showToast({
 		    title: response.data.msg,
 			icon:'none'		
@@ -24,17 +24,23 @@ export const login = (data) => {
 // 获取验证码
 export const captcha = (data) => {
 	return http.request({
-		url: 'user/register',
-		method: 'get',
+		url: 'user/send',
+		method: 'post',
 		data,
 	})
 }
 
 // 个人中心数据
-export const  count= (data) => {
+export const  massifCount= (data) => {
 	return http.request({
 		url: 'massif/count',
-		method: 'get',
-		data,
+		method: 'post'
+	})
+}
+// 农场列表
+export const  findByFarm= (data) => {
+	return http.request({
+		url: 'farm/findByFarm',
+		method: 'post'
 	})
 }

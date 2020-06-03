@@ -1,7 +1,7 @@
 <template>
 	<view class="padding-login">
 		<view class="title-y">
-			欢迎登录/注册数农科技！
+			欢迎登录/注册星鸦智农！
 		</view>
 		<view class="border-bottom">
 			<view class="cu-form-group">
@@ -16,7 +16,7 @@
 		</view>
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
 		 lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">
-			登录</button>
+			登录/注册</button>
 		<view class="auto-bottom">
 			注册即为同意<text class="agreement">《数农科技用户使用协议》</text>
 		</view>
@@ -49,7 +49,7 @@
 		},
 		onShareAppMessage(res) {
 			return {
-				title: '农事云',
+				title: '星鸦智农',
 				path: '/pages/index/index'
 			}
 		},
@@ -61,7 +61,7 @@
 			onInput(e) {
 				this.obj.phone = e.detail.value
 			},
-			onPwdInput(e) {
+			captchaInput(e){
 				this.obj.yzm = e.detail.value
 			},
 			// 手动授权方法
@@ -105,7 +105,7 @@
 				this.$api.captcha({
 					phone: this.obj.phone
 				}).then(res => {
-					if (res.data.state == 200) {
+					if (res.data.stateCode == 200) {
 						this.btnTitle = 60
 						this.txt = 'S秒后获取'
 						let timer = setInterval(function() {
@@ -126,10 +126,10 @@
 			userLogin() {
 				let that = this;
 		
-				// this.$api.login(this.obj).then(res => {
-				// 	if (res.data.code == 200) {
+				this.$api.login(this.obj).then(res => {
+					
 						let obj = {
-							// token: res.data.data.token,					
+							 token: res.data.data.token,					
 							nickName: this.user.nickName,
 							avatarUrl: this.user.avatarUrl,
 							phone: this.obj.phone,
@@ -151,8 +151,8 @@
 								})
 							}
 						})
-				// 	}
-				// })
+					
+				})
 			}
 		}
 	}

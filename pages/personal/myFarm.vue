@@ -135,20 +135,6 @@
 					url: 'detailFarm'
 				})
 			},
-			delOrganUserWorkOrderManage(id) { //删除
-				let _this = this
-				this.$apiYZX.delOrganUserWorkOrderManage(id).then(res => {
-					if (res.data.code == 200) {
-						uni.showToast({
-							title: '删除成功',
-							duration: 2000,
-							success() {
-								_this.initData()
-							}
-						});
-					}
-				})
-			},
 			scrolltoupper() {
 				console.info('下拉')
 			},
@@ -164,7 +150,7 @@
 				let obj = { ...this.listObj,
 					...this.obj
 				}
-				this.$apiYZX.getFeedBackWorkOrdersList(this.page, obj).then(res => {
+				this.$api.findByFarm(this.page, obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.data)
 					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0
