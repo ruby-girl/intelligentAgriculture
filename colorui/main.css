@@ -331,10 +331,10 @@ checkbox.green.checked .uni-checkbox-input,
 checkbox.checked .uni-checkbox-input,
 radio.green.checked .uni-radio-input,
 radio.checked .uni-radio-input {
-	background-color: #39b54a !important;
-	border-color: #39b54a !important;
+	background-color: #17BB89 !important;
+	border-color: #17BB89 !important;
 	color: #ffffff !important;
-	border-color: #39B54A !important;
+	border-color: #17BB89 !important;
 }
 
 switch.cyan[checked] .wx-switch-input,
@@ -3350,7 +3350,7 @@ scroll-view.cu-steps .cu-item {
 
 .line-green::after,
 .lines-green::after {
-	border-color: #39b54a;
+	border-color: #17BB89;
 }
 
 .line-cyan::after,
@@ -3424,7 +3424,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-green {
-	background-color: #39b54a;
+	background-color: #17BB89;
 	color: #ffffff;
 }
 
@@ -3509,7 +3509,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-green.light {
-	color: #39b54a;
+	color: #17BB89;
 	background-color: #d7f0dbff;
 }
 
@@ -3559,7 +3559,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-gradual-green {
-	background-image: linear-gradient(45deg, #39b54a, #8dc63f);
+	background-image: linear-gradient(45deg, #17BB89, #8dc63f);
 	color: #ffffff;
 }
 
@@ -3848,7 +3848,7 @@ scroll-view.cu-steps .cu-item {
 .text-green,
 .line-green,
 .lines-green {
-	color: #39b54a;
+	color: #17BB89;
 }
 
 .text-cyan,

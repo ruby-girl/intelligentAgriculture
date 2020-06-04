@@ -5,7 +5,7 @@ http.interceptor.response = (response) => {
 	uni.hideLoading();
 	if(response.statusCode!=200){
 		uni.showToast({
-		    title: response.data.msg,
+		    title: response.msg,
 			icon:'none'		
 		})		
 	}
@@ -42,5 +42,29 @@ export const  findByFarm= (data) => {
 	return http.request({
 		url: 'farm/findByFarm',
 		method: 'post'
+	})
+}
+// 获取农场详情
+export const  selectFarmId= (data) => {
+	return http.request({
+		url: 'farm/selectFarmId',
+		method: 'post',
+		data:data
+	})
+}
+// 获取农场详情
+export const  insertFarm= (data) => {
+	return http.request({
+		url: 'farm/insertFarm',
+		method: 'post',
+		data:data
+	})
+}
+// 获取省市区
+export const  districts= (data) => {
+	return http.request({
+		url: 'districts',
+		method: 'post',
+		data:data
 	})
 }

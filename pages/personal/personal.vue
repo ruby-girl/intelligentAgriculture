@@ -39,7 +39,7 @@
 		</view>
 		<view class="container-input">
 			<form>
-				<view class="cu-form-group item-jt">
+				<view class="cu-form-group item-jt" @click="toSet">
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/warning.png" mode=""></image>预警设置
 					</view>
@@ -99,6 +99,11 @@
 			this.getCount()
 		},
 		methods: {
+			toSet(){//跳转预警设置
+				uni.navigateTo({
+					url: 'setTheWarning'
+				});
+			},
 			getCount(){
 				this.$api.massifCount().then(res => {
 					this.nums=res.data.data

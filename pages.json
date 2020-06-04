@@ -103,6 +103,22 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
+		},{	
+			"path": "pages/personal/setTheWarning",
+			"style": {
+				"navigationBarTitleText": "预警设置",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+			}
+		},{	
+			"path": "pages/personal/detailWarning",
+			"style": {
+				"navigationBarTitleText": "预警设置",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+			}
 		}
 	],
 	"globalStyle": {

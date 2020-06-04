@@ -2,7 +2,7 @@
 export default {
 	config: {
 		//baseUrl: "https://bysk.scddwb.com/byapi/",
-		baseUrl: "https://bcdca265b40b.ngrok.io/",
+		baseUrl: "https://e01e88c34188.ngrok.io/",
 		//baseUrl: "http://192.168.101.30:8088/",
 		header: {
 			 'Content-Type':'application/json',
@@ -35,15 +35,14 @@ export default {
 		options.baseUrl = options.baseUrl || _this.config.baseUrl
 		options.dataType = options.dataType || _this.config.dataType
 		options.url = options.baseUrl + options.url
-		if(options.method=='get' || options.method=='GET'){
-			options.data = options.data || {}
-		}else{
-			options.data = options.data || {}
-		}
+		
+	    options.data = options.data || {}
+		
 		options.method = options.method || _this.config.method
 		//TODO 加密数据	
 		//TODO 数据签名
-		  options.header = {'token':uni.getStorageSync('userInfo').token || ''}
+	
+		  options.header = {'token':uni.getStorageSync('userInfo').token || '','Content-Type':'application/x-www-form-urlencoded'}
 		return new Promise((resolve, reject) => {
 			let _config = null
 		

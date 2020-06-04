@@ -6,11 +6,7 @@
 				<form>
 					<view class="cu-form-group">
 						<view class="title">农场名称</view>
-						<input class="form-input-left" placeholder="请输入农场名称" name="input"></input>
-					</view>
-					<view class="cu-form-group">
-						<view class="title">农场区域</view>
-						<input class="form-input-left" placeholder="请输入批次名称" name="input"></input>
+						<input class="form-input-left" v-model="postData.farmName" placeholder="请输入农场名称" name="input"></input>
 					</view>
 					<view class="cu-form-group">
 						<view class="title">农场区域</view>
@@ -23,18 +19,18 @@
 					</view>
 					<view class="cu-form-group">
 						<view class="title">农场地址</view>
-						<input class="form-input-left" placeholder="请输入农场详细地址" name="input"></input>
+						<input v-model="postData.address" @blur="atuoGetLocation" class="form-input-left" placeholder="请输入农场详细地址" name="input"></input>
 					</view>
 				</form>
 			</view>
 			<view class="people-box container-input">
 				<view class="cu-form-group">
 					<view class="title">农场负责人</view>
-					<input class="form-input-left" placeholder="请输入农场负责人" name="input"></input>
+					<input v-model="postData.master" class="form-input-left" placeholder="请输入农场负责人" name="input"></input>
 				</view>
 				<view class="cu-form-group">
 					<view class="title">联系电话</view>
-					<input class="form-input-left" placeholder="请输入联系电话" name="input"></input>
+					<input v-model="postData.fphone" class="form-input-left" placeholder="请输入联系电话" name="input"></input>
 				</view>
 				<view class="cu-form-group">
 					<view class="title">负责人照片</view>
@@ -56,7 +52,7 @@
 					<view class="title">农场介绍</view>
 				</view>
 				<view>
-					<textarea placeholder="请输入农场介绍" maxlength="100"></textarea>
+					<textarea v-model="postData.introduce" placeholder="请输入农场介绍" maxlength="100"></textarea>
 				</view>
 				<view class="cu-form-group">
 					<view class="title">农场照片</view>
@@ -82,13 +78,13 @@
 </template>
 
 <script>
+	import QQMapWX from '@/static/qqmap-wx-jssdk.min.js';
+	var qqmapsdk;
 	export default {
 		data() {
 			return {
 				index: '',
 				imgList: [],
-				action: 1,
-				date: '2020',
 				landList: [],
 				disabled: false,
 				landId: '', //选择的地块ID
@@ -97,35 +93,171 @@
 				breed: '0', //作物值
 				planName: '',
 				multiIndex: [0, 0, 0],
-				multiArray: [
-					[{
-						name: 'asd',
-						id: 1
-					}, {
-						name: 'asd2',
-						id: 2
-					}],
-					[{
-						name: 'asd3',
-						id: 3
-					}, {
-						name: 'asd4',
-						id: 4
-					}],
-					[{
-						name: 'asd5',
-						id: 5
-					}, {
-						name: 'asd6',
-						id: 6
-					}]
-				]
+				multiArray: [],
+				location: {},
+				postData: {
+					farmId: ''				
+				},
+				provinceCode: '',
+				cityCode: '',
+				areaCode: '',
+				init: true,
+				multiIndexsave: []
 			}
 		},
 		onLoad(option) {
+			if (option.farmId) {
+				this.postData.farmId = option.farmId
+				this.getFarm()
+			} else {
+				this.getProvinceCode()
+			}
+			qqmapsdk = new QQMapWX({
+				key: 'TN7BZ-YJKCP-OMTD3-LQKOM-2C5KZ-AWFUQ'
+			});
 
 		},
 		methods: {
+			getProvinceCode() { //获取省
+				this.$api.districts({
+					parent: 86
+				}).then(res => {
+					let arr = []
+					res.data.data.forEach(item => {
+						let obj = {
+							name: item.name,
+							id: item.code
+						}
+						arr.push(obj)
+					})
+					this.multiArray[0] = arr;
+					this.getByProvinceCode(res.data.data[0].code)
+				})
+			},
+			getByProvinceCode(code, n) { //获取市、、n：有市的默认值
+				this.$api.districts({
+					parent: code
+				}).then(res => {
+					let arr = []
+					res.data.data.forEach(item => {
+						let obj = {
+							name: item.name,
+							id: item.code
+						}
+						arr.push(obj)
+					})
+					this.multiArray[1] = arr;
+					if (n) {
+						this.getByCityCode(n)
+					} else {
+						this.getByCityCode(res.data.data[0].code)
+					}
+
+				})
+			},
+			getByCityCode(code) { //获取区
+				this.$api.districts({
+					parent: code
+				}).then(res => {
+					let arr = []
+					res.data.data.forEach(item => {
+						let obj = {
+							name: item.name,
+							id: item.code
+						}
+						arr.push(obj)
+					})
+					this.multiArray[2] = arr;
+					if (this.init && this.provinceCode) { //如果有默认值
+						let code1 = this.multiArray[0].findIndex((item, i) => {
+							return item.id == this.provinceCode
+						})
+						let code2 = this.multiArray[1].findIndex((item, i) => {
+							return item.id == this.cityCode
+						})
+						let code3 = this.multiArray[2].findIndex((item, i) => {
+							return item.id == this.areaCode
+						})
+
+						this.multiIndex = [code1, code2, code3]
+						this.init = false
+					} else if (this.init && !this.provinceCode) {
+						this.multiIndex = [0, 0, 0]
+						this.init = false
+					} else {
+						this.multiIndex = [...this.multiIndexsave]
+					}
+				})
+			},
+			getFarm() { //如果为编辑，获取农场详情
+				this.$api.selectFarmId({
+					farmId: this.postData.farmId
+				}).then(res => {
+					this.postData = res.data.data
+					// 根据code设置省市县默认值 
+					this.provinceCode = res.data.data.provinceCode
+					this.cityCode = res.data.data.cityCode
+					this.areaCode = res.data.data.areaCode
+					this.$api.districts({
+						parent: 86
+					}).then(res => {
+						let arr = []
+						res.data.data.forEach(item => {
+							let obj = {
+								name: item.name,
+								id: item.code
+							}
+							arr.push(obj)
+						})
+						this.multiArray[0] = arr;
+						let code;
+						if (this.provinceCode) {
+							this.getByProvinceCode(this.provinceCode, this.cityCode)
+						} else {
+							this.getByProvinceCode(res.data.data[0].code)
+						}
+
+					})
+				})
+			},
+			MultiChange(e) {
+				this.multiIndex = e.detail.value
+			},
+			MultiColumnChange(e) {
+				let data = {
+					multiArray: this.multiArray,
+					multiIndex: this.multiIndex
+				};
+				this.multiIndex[e.detail.column] = e.detail.value;
+				this.multiIndexsave = [...this.multiIndex]
+				switch (e.detail.column) {
+					case 0:
+						this.getByProvinceCode(data.multiArray[0][data.multiIndex[0]].id)
+						break;
+					case 1:
+						this.multiIndex[2] = 0
+						this.multiIndexsave = [...this.multiIndex]
+						this.getByCityCode(data.multiArray[1][data.multiIndex[1]].id)
+						break;
+				}
+			},
+			atuoGetLocation(e) { //根据地址获取经纬度
+				let _this = this
+				qqmapsdk.geocoder({
+					address: e.detail.value,
+					complete: res => {
+						if (res.result) {
+							_this.location = res.result.location
+						} else {
+							uni.showToast({
+								title: '无法定位到该地址，请确认地址信息！',
+								icon: 'none'
+							})
+						}
+					}
+
+				});
+			},
 			ChooseImage() {
 				uni.chooseImage({
 					count: 6, //默认9
@@ -175,50 +307,49 @@
 					}
 				})
 			},
-			MultiChange() {},
-			MultiColumnChange() {},
-			DateChange(e) {
-				this.date = e.detail.value
-				this.postData.plantingTime = e.detail.value
-			},
-			pickerChange(e) {
-				this.breed = e.target.value
-				let arr = this.breedList.filter((item, i) => {
-					return i == e.target.value
-				})
-				this.postData.breedId = arr[0].id
-			},
 			test() {
-				if (this.postData.landParcelIds.length < 1) {
+				if (!this.postData.farmName) {
 					uni.showToast({
-						title: '请选择地块信息',
-						icon: 'none'
-					})
-					return false
-				}
-				if (this.postData.plantingPlanId.length < 1) {
-					uni.showToast({
-						title: '请选择种植计划',
+						title: '请输入农场名称',
 						icon: 'none'
 					})
 					return false
 				}
 				return true
 			},
+			getSelectValue() { //获取所在区域的值
+				let code1 = this.multiArray[0].filter((item, i) => {
+					return i == this.multiIndex[0]
+				})
+				let code2 = this.multiArray[1].filter((item, i) => {
+					return i == this.multiIndex[1]
+				})
+				let code3 = this.multiArray[2].filter((item, i) => {
+					return i == this.multiIndex[2]
+				})
+				this.postData.provinceCode = code1[0].id
+				this.postData.provinceName = code1[0].name
+				this.postData.cityCode = code2[0].id
+				this.postData.cityName = code2[0].name
+				this.postData.arerCode = code3[0].id
+				this.postData.arerName = code3[0].name
+			},
 			addFunc() {
 				if (!this.test()) return
-				this.$apiYZX.addPlantingBatchs(this.postData).then(res => {
-					if (res.data.code == '200') {
-						uni.showToast({
-							title: '添加成功',
-							duration: 2000,
-							success() {
-								uni.redirectTo({
-									url: 'list'
-								});
-							}
-						});
-					}
+				this.getSelectValue()
+				console.info(this.postData)
+				this.postData.picture = 'qwe'		
+				this.postData.masterPicture = 'qwe'
+				this.$api.insertFarm(this.postData).then(res => {
+					uni.showToast({
+						title: '添加成功',
+						duration: 2000,
+						success() {
+							uni.redirectTo({
+								url: 'myFarm'
+							});
+						}
+					});
 				})
 			}
 		}
@@ -296,7 +427,8 @@
 		border-bottom: 1px solid #eee;
 		background: #fff;
 	}
-	.cu-form-group .title{
-		width:180rpx;
+
+	.cu-form-group .title {
+		width: 180rpx;
 	}
 </style>
