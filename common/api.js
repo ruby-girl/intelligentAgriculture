@@ -38,10 +38,11 @@ export const  massifCount= (data) => {
 	})
 }
 // 农场列表
-export const  findByFarm= (data) => {
+export const farmGetAll= (data) => {
 	return http.request({
-		url: 'farm/findByFarm',
-		method: 'post'
+		url: 'farm/getAll',
+		method: 'post',
+		data:data
 	})
 }
 // 获取农场详情
@@ -55,7 +56,7 @@ export const  selectFarmId= (data) => {
 // 获取农场详情
 export const  insertFarm= (data) => {
 	return http.request({
-		url: 'farm/insertFarm',
+		url: 'farm/insertFrom',
 		method: 'post',
 		data:data
 	})

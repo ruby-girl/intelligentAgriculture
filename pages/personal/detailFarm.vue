@@ -12,17 +12,20 @@
 			</scroll-view>
 		</view>
 		<!-- 农场详情 -->
-		<view v-if="TabCur==1">
+		<view v-show="TabCur==1">
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
 
 				<view class="map-container">
 					<map style="width:100%;height:300px;" :latitude="latitude" :longitude="longitude" :markers="covers"></map>
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
 						<view class="detail-name">
-							<view><text style="font-weight: bold;font-size: 16px;">开心农场</text></view>
-							<view class="detail-small-txt"><image style="width: 17px;height: 20px;" src="../../static/imgs/location-2.png" mode="aspectFill"></image>农场地址阿达收到</view>
+							<view><text style="font-weight: bold;font-size: 16px;">{{farmDetail.farmName}}</text></view>
+							<view class="detail-small-txt">
+								<image style="width: 17px;height: 20px;" src="../../static/imgs/location-2.png" mode="aspectFill"></image>
+								{{farmAddress}}
+							</view>
 						</view>
-						<view class="detail-img">
+						<view class="detail-img" @click="editFarm">
 							<image src="../../static/imgs/deit.png" mode="aspectFill"></image>
 							<view>
 								编辑
@@ -35,8 +38,8 @@
 							<view class="detail-name flex align-items-center" style="border:none;">
 								<image style="width: 30px;height: 30px;" src="../../static/imgs/deit.png" mode="aspectFill"></image>
 								<view style="line-height:18px;">
-									<view>样子西</view>
-									<view class="detail-small-txt">13696279917</view>
+									<view>{{farmDetail.master}}</view>
+									<view class="detail-small-txt">{{farmDetail.fphone}}</view>
 								</view>
 							</view>
 							<view class="detail-img">
@@ -47,11 +50,11 @@
 				</view>
 				<view class="farm-detail-box">
 					<view><text style="font-size: 16px;">农场介绍</text></view>
-					<view class="detail-small-txt">阿斯达四大阿萨德阿萨德阿萨阿斯达四大阿萨德阿萨德阿萨德阿斯达四大阿萨德阿萨德阿萨德阿斯达四大阿萨德阿萨德阿萨德德</view>
+					<view class="detail-small-txt">{{farmDetail.introduce}}</view>
 				</view>
 			</scroll-view>
 		</view>
-		<view v-else-if="TabCur==2">
+		<view v-show="TabCur==2">
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
 			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
@@ -62,7 +65,7 @@
 				<view class="loading-more">{{contentdown}}</view>
 			</scroll-view>
 		</view>
-		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else-if="TabCur==3">
+		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-show="TabCur==3">
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
 				<view class="cu-timeline">
 					<view class="cu-item text-olive" v-for="i in 5" :key="i">
@@ -82,16 +85,14 @@
 </template>
 
 <script>
+	import QQMapWX from '@/static/qqmap-wx-jssdk.min.js';
 	import {
 		throttle
 	} from "@/utils/index.js"
-	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
-	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
 	import landBlock from '@/components/landBlock.vue'
+	var qqmapsdk;
 	export default {
 		components: {
-			msDropdownMenu,
-			msDropdownItem,
 			landBlock
 		},
 		data() {
@@ -99,18 +100,16 @@
 				latitude: 39.909,
 				longitude: 116.39742,
 				covers: [{
-					latitude: 39.909,
-					longitude: 116.39742
-
-				}, {
-					latitude: 39.90,
-					longitude: 116.39
-
+					latitude: '',
+					longitude: ''
 				}],
+				farmDetail: {},
+				farmId: '',
+				farmAddress: '',
 				orderList: [],
 				tabs: [{
 						id: 1,
-						name: '农场息'
+						name: '农场信息'
 					}, {
 						id: 2,
 						name: '地块信息'
@@ -129,23 +128,10 @@
 				}],
 				TabCur: 1,
 				newsList: [],
-				baseId: '',
-				obj: {
-					baseId: '',
-					organUserId: '',
-					plantingBatchStatus: '' //批次状态
-				},
-				listObj: {
-					plantingBatchId: '', //批次ID
-					timeType: '', //时间
-					workOrderStatus: '', //工单状态
-					initiatorId: '' //发起人
-				},
 				page: 1,
 				moreHeight: 30,
 				windowHeight: 300,
 				contentdown: '',
-				newsList: [],
 				loadingType: 0,
 				triggered: false,
 				_freshing: false
@@ -153,6 +139,12 @@
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
+			qqmapsdk = new QQMapWX({
+				key: 'TN7BZ-YJKCP-OMTD3-LQKOM-2C5KZ-AWFUQ'
+			});
+			this.farmId = option.id
+			this.getFarmDetail()
+
 			// this.getData()
 		},
 		mounted() {
@@ -238,6 +230,17 @@
 					}
 				})
 			},
+			getFarmDetail() {
+				this.$api.selectFarmId({
+					farmId: this.farmId
+				}).then(res => {
+					this.farmDetail = res.data.data
+					this.farmAddress = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName + this.farmDetail
+						.address
+					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName
+					this.atuoGetLocation(this.farmAddress, area)
+				})
+			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				// if (e.currentTarget.dataset.id == 1) {
@@ -246,6 +249,30 @@
 				// 	this.listObj.initiatorId = ''
 				// }
 				// this.initData()
+			},
+			atuoGetLocation(addr, area) { //根据地址获取经纬度
+				let _this = this
+				qqmapsdk.geocoder({
+					address: addr,
+					complete: res => {
+						if (res.result) {
+							this.latitude = res.result.location.lat
+							this.longitude = res.result.location.lng
+							this.covers=[{
+								latitude: res.result.location.lat,
+								longitude: res.result.location.lng
+							}]
+						} else {
+							this.atuoGetLocation(area) //具体位置获取不到经纬度，用省市县地址获取
+						}
+					}
+
+				});
+			},
+			editFarm(){
+				uni.navigateTo({
+					url: 'addMyFarm?id='+this.farmId
+				})
 			}
 		}
 	}
@@ -261,9 +288,11 @@
 			padding-top: 100rpx;
 		}
 	}
+
 	.flex {
 		display: flex;
 	}
+
 	.workOrder {
 		height: 100%;
 
@@ -325,56 +354,68 @@
 	.map-container {
 		position: relative;
 	}
-	.detail-name{
-		width:75%;
-		border-right:1px solid #eee;
+
+	.detail-name {
+		width: 75%;
+		border-right: 1px solid #eee;
 	}
-	.detail-small-txt{
-		color:#999;
+
+	.detail-small-txt {
+		color: #999;
 		font-size: 13px;
 	}
-	.detail-img{
-		width:25%;
+
+	.detail-img {
+		width: 25%;
 		text-align: center;
 	}
-	.detail-img image,.detail-name image{
-		width:30rpx;
-		height:30rpx;
+
+	.detail-img image,
+	.detail-name image {
+		width: 30rpx;
+		height: 30rpx;
 	}
-	.detail-box{
-		padding:20rpx;
+
+	.detail-box {
+		padding: 20rpx;
 		background: #fff;
 		border-radius: 6px;
 	}
-	.color-grey{
-		color:#999;
+
+	.color-grey {
+		color: #999;
 	}
-	.font-size-16{
+
+	.font-size-16 {
 		font-size: 15px;
 	}
-    .map-top-box{
+
+	.map-top-box {
 		position: absolute;
-		top:0;
-		width:96%;
+		top: 0;
+		width: 96%;
 		background: #fff;
-		padding:10rpx 20rpx;
-		left:2%;
+		padding: 10rpx 20rpx;
+		left: 2%;
 		border-radius: 4px;
 	}
-	 .map-bottom-box{
+
+	.map-bottom-box {
 		position: absolute;
-		bottom:15rpx;
-		left:2%;
-		width:96%;
+		bottom: 15rpx;
+		left: 2%;
+		width: 96%;
 		background: #fff;
-		padding:10rpx 20rpx;
+		padding: 10rpx 20rpx;
 		border-radius: 4px;
 	}
-	.farm-detail-box{
+
+	.farm-detail-box {
 		padding: 20rpx 30rpx;
 		background: #fff;
-		.detail-small-txt{
-			text-indent:2em;
+
+		.detail-small-txt {
+			text-indent: 2em;
 		}
 	}
 </style>

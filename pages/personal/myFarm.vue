@@ -15,14 +15,14 @@
 		 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 		 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 		 @scrolltolower="loadingData">
-			<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="index in 10" :key="index" @tap="toDetail()">
+			<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index" @tap="toDetail(item.farmId)">
 				<view class="flex align-items-center justify-content-flex-justify">
-					<text class="item-title">开心农场</text>
+					<text class="item-title">{{item.farmName}}</text>
 					<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
 				</view>
 				<view style="line-height:35px;">
 					<image style="width:17px;height:20px;" src="../../static/imgs/location-2.png"></image>
-					<text>四川省绵阳市爱仕达多</text>
+					<text>{{item.provinceName}}{{item.cityName}}{{item.arerName}}{{item.address}}</text>
 				</view>
 				<view class="flex align-items-center justify-content-flex-justify">
 					<view class="item-type-box flex align-items-center justify-content-flex-justify">
@@ -41,9 +41,7 @@
 					</view>
 				</view>
 				<view class="item-content">
-					奥术大师多阿萨德阿萨德阿萨德奥术大师的阿达收到阿萨德阿萨德
-					阿萨德阿萨德阿萨德阿萨德啊大声道奥术大师多阿萨德阿萨德阿萨德奥术大师的阿达收到阿萨德阿萨德
-					阿萨德阿萨德阿萨德阿萨德啊大声道
+					{{item.introduce}}
 				</view>
 			</view>
 			<view class="loading-more">{{contentdown}}</view>
@@ -55,30 +53,14 @@
 	import {
 		throttle
 	} from "@/utils/index.js"
-	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
-	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
 	export default {
-		components: {
-			msDropdownMenu,
-			msDropdownItem
-		},
 		data() {
 			return {
 				orderList: [],
 				newsList: [],
 				baseId: '',
-				obj: {
-					baseId: '',
-					organUserId: '',
-					plantingBatchStatus: '' //批次状态
-				},
-				listObj: {
-					plantingBatchId: '', //批次ID
-					timeType: '', //时间
-					workOrderStatus: '', //工单状态
-					initiatorId: '' //发起人
-				},
 				page: 1,
+				pageSize:10,
 				moreHeight: 30,
 				windowHeight: 300,
 				contentdown: '',
@@ -94,8 +76,10 @@
 		},
 		mounted() {
 			this.loadingData = throttle(this.loadingData, 2000);
+			this.initData()
 		},
 		methods: {
+			
 			onPulling() {},
 			onRefresh() {
 				if (this._freshing) return;
@@ -130,9 +114,9 @@
 					url: 'addMyFarm'
 				})
 			},
-			toDetail() { //跳转我的农场详情
+			toDetail(id) { //跳转我的农场详情
 				uni.navigateTo({
-					url: 'detailFarm'
+					url: 'detailFarm?id='+id
 				})
 			},
 			scrolltoupper() {
@@ -147,27 +131,28 @@
 				}
 			},
 			getData() {
-				let obj = { ...this.listObj,
-					...this.obj
+				let obj={
+					pageNum:this.page,
+					pageSize:this.pageSize
 				}
-				this.$api.findByFarm(this.page, obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.data)
-					if (this.page == 1 && this.newsList.length == 0) {
-						this.loadingType = 0
-						this.contentdown = '暂无数据'
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-						this.contentdown = ''
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-						this.contentdown = '无更多数据'
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length) {
-						this.loadingType = 0
-						this.contentdown = '无更多数据'
-					} else {
-						this.contentdown = '上拉加载更多'
-						this.loadingType = 1
-					}
+				this.$api.farmGetAll(obj).then(res => {
+					this.newsList = this.newsList.concat(res.data.data)
+					// if (this.page == 1 && this.newsList.length == 0) {
+					// 	this.loadingType = 0
+					// 	this.contentdown = '暂无数据'
+					// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
+					// 	this.contentdown = ''
+					// 	this.loadingType = 0
+					// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
+					// 	this.contentdown = '无更多数据'
+					// 	this.loadingType = 0
+					// } else if (res.data.data.rowCount == this.newsList.length) {
+					// 	this.loadingType = 0
+					// 	this.contentdown = '无更多数据'
+					// } else {
+					// 	this.contentdown = '上拉加载更多'
+					// 	this.loadingType = 1
+					// }
 				})
 			}
 		}

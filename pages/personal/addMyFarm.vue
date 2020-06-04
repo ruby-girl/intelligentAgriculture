@@ -78,8 +78,6 @@
 </template>
 
 <script>
-	import QQMapWX from '@/static/qqmap-wx-jssdk.min.js';
-	var qqmapsdk;
 	export default {
 		data() {
 			return {
@@ -112,10 +110,6 @@
 			} else {
 				this.getProvinceCode()
 			}
-			qqmapsdk = new QQMapWX({
-				key: 'TN7BZ-YJKCP-OMTD3-LQKOM-2C5KZ-AWFUQ'
-			});
-
 		},
 		methods: {
 			getProvinceCode() { //获取省
@@ -240,23 +234,6 @@
 						this.getByCityCode(data.multiArray[1][data.multiIndex[1]].id)
 						break;
 				}
-			},
-			atuoGetLocation(e) { //根据地址获取经纬度
-				let _this = this
-				qqmapsdk.geocoder({
-					address: e.detail.value,
-					complete: res => {
-						if (res.result) {
-							_this.location = res.result.location
-						} else {
-							uni.showToast({
-								title: '无法定位到该地址，请确认地址信息！',
-								icon: 'none'
-							})
-						}
-					}
-
-				});
 			},
 			ChooseImage() {
 				uni.chooseImage({
