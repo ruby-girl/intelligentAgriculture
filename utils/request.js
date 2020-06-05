@@ -1,7 +1,7 @@
 
 export default {
 	config: {
-		baseUrl: "https://9fb00a35acf2.ngrok.io/",
+		baseUrl: "https://6d35af117885.ngrok.io/",
 		//baseUrl: "http://192.168.101.30:8088/",
 		header: {
 			 'Content-Type':'application/json',

@@ -15,7 +15,8 @@
 		 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 		 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 		 @scrolltolower="loadingData">
-			<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index" @tap="toDetail(item.farmId)">
+			<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index"
+			 @tap="toDetail(item.farmId)">
 				<view class="flex align-items-center justify-content-flex-justify">
 					<text class="item-title">{{item.farmName}}</text>
 					<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
@@ -60,7 +61,7 @@
 				newsList: [],
 				baseId: '',
 				page: 1,
-				pageSize:10,
+				pageSize: 10,
 				moreHeight: 30,
 				windowHeight: 300,
 				contentdown: '',
@@ -79,7 +80,7 @@
 			this.initData()
 		},
 		methods: {
-			
+
 			onPulling() {},
 			onRefresh() {
 				if (this._freshing) return;
@@ -115,9 +116,17 @@
 				})
 			},
 			toDetail(id) { //跳转我的农场详情
-				uni.navigateTo({
-					url: 'detailFarm?id='+id
+				uni.setStorage({
+					key: 'farmId',
+					data: id,
+					success() {
+						uni.navigateTo({
+							url: 'detailFarm'
+						})
+					}
 				})
+
+
 			},
 			scrolltoupper() {
 				console.info('下拉')
@@ -131,28 +140,28 @@
 				}
 			},
 			getData() {
-				let obj={
-					pageNum:this.page,
-					pageSize:this.pageSize
+				let obj = {
+					pageNum: this.page,
+					pageSize: this.pageSize
 				}
 				this.$api.farmGetAll(obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data)
-					// if (this.page == 1 && this.newsList.length == 0) {
-					// 	this.loadingType = 0
-					// 	this.contentdown = '暂无数据'
-					// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-					// 	this.contentdown = ''
-					// 	this.loadingType = 0
-					// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-					// 	this.contentdown = '无更多数据'
-					// 	this.loadingType = 0
-					// } else if (res.data.data.rowCount == this.newsList.length) {
-					// 	this.loadingType = 0
-					// 	this.contentdown = '无更多数据'
-					// } else {
-					// 	this.contentdown = '上拉加载更多'
-					// 	this.loadingType = 1
-					// }
+					this.newsList = this.newsList.concat(res.data.data.farms)
+					if (this.page == 1 && this.newsList.length == 0) {
+						this.loadingType = 0
+						this.contentdown = '暂无数据'
+					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
+						this.contentdown = ''
+						this.loadingType = 0
+					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
+						this.contentdown = '无更多数据'
+						this.loadingType = 0
+					} else if (res.data.data.rowCount == this.newsList.length) {
+						this.loadingType = 0
+						this.contentdown = '无更多数据'
+					} else {
+						this.contentdown = '上拉加载更多'
+						this.loadingType = 1
+					}
 				})
 			}
 		}
@@ -286,21 +295,24 @@
 		font-size: 15px;
 		font-weight: bold;
 	}
-	.item-icon{
-		width:22px !important;
-		height:22px !important;
+
+	.item-icon {
+		width: 22px !important;
+		height: 22px !important;
 		margin-right: 5px;
 	}
-	.item-type-box{
+
+	.item-type-box {
 		padding: 5px 30rpx;
-		width:46%;
-		background:rgba(249,249,249,1);
-		border-radius:32px;
+		width: 46%;
+		background: rgba(249, 249, 249, 1);
+		border-radius: 32px;
 	}
-	.item-content{
+
+	.item-content {
 		padding-top: 20rpx;
-		text-indent:2em;
+		text-indent: 2em;
 		font-size: 13px;
-		color:#999;
+		color: #999;
 	}
 </style>

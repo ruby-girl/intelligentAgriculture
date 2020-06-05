@@ -53,10 +53,18 @@ export const  selectFarmId= (data) => {
 		data:data
 	})
 }
-// 获取农场详情
+// 添加农场
 export const  insertFarm= (data) => {
 	return http.request({
 		url: 'farm/insertFrom',
+		method: 'post',
+		data:data
+	})
+}
+// 编辑农场
+export const  updateFarm= (data) => {
+	return http.request({
+		url: 'farm/update',
 		method: 'post',
 		data:data
 	})

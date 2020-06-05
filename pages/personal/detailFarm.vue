@@ -142,9 +142,14 @@
 			qqmapsdk = new QQMapWX({
 				key: 'TN7BZ-YJKCP-OMTD3-LQKOM-2C5KZ-AWFUQ'
 			});
-			this.farmId = option.id
-			this.getFarmDetail()
-
+			let _this=this
+			uni.getStorage({
+				key: 'farmId',
+				success: function(res) {
+					_this.farmId = res.data
+					_this.getFarmDetail()
+				}
+			})
 			// this.getData()
 		},
 		mounted() {

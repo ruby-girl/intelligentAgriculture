@@ -3,8 +3,8 @@
 	<view>
 		<view class="cu-form-group" style="position: relative;">
 			<view class="title">选择农场</view>
-			<picker @change="pickerChange($event)" :value="optionValue" :range="list" range-key="name">
-				<view class="uni-input">{{list[optionValue].name}}</view>
+			<picker @change="pickerChange($event)" :value="farmValue" :range="farmList" range-key="name">
+				<view class="uni-input">{{farmList[farmValue].farmName}}</view>
 			</picker>
 		</view>
 		<view class="cu-form-group">
@@ -39,6 +39,8 @@
 	export default {
 		data() {
 			return {
+				farmList:[],
+				farmValue:0,
 				list: [{
 					name: 'option1',
 					id: 1
@@ -72,7 +74,7 @@
 			}
 		},
 		onLoad(option) {
-
+			
 		},
 		methods: {
 			selectChange(val) {
@@ -96,6 +98,15 @@
 			// this.landId = ids.join()
 			// this.postData.landParcelIds = ids.join()
 		},
+		getFarmData() {//获取农场下拉数据
+			let obj = {
+				pageNum:1,
+				pageSize: 100
+			}
+			this.$api.farmGetAll(obj).then(res => {
+				this.farmList =res.data.data.farms			
+			})
+		}
 		}
 	}
 </script>

@@ -72,7 +72,7 @@
 				</view>
 			</view>
 			<button :disabled="disabled" @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg" style="margin:40px 20px 20px 20px">
-				添加农场</button>
+			{{btnTxt}}</button>
 		</scroll-view>
 	</view>
 </template>
@@ -81,6 +81,7 @@
 	export default {
 		data() {
 			return {
+				btnTxt:'添加农场',
 				index: '',
 				imgList: [],
 				landList: [],
@@ -104,8 +105,12 @@
 			}
 		},
 		onLoad(option) {
-			if (option.farmId) {
-				this.postData.farmId = option.farmId
+			if (option.id) {
+				this.postData.farmId = option.id
+				uni.setNavigationBarTitle({
+					title:"编辑农场"
+				})
+				this.btnTxt='保存'
 				this.getFarm()
 			} else {
 				this.getProvinceCode()
@@ -191,7 +196,7 @@
 					// 根据code设置省市县默认值 
 					this.provinceCode = res.data.data.provinceCode
 					this.cityCode = res.data.data.cityCode
-					this.areaCode = res.data.data.areaCode
+					this.areaCode = res.data.data.arerCode
 					this.$api.districts({
 						parent: 86
 					}).then(res => {
@@ -314,19 +319,39 @@
 			addFunc() {
 				if (!this.test()) return
 				this.getSelectValue()
-				console.info(this.postData)
 				this.postData.picture = 'qwe'		
 				this.postData.masterPicture = 'qwe'
-				this.$api.insertFarm(this.postData).then(res => {
-					uni.showToast({
-						title: '添加成功',
-						duration: 2000,
-						success() {
-							uni.redirectTo({
-								url: 'myFarm'
-							});
-						}
-					});
+				let api;
+				if(!this.postData.farmId){
+					 api='insertFarm'
+				}else api='updateFarm';	
+				this.$api[api](this.postData).then(res => {
+					if(this.postData.farmId){
+						uni.showToast({
+							title: '编辑成功',
+							duration: 2000,
+							success() {
+								 let pages = getCurrentPages(); // 当前页面
+								 let beforePage = pages[pages.length - 2]; // 前一个页面
+								uni.navigateBack({
+								     success: function() {
+								         beforePage.onLoad(); // 执行前一个页面的onLoad方法
+								     }
+								 });
+							}
+						});
+					}else{
+						uni.showToast({
+							title: '添加成功',
+							duration: 2000,
+							success() {
+								uni.redirectTo({
+									url: 'myFarm'
+								});
+							}
+						});
+					}
+					
 				})
 			}
 		}
