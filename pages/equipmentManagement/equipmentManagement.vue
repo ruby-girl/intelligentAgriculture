@@ -1,4 +1,4 @@
-<!-- 预警与监测 -->
+<!-- 设备列表-->
 <template>
 	<view class="workOrder">
 		<view class="top equipmentManagement-title flex  align-items-center justify-content-flex-justify">

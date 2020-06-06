@@ -77,3 +77,35 @@ export const  districts= (data) => {
 		data:data
 	})
 }
+// 添加设备
+export const  insertDevice= (data) => {
+	return http.request({
+		url: 'device/insertDevice',
+		method: 'post',
+		data:data
+	})
+}
+// 添加地块
+export const  insertMassif= (data) => {
+	return http.request({
+		url: 'massif/insertMassif',
+		method: 'post',
+		data:data
+	})
+}
+// 获取未绑定地块设备列表
+export const  devicegetNoBangAll= (data) => {
+	return http.request({
+		url: 'device/getAll',
+		method: 'post',
+		data:data
+	})
+}
+// 获取地块列表
+export const  selectMassif= (data) => {
+	return http.request({
+		url: 'massif/selectMassif',
+		method: 'post',
+		data:data
+	})
+}

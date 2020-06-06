@@ -3,35 +3,37 @@
 	<view>
 		<view class="cu-form-group" style="position: relative;">
 			<view class="title">选择农场</view>
-			<picker @change="pickerChange($event)" :value="farmValue" :range="farmList" range-key="name">
+			<picker @change="pickerChange($event)" :value="farmValue" :range="farmList" range-key="farmName">
 				<view class="uni-input">{{farmList[farmValue].farmName}}</view>
 			</picker>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">地块编号</view>
-			<input placeholder="输入地块编号" name="input"></input>
+			<input placeholder="输入地块编号" v-model="obj.massifNo" name="input"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">地块名称</view>
-			<input placeholder="输入地块名称" name="input"></input>
+			<input placeholder="输入地块名称" v-model="obj.massifName" name="input"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">关联作物</view>
-			<picker @change="pickerChange($event)" :value="optionValue" :range="list" range-key="name">
-				<view class="uni-input">{{list[optionValue].name}}</view>
-			</picker>
+			<input placeholder="输入作物名称" v-model="obj.crop" name="input"></input>
+		</view>
+		<view class="cu-form-group">
+			<view class="title">作物周期</view>
+			<input placeholder="输入作物周期" v-model="obj.cycle" type="number" name="input"></input>
 		</view>
 		<view class="cu-form-group" style="padding-bottom:0;height:40rpx">
 			<view class="title">关联设备</view>
 		</view>
 		<view class="cu-form-group" style="border-top:none;">
 			<view class="flex flex-wrap container-input">
-				<view v-bind:class="{'btn-box':true,'btn-box-action':item.isChecked}" @click="setAction(i)" :key="i" v-for="(item,i) in landList">
-					{{item.label}}
+				<view v-bind:class="{'btn-box':true,'btn-box-action':item.isChecked}" @click="setAction(i)" :key="i" v-for="(item,i) in devicegetList">
+					{{item.deviceName}}
 				</view>
 			</view>
-		</view>		
-		<view class="bottom-lg-btn">保存</view>
+		</view>
+		<view class="bottom-lg-btn" @click="insertMassif">保存</view>
 	</view>
 </template>
 
@@ -39,8 +41,8 @@
 	export default {
 		data() {
 			return {
-				farmList:[],
-				farmValue:0,
+				farmList: [],
+				farmValue: 0,
 				list: [{
 					name: 'option1',
 					id: 1
@@ -48,65 +50,110 @@
 					name: 'option2',
 					id: 2
 				}],
-				optionValue: 0,
-				values: [],
-				landList: [{
-					id: '选项1',
-					label: '黄金糕',
-					isChecked:false
-				}, {
-					id: '选项2',
-					label: '双皮奶',
-					isChecked:false
-				}, {
-					id: '选项3',
-					label: '蚵仔煎',
-					isChecked:false
-				}, {
-					id: '选项4',
-					label: '龙须面',
-					isChecked:false
-				}, {
-					id: '选项5',
-					label: '北京烤鸭',
-					isChecked:false
-				}]
+				obj: { //设备参数未处理~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+					massifName: '', //地块名
+					massifNo: '', //地块编号
+					crop: '', //作物
+					cycle: '', //预计作物周期
+					massifId: '' //地块ID
+				},
+				devicegetList: [], //设备下拉变量
 			}
 		},
 		onLoad(option) {
-			
+			if (option.massifId) {
+				this.obj.massifId = option.massifId
+			}
+			this.devicegetNoBangAll()
+			this.getFarmData()
 		},
 		methods: {
-			selectChange(val) {
-				this.values = val
+			getOptionValue(){			
+				let _this=this
+				let arr=this.farmList.filter((item,i)=>{
+					return i==_this.farmValue
+				})
+				this.obj.farmId=arr[0].farmId			
 			},
-			pickerChange(e) {
-				this.optionValue = e.target.value
-				// let arr = this.breedList.filter((item, i) => {
-				// 	return i == e.target.value
-				// })
-				// this.postData.breedId = arr[0].id
+			insertMassif() { //添加地快，未处理判断新增和编辑的接口~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+				if (!this.obj.massifName) {
+					uni.showToast({
+						title: '请输入地块名称',
+						icon: 'none'
+					})
+					return
+				}
+				if (!this.obj.massifNo) {
+					uni.showToast({
+						title: '请输入地块编号',
+						icon: 'none'
+					})
+					return
+				}
+				this.getOptionValue()
+				this.$api.insertMassif(this.obj).then(res => {
+					if (this.obj.massifId) {
+						uni.showToast({
+							title: '编辑成功',
+							duration: 2000,
+							success() {
+								let pages = getCurrentPages(); // 当前页面
+								let beforePage = pages[pages.length - 2]; // 前一个页面
+								uni.navigateBack({
+									success: function() {
+										beforePage.onLoad(); // 执行前一个页面的onLoad方法
+									}
+								});
+							}
+						});
+					} else {
+						uni.showToast({
+							title: '添加成功',
+							duration: 2000,
+							success() {
+								let pages = getCurrentPages(); // 当前页面
+								 let beforePage = pages[pages.length - 2]; // 前一个页面
+								uni.navigateBack({
+								     success: function() {
+								         beforePage.onLoad(); // 执行前一个页面的onLoad方法
+								     }
+								 });
+							}
+						});
+					}
+				})
 			},
-		setAction(i) {
-			this.landList[i].isChecked = !this.landList[i].isChecked
-			let arr = this.landList.filter(item => {
-				return item.isChecked
-			})
-			let ids = arr.map(item => {
-				return item.id
-			})
-			// this.landId = ids.join()
-			// this.postData.landParcelIds = ids.join()
-		},
-		getFarmData() {//获取农场下拉数据
-			let obj = {
-				pageNum:1,
-				pageSize: 100
+			devicegetNoBangAll() { //获取地块
+				this.$api.devicegetNoBangAll().then(res => {
+					res.data.data.devices.forEach((item, i) => {
+						res.data.data.devices[i].isChecked = false
+					})
+					this.devicegetList = res.data.data.devices
+				})
+			},
+			pickerChange(e) {//选择农场
+				this.farmValue = e.target.value
+			},
+			setAction(i) {
+				this.devicegetList[i].isChecked = !this.devicegetList[i].isChecked
+				let arr = this.devicegetList.filter(item => {
+					return item.isChecked
+				})
+				let ids = arr.map(item => {
+					return item.deviceId
+				})
+				// this.landId = ids.join()
+				// this.postData.landParcelIds = ids.join()
+			},
+			getFarmData() { //获取农场下拉数据
+				let obj = {
+					pageNum: 1,
+					pageSize: 100
+				}
+				this.$api.farmGetAll(obj).then(res => {
+					this.farmList = res.data.data.farms
+				})
 			}
-			this.$api.farmGetAll(obj).then(res => {
-				this.farmList =res.data.data.farms			
-			})
-		}
 		}
 	}
 </script>
@@ -142,13 +189,14 @@
 		text-align: center;
 		color: #fff;
 	}
+
 	.btn-box {
 		border: 1px solid #eee;
 		padding: 4px 8px;
 		border-radius: 4px;
 		margin: 20rpx 30rpx 20rpx 0;
 	}
-	
+
 	.btn-box-action {
 		border: 1px solid #00AE66;
 		color: #00AE66;
