@@ -48,7 +48,7 @@
 		},
 		methods: {
 			selectMassif(){//获取未绑定地块的设备
-				this.$api.selectMassif().then(res=>{
+				this.$api.selectMassif({pageNum:1,pageSize:100}).then(res=>{
 					this.massifsList=res.data.data.massifs
 				})
 			},

@@ -33,7 +33,32 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-form-group" style="border-top:none;" v-if="obj.massifId">
+			<view class="title">关联设备</view>
+			<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
+		</view>
 		<view class="bottom-lg-btn" @click="insertMassif">保存</view>
+		<view v-if="obj.massifId" class="bottom-lg-btn" style="background: #fff;color:#000;" @click="delMassif">删除地块</view>
+		<view class="cu-modal" :class="modalName=='DialogModal1'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content" style="color:#333">遇到了点小问题</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view style="text-align: center;background: #fff;padding:0 10rpx">
+					<view style="font-size: 30rpx;color:#666">地块关联设备时不能删除地块。</view>
+					<view style="font-size: 30rpx;color:#666">请先解除设备关联</view>
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action" style="text-align: center;margin:0 auto;color:#49BA89">
+						<view class="action margin-0" @tap="hideModal">我知道了</view>
+
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -55,25 +80,72 @@
 					massifNo: '', //地块编号
 					crop: '', //作物
 					cycle: '', //预计作物周期
-					massifId: '' //地块ID
+					massifId: '', //地块ID
+					deviceId:[]//设备数组
 				},
-				devicegetList: [], //设备下拉变量
+				devicegetList: [], //设备列表
+				switchB: true, //是否关联设备
+				modalName: ''
 			}
 		},
 		onLoad(option) {
 			if (option.massifId) {
 				this.obj.massifId = option.massifId
+				this.getLandDetail(option.massifId)//获取地块详情
 			}
 			this.devicegetNoBangAll()
 			this.getFarmData()
 		},
 		methods: {
-			getOptionValue(){			
-				let _this=this
-				let arr=this.farmList.filter((item,i)=>{
-					return i==_this.farmValue
+			hideModal(){
+				this.modalName = null
+			},
+			delMassif() { //删除设备
+				if (this.switchB) {
+					this.modalName = 'DialogModal1'
+					return
+				}
+				this.$api.deleteMassif({
+					massifId: this.obj.massifId
+				}).then(res => {
+					uni.showToast({
+						title: '删除成功',
+						duration: 2000,
+						success() {
+							let pages = getCurrentPages(); // 当前页面
+							let beforePage = pages[pages.length - 2]; // 前一个页面
+							uni.navigateBack({
+								success: function() {
+									beforePage.onLoad(); // 执行前一个页面的onLoad方法
+								}
+							});
+						}
+					});
 				})
-				this.obj.farmId=arr[0].farmId			
+			},
+			changeSwitch(e) {
+				this.switchB = e.detail.value
+				if(!this.switchB){
+					this.devicegetList.forEach((item, i) => {
+						this.devicegetList[i].isChecked = false
+					})
+				}
+			},
+			getLandDetail(id) {//详情
+				this.$api.selectIdAll({massifId:id}).then(res => {
+					this.obj = res.data.data
+					// this.devicegetList.filter(item=>{
+						
+					// 	return item.
+					// })
+				})
+			},
+			getOptionValue() {
+				let _this = this
+				let arr = this.farmList.filter((item, i) => {
+					return i == _this.farmValue
+				})
+				this.obj.farmId = arr[0].farmId
 			},
 			insertMassif() { //添加地快，未处理判断新增和编辑的接口~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 				if (!this.obj.massifName) {
@@ -112,18 +184,18 @@
 							duration: 2000,
 							success() {
 								let pages = getCurrentPages(); // 当前页面
-								 let beforePage = pages[pages.length - 2]; // 前一个页面
+								let beforePage = pages[pages.length - 2]; // 前一个页面
 								uni.navigateBack({
-								     success: function() {
-								         beforePage.onLoad(); // 执行前一个页面的onLoad方法
-								     }
-								 });
+									success: function() {
+										beforePage.onLoad(); // 执行前一个页面的onLoad方法
+									}
+								});
 							}
 						});
 					}
 				})
 			},
-			devicegetNoBangAll() { //获取地块
+			devicegetNoBangAll() { //获获取未绑定地块设备列表//如果是编辑，应该请求这个地块下包含的设备+未绑定地块的涉笔列表
 				this.$api.devicegetNoBangAll().then(res => {
 					res.data.data.devices.forEach((item, i) => {
 						res.data.data.devices[i].isChecked = false
@@ -131,7 +203,7 @@
 					this.devicegetList = res.data.data.devices
 				})
 			},
-			pickerChange(e) {//选择农场
+			pickerChange(e) { //选择农场
 				this.farmValue = e.target.value
 			},
 			setAction(i) {
@@ -142,8 +214,7 @@
 				let ids = arr.map(item => {
 					return item.deviceId
 				})
-				// this.landId = ids.join()
-				// this.postData.landParcelIds = ids.join()
+				this.obj.deviceId = ids
 			},
 			getFarmData() { //获取农场下拉数据
 				let obj = {

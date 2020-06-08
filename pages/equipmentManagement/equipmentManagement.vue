@@ -97,7 +97,7 @@
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			// this.getData()
+			this.initData()
 		},
 		mounted() {
 			this.loadingData = throttle(this.loadingData, 2000);
@@ -168,10 +168,11 @@
 				}
 			},
 			getData() {
-				let obj = { ...this.listObj,
-					...this.obj
+				let obj = {
+					pageNum: this.page,
+					pageSize: 10
 				}
-				this.$apiYZX.getFeedBackWorkOrdersList(this.page, obj).then(res => {
+				this.$api.findByDevice(obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.data)
 					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0

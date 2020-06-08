@@ -109,3 +109,32 @@ export const  selectMassif= (data) => {
 		data:data
 	})
 }
+//删除地块
+export const  deleteMassif= (data) => {
+	return http.request({
+		url: 'massif/deleteMassif',
+		method: 'post',
+		data:data
+	})
+}
+
+//获取地块详情
+export const  selectIdAll= (data) => {
+	return http.request({
+		url: 'massif/selectIdAll',
+		method: 'post',
+		data:data
+	})
+}
+
+
+
+// TAB 获取设备列表
+
+export const  findByDevice= (data) => {
+	return http.request({
+		url: 'device/findByDevice',
+		method: 'post',
+		data:data
+	})
+}

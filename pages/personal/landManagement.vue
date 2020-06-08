@@ -3,9 +3,9 @@
 	<view class="workOrder">
 		<view v-bind:style="{height:(windowHeight-20)+'px'}">
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-				<view class="cu-form-group" v-for="i in 5" style="padding:20rpx 30rpx;">
+				<view class="cu-form-group" v-for="(item,i) in newsList" :key="i" style="padding:20rpx 30rpx;" @click="toDetail(item.massifId)">
 					<view>
-						<view class="item-title">NO.00001  冬瓜地</view>
+						<view class="item-title">{{item.massifNo}}  {{item.crop}}地</view>
 						<view class="small-text">开心农场</view>
 					</view>
 					<image class="right-jt" src="../../static/imgs/arrows.png" mode=""></image>
@@ -60,17 +60,11 @@
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
+			this.loadingData = throttle(this.loadingData, 2000);
+			this.initData()
 			// this.getData()
 		},
-		mounted() {
-			this.loadingData = throttle(this.loadingData, 2000);
-		},
 		methods: {
-			toUrl() { //跳转监测详情
-				uni.navigateTo({
-					url: 'growthMonitoring'
-				})
-			},
 			onPulling() {},
 			onRefresh() {
 				if (this._freshing) return;
@@ -112,11 +106,12 @@
 				}
 			},
 			getData() {
-				let obj = { ...this.listObj,
-					...this.obj
+				let obj = {
+					pageNum: this.page,
+					pageSize: 15
 				}
-				this.$apiYZX.getFeedBackWorkOrdersList(this.page, obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.data)
+				this.$api.selectMassif(obj).then(res => {
+					this.newsList = this.newsList.concat(res.data.data.massifs)
 					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
@@ -138,6 +133,11 @@
 			toAdd(){
 				uni.navigateTo({
 					url: 'addLand'
+				})
+			},
+			toDetail(id){
+				uni.navigateTo({
+					url: 'addLand?massifId='+id
 				})
 			}
 		}
