@@ -93,6 +93,14 @@ export const  insertMassif= (data) => {
 		data:data
 	})
 }
+// 编辑地块
+export const updateMassif= (data) => {
+	return http.request({
+		url: 'massif/updateMassif',
+		method: 'post',
+		data:data
+	})
+}
 // 获取未绑定地块设备列表
 export const  devicegetNoBangAll= (data) => {
 	return http.request({

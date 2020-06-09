@@ -12,7 +12,7 @@
 		<view class="cu-form-group">
 			<view class="title">关联地块</view>
 			<picker @change="pickerChange($event)" :value="optionValue" :range="massifsList" range-key="name">
-				<view class="uni-input">{{devicegetList[optionValue].massifId}}</view>
+				<view class="uni-input">{{massifsList[optionValue].massifName}}</view>
 			</picker>
 		</view>
 		<view class="bottom-lg-btn" @click="toAdd">添加设备</view>

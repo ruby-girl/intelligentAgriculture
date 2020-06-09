@@ -26,7 +26,7 @@
 		<view class="cu-form-group" style="padding-bottom:0;height:40rpx">
 			<view class="title">关联设备</view>
 		</view>
-		<view class="cu-form-group" style="border-top:none;">
+		<view class="cu-form-group" style="border-top:none;" v-if="devicegetList.length>0">
 			<view class="flex flex-wrap container-input">
 				<view v-bind:class="{'btn-box':true,'btn-box-action':item.isChecked}" @click="setAction(i)" :key="i" v-for="(item,i) in devicegetList">
 					{{item.deviceName}}
@@ -37,7 +37,7 @@
 			<view class="title">关联设备</view>
 			<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
 		</view>
-		<view class="bottom-lg-btn" @click="insertMassif">保存</view>
+		<view :class="{'bottom-lg-btn':true,'btn-disabled':btnDisabled}" @click="insertMassif">保存</view>
 		<view v-if="obj.massifId" class="bottom-lg-btn" style="background: #fff;color:#000;" @click="delMassif">删除地块</view>
 		<view class="cu-modal" :class="modalName=='DialogModal1'?'show':''">
 			<view class="cu-dialog">
@@ -75,7 +75,7 @@
 					name: 'option2',
 					id: 2
 				}],
-				obj: { //设备参数未处理~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				obj: {
 					massifName: '', //地块名
 					massifNo: '', //地块编号
 					crop: '', //作物
@@ -85,13 +85,13 @@
 				},
 				devicegetList: [], //设备列表
 				switchB: true, //是否关联设备
-				modalName: ''
+				modalName: '',
+				btnDisabled:false
 			}
 		},
 		onLoad(option) {
 			if (option.massifId) {
-				this.obj.massifId = option.massifId
-				this.getLandDetail(option.massifId)//获取地块详情
+				this.obj.massifId = option.massifId			
 			}
 			this.devicegetNoBangAll()
 			this.getFarmData()
@@ -126,18 +126,34 @@
 			changeSwitch(e) {
 				this.switchB = e.detail.value
 				if(!this.switchB){
+					this.obj.relation=0
 					this.devicegetList.forEach((item, i) => {
 						this.devicegetList[i].isChecked = false
 					})
+				}else{
+					this.obj.relation=1
 				}
 			},
-			getLandDetail(id) {//详情
+			getLandDetail(id,devicegetList) {//详情		  
 				this.$api.selectIdAll({massifId:id}).then(res => {
 					this.obj = res.data.data
-					// this.devicegetList.filter(item=>{
-						
-					// 	return item.
-					// })
+					this.obj.massifId=id
+					if(this.obj.relation==1){
+						this.switchB=true
+					}else{
+						this.switchB=false
+					}
+					let deviceId=[]
+					this.obj.devices.forEach((item, i) => {
+						deviceId.push(item.deviceId)
+						this.obj.devices[i].isChecked = true
+						devicegetList.push(this.obj.devices[i])
+					})
+					
+					delete this.obj.devices
+					delete this.obj.creationTime
+					this.obj.deviceId=deviceId
+					this.devicegetList=[...devicegetList]
 				})
 			},
 			getOptionValue() {
@@ -147,7 +163,10 @@
 				})
 				this.obj.farmId = arr[0].farmId
 			},
-			insertMassif() { //添加地快，未处理判断新增和编辑的接口~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+			insertMassif() { //添加地快
+				if(this.btnDisabled){//没有设备无法添加
+					return
+				}
 				if (!this.obj.massifName) {
 					uni.showToast({
 						title: '请输入地块名称',
@@ -163,7 +182,11 @@
 					return
 				}
 				this.getOptionValue()
-				this.$api.insertMassif(this.obj).then(res => {
+				let api;
+				if(!this.obj.massifId){
+					 api='insertMassif'
+				}else api='updateMassif';	
+				this.$api[api](this.obj).then(res => {
 					if (this.obj.massifId) {
 						uni.showToast({
 							title: '编辑成功',
@@ -195,19 +218,38 @@
 					}
 				})
 			},
-			devicegetNoBangAll() { //获获取未绑定地块设备列表//如果是编辑，应该请求这个地块下包含的设备+未绑定地块的涉笔列表
+			devicegetNoBangAll() { //获获取未绑定地块设备列表
 				this.$api.devicegetNoBangAll().then(res => {
 					res.data.data.devices.forEach((item, i) => {
 						res.data.data.devices[i].isChecked = false
 					})
-					this.devicegetList = res.data.data.devices
+					let devicegetList = res.data.data.devices
+					if(this.obj.massifId){//如果是编辑
+						this.getLandDetail(this.obj.massifId,devicegetList)//获取地块详情
+					}else{
+						this.devicegetList=devicegetList
+						if(this.devicegetList.length<1){
+							uni.showToast({
+								title: '当前无可用设备，无法添加地块',
+								icon: 'none'
+							})
+							this.btnDisabled=true
+						}else{
+							this.btnDisabled=false
+						}
+					}
 				})
 			},
 			pickerChange(e) { //选择农场
 				this.farmValue = e.target.value
 			},
 			setAction(i) {
-				this.devicegetList[i].isChecked = !this.devicegetList[i].isChecked
+				if(!this.switchB){
+					return
+				}
+				let devicegetList=[...this.devicegetList]			
+				devicegetList[i].isChecked = !devicegetList[i].isChecked
+				this.devicegetList=devicegetList
 				let arr = this.devicegetList.filter(item => {
 					return item.isChecked
 				})
@@ -271,5 +313,8 @@
 	.btn-box-action {
 		border: 1px solid #00AE66;
 		color: #00AE66;
+	}
+	.btn-disabled{
+		background: #aaa;
 	}
 </style>
