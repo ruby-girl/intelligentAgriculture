@@ -2,20 +2,20 @@
 	<view>
 		<view class="cu-form-group" style="position: relative;">
 			<view class="title">设备序列号</view>
-			<input placeholder="输入设备名称" v-model="obj.SN" name="input"></input>
-			<image class="code-img" src="../../static/imgs/qr-code.png" mode=""></image>
+			<input placeholder="输入设备名称" v-model="obj.sn" name="input"></input>
+			<image @click="toScanCode" class="code-img" src="../../static/imgs/qr-code.png" mode=""></image>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">设备名称</view>
-			<input placeholder="输入设备名称" v-model="obj.deviceName"  name="input"></input>
+			<input placeholder="输入设备名称" v-model="obj.deviceName" name="input"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">关联地块</view>
-			<picker @change="pickerChange($event)" :value="optionValue" :range="massifsList" range-key="name">
+			<picker @change="pickerChange($event)" :value="optionValue" :range="massifsList" range-key="massifName">
 				<view class="uni-input">{{massifsList[optionValue].massifName}}</view>
 			</picker>
 		</view>
-		<view class="bottom-lg-btn" @click="toAdd">添加设备</view>
+		<view class="bottom-lg-btn" @click="toAdd">{{btnTxt}}</view>
 	</view>
 </template>
 
@@ -23,33 +23,61 @@
 	export default {
 		data() {
 			return {
-				list: [{
-					name: 'option1',
-					id: 1
-				}, {
-					name: 'option2',
-					id: 2
-				}],
 				optionValue: 0,
-				obj:{
-					deviceName:'',
-					massifId:'',
-					SN:'',
-					deviceId:''
+				obj: {
+					deviceName: '',
+					massifId: '',
+					sn: '',
+					deviceId: ''
 				},
-				massifsList:[]
+				massifsList: [],
+				btnTxt: '新建设备'
 			}
 		},
 		onLoad(option) {
-			if(option.deviceId){
-				this.obj.deviceId=option.deviceId
+			if (option.deviceId) {
+				this.obj.deviceId = option.deviceId
+				this.selectDevice()
+				uni.setNavigationBarTitle({
+					title: "编辑设备"
+				})
+				this.btnTxt = '保存'
+			} else {
+				this.selectMassif()
 			}
-			this.selectMassif()
+
 		},
 		methods: {
-			selectMassif(){//获取未绑定地块的设备
-				this.$api.selectMassif({pageNum:1,pageSize:100}).then(res=>{
-					this.massifsList=res.data.data.massifs
+			toScanCode() { //扫码
+				uni.scanCode({
+					success: function(res) {
+						console.log(JSON.stringify(res));
+						this.obj.sn=res.result	
+					}
+				});
+
+			},
+			selectDevice() {
+				this.$api.selectDevice({
+					deviceId: this.obj.deviceId
+				}).then(res => {
+					this.obj = res.data.data
+					this.selectMassif()
+				})
+			},
+			selectMassif() { //获取地块列表
+				this.$api.selectMassif({
+					pageNum: 1,
+					pageSize: 100
+				}).then(res => {
+					this.massifsList = res.data.data.massifs
+					if (option.deviceId) {
+						this.optionValue = this.massifsList.filter((item, i) => {
+							if (item.massifId == this.obj.massifId) {
+								return i
+							}
+						})
+					}
 				})
 			},
 			pickerChange(e) {
@@ -59,48 +87,62 @@
 				// })
 				// this.postData.breedId = arr[0].id
 			},
-			toAdd(){
-				if(!this.obj.deviceName){
+			toAdd() { //添加设备
+				if (!this.obj.deviceName) {
 					uni.showToast({
-					    title: '请输入设备名称',
-						icon:'none'		
+						title: '请输入设备名称',
+						icon: 'none'
 					})
 					return
 				}
-				if(!this.obj.SN){
+				if (!this.obj.SN && !this.obj.deviceId) {
 					uni.showToast({
-					    title: '请输入设备序列号',
-						icon:'none'		
+						title: '请输入设备序列号',
+						icon: 'none'
 					})
 					return
 				}
-				this.$api.insertDevice(this.obj).then(res=>{
-					if(this.obj.deviceId){
+				if (this.obj.sn && this.obj.deviceId) {
+					uni.showToast({
+						title: '请输入设备序列号',
+						icon: 'none'
+					})
+					return
+				}
+				let api; //未处理~~~~
+				if (!this.obj.massifId) {
+					api = 'insertDevice'
+				} else {
+					api = 'updateDevice';
+					this.obj.SN = this.obj.sn
+				}
+				this.$api[api](this.obj).then(res => {
+					if (this.obj.deviceId) {
 						uni.showToast({
 							title: '编辑成功',
 							duration: 2000,
 							success() {
-								 let pages = getCurrentPages(); // 当前页面
-								 let beforePage = pages[pages.length - 2]; // 前一个页面
+								let pages = getCurrentPages(); // 当前页面
+								let beforePage = pages[pages.length - 2]; // 前一个页面
 								uni.navigateBack({
-								     success: function() {
-								         beforePage.onLoad(); // 执行前一个页面的onLoad方法
-								     }
-								 });
+									success: function() {
+										beforePage.onLoad(); // 执行前一个页面的onLoad方法
+									}
+								});
 							}
 						});
-					}else{
+					} else {
 						uni.showToast({
 							title: '添加成功',
 							duration: 2000,
 							success() {
 								let pages = getCurrentPages(); // 当前页面
-								 let beforePage = pages[pages.length - 2]; // 前一个页面
+								let beforePage = pages[pages.length - 2]; // 前一个页面
 								uni.navigateBack({
-								     success: function() {
-								         beforePage.onLoad(); // 执行前一个页面的onLoad方法
-								     }
-								 });
+									success: function() {
+										beforePage.onLoad(); // 执行前一个页面的onLoad方法
+									}
+								});
 							}
 						});
 					}
@@ -118,23 +160,27 @@
 		width: 35rpx;
 		height: 35rpx;
 	}
-	.cu-form-group picker::after{
+
+	.cu-form-group picker::after {
 		line-height: 50rpx;
 	}
-	.uni-input{
+
+	.uni-input {
 		line-height: 18rpx;
 		padding-left: 0;
 	}
-	.title{
-		width:180rpx;
+
+	.title {
+		width: 180rpx;
 	}
-	.bottom-lg-btn{
+
+	.bottom-lg-btn {
 		background: #00AE66;
 		border-radius: 20px;
 		padding: 5px 0;
-		width:80%;
-		margin:40rpx auto;
+		width: 80%;
+		margin: 40rpx auto;
 		text-align: center;
-		color:#fff;
+		color: #fff;
 	}
 </style>

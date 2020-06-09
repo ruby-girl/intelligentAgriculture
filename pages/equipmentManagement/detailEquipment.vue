@@ -3,10 +3,10 @@
 		<view class="detail-box">
 			<view class="flex align-items-center justify-content-flex-justify">
 				<view class="detail-name">
-					<view><text style="font-weight: bold;font-size: 17px;">SN:0000</text><text style="font-size: 13px;">设备名称</text></view>
-					<view class="detail-small-txt"><text>经度：117.11</text><text>纬度：110.22</text></view>
+					<view><text style="font-weight: bold;font-size: 17px;">{{obj.sn||''}}</text><text style="font-size: 13px;">{{obj.deviceName||''}}</text></view>
+					<view class="detail-small-txt"><text>经度：{{obj.longitude||''}}</text><text>纬度：{{obj.latitude||''}}</text></view>
 				</view>
-				<view class="detail-img">
+				<view class="detail-img"  @click="toAdd">
 					<image src="../../static/imgs/deit.png" mode="aspectFill"></image>
 					<view>
 						编辑
@@ -16,10 +16,10 @@
 			<view class="detail-bottom-box">
 				<view class="flex align-items-center justify-content-flex-justify">
 					<view class="font-size-16">
-						<text class="color-grey">所属农场：</text><text>开心农场</text>
+						<text class="color-grey">所属农场：</text><text>{{obj.farmName||''}}</text>
 					</view>
 					<view class="font-size-16">
-						<text class="color-grey">设备状态：</text><text>正常</text>
+						<text class="color-grey">设备状态：</text><text>{{obj.statusTxt||''}}</text>
 					</view>
 				</view>
 				<view class="flex align-items-center justify-content-flex-justify">
@@ -27,11 +27,11 @@
 						<text class="color-grey">版本信息：</text><text>V1.0</text>
 					</view>
 					<view class="font-size-16">
-						<text class="color-grey">设备电量：</text><text>89%</text>
+						<text class="color-grey">设备电量：</text><text>{{obj.batteryLevel||''}}%</text>
 					</view>
 				</view>
 			</view>
-			<view class="color-grey" style="text-align: center;">数据更新于12:57:11</view>
+			<view class="color-grey" style="text-align: center;">数据更新于{{obj.newest||''}}</view>
 		</view>
 		<view class="bottom-lg-btn">删除设备</view>
 	</view>
@@ -48,20 +48,35 @@
 					name: 'option2',
 					id: 2
 				}],
-				optionValue: 0
+				optionValue: 0,
+				deviceId:'',
+				obj:{}
 			}
 		},
 		onLoad(option) {
-
+			this.deviceId=option.deviceId
+			this.selectDevice()
 		},
 		methods: {
-			pickerChange(e) {
-				this.optionValue = e.target.value
-				// let arr = this.breedList.filter((item, i) => {
-				// 	return i == e.target.value
-				// })
-				// this.postData.breedId = arr[0].id
+			toAdd(){//跳转编辑
+				uni.navigateTo({
+					url: 'addEquipment?deviceId='+this.deviceId
+				})
 			},
+			selectDevice(){
+				this.$api.selectDevice({deviceId:this.deviceId}).then(res=>{
+					this.obj=res.data.data
+					if(this.obj.status=='ONLINE'){
+						this.obj.statusTxt='在线'
+					}else if(this.obj.status=='OFFLINE'){
+						this.obj.statusTxt='离线'
+					}else if(this.obj.status=='UNACTIVE'){
+						this.obj.statusTxt='未激活'
+					}else if(this.obj.status=='DISABLE'){
+						this.obj.statusTxt='禁用'
+					}
+				})
+			}
 		}
 	}
 </script>

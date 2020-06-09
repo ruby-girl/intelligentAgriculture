@@ -15,16 +15,16 @@
 			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 			 @scrolltolower="loadingData">
-				<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="index in 10" :key="index" @tap="toDetail()">
+				<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index" @tap="toDetail(item.deviceId)">
 					<view class="">
 						<view class="flex align-items-center justify-content-flex-justify">
 							<view class="">
-								<text>SN:000</text>
-								<text>设备名称</text>
+								<text>{{item.sn||''}}</text>
+								<text>{{item.deviceName||''}}</text>
 							</view>
 							<view>
 								<image class="line-img" src="../../static/imgs/online.png" mode="aspectFill"></image>
-								<text>在线</text>
+								<text>{{item.statusTxt||''}}</text>
 								<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
 							</view>
 						</view>
@@ -137,9 +137,9 @@
 					url: 'addEquipment'
 				})
 			},
-			toDetail(){//跳转详情
+			toDetail(id){//跳转详情
 				uni.navigateTo({
-					url: 'detailEquipment'
+					url: 'detailEquipment?deviceId='+id
 				})
 			},
 			delOrganUserWorkOrderManage(id) { //删除
@@ -173,7 +173,18 @@
 					pageSize: 10
 				}
 				this.$api.findByDevice(obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.data)
+					this.newsList = this.newsList.concat(res.data.data.devices)
+					this.newsList.forEach((item,i)=>{
+						if(this.newsList[i].status=='ONLINE'){
+							this.newsList[i].statusTxt='在线'
+						}else if(this.newsList[i].status=='OFFLINE'){
+							this.newsList[i].statusTxt='离线'
+						}else if(this.newsList[i].status=='UNACTIVE'){
+							this.newsList[i].statusTxt='未激活'
+						}else if(this.newsList[i].status=='DISABLE'){
+							this.newsList[i].statusTxt='禁用'
+						}
+					})
 					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0
 						this.contentdown = '暂无数据'

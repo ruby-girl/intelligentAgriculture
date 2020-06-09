@@ -6,8 +6,8 @@
 					<image :src="user.avatarUrl" mode=""></image>
 				</view>
 				<view class="">
-					<text>{{user.nickName}}</text>
-					<view class="text-gray">{{user.phone}}</view>
+					<text>{{user.nickName||''}}</text>
+					<view class="text-gray">{{user.phone||''}}</view>
 				</view>
 			</view>
 		</view>
@@ -21,7 +21,7 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					{{nums.farmCount}}
+					{{nums.farmCount||''}}
 				</view>
 			</view>
 			<!-- 地块 -->
@@ -33,7 +33,7 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					{{nums.massifCount}}
+					{{nums.massifCount||''}}
 				</view>
 			</view>
 		</view>

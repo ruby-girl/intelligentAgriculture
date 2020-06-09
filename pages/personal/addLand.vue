@@ -34,7 +34,7 @@
 			</view>
 		</view>
 		<view class="cu-form-group" style="border-top:none;" v-if="obj.massifId">
-			<view class="title">关联设备</view>
+			<view class="title">是否关联</view>
 			<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
 		</view>
 		<view :class="{'bottom-lg-btn':true,'btn-disabled':btnDisabled}" @click="insertMassif">保存</view>
@@ -91,7 +91,10 @@
 		},
 		onLoad(option) {
 			if (option.massifId) {
-				this.obj.massifId = option.massifId			
+				this.obj.massifId = option.massifId
+					uni.setNavigationBarTitle({
+						title:"编辑地块"
+					})
 			}
 			this.devicegetNoBangAll()
 			this.getFarmData()

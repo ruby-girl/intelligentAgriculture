@@ -135,13 +135,27 @@ export const  selectIdAll= (data) => {
 	})
 }
 
-
-
 // TAB 获取设备列表
 
 export const  findByDevice= (data) => {
 	return http.request({
 		url: 'device/findByDevice',
+		method: 'post',
+		data:data
+	})
+}
+// T获取设备详情
+export const  selectDevice= (data) => {
+	return http.request({
+		url: 'device/selectDevice',
+		method: 'post',
+		data:data
+	})
+}
+// 编辑设备
+export const  updateDevice= (data) => {
+	return http.request({
+		url: 'device/updateDevice',
 		method: 'post',
 		data:data
 	})
