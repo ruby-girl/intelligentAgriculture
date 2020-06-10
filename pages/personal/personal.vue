@@ -101,7 +101,7 @@
 		methods: {
 			toSet(){//跳转预警设置
 				uni.navigateTo({
-					url: 'setTheWarning'
+					url: 'landWaring'
 				});
 			},
 			getCount(){
