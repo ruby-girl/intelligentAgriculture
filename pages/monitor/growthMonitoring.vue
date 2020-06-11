@@ -3,25 +3,25 @@
 	<view class="workOrder">
 		<view>
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
-				<view class="map-container" :style="{'backgroundImage':'url('+imgUrl+')','backgroundRepeat': 'no-repeat',backgroundSize:'100%'}">
+				<view class="map-container" :style="{'backgroundImage':'url('+obj.liveCoverUrl+')','backgroundRepeat': 'no-repeat',backgroundSize:'100%'}">
 				
-					<!-- <video style="width:100%;height:600rpx;"  id="myVideo" src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
-					          enable-danmu danmu-btn controls></video> -->
+					<video style="width:100%;height:600rpx;"  id="myVideo" src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
+					          enable-danmu danmu-btn controls></video>
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">		
 						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">10123</view>
+							<view style="font-size: 15px;font-weight: bold;">{{obj.surplus}}</view>
 							<view class="small-text">剩余时间(天)</view>
 						</view>
 						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">10123</view>
+							<view style="font-size: 15px;font-weight: bold;">{{obj.already}}</view>
 							<view class="small-text">已成长(天)</view>
 						</view>
 						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">01.28</view>
+							<view style="font-size: 15px;font-weight: bold;">{{obj.creationTime}}</view>
 							<view class="small-text">种植日期</view>
 						</view>
 						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">10%</view>
+							<view style="font-size: 15px;font-weight: bold;">{{obj.proportion||'-'}}%</view>
 							<view class="small-text">种植进度</view>
 						</view>
 					</view>
@@ -34,52 +34,55 @@
 								<view class="flex  align-items-center">
 									<image class="land-img" src="../../static/imgs/location.png" mode=""></image>
 									<view class="item-title">
-										<view class="order-title">NO.00001</view>
-										<view class="order-title small-text">开心农场 </view>
+										<view class="order-title">{{obj.massifNo}}</view>
+										<view class="order-title small-text">{{obj.farmName}}</view>
 									</view>
 								</view>
-								<view class="state-box">
-									在线
+								<view class="state-box" v-if="obj.statusTxt=='在线'">
+									{{obj.statusTxt}}
 								</view>
-							</view>
-							<view class="box-margin flex justify-content-flex-justify align-items-center">
-								<view class="item-content-box">
-									<view class="item-num">
-										60%
-									</view>
-									<text class="small-text">冬瓜</text>
-								</view>
-								<view class="item-content-box">
-									<view class="item-num">
-										60%
-									</view>
-									<text class="small-text">冬瓜</text>
-								</view>
-								<view class="item-content-box">
-									<view class="item-num">
-										60%
-									</view>
-									<text class="small-text">冬瓜</text>
+								<view class="state-box-error" v-else>
+									{{obj.statusTxt}}
 								</view>
 							</view>
 							<view class="box-margin flex justify-content-flex-justify align-items-center">
 								<view class="item-content-box">
 									<view class="item-num">
-										60%
+										{{obj.proportion||'-'}}<span class="small-txt">%</span>
 									</view>
 									<text class="small-text">冬瓜</text>
 								</view>
 								<view class="item-content-box">
 									<view class="item-num">
-										60%
+										{{obj.temperature||'-'}}<span class="small-txt">℃</span>
 									</view>
-									<text class="small-text">冬瓜阿萨德</text>
+									<text class="small-text">空气温度</text>
 								</view>
 								<view class="item-content-box">
 									<view class="item-num">
-										60%
+										{{obj.humidity||'-'}}<span class="small-txt">%</span>
 									</view>
-									<text class="small-text">冬瓜</text>
+									<text class="small-text">空气湿度</text>
+								</view>
+							</view>
+							<view class="box-margin flex justify-content-flex-justify align-items-center">
+								<view class="item-content-box">
+									<view class="item-num">
+										{{obj.care||'-'}}<span class="small-txt">LX</span>
+									</view>
+									<text class="small-text">光照强度</text>
+								</view>
+								<view class="item-content-box">
+									<view class="item-num">
+										{{obj.soilTemperature||'-'}}<span class="small-txt">℃</span>
+									</view>
+									<text class="small-text">土壤温度</text>
+								</view>
+								<view class="item-content-box">
+									<view class="item-num">
+										{{obj.soliMoistrue||'-'}}<span class="small-txt">%</span>
+									</view>
+									<text class="small-text">土壤水分</text>
 								</view>
 							</view>
 						   <view class="flex">
@@ -127,134 +130,39 @@
 						]
 					
 				},
-				orderList: [],
-				list: [{
-					name: 'asdasd'
-				}, {
-					name: 'asdasd'
-				}, {
-					name: 'asdasd'
-				}],
-				TabCur: 1,
-				newsList: [],
 				baseId: '',
-				obj: {
-					baseId: '',
-					organUserId: '',
-					plantingBatchStatus: '' //批次状态
-				},
-				listObj: {
-					plantingBatchId: '', //批次ID
-					timeType: '', //时间
-					workOrderStatus: '', //工单状态
-					initiatorId: '' //发起人
-				},
-				page: 1,
-				moreHeight: 30,
+				obj: {},
 				windowHeight: 300,
-				contentdown: '',
-				newsList: [],
-				loadingType: 0,
-				triggered: false,
-				_freshing: false,
-				imgUrl:require('../../static/imgs/location.png')//冬瓜图片
+				imgUrl:require('../../static/imgs/location.png'),//冬瓜图片
+				massifId:''
 			};
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			// this.getData()
+			this.massifId=option.massifId
+			this.getData()
 		},
 		mounted() {
 		},
-		methods: {
-			onPulling() {},
-			onRefresh() {
-				if (this._freshing) return;
-				this._freshing = true;
-				if (!this.triggered) { //界面下拉触发，triggered可能不是true，要设为true  
-					this.triggered = true;
-				}
-				let _this = this
-				setTimeout(() => {
-					this.triggered = false; //触发onRestore，并关闭刷新图标
-					this._freshing = false;
-					_this.initData()
-				}, 1000)
-			},
-			onRestore() {
-				this.triggered = false; // 需要重置
-				this._freshing = false
-			},
-			onAbort() {
-				this.triggered = false; //触发onRestore，并关闭刷新图标
-				this._freshing = false;
-			},
-			initData() {
-				this.newsList = []
-				this.page = 1
-				this.loadingType = 1
-				this.contentdown = ''
-				this.getData()
-			},
-
-			delOrganUserWorkOrderManage(id) { //删除
-				let _this = this
-				this.$apiYZX.delOrganUserWorkOrderManage(id).then(res => {
-					if (res.data.code == 200) {
-						uni.showToast({
-							title: '删除成功',
-							duration: 2000,
-							success() {
-								_this.initData()
-							}
-						});
+		methods: {	
+			getData() {//获取检测详情
+				this.$api.massifMonitor({massifId:this.massifId}).then(res => {
+					this.obj =res.data.data
+					let arr=this.obj.creationTime.split(' ')
+					let YMD=arr[0]
+					let MD=YMD.split('-')
+					this.obj.creationTime=MD[1]+'-'+MD[2]
+					if(this.obj.status=='ONLINE'){
+						this.obj.statusTxt='在线'
+					}else if(this.obj.status=='OFFLINE'){
+						this.obj.statusTxt='离线'
+					}else if(this.obj.status=='UNACTIVE'){
+						this.obj.statusTxt='未激活'
+					}else if(this.obj.status=='DISABLE'){
+						this.obj.statusTxt='禁用'
 					}
 				})
-			},
-			scrolltoupper() {
-				console.info('下拉')
-			},
-			loadingData(e) {
-				this.lastTime = e.timeStamp
-				if (this.loadingType) {
-					this.page++
-					this.contentdown = '加载中...'
-					this.getData()
-				}
-			},
-			getData() {
-				let obj = { ...this.listObj,
-					...this.obj
-				}
-				this.$apiYZX.getFeedBackWorkOrdersList(this.page, obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.data)
-					if (this.page == 1 && this.newsList.length == 0) {
-						this.loadingType = 0
-						this.contentdown = '暂无数据'
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-						this.contentdown = ''
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-						this.contentdown = '无更多数据'
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length) {
-						this.loadingType = 0
-						this.contentdown = '无更多数据'
-					} else {
-						this.contentdown = '上拉加载更多'
-						this.loadingType = 1
-					}
-				})
-			},
-			tabSelect(e) {
-				this.TabCur = e.currentTarget.dataset.id;
-				// if (e.currentTarget.dataset.id == 1) {
-				// 	this.listObj.initiatorId = this.obj.organUserId
-				// } else {
-				// 	this.listObj.initiatorId = ''
-				// }
-				// this.initData()
-			}
+			} 
 		}
 	}
 </script>
@@ -306,7 +214,15 @@
 		background: #49BA89;
 		color: #fff;
 	}
-
+	.state-box-error{
+		position: relative;
+		padding:3px 6px;
+		border-top-left-radius: 15px;
+		border-bottom-left-radius: 15px;
+		right:-20rpx;
+		background: #FDB523;
+		color:#fff;
+	}
 	.item-content-box {
 		width: 30%;
 		text-align: center;

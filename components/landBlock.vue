@@ -4,52 +4,55 @@
 			<view class="flex  align-items-center">
 				<image class="land-img" src="../static/imgs/location.png" mode=""></image>
 				<view class="item-title">
-					<view class="order-title">NO.00001</view>
-					<view class="order-title small-text">开心农场 </view>
+					<view class="order-title">{{itemObject.massifNo}}</view>
+					<view class="order-title small-text">{{itemObject.massifName}}</view>
 				</view>
 			</view>
-			<view class="state-box">
-				在线
+			<view class="state-box" v-if="itemObject.statusTxt=='在线'">
+				{{itemObject.statusTxt}}
 			</view>
-		</view>
-		<view class="box-margin flex justify-content-flex-justify align-items-center">
-			<view class="item-content-box">
-				<view class="item-num">
-					60%
-				</view>
-				<text class="small-text">冬瓜</text>
-			</view>
-			<view class="item-content-box">
-				<view class="item-num">
-					60%
-				</view>
-				<text class="small-text">冬瓜</text>
-			</view>
-			<view class="item-content-box">
-				<view class="item-num">
-					60%
-				</view>
-				<text class="small-text">冬瓜</text>
+			<view class="state-box-error" v-else>
+				{{itemObject.statusTxt}}
 			</view>
 		</view>
 		<view class="box-margin flex justify-content-flex-justify align-items-center">
 			<view class="item-content-box">
 				<view class="item-num">
-					60%
+					{{itemObject.proportion||'-'}}<span class="small-txt">%</span>
 				</view>
 				<text class="small-text">冬瓜</text>
 			</view>
 			<view class="item-content-box">
 				<view class="item-num">
-					60%
+					{{itemObject.temperature||'-'}}<span class="small-txt">℃</span>
 				</view>
-				<text class="small-text">冬瓜阿萨德</text>
+				<text class="small-text">空气温度</text>
 			</view>
 			<view class="item-content-box">
 				<view class="item-num">
-					60%
+					{{itemObject.humidity||'-'}}<span class="small-txt">%</span>
 				</view>
-				<text class="small-text">冬瓜</text>
+				<text class="small-text">空气湿度</text>
+			</view>
+		</view>
+		<view class="box-margin flex justify-content-flex-justify align-items-center">
+			<view class="item-content-box">
+				<view class="item-num">
+					{{itemObject.care||'-'}}<span class="small-txt">LX</span>
+				</view>
+				<text class="small-text">光照强度</text>
+			</view>
+			<view class="item-content-box">
+				<view class="item-num">
+					{{itemObject.soilTemperature||'-'}}<span class="small-txt">℃</span>
+				</view>
+				<text class="small-text">土壤温度</text>
+			</view>
+			<view class="item-content-box">
+				<view class="item-num">
+					{{itemObject.soliMoistrue||'-'}}<span class="small-txt">%</span>
+				</view>
+				<text class="small-text">土壤水分</text>
 			</view>
 		</view>
 	</view>
@@ -58,9 +61,7 @@
 <script>
 	export default {
 		name:'landBlock',
-		props: {	
-			itemObject:Object
-		},
+		props: ['itemObject'],	
 		data() {
 			return {
 				
@@ -127,6 +128,15 @@
 		background: #49BA89;
 		color:#fff;
 	}
+	.state-box-error{
+		position: relative;
+		padding:3px 6px;
+		border-top-left-radius: 15px;
+		border-bottom-left-radius: 15px;
+		right:-20rpx;
+		background: #FDB523;
+		color:#fff;
+	}
 	.item-content-box{
 		width:30%;
 		text-align: center;
@@ -134,5 +144,8 @@
 			font-size: 18px;
 			font-weight: bold;
 		}
+	}
+	.small-txt{
+		font-size: 12px;
 	}
 </style>

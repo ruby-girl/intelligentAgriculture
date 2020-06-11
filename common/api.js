@@ -160,3 +160,19 @@ export const  updateDevice= (data) => {
 		data:data
 	})
 }
+// 首页监测
+export const  selectMonitor= (data) => {
+	return http.request({
+		url: 'massif/selectMonitor',
+		method: 'post',
+		data:data
+	})
+}
+// 监测详情==监控等数据
+export const  massifMonitor= (data) => {
+	return http.request({
+		url: 'massif/massifMonitor',
+		method: 'post',
+		data:data
+	})
+}

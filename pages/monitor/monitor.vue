@@ -16,7 +16,7 @@
 			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 			 @scrolltolower="loadingData">
-				<view class="" v-for="(item,index) in list" :key="index" @tap="toUrl(item)">
+				<view class="" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.massifId)">
 					<land-block :itemObject="item" />
 				</view>
 				<view class="loading-more">{{contentdown}}</view>
@@ -29,7 +29,7 @@
 						<text class="small-text">2010-11-11</text>
 						<view class="flex justify-content-flex-justify align-items-center">
 							<view class="timeline-box">
-								<view>开心农场 NO.123123</view>
+								<view style="font-size: 14px;">开心农场 NO.123123</view>
 								<view><text>温度45℃</text><text>温度45℃</text></view>
 							</view>
 							<button class="cu-btn bg-green" @click="showPopup">查看</button>
@@ -79,17 +79,6 @@
 				TabCur: 1,
 				newsList: [],
 				baseId: '',
-				obj: {
-					baseId: '',
-					organUserId: '',
-					plantingBatchStatus: '' //批次状态
-				},
-				listObj: {
-					plantingBatchId: '', //批次ID
-					timeType: '', //时间
-					workOrderStatus: '', //工单状态
-					initiatorId: '' //发起人
-				},
 				page: 1,
 				moreHeight: 30,
 				windowHeight: 300,
@@ -103,7 +92,7 @@
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			// this.getData()
+			this.initData()
 		},
 		mounted() {
 			this.loadingData = throttle(this.loadingData, 2000);
@@ -115,10 +104,9 @@
 			showPopup(){
 				this.popupShow=true
 			},
-			toUrl(){//跳转监测详情
-			console.log('123')
+			toUrl(id){//跳转监测详情
 				uni.navigateTo({
-					url: 'growthMonitoring'
+					url: 'growthMonitoring?massifId='+id
 				})
 			},
 			onPulling() {},
@@ -177,11 +165,23 @@
 				}
 			},
 			getData() {
-				let obj = { ...this.listObj,
-					...this.obj
+				let obj = {
+					pageNum: this.page,
+					pageSize: 10
 				}
-				this.$apiYZX.getFeedBackWorkOrdersList(this.page, obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.data)
+				this.$api.selectMonitor(obj).then(res => {
+					this.newsList = this.newsList.concat(res.data.data.massifs)
+					this.newsList.forEach((item,i)=>{
+						if(this.newsList[i].status=='ONLINE'){
+							this.newsList[i].statusTxt='在线'
+						}else if(this.newsList[i].status=='OFFLINE'){
+							this.newsList[i].statusTxt='离线'
+						}else if(this.newsList[i].status=='UNACTIVE'){
+							this.newsList[i].statusTxt='未激活'
+						}else if(this.newsList[i].status=='DISABLE'){
+							this.newsList[i].statusTxt='禁用'
+						}
+					})
 					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
@@ -256,7 +256,7 @@
 
 	.small-text {
 		color: #999999;
-		font-size: 13px;
+		font-size: 26rpx;
 	}
 
 	.state-box {
