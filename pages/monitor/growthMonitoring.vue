@@ -3,10 +3,10 @@
 	<view class="workOrder">
 		<view>
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
-				<view class="map-container" :style="{'backgroundImage':'url('+obj.liveCoverUrl+')','backgroundRepeat': 'no-repeat',backgroundSize:'100%'}">
-				
-					<video style="width:100%;height:600rpx;"  id="myVideo" src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
-					          enable-danmu danmu-btn controls></video>
+				<view class="map-container">
+				<video controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl' src="http://pili-live-hls.tree-iot.com/zhslive/0018DE743E31C1.m3u8">
+				</video>
+					
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">		
 						<view class="map-top-item">
 							<view style="font-size: 15px;font-weight: bold;">{{obj.surplus}}</view>
@@ -39,10 +39,10 @@
 									</view>
 								</view>
 								<view class="state-box" v-if="obj.statusTxt=='在线'">
-									{{obj.statusTxt}}
+									{{obj.statusTxt||''}}
 								</view>
 								<view class="state-box-error" v-else>
-									{{obj.statusTxt}}
+									{{obj.statusTxt||''}}
 								</view>
 							</view>
 							<view class="box-margin flex justify-content-flex-justify align-items-center">
@@ -107,9 +107,10 @@
 					<view class="">
 						<line-chart ref="line" :opts="option" chartType="line" option/>
 					</view>
-				</view>
+				</view>		   
 			</scroll-view>
 		</view>
+		
 	</view>
 </template>
 
@@ -136,6 +137,9 @@
 				imgUrl:require('../../static/imgs/location.png'),//冬瓜图片
 				massifId:''
 			};
+		},
+		onShow(){
+			
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
@@ -249,9 +253,8 @@
 		width:75%;
 		border-right:1px solid #eee;
 	}
-	.detail-small-txt{
-		color:#999;
-		font-size: 13px;
+	.small-txt{
+		font-size: 12px;
 	}
 	.detail-img{
 		width:25%;
@@ -283,7 +286,7 @@
 	}
 	 .map-bottom-box{
 		position: absolute;
-		bottom:-300rpx;
+		bottom:-420rpx;
 		left:2%;
 		width:96%;
 		background: #fff;
@@ -354,7 +357,7 @@
 	.farm-detail-box{
 		padding: 20rpx 30rpx;
 		background: #fff;
-		border-top: 360rpx solid #eee;
+		border-top: 440rpx solid #F5F5F5;
 	}
 	.map-bottom-tip{
 		width:50%;
@@ -373,7 +376,7 @@
 	.play-box{
 		width:100%;
 		text-align: right;
-		padding:400rpx 20rpx 10rpx 0;
+		padding:500rpx 20rpx 10rpx 0;
 		image{
 			width:88rpx;
 			height:68rpx;

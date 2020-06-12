@@ -1,8 +1,11 @@
 <!--地块管理-->
 <template>
 	<view class="workOrder">
-		<view v-bind:style="{height:(windowHeight-20)+'px'}">
-			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
+		<view v-bind:style="{height:windowHeight+'px'}">
+			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
+			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+			 @scrolltolower="loadingData">
 				<view class="cu-form-group" v-for="(item,i) in newsList" :key="i" style="padding:20rpx 30rpx;" @click="toDetail(item.massifId)">
 					<view>
 						<view class="item-title">{{item.massifNo}}  {{item.crop}}地</view>

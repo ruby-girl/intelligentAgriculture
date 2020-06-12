@@ -2,54 +2,15 @@
 <template>
 	<view class="workOrder">
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-				<view class="list-item margin-top" @tap="toDetail()">
+				<view class="list-item margin-top"  v-for="(item,i) in list" :key="i">
 					<view class="flex align-items-center justify-content-flex-justify">
-						<text class="item-title">空气温度预警开关</text>
-						<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
+						<text class="item-title" @tap="toDetail(item)">{{item.warningName}}</text>
+						<switch @change="changeSwitch($event,i)" :class="item.opening?'checked':''" :checked="item.opening?true:false" color="red"></switch>
 					</view>
-					<view class="flex align-items-center justify-content-flex-justify border-top">
-						<text class="small-text">温度预警值</text>
+					<view class="flex align-items-center justify-content-flex-justify border-top" @tap="toDetail(item)">
+						<text class="small-text">{{item.warningsTxt}}值</text>
 						<view>
-							<text>最低°C 最高°C</text>
-							<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
-						</view>
-					</view>
-				</view>
-				<view class="list-item margin-top" @tap="toDetail()">
-					<view class="flex align-items-center justify-content-flex-justify">
-						<text class="item-title">空气湿度预警开关</text>
-						<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
-					</view>
-					<view class="flex align-items-center justify-content-flex-justify border-top">
-						<text class="small-text">湿度预警值</text>
-						<view>
-							<text>最低°C 最高°C</text>
-							<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
-						</view>
-					</view>
-				</view>
-				<view class="list-item margin-top" @tap="toDetail()">
-					<view class="flex align-items-center justify-content-flex-justify">
-						<text class="item-title">土壤温度预警开关</text>
-						<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
-					</view>
-					<view class="flex align-items-center justify-content-flex-justify border-top">
-						<text class="small-text">温度预警值</text>
-						<view>
-							<text>最低°C 最高°C</text>
-							<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
-						</view>
-					</view>
-				</view>
-				<view class="list-item margin-top" @tap="toDetail()">
-					<view class="flex align-items-center justify-content-flex-justify">
-						<text class="item-title">土壤湿度预警开关</text>
-						<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
-					</view>
-					<view class="flex align-items-center justify-content-flex-justify border-top">
-						<text class="small-text">湿度预警值</text>
-						<view>
-							<text>最低°C 最高°C</text>
+							<text>最低{{item.low||''}}°C 最高{{item.high||''}}°C</text>
 							<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
 						</view>
 					</view>
@@ -66,26 +27,45 @@
 			return {
 				moreHeight: 30,
 				windowHeight: 300,
-				switchB:true
+				switchB:true,
+				massifId:'',
+				list:[]
 			};
 		},
-		onLoad(option) {
+		
+		onLoad(option) {			
+			this.massifId=option.massifId
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
+			this.findList()
 			// this.getData()
-		},
-		mounted() {
-			this.loadingData = throttle(this.loadingData, 2000);
-		},
+		}, 
 		methods: {
-			toDetail(){//跳转设置
+			toDetail(item){//跳转设置
 				uni.navigateTo({
-					url: 'detailWarning'
+					url: 'detailWarning?warningId='+item.warningId+'&massifId='+this.massifId+'&low='+item.low+'&high='+item.high
 				})
 			},
-			changeSwitch(e) {
-				this.switchB = e.detail.value
+			changeSwitch(e,i) {
+				this.list[i].opening=e.detail.value
+				this.switchFunc(this.list[i].warningId,e.detail.value)
+			},
+			switchFunc(id,value=false){
+				this.$api.updateOpening({warningId:id,opening:value}).then(res=>{
+					uni.showToast({
+						title: '设置成功',
+						duration: 2000
+					})
+				})
+			},
+			findList(){
+				this.$api.findList({massifId:this.massifId}).then(res=>{
+					this.list=res.data.data.warnings
+					this.list.forEach((item,i)=>{
+						let txt=item.warningName.split(2,6)
+						this.list[i].warningsTxt=txt
+					})
+				})
 			}
-		
 
 		}
 	}

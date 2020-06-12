@@ -176,3 +176,19 @@ export const  massifMonitor= (data) => {
 		data:data
 	})
 }
+// 预警列表
+export const  findList= (data) => {
+	return http.request({ 
+		url: 'warning/findList',
+		method: 'post',
+		data:data
+	})
+}
+// 预警列表 设置开关
+export const  updateOpening= (data) => {
+	return http.request({ 
+		url: 'warning/updateOpening',
+		method: 'post',
+		data:data
+	})
+}

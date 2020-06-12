@@ -15,18 +15,18 @@
 			</view>
 			<view class="detail-bottom-box">
 				<view class="flex align-items-center justify-content-flex-justify">
-					<view class="font-size-16">
+					<view class="font-size-16 width-item">
 						<text class="color-grey">所属农场：</text><text>{{obj.farmName||''}}</text>
 					</view>
-					<view class="font-size-16">
-						<text class="color-grey">设备状态：</text><text>{{obj.statusTxt||''}}</text>
+					<view class="font-size-16 width-item"  style="padding-left:30rpx">
+						<text class="color-grey">设备状态：</text><text :style="{'color':obj.statusTxt!=='在线'?'red':''}">{{obj.statusTxt||''}}</text>
 					</view>
 				</view>
 				<view class="flex align-items-center justify-content-flex-justify">
-					<view class="font-size-16">
-						<text class="color-grey">版本信息：</text><text>V1.0</text>
+					<view class="font-size-16 width-item">
+						<text class="color-grey">版本信息：</text><text>{{obj.firmwareVersion}}</text>
 					</view>
-					<view class="font-size-16">
+					<view class="font-size-16 width-item"  style="padding-left:30rpx">
 						<text class="color-grey">设备电量：</text><text>{{obj.batteryLevel||''}}%</text>
 					</view>
 				</view>
@@ -125,5 +125,12 @@
 		padding:40rpx;
 		margin-top:20rpx;
 		border-top:1px solid #eee;
+	}
+	.width-item{
+		width:49%;
+		text-align: left;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 </style>

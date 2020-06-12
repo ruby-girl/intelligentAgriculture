@@ -23,8 +23,9 @@
 								<text>{{item.deviceName||''}}</text>
 							</view>
 							<view>
-								<image class="line-img" src="../../static/imgs/online.png" mode="aspectFill"></image>
-								<text>{{item.statusTxt||''}}</text>
+								<image v-if="item.statusTxt=='在线'" class="line-img" src="../../static/imgs/online.png" mode="aspectFill"></image>
+								<image v-else class="line-img" src="../../static/imgs/offline.png" mode="aspectFill"></image>
+								<text :style="{'color':item.statusTxt=='在线'?'#49BA89':'#E50C05'}">{{item.statusTxt||''}}</text>
 								<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
 							</view>
 						</view>
@@ -34,7 +35,7 @@
 							<view class="item-bottom-box-left" style="border-right:1px solid #eee;">
 								<view  class="flex align-items-center justify-content-flex-justify">
 									<view>版本信息</view>
-									<view>V1.2</view>
+									<view>{{item.firmwareVersion}}</view>
 								</view>
 								<text>已是最新版本</text>
 							</view>

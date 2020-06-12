@@ -80,7 +80,7 @@
 				path: '/pages/index/index'
 			}
 		},
-		onShow() {
+		onLoad() {
 			let _this = this
 			uni.getStorage({
 				key: 'userInfo',

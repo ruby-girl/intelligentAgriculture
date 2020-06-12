@@ -55,13 +55,13 @@
 						this.obj.sn=res.result	
 					}
 				});
-
 			},
 			selectDevice() {
 				this.$api.selectDevice({
 					deviceId: this.obj.deviceId
 				}).then(res => {
 					this.obj = res.data.data
+					delete this.obj.newest
 					this.selectMassif()
 				})
 			},
@@ -71,21 +71,19 @@
 					pageSize: 100
 				}).then(res => {
 					this.massifsList = res.data.data.massifs
-					if (option.deviceId) {
-						this.optionValue = this.massifsList.filter((item, i) => {
-							if (item.massifId == this.obj.massifId) {
-								return i
-							}
+					if (this.obj.deviceId) {//回填地块
+						this.optionValue = this.massifsList.findIndex((item, i) => {
+							return item.massifId == this.obj.massifId
 						})
 					}
 				})
 			},
 			pickerChange(e) {
 				this.optionValue = e.target.value
-				// let arr = this.breedList.filter((item, i) => {
-				// 	return i == e.target.value
-				// })
-				// this.postData.breedId = arr[0].id
+				let arr = this.massifsList.filter((item, i) => {
+					return i == e.target.value
+				})
+				this.obj.massifId = arr[0].massifId
 			},
 			toAdd() { //添加设备
 				if (!this.obj.deviceName) {
@@ -102,14 +100,14 @@
 					})
 					return
 				}
-				if (this.obj.sn && this.obj.deviceId) {
+				if (!this.obj.sn && this.obj.deviceId) {
 					uni.showToast({
 						title: '请输入设备序列号',
 						icon: 'none'
 					})
 					return
 				}
-				let api; //未处理~~~~
+				let api;
 				if (!this.obj.massifId) {
 					api = 'insertDevice'
 				} else {
@@ -118,35 +116,29 @@
 				}
 				this.$api[api](this.obj).then(res => {
 					if (this.obj.deviceId) {
-						uni.showToast({
-							title: '编辑成功',
-							duration: 2000,
-							success() {
-								let pages = getCurrentPages(); // 当前页面
-								let beforePage = pages[pages.length - 2]; // 前一个页面
-								uni.navigateBack({
-									success: function() {
-										beforePage.onLoad(); // 执行前一个页面的onLoad方法
-									}
-								});
-							}
-						});
+						this.toastFunc('编辑成功')
 					} else {
-						uni.showToast({
-							title: '添加成功',
-							duration: 2000,
-							success() {
-								let pages = getCurrentPages(); // 当前页面
-								let beforePage = pages[pages.length - 2]; // 前一个页面
-								uni.navigateBack({
-									success: function() {
-										beforePage.onLoad(); // 执行前一个页面的onLoad方法
-									}
-								});
-							}
-						});
+						this.toastFunc('添加成功')
 					}
 				})
+			},
+			toastFunc(title){
+				let _this=this
+				uni.showToast({
+					title: title,
+					duration: 2000,
+					success() {
+						setTimeout(function(){
+							let pages = getCurrentPages(); // 当前页面
+							let beforePage = pages[pages.length - 2]; // 前一个页面
+							uni.navigateBack({
+								success: function() {
+									beforePage.onLoad({deviceId:_this.obj.deviceId}); // 执行前一个页面的onLoad方法
+								}
+							});
+						},2000)
+					}
+				});
 			}
 		}
 	}

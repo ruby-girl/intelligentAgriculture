@@ -195,13 +195,15 @@
 							title: '编辑成功',
 							duration: 2000,
 							success() {
-								let pages = getCurrentPages(); // 当前页面
-								let beforePage = pages[pages.length - 2]; // 前一个页面
-								uni.navigateBack({
-									success: function() {
-										beforePage.onLoad(); // 执行前一个页面的onLoad方法
-									}
-								});
+								setTimeout(function(){
+									let pages = getCurrentPages(); // 当前页面
+									let beforePage = pages[pages.length - 2]; // 前一个页面
+									uni.navigateBack({
+										success: function() {
+											beforePage.onLoad(); // 执行前一个页面的onLoad方法
+										}
+									});
+								},2000)
 							}
 						});
 					} else {
@@ -209,13 +211,15 @@
 							title: '添加成功',
 							duration: 2000,
 							success() {
-								let pages = getCurrentPages(); // 当前页面
-								let beforePage = pages[pages.length - 2]; // 前一个页面
-								uni.navigateBack({
-									success: function() {
-										beforePage.onLoad(); // 执行前一个页面的onLoad方法
-									}
-								});
+								setTimeout(function(){
+									let pages = getCurrentPages(); // 当前页面
+									let beforePage = pages[pages.length - 2]; // 前一个页面
+									uni.navigateBack({
+										success: function() {
+											beforePage.onLoad(); // 执行前一个页面的onLoad方法
+										}
+									});
+								},2000)
 							}
 						});
 					}

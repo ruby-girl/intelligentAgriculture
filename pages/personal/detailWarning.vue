@@ -1,16 +1,15 @@
 <template>
 	<!-- 详细预警设置 -->
-	<view>
-		
+	<view>	
 		<view class="cu-form-group">
 			<view class="title">最低预警值</view>
-			<input placeholder="低于此值时预警通知" name="input"></input>
+			<input placeholder="低于此值时预警通知" v-model="obj.low" name="input"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">最高预警值</view>
-			<input placeholder="高于此值时预警通知" name="input"></input>
+			<input placeholder="高于此值时预警通知" v-model="obj.high" name="input"></input>
 		</view>
-		<view class="bottom-lg-btn">保存</view>
+		<view class="bottom-lg-btn" @click="setFunc">保存</view>
 	</view>
 </template>
 
@@ -18,13 +17,48 @@
 	export default {
 		data() {
 			return {
+				obj:{
+					low:'',
+					high:'',
+					warningId:''
+				},
+				massifId:''
 				}
 		},
 		onLoad(option) {
-
+			this.obj.warningId=option.warningId
+			this.obj.low=option.low
+			this.obj.high=option.high
+			this.massifId=option.massifId
 		},
 		methods: {
-			
+			setFunc(){
+				if(!this.obj.low||!this.obj.high){
+					uni.showToast({
+						title: '请输入预警值',
+						icon: 'none'
+					})
+					return
+				}
+				let _this=this
+				this.$api.updateOpening(this.obj).then(res=>{
+					uni.showToast({
+						title: '设置成功',
+						duration: 2000,
+						success() {
+							setTimeout(function(){
+								let pages = getCurrentPages(); // 当前页面
+								let beforePage = pages[pages.length - 2]; // 前一个页面
+								uni.navigateBack({
+									success: function() {
+										beforePage.onLoad({massifId:_this.massifId}); // 执行前一个页面的onLoad方法
+									}
+								});
+							},2000)
+						}
+					});
+				})
+			}
 		}
 	}
 </script>
