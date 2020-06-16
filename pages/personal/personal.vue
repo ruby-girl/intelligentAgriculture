@@ -2,12 +2,12 @@
 	<view>
 		<view class="bg-personal">
 			<view class="user-info text-center flex">
-				<view style="margin-top:20rpx" class="text-lg">
-					<image :src="user.avatarUrl" mode=""></image>
+				<view class="text-lg">
+					<image style="width:90rpx;height:90rpx;border-radius: 50%;" :src="user.avatarUrl" mode=""></image>
 				</view>
-				<view class="">
-					<text>{{user.nickName||''}}</text>
-					<view class="text-gray">{{user.phone||''}}</view>
+				<view style="text-align: left;padding-left:20rpx">
+					<text style="color:#fff">{{user.nickName||''}}</text>
+					<view style="color:#fff" class="text-gray">{{user.phone||''}}</view>
 				</view>
 			</view>
 		</view>
@@ -140,7 +140,7 @@
 	.user-info {
 		margin: 0 30rpx;
 		padding: 40rpx;
-
+		padding-left:0;
 		.text-lg image {
 			width: 50rpx;
 			height: 50rpx;
@@ -150,8 +150,8 @@
 		text-align: right;
 	}
 	.title>image{
-		width: 40rpx;
-		height: 40rpx;
+		width: 36rpx;
+		height: 36rpx;
 		margin-right: 5px;
 	}
 	.item-jt>image {

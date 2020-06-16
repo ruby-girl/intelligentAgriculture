@@ -192,3 +192,20 @@ export const  updateOpening= (data) => {
 		data:data
 	})
 }
+
+// 7日温度数据
+export const  findRangeData= (data) => {
+	return http.request({ 
+		url: 'device/findRangeData',
+		method: 'post',
+		data:data
+	})
+}
+//获取用户下所有预警
+export const  warningAll= (data) => {
+	return http.request({ 
+		url: 'massif/warningAll',
+		method: 'post',
+		data:data
+	})
+}

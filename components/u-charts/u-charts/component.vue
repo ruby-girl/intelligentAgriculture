@@ -101,7 +101,7 @@
 					enableScroll: false,
 					xAxis: {
 						type: 'grid',
-						gridColor: '#CCCCCC',
+						gridColor: '#fff',
 						gridType: 'dash',
 						dashLength: 8,
 						itemCount: 4,
@@ -109,7 +109,7 @@
 					},
 					yAxis: {
 						gridType: 'dash',
-						gridColor: '#CCCCCC',
+						gridColor: '#fff',
 						dashLength: 8,
 						splitNumber: 5,
 						min: 10,

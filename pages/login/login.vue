@@ -72,6 +72,8 @@
 						if (res.code) {
 							//发起网络请求
 							var code = res.code
+							// 这里通过code获取openid
+							// getApp().globalData.openId='XXXXXXXXXXXXX'
 							// 获取微信用户信息
 							wx.getUserInfo({
 								success: function(res) {

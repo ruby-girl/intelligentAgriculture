@@ -138,13 +138,22 @@
 				massifId:''
 			};
 		},
+		onShareAppMessage: function () {	
+		    return {
+		        title: '快来看看我的地块生长情况吧！',
+		        desc: '分享页面的内容',
+		        path: 'pages/monitor/growthMonitoring?massifId='+this.massifId // 路径，传递参数到指定页面。
+		    }	
+		},
 		onShow(){
 			
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.massifId=option.massifId
+			console.info('option.massifId',option.massifId)
 			this.getData()
+			console.log('getApp().globalData.openId',getApp().globalData.openId)
 		},
 		mounted() {
 		},
@@ -166,7 +175,12 @@
 						this.obj.statusTxt='禁用'
 					}
 				})
-			} 
+			},
+			findRangeData(){
+				this.$api.findRangeData().then(res=>{
+					
+				})
+			}
 		}
 	}
 </script>

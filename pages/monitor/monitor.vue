@@ -25,12 +25,12 @@
 		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else>
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
 				<view class="cu-timeline">
-					<view class="cu-item text-olive" v-for="i in 5" :key="i">
+					<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
 						<text class="small-text">2010-11-11</text>
 						<view class="flex justify-content-flex-justify align-items-center">
 							<view class="timeline-box">
-								<view style="font-size: 14px;">开心农场 NO.123123</view>
-								<view><text>温度45℃</text><text>温度45℃</text></view>
+								<view style="font-size: 14px;color:#333">{{item.farmName}} {{item.massifNo}}</view>
+								<view><text>{{item.msg}}</text></view>
 							</view>
 							<button class="cu-btn bg-green" @click="showPopup">查看</button>
 						</view>
@@ -66,7 +66,7 @@
 					},
 					{
 						id: 2,
-						name: '预警（8）'
+						name: '预警'
 					},
 				],
 				list: [{
@@ -87,17 +87,31 @@
 				loadingType: 0,
 				triggered: false,
 				_freshing: false,
-				popupShow:false
+				popupShow:false,
+				timeList:[]
 			};
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.initData()
+			this.warningAll()
 		},
 		mounted() {
 			this.loadingData = throttle(this.loadingData, 2000);
+			// 测试openid
+			getApp().globalData.openId='XXXXXXXXXXXXX'
 		},
 		methods: {
+			warningAll(){
+				let obj={
+					pageNum:1,
+					pageSize:100
+				}
+				this.$api.warningAll(obj).then(res=>{
+					this.timeList=res.data.data.massifs
+					this.tabs[1].name=`预警（${this.timeList.length}）`
+				})
+			},
 			closePopup(){
 				this.popupShow=false
 			},
