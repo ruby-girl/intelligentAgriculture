@@ -127,9 +127,7 @@
 			},
 			userLogin() {
 				let that = this;
-		
-				this.$api.login(this.obj).then(res => {
-					
+				this.$api.login(this.obj).then(res => {			
 						let obj = {
 							 token: res.data.data.token,					
 							nickName: this.user.nickName,
@@ -138,7 +136,7 @@
 						}
 
 						uni.setStorage({
-							key: 'userInfo',
+							key: 'XYZNUserInfo',
 							data: obj,
 							success() {
 								uni.showToast({

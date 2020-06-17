@@ -1,7 +1,7 @@
 
 export default {
 	config: {
-		baseUrl: "https://40f5ed620fe1.ngrok.io/",
+		baseUrl: "http://182.136.75.132/",
 		//baseUrl: "http://192.168.101.30:8088/",
 		header: {
 			 'Content-Type':'application/json',
@@ -41,7 +41,7 @@ export default {
 		//TODO 加密数据	
 		//TODO 数据签名
 	
-		  options.header = {'token':uni.getStorageSync('userInfo').token || '','Content-Type':'application/x-www-form-urlencoded'}
+		  options.header = {'token':uni.getStorageSync('XYZNUserInfo').token || '','Content-Type':'application/x-www-form-urlencoded'}
 		return new Promise((resolve, reject) => {
 			let _config = null
 		

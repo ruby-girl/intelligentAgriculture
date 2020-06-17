@@ -1,26 +1,25 @@
 <script>
 	export default {
 		onLaunch: function() {
-
-
 			console.log('App Launch')
-
 		},
 		onShow: function() {
 			console.log('App Show')
 		},
 		onShareAppMessage(res) {
-		    return {
-		      title: '农事云'	    
-		  }
+			return {
+				title: '农事云'
+			}
 		},
 		onHide: function() {
 			console.log('App Hide')
 		},
-		
-		globalData:{
-		imgUrl:'https://bysk.scddwb.com/byapi/showImg/planting/',
-		baseUrl:'https://bysk.scddwb.com/byapi/'
+
+		globalData: {
+			imgUrl: 'https://bysk.scddwb.com/byapi/showImg/planting/',
+			baseUrl: 'https://bysk.scddwb.com/byapi/',
+			isLogin: false,
+			openId: ''
 		}
 	}
 </script>
@@ -29,7 +28,7 @@
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 	@import './common/uni.css';
-	
+
 	/*每个页面公共css */
 	.display-flex {
 		display: -webkit-box;

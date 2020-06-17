@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="bg-personal">
-			<view class="user-info text-center flex">
+			<view class="user-info text-center flex" v-if="isLogin">
 				<view class="text-lg">
 					<image style="width:90rpx;height:90rpx;border-radius: 50%;" :src="user.avatarUrl" mode=""></image>
 				</view>
@@ -10,9 +10,14 @@
 					<view style="color:#fff" class="text-gray">{{user.phone||''}}</view>
 				</view>
 			</view>
+			<view style="padding:40rpx 30rpx" v-else>
+				<view class="login-box" @click="showPopup">
+					登录/注册
+				</view>
+			</view>
+
 		</view>
 		<view class="flex justify-content-flex-justify positon-box">
-			<!-- 农场 -->
 			<view class="item-box" @click="toMyFarm">
 				<view class="flex justify-content-flex-justify item-jt align-items-center">
 					<view class="title display-flex align-items-center">
@@ -21,10 +26,9 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					{{nums.farmCount||''}}
+					{{nums.farmCount||'-'}}
 				</view>
 			</view>
-			<!-- 地块 -->
 			<view class="item-box" @click="toLandManagement()">
 				<view class="flex justify-content-flex-justify item-jt align-items-center">
 					<view class="title display-flex align-items-center">
@@ -33,13 +37,13 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					{{nums.massifCount||''}}
+					{{nums.massifCount||'-'}}
 				</view>
 			</view>
 		</view>
 		<view class="container-input">
 			<form>
-				<view class="cu-form-group item-jt" @click="toSet">
+				<view class="cu-form-group item-jt" @click="toSetWaring">
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/warning.png" mode=""></image>预警设置
 					</view>
@@ -57,22 +61,30 @@
 						<image src="../../static/imgs/about.png" mode=""></image>关于我们
 					</view>
 					<image src="../../static/imgs/arrows.png" mode=""></image>
-				
+
 				</view>
 			</form>
 		</view>
-		<button @click="toLogin" class="cu-btn block line-green lg" style="width:90%;margin:100rpx auto">退出</button>
+		<button v-if="isLogin" @click="toLogin" class="cu-btn block line-green lg" style="width:90%;margin:60rpx auto">退出</button>
+		<popup content='是否跳转到登录页面？' align='center' cancelText="我再看看" :show='popupShow' :showCancel='true' confirmText='确定'
+		 @confirm="confirmFunc" @close="closePopup" />
 	</view>
 </template>
 
 <script>
+	import popup from "@/components/neil-modal/neil-modal.vue"
 	export default {
 		data() {
 			return {
 				switchB: true,
 				nums: {},
-				user:{}
+				user: {},
+				isLogin: false,
+				popupShow: false
 			};
+		},
+		components: {
+			popup
 		},
 		onShareAppMessage(res) {
 			return {
@@ -83,38 +95,75 @@
 		onLoad() {
 			let _this = this
 			uni.getStorage({
-				key: 'userInfo',
+				key: 'XYZNUserInfo',
 				success: function(res) {
-					_this.isLogin=true
+					_this.isLogin = true
+					getApp().globalData.isLogin = true
 					_this.user = {
 						nickName: res.data.nickName || '',
 						phone: res.data.phone || '',
 						avatarUrl: res.data.avatarUrl
 					}
+					_this.getCount()
 				},
 				fail: function() {
-					_this.isLogin=false
+					_this.isLogin = false
+					getApp().globalData.isLogin = false
 				}
 			});
-			this.getCount()
+		},
+		onShow() {
+			if (!this.isLogin) { //每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
+				this.isLogin = getApp().globalData.isLogin
+				if (this.isLogin) {
+					this.getCount()
+				}
+			}
 		},
 		methods: {
-			toSet(){//跳转预警设置
+			closePopup() {
+				this.popupShow = false
+			},
+			toSetWaring() { //跳转预警设置
+			console.log('这条')
+				if (!this.isLogin) {
+					uni.showToast({
+						title: '请先登录',
+						icon: 'none'
+					})
+					return
+				}
+				console.log('这条')
 				uni.navigateTo({
 					url: 'landWaring'
 				});
 			},
-			getCount(){
+			getCount() {
 				this.$api.massifCount().then(res => {
-					this.nums=res.data.data
+					this.nums = res.data.data
 				})
 			},
-			toMyFarm(){//跳转我的农场
+			toMyFarm() { //跳转我的农场
+				if (!this.isLogin) {
+					uni.showToast({
+						title: '请先登录',
+						icon: 'none'
+					})
+					return
+				}
+				
 				uni.navigateTo({
 					url: 'myFarm'
 				});
 			},
-			toLandManagement(){//跳转地块管理
+			toLandManagement() { //跳转地块管理
+				if (!this.isLogin) {
+					uni.showToast({
+						title: '请先登录',
+						icon: 'none'
+					})
+					return
+				}
 				uni.navigateTo({
 					url: 'landManagement'
 				});
@@ -124,6 +173,12 @@
 				uni.redirectTo({
 					url: '/pages/login/login'
 				});
+			},
+			confirmFunc() {
+				this.toLogin()
+			},
+			showPopup() {
+				this.popupShow = true
 			}
 		}
 	}
@@ -131,8 +186,8 @@
 
 <style lang="scss" scoped>
 	.bg-personal {
-		height: 200rpx;
-		background:#17BB89;
+		height: 250rpx;
+		background: #17BB89;
 		position: relative;
 		z-index: 1;
 	}
@@ -140,50 +195,61 @@
 	.user-info {
 		margin: 0 30rpx;
 		padding: 40rpx;
-		padding-left:0;
+		padding-left: 0;
+
 		.text-lg image {
 			width: 50rpx;
 			height: 50rpx;
 		}
 	}
+
 	.form-input-left {
 		text-align: right;
 	}
-	.title>image{
+
+	.title>image {
 		width: 36rpx;
 		height: 36rpx;
 		margin-right: 5px;
 	}
+
 	.item-jt>image {
 		width: 14rpx;
 		height: 28rpx;
 	}
-	.tip-text{
-		color:#999999;
+
+	.tip-text {
+		color: #999999;
 		font-size: 14px;
 	}
-	.item-box{
-		width:45%;
+
+	.item-box {
+		width: 45%;
 		background: #fff;
-		padding:15rpx;
+		padding: 15rpx;
 		border-radius: 6px;
 	}
-	.positon-box{
+
+	.positon-box {
 		position: relative;
-		top: -30rpx;
+		top: -80rpx;
 		z-index: 1011;
 		padding: 0 30rpx;
-		.position-num{
+
+		.position-num {
 			font-size: 28px;
 			font-weight: bold;
-			color:#49BA89;
+			color: #49BA89;
 			text-align: center;
 		}
 	}
+
 	.container-input {
 		padding: 0 30rpx;
-		z-index: -11;
+		z-index: 11111;
 		background: #fff;
+		position: relative;
+		top: -40rpx;
 	}
 
 	.cu-form-group {
@@ -198,5 +264,15 @@
 		font-size: 23px;
 		color: #828282;
 		width: 16px;
+	}
+
+	.login-box {
+		background: #17BB89;
+		padding: 3px 0;
+		border-radius: 17px;
+		border: 1px solid #fff;
+		color: #fff;
+		width: 160rpx;
+		text-align: center;
 	}
 </style>

@@ -1,61 +1,66 @@
 <!-- 设备列表-->
 <template>
 	<view class="workOrder">
-		<view class="top equipmentManagement-title flex  align-items-center justify-content-flex-justify">
-			<view style="font-size: 16px;font-weight: bold;" class="flex  align-items-center">
-				<image style="height:24px" src="../../static/imgs/equipmentManagement.png" mode=""></image>
-				<text>在线设备3/5</text>
-			</view>
-			<view class="equipmentManagement-btn" @click="toAdd">
-				<image src="../../static/imgs/add.png" mode=""></image>
-				<text>添加</text>
-			</view>
-		</view>
-			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
-			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
-			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
-			 @scrolltolower="loadingData">
-				<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index" @tap="toDetail(item.deviceId)">
-					<view class="">
-						<view class="flex align-items-center justify-content-flex-justify">
-							<view class="">
-								<text>{{item.sn||''}}</text>
-								<text>{{item.deviceName||''}}</text>
-							</view>
-							<view>
-								<image v-if="item.statusTxt=='在线'" class="line-img" src="../../static/imgs/online.png" mode="aspectFill"></image>
-								<image v-else class="line-img" src="../../static/imgs/offline.png" mode="aspectFill"></image>
-								<text :style="{'color':item.statusTxt=='在线'?'#49BA89':'#E50C05'}">{{item.statusTxt||''}}</text>
-								<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
-							</view>
-						</view>
-					</view>
-					<view class="item-bottom-box">
-						<view class="flex align-items-center justify-content-flex-justify">
-							<view class="item-bottom-box-left" style="border-right:1px solid #eee;">
-								<view  class="flex align-items-center justify-content-flex-justify">
-									<view>版本信息</view>
-									<view>{{item.firmwareVersion}}</view>
-								</view>
-								<text>已是最新版本</text>
-							</view>
-							<!-- 报红 -->
-							<view style="padding-left:20rpx;color:red" class="flex align-items-center justify-content-flex-justify item-bottom-box-left">
-								<view>
-									<view>设备状态</view>
-									<view>未定位</view>
-								</view>
-								<view>
-									<view>故障码</view>
-									<view>XXX</view>
-								</view>
-							</view>
-						</view>
-					</view>
-					
+		<view v-if="isLogin">
+			<view class="top equipmentManagement-title flex  align-items-center justify-content-flex-justify">
+				<view style="font-size: 16px;font-weight: bold;" class="flex  align-items-center">
+					<image style="height:24px" src="../../static/imgs/equipmentManagement.png" mode=""></image>
+					<text>在线设备3/5</text>
 				</view>
-				<view class="loading-more">{{contentdown}}</view>
-			</scroll-view>
+				<view class="equipmentManagement-btn" @click="toAdd">
+					<image src="../../static/imgs/add.png" mode=""></image>
+					<text>添加</text>
+				</view>
+			</view>
+				<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
+				 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+				 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+				 @scrolltolower="loadingData">
+					<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index" @tap="toDetail(item.deviceId)">
+						<view class="">
+							<view class="flex align-items-center justify-content-flex-justify">
+								<view class="">
+									<text>{{item.sn||''}}</text>
+									<text>{{item.deviceName||''}}</text>
+								</view>
+								<view>
+									<image v-if="item.statusTxt=='在线'" class="line-img" src="../../static/imgs/online.png" mode="aspectFill"></image>
+									<image v-else class="line-img" src="../../static/imgs/offline.png" mode="aspectFill"></image>
+									<text :style="{'color':item.statusTxt=='在线'?'#49BA89':'#E50C05'}">{{item.statusTxt||''}}</text>
+									<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
+								</view>
+							</view>
+						</view>
+						<view class="item-bottom-box">
+							<view class="flex align-items-center justify-content-flex-justify">
+								<view class="item-bottom-box-left" style="border-right:1px solid #eee;">
+									<view  class="flex align-items-center justify-content-flex-justify">
+										<view>版本信息</view>
+										<view>{{item.firmwareVersion}}</view>
+									</view>
+									<text>已是最新版本</text>
+								</view>
+								<!-- 报红 -->
+								<view style="padding-left:20rpx;color:red" class="flex align-items-center justify-content-flex-justify item-bottom-box-left">
+									<view>
+										<view>设备状态</view>
+										<view>未定位</view>
+									</view>
+									<view>
+										<view>故障码</view>
+										<view>XXX</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						
+					</view>
+					<view class="loading-more">{{contentdown}}</view>
+				</scroll-view>
+		</view>
+		<view v-else>
+			<not-login />
+		</view>
 	</view>
 </template>
 
@@ -63,12 +68,10 @@
 	import {
 		throttle
 	} from "@/utils/index.js"
-	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
-	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
+	import notLogin from "@/components/notLogin/notLogin.vue"
 	export default {
 		components: {
-			msDropdownMenu,
-			msDropdownItem
+			notLogin
 		},
 		data() {
 			return {
@@ -93,12 +96,24 @@
 				newsList: [],
 				loadingType: 0,
 				triggered: false,
-				_freshing: false
+				_freshing: false,
+				isLogin:false
 			};
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			this.initData()
+			this.isLogin=getApp().globalData.isLogin
+			if(this.isLogin){
+				this.initData()
+			}	
+		},
+		onShow() {
+			if(!this.isLogin){//每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
+				this.isLogin=getApp().globalData.isLogin
+				if(this.isLogin){
+					this.initData()
+				}
+			}
 		},
 		mounted() {
 			this.loadingData = throttle(this.loadingData, 2000);

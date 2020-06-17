@@ -10,3 +10,9 @@ export const throttle = (func, wait) => {
 	    }
 	}
 }
+export const formatDate = (time) => {
+	var year=time.getFullYear(); 
+	var month=time.getMonth()+1; 
+	var date=time.getDate(); 
+	return year+"-"+month+"-"+date;
+}

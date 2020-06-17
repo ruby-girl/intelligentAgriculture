@@ -116,6 +116,7 @@
 
 <script>
 	import LineChart from '@/components/u-charts/u-charts/component.vue';
+	import {formatDate} from "@/utils/index.js" 
 	export default {
 		components: {		
 			LineChart		

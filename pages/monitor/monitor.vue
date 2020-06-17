@@ -11,32 +11,37 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view v-if="TabCur==1">
-			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
-			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
-			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
-			 @scrolltolower="loadingData">
-				<view class="" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.massifId)">
-					<land-block :itemObject="item" />
-				</view>
-				<view class="loading-more">{{contentdown}}</view>
-			</scroll-view>
-		</view>
-		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else>
-			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-				<view class="cu-timeline">
-					<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
-						<text class="small-text">2010-11-11</text>
-						<view class="flex justify-content-flex-justify align-items-center">
-							<view class="timeline-box">
-								<view style="font-size: 14px;color:#333">{{item.farmName}} {{item.massifNo}}</view>
-								<view><text>{{item.msg}}</text></view>
+		<view v-if="isLogin">
+			<view v-if="TabCur==1">
+				<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
+				 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+				 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
+				 @scrolltolower="loadingData">
+					<view class="" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item.massifId)">
+						<land-block :itemObject="item" />
+					</view>
+					<view class="loading-more">{{contentdown}}</view>
+				</scroll-view>
+			</view>
+			<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else>
+				<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
+					<view class="cu-timeline">
+						<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
+							<text class="small-text">2010-11-11</text>
+							<view class="flex justify-content-flex-justify align-items-center">
+								<view class="timeline-box">
+									<view style="font-size: 14px;color:#333">{{item.farmName}} {{item.massifNo}}</view>
+									<view><text>{{item.msg}}</text></view>
+								</view>
+								<button class="cu-btn bg-green" @click="showPopup">查看</button>
 							</view>
-							<button class="cu-btn bg-green" @click="showPopup">查看</button>
 						</view>
 					</view>
-				</view>
-			</scroll-view>
+				</scroll-view>
+			</view>
+		</view>
+		<view class="" v-else>
+			<not-login />
 		</view>
 		<popup content='这是内容' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup"/>
 	</view>
@@ -46,16 +51,14 @@
 	import {
 		throttle
 	} from "@/utils/index.js"
-	import msDropdownMenu from '@/components/ms-dropdown/dropdown-menu.vue'
-	import msDropdownItem from '@/components/ms-dropdown/dropdown-item.vue'
 	import landBlock from '@/components/landBlock.vue'
 	import popup from "@/components/neil-modal/neil-modal.vue"
+	import notLogin from "@/components/notLogin/notLogin.vue"
 	export default {
 		components: {
-			msDropdownMenu,
-			msDropdownItem,
 			landBlock,
-			popup
+			popup,
+			notLogin
 		},
 		data() {
 			return {
@@ -88,13 +91,26 @@
 				triggered: false,
 				_freshing: false,
 				popupShow:false,
-				timeList:[]
+				timeList:[],
+				isLogin:false
 			};
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			this.initData()
-			this.warningAll()
+			this.isLogin=getApp().globalData.isLogin
+			if(this.isLogin){
+				this.initData()
+				this.warningAll()
+			}
+		},
+		onShow() {		
+			if(!this.isLogin){//每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
+				this.isLogin=getApp().globalData.isLogin
+				if(this.isLogin){
+					this.initData()
+					this.warningAll()
+				}
+			}
 		},
 		mounted() {
 			this.loadingData = throttle(this.loadingData, 2000);
