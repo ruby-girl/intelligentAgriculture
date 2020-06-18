@@ -16,8 +16,10 @@
 		},
 
 		globalData: {
-			imgUrl: 'https://bysk.scddwb.com/byapi/showImg/planting/',
-			baseUrl: 'https://bysk.scddwb.com/byapi/',
+			// imgUrl: 'https://bysk.scddwb.com/byapi/showImg/planting/',
+			// baseUrl: 'https://bysk.scddwb.com/byapi/',
+			imgUrl: 'http://kwt.mmy.red:8081/',
+			baseUrl: 'http://kwt.mmy.red:8081/',
 			isLogin: false,
 			openId: ''
 		}

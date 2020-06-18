@@ -4,7 +4,7 @@
 		<view>
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
 				<view class="map-container">
-				<video controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl' src="http://pili-live-hls.tree-iot.com/zhslive/0018DE743E31C1.m3u8">
+				<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl' src="http://pili-live-hls.tree-iot.com/zhslive/0018DE743E31C1.m3u8">
 				</video>
 					
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">		
@@ -152,9 +152,8 @@
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.massifId=option.massifId
-			console.info('option.massifId',option.massifId)
 			this.getData()
-			console.log('getApp().globalData.openId',getApp().globalData.openId)
+			this.findRangeData()
 		},
 		mounted() {
 		},

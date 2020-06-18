@@ -20,7 +20,7 @@
 						<view class="">
 							<view class="flex align-items-center justify-content-flex-justify">
 								<view class="">
-									<text>{{item.sn||''}}</text>
+									<text>SN:{{item.sn||''}}</text>
 									<text>{{item.deviceName||''}}</text>
 								</view>
 								<view>

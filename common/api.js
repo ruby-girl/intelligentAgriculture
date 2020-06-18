@@ -209,3 +209,19 @@ export const  warningAll= (data) => {
 		data:data
 	})
 }
+//获取农场下所有地块
+export const  massifSelectFarmId= (data) => {
+	return http.request({ 
+		url: 'massif/selectFarmId',
+		method: 'post',
+		data:data
+	})
+}
+//获取农场下所有预警
+export const  massifFindFarmId= (data) => {
+	return http.request({ 
+		url: 'massif/findFarmId',
+		method: 'post',
+		data:data
+	})
+}

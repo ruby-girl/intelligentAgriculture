@@ -59,7 +59,7 @@
 			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 			 @scrolltolower="loadingData">
-				<view class="list-item" v-for="(item,index) in list" :key="index" @tap="toUrl(item)">
+				<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item)">
 					<land-block :itemObject="item" />
 				</view>
 				<view class="loading-more">{{contentdown}}</view>
@@ -68,18 +68,19 @@
 		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-show="TabCur==3">
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
 				<view class="cu-timeline">
-					<view class="cu-item text-olive" v-for="i in 5" :key="i">
-						<text class="small-text">2010-11-11</text>
+					<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
+						<text class="small-text">{{item.creationTime}}</text>
 						<view class="flex justify-content-flex-justify align-items-center">
 							<view class="timeline-box">
-								<view>开心农场 NO.123123</view>
-								<view><text>温度45℃</text><text>温度45℃</text></view>
+								<view style="color:#333">{{item.farmName}} NO.{{item.massifNo}}</view>
+								<view style="color:red">{{item.warningName}}</view>
 							</view>
-							<button class="cu-btn bg-green">查看</button>
+							<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
 						</view>
 					</view>
 				</view>
 			</scroll-view>
+			<popup :content='modelContent' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup"/>
 		</view>
 	</view>
 </template>
@@ -90,10 +91,12 @@
 		throttle
 	} from "@/utils/index.js"
 	import landBlock from '@/components/landBlock.vue'
+	import popup from "@/components/neil-modal/neil-modal.vue"
 	var qqmapsdk;
 	export default {
 		components: {
-			landBlock
+			landBlock,
+			popup
 		},
 		data() {
 			return {
@@ -106,7 +109,6 @@
 				farmDetail: {},
 				farmId: '',
 				farmAddress: '',
-				orderList: [],
 				tabs: [{
 						id: 1,
 						name: '农场信息'
@@ -116,16 +118,9 @@
 					},
 					{
 						id: 3,
-						name: '预警（8）'
-					},
+						name: '预警'
+					}
 				],
-				list: [{
-					name: 'asdasd'
-				}, {
-					name: 'asdasd'
-				}, {
-					name: 'asdasd'
-				}],
 				TabCur: 1,
 				newsList: [],
 				page: 1,
@@ -134,7 +129,10 @@
 				contentdown: '',
 				loadingType: 0,
 				triggered: false,
-				_freshing: false
+				_freshing: false,
+				timeList:[],
+				popupShow:false,
+				modelContent:''
 			};
 		},
 		onLoad(option) {
@@ -148,14 +146,22 @@
 				success: function(res) {
 					_this.farmId = res.data
 					_this.getFarmDetail()
+					_this.getData()
+					_this.massifFindFarmId()
 				}
 			})
-			// this.getData()
 		},
 		mounted() {
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			showModel(txt){
+				this.modelContent=txt
+				this.popupShow=true
+			},
+			closePopup(){
+				this.popupShow=false
+			},
 			onPulling() {},
 			onRefresh() {
 				if (this._freshing) return;
@@ -185,21 +191,6 @@
 				this.contentdown = ''
 				this.getData()
 			},
-
-			delOrganUserWorkOrderManage(id) { //删除
-				let _this = this
-				this.$apiYZX.delOrganUserWorkOrderManage(id).then(res => {
-					if (res.data.code == 200) {
-						uni.showToast({
-							title: '删除成功',
-							duration: 2000,
-							success() {
-								_this.initData()
-							}
-						});
-					}
-				})
-			},
 			scrolltoupper() {
 				console.info('下拉')
 			},
@@ -211,12 +202,36 @@
 					this.getData()
 				}
 			},
-			getData() {
-				let obj = { ...this.listObj,
-					...this.obj
+			massifFindFarmId(){//获取农场下所有预警
+				let obj={
+					pageNum:1,
+					pageSize:100,
+					farmId:this.farmId
 				}
-				this.$apiYZX.getFeedBackWorkOrdersList(this.page, obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.data)
+				this.$api.massifFindFarmId(obj).then(res=>{
+					this.timeList=res.data.data.massifs
+					this.tabs[2].name=`预警（${this.timeList.length}）`
+				})
+			},
+			getData() {//获取农场下所有地块
+				let obj = {
+					pageNum: this.page,
+					pageSize:10,
+					farmId:this.farmId
+				}
+				this.$api.massifSelectFarmId(obj).then(res => {
+					this.newsList = this.newsList.concat(res.data.data.massifs)
+					this.newsList.forEach((item,i)=>{
+						if(this.newsList[i].status=='ONLINE'){
+							this.newsList[i].statusTxt='在线'
+						}else if(this.newsList[i].status=='OFFLINE'){
+							this.newsList[i].statusTxt='离线'
+						}else if(this.newsList[i].status=='UNACTIVE'){
+							this.newsList[i].statusTxt='未激活'
+						}else if(this.newsList[i].status=='DISABLE'){
+							this.newsList[i].statusTxt='禁用'
+						}
+					})
 					if (this.page == 1 && this.newsList.length == 0) {
 						this.loadingType = 0
 						this.contentdown = '暂无数据'
@@ -422,5 +437,8 @@
 		.detail-small-txt {
 			text-indent: 2em;
 		}
+	}
+	.cu-timeline{
+		padding:30rpx 0;
 	}
 </style>

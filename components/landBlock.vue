@@ -4,7 +4,7 @@
 			<view class="flex  align-items-center">
 				<image class="land-img" src="../static/imgs/location.png" mode=""></image>
 				<view class="item-title">
-					<view class="order-title">{{itemObject.massifNo}}</view>
+					<view class="order-title">NO.{{itemObject.massifNo}}</view>
 					<view class="order-title small-text">{{itemObject.massifName}}</view>
 				</view>
 			</view>

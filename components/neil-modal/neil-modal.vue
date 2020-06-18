@@ -52,7 +52,7 @@
             },
             confirmColor: { //确认按钮颜色
                 type: String,
-                default: '#007aff'
+                default: '#49BA89'
             },
             showCancel: { //是否显示取消按钮，默认为 true
                 type: [Boolean, String],

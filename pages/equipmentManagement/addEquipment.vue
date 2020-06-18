@@ -49,10 +49,11 @@
 		},
 		methods: {
 			toScanCode() { //扫码
+			let _this=this
 				uni.scanCode({
 					success: function(res) {
 						console.log(JSON.stringify(res));
-						this.obj.sn=res.result	
+						_this.obj.sn=res.result	
 					}
 				});
 			},

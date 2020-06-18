@@ -39,7 +39,7 @@
 					<view class="grid col-4 grid-square flex-sub">
 						<view class="bg-img" v-for="(item,index) in imgList" :key="index" :data-url="imgList[index]">
 							<image :src="imgList[index]" mode="aspectFill"></image>
-							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
+							<view class="cu-tag bg-red" @tap.stop="DelImg($event,1)" :data-index="index">
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
@@ -59,20 +59,20 @@
 				</view>
 				<view>
 					<view class="grid col-4 grid-square flex-sub">
-						<view class="bg-img" v-for="(item,index) in imgList" :key="index" :data-url="imgList[index]">
-							<image :src="imgList[index]" mode="aspectFill"></image>
-							<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
+						<view class="bg-img" v-for="(item,index) in imgList2" :key="index" :data-url="imgList2[index]">
+							<image :src="imgList2[index]" mode="aspectFill"></image>
+							<view class="cu-tag bg-red" @tap.stop="DelImg($event,2)" :data-index="index">
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="imgList.length<4">
+						<view class="solids" @tap="ChooseImage" v-if="imgList2.length<4">
 							<text class='cuIcon-cameraadd'></text>
 						</view>
 					</view>
 				</view>
 			</view>
 			<button :disabled="disabled" @click="addFunc" class="cu-btn block bg-green margin-tb-sm lg" style="margin:40px 20px 20px 20px">
-			{{btnTxt}}</button>
+				{{btnTxt}}</button>
 		</scroll-view>
 	</view>
 </template>
@@ -81,9 +81,9 @@
 	export default {
 		data() {
 			return {
-				btnTxt:'添加农场',
+				btnTxt: '添加农场',
 				index: '',
-				imgList: [],
+				
 				landList: [],
 				disabled: false,
 				landId: '', //选择的地块ID
@@ -95,26 +95,36 @@
 				multiArray: [],
 				location: {},
 				postData: {
-					farmId: ''				
+					farmId: ''
 				},
 				provinceCode: '',
 				cityCode: '',
-				areaCode: '',
+				areaCode: '', 
 				init: true,
-				multiIndexsave: []
+				multiIndexsave: [],
+				imgUrl: getApp().globalData.imgUrl,
+				imgList: [],
+				imgList2:[],
+				imgArr: [] ,//农场主照片集合
+				imgArr2: [] //农场照片集合
 			}
 		},
 		onLoad(option) {
-			if (option.id) {
-				this.postData.farmId = option.id
-				uni.setNavigationBarTitle({
-					title:"编辑农场"
-				})
-				this.btnTxt='保存'
-				this.getFarm()
+			if (option.img) {
+				this.uploadImg(option.img, option.photoType)
 			} else {
-				this.getProvinceCode()
+				if (option.id) {
+					this.postData.farmId = option.id
+					uni.setNavigationBarTitle({
+						title: "编辑农场"
+					})
+					this.btnTxt = '保存'
+					this.getFarm()
+				} else {
+					this.getProvinceCode()
+				}
 			}
+
 		},
 		methods: {
 			getProvinceCode() { //获取省
@@ -240,7 +250,27 @@
 						break;
 				}
 			},
-			ChooseImage() {
+			chooseType(n){
+				let _this =  this;
+				
+				wx.showActionSheet({
+				  itemList: ['拍照','从手机相册选择'],
+				  success (res) {
+					  if(res.tapIndex  == 0){
+						  uni.navigateTo({
+						  	url:'../plantManage/framManage/camera?person=true&photoType='+n
+						  })
+					  }else{
+						  _this.chooseImage(n);
+					  }
+				    console.log(res.tapIndex)
+				  },
+				  fail (res) {
+				    console.log(res.errMsg)
+				  }
+				})
+			},
+			ChooseImage(n) {
 				uni.chooseImage({
 					count: 6, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -248,15 +278,15 @@
 					success: (res) => {
 						let that = this
 						res.tempFilePaths.forEach(item => {
-							that.uploadImg(item)
+							that.uploadImg(item,n)
 						});
 
 					}
 				});
 			},
-			uploadImg(url) {
+			uploadImg(url,n) {
 				let that = this
-				let URLPath = getApp().globalData.baseUrl + '/uploadFile/plantingUpload';
+				let URLPath = getApp().globalData.baseUrl + 'farm/uploadHead';
 				wx.uploadFile({
 					url: URLPath,
 					filePath: url,
@@ -264,8 +294,13 @@
 					//formData: { type: 'headImg' },
 					success: function(resData) {
 						let data = JSON.parse(resData.data).data
-						that.imgList = that.imgList.concat(that.imgUrl + data)
-						that.imgArr.push(data)
+						if(n==1){
+							that.imgList = that.imgList.concat(that.imgUrl + data)
+							that.imgArr.push(data)
+						}else{
+							that.imgList2 = that.imgList2.concat(that.imgUrl + data)
+							that.imgArr2.push(data)
+						}
 
 					}
 				})
@@ -276,7 +311,7 @@
 					current: e.currentTarget.dataset.url
 				});
 			},
-			DelImg(e) {
+			DelImg(e,n) {
 				uni.showModal({
 					title: '删除',
 					content: '确定要删除此图片吗？',
@@ -284,7 +319,11 @@
 					confirmText: '确定',
 					success: res => {
 						if (res.confirm) {
-							this.imgArr.splice(e.currentTarget.dataset.index, 1)
+							if(n==1){
+								this.imgArr.splice(e.currentTarget.dataset.index, 1)
+							}else{
+								this.imgArr2.splice(e.currentTarget.dataset.index, 1)
+							}
 						}
 					}
 				})
@@ -319,19 +358,19 @@
 			addFunc() {
 				if (!this.test()) return
 				this.getSelectValue()
-				this.postData.picture = 'qwe'		
+				this.postData.picture = 'qwe'
 				this.postData.masterPicture = 'qwe'
 				let api;
-				if(!this.postData.farmId){
-					 api='insertFarm'
-				}else api='updateFarm';	
+				if (!this.postData.farmId) {
+					api = 'insertFarm'
+				} else api = 'updateFarm';
 				this.$api[api](this.postData).then(res => {
-					if(this.postData.farmId){
+					if (this.postData.farmId) {
 						uni.showToast({
 							title: '编辑成功',
 							duration: 2000,
 							success() {
-								setTimeout(function(){
+								setTimeout(function() {
 									let pages = getCurrentPages(); // 当前页面
 									let beforePage = pages[pages.length - 2]; // 前一个页面
 									uni.navigateBack({
@@ -339,11 +378,11 @@
 											beforePage.onLoad(); // 执行前一个页面的onLoad方法
 										}
 									});
-								},2000)
+								}, 2000)
 							}
 						});
-					}else{
-						setTimeout(function(){
+					} else {
+						setTimeout(function() {
 							let pages = getCurrentPages(); // 当前页面
 							let beforePage = pages[pages.length - 2]; // 前一个页面
 							uni.navigateBack({
@@ -351,9 +390,9 @@
 									beforePage.onLoad(); // 执行前一个页面的onLoad方法
 								}
 							});
-						},2000)
+						}, 2000)
 					}
-					
+
 				})
 			}
 		}

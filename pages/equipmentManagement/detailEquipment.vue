@@ -3,7 +3,7 @@
 		<view class="detail-box">
 			<view class="flex align-items-center justify-content-flex-justify">
 				<view class="detail-name">
-					<view><text style="font-weight: bold;font-size: 17px;">{{obj.sn||''}}</text><text style="font-size: 13px;">{{obj.deviceName||''}}</text></view>
+					<view><text style="font-weight: bold;font-size: 17px;">SN:{{obj.sn||''}}</text><text style="font-size: 13px;">{{obj.deviceName||''}}</text></view>
 					<view class="detail-small-txt"><text>经度：{{obj.longitude||''}}</text><text>纬度：{{obj.latitude||''}}</text></view>
 				</view>
 				<view class="detail-img"  @click="toAdd">

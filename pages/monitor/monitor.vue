@@ -27,13 +27,13 @@
 				<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
 					<view class="cu-timeline">
 						<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
-							<text class="small-text">2010-11-11</text>
+							<text class="small-text">{{item.creationTime}}</text>
 							<view class="flex justify-content-flex-justify align-items-center">
 								<view class="timeline-box">
-									<view style="font-size: 14px;color:#333">{{item.farmName}} {{item.massifNo}}</view>
-									<view><text>{{item.msg}}</text></view>
+									<view style="color:#333">{{item.farmName}} NO.{{item.massifNo}}</view>
+									<view style="color:red">{{item.warningName}}</view>
 								</view>
-								<button class="cu-btn bg-green" @click="showPopup">查看</button>
+								<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
 							</view>
 						</view>
 					</view>
@@ -43,7 +43,7 @@
 		<view class="" v-else>
 			<not-login />
 		</view>
-		<popup content='这是内容' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup"/>
+		<popup :content='modelContent' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup"/>
 	</view>
 </template>
 
@@ -92,7 +92,8 @@
 				_freshing: false,
 				popupShow:false,
 				timeList:[],
-				isLogin:false
+				isLogin:false,
+				modelContent:''
 			};
 		},
 		onLoad(option) {
@@ -118,6 +119,13 @@
 			getApp().globalData.openId='XXXXXXXXXXXXX'
 		},
 		methods: {
+			showModel(txt){
+				this.modelContent=txt
+				this.popupShow=true
+			},
+			closePopup(){
+				this.popupShow=false
+			},
 			warningAll(){
 				let obj={
 					pageNum:1,
@@ -127,12 +135,6 @@
 					this.timeList=res.data.data.massifs
 					this.tabs[1].name=`预警（${this.timeList.length}）`
 				})
-			},
-			closePopup(){
-				this.popupShow=false
-			},
-			showPopup(){
-				this.popupShow=true
 			},
 			toUrl(id){//跳转监测详情
 				uni.navigateTo({
@@ -313,6 +315,8 @@
 		text {
 			color: red;
 		}
-
+	}
+	.cu-timeline{
+		padding:30rpx 0;
 	}
 </style>
