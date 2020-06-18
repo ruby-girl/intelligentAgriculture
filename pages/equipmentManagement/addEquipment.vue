@@ -2,7 +2,7 @@
 	<view>
 		<view class="cu-form-group" style="position: relative;">
 			<view class="title">设备序列号</view>
-			<input placeholder="输入设备名称" v-model="obj.sn" name="input"></input>
+			<input placeholder="输入设备名称" v-model="obj.SN" name="input"></input>
 			<image @click="toScanCode" class="code-img" src="../../static/imgs/qr-code.png" mode=""></image>
 		</view>
 		<view class="cu-form-group">
@@ -27,7 +27,7 @@
 				obj: {
 					deviceName: '',
 					massifId: '',
-					sn: '',
+					SN: '',
 					deviceId: ''
 				},
 				massifsList: [],
@@ -61,8 +61,11 @@
 				this.$api.selectDevice({
 					deviceId: this.obj.deviceId
 				}).then(res => {
-					this.obj = res.data.data
-					delete this.obj.newest
+					let obj=res.data.data
+					obj.SN=obj.sn
+					delete obj.sn
+					delete obj.newest
+					this.obj = obj
 					this.selectMassif()
 				})
 			},
@@ -76,6 +79,8 @@
 						this.optionValue = this.massifsList.findIndex((item, i) => {
 							return item.massifId == this.obj.massifId
 						})
+					}else{
+						this.obj.massifId=this.massifsList[0].massifId
 					}
 				})
 			},
@@ -94,27 +99,22 @@
 					})
 					return
 				}
-				if (!this.obj.SN && !this.obj.deviceId) {
-					uni.showToast({
-						title: '请输入设备序列号',
-						icon: 'none'
-					})
-					return
-				}
-				if (!this.obj.sn && this.obj.deviceId) {
-					uni.showToast({
-						title: '请输入设备序列号',
-						icon: 'none'
-					})
-					return
-				}
+				if(!this.obj.deviceId){
+					if (!this.obj.SN && !this.obj.deviceId) {
+						uni.showToast({
+							title: '请输入设备序列号',
+							icon: 'none'
+						})
+						return
+					}
+				}	
 				let api;
-				if (!this.obj.massifId) {
+				if (!this.obj.deviceId) {
 					api = 'insertDevice'
 				} else {
 					api = 'updateDevice';
-					this.obj.SN = this.obj.sn
 				}
+				console.info(this.obj)
 				this.$api[api](this.obj).then(res => {
 					if (this.obj.deviceId) {
 						this.toastFunc('编辑成功')

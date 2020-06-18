@@ -186,7 +186,7 @@
 			getData() {
 				let obj = {
 					pageNum: this.page,
-					pageSize: 10
+					pageSize: 6
 				}
 				this.$api.findByDevice(obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.devices)

@@ -1,6 +1,6 @@
 <template>
-	<canvas v-if="canvasId" :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px', 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}"
-	 @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error">
+	<canvas v-if="canvasId" :id="canvasId" disable-scroll="true" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px', 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}"
+	 @error="error">
 	</canvas>
 </template>
 
@@ -69,7 +69,7 @@
 					xAxis: {
 						disableGrid: true,
 						itemCount: 4,
-						scrollShow: true
+						scrollShow: false
 					},
 					yAxis: {
 						//disabled:true
@@ -103,9 +103,9 @@
 						type: 'grid',
 						gridColor: '#fff',
 						gridType: 'dash',
-						dashLength: 8,
-						itemCount: 4,
-						scrollShow: true
+						dashLength: 7,
+						itemCount: 7,
+						scrollShow: false
 					},
 					yAxis: {
 						gridType: 'dash',

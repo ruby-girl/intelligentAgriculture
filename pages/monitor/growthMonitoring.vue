@@ -2,7 +2,7 @@
 <template>
 	<view class="workOrder">
 		<view>
-			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
+			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" @scroll="scroll">
 				<view class="map-container">
 				<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl' src="http://pili-live-hls.tree-iot.com/zhslive/0018DE743E31C1.m3u8">
 				</video>
@@ -105,7 +105,7 @@
 						<text class="item-num" style="width:50%;text-align: right;display: inline-block;">最近7日数据</text>
 					</view>				
 					<view class="">
-						<line-chart ref="line" :opts="option" chartType="line" option/>
+						<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" ref="line" :opts="option" chartType="line" option/>
 					</view>
 				</view>		   
 			</scroll-view>
@@ -136,7 +136,10 @@
 				obj: {},
 				windowHeight: 300,
 				imgUrl:require('../../static/imgs/location.png'),//冬瓜图片
-				massifId:''
+				massifId:'',
+				scrollTop:0,
+				cWidth:'',
+				cHeight:''
 			};
 		},
 		onShareAppMessage: function () {	
@@ -154,10 +157,15 @@
 			this.massifId=option.massifId
 			this.getData()
 			this.findRangeData()
+			this.cWidth=uni.upx2px(750);
+						this.cHeight=uni.upx2px(500);
 		},
 		mounted() {
 		},
-		methods: {	
+		methods: {
+			scroll: function(e) {
+								this.scrollTop = e.detail.scrollTop
+						},
 			getData() {//获取检测详情
 				this.$api.massifMonitor({massifId:this.massifId}).then(res => {
 					this.obj =res.data.data
