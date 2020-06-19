@@ -43,7 +43,7 @@
 								</view>
 							</view>
 							<view class="detail-img">
-								<image style="width: 30px;height: 30px;" src="../../static/imgs/phone.png" mode="aspectFill"></image>
+								<image @click="callPhone(farmDetail.fphone)" style="width: 30px;height: 30px;" src="../../static/imgs/phone.png" mode="aspectFill"></image>
 							</view>
 						</view>
 					</view>
@@ -56,7 +56,7 @@
 		</view>
 		<view v-show="TabCur==2">
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
-			 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+			 refresher-background="#eee" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 			 @scrolltolower="loadingData">
 				<view class="list-item" v-for="(item,index) in newsList" :key="index" @tap="toUrl(item)">
@@ -155,6 +155,12 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			callPhone(){
+				uni.makePhoneCall({			 	
+				 	// 手机号
+				    phoneNumber: '18190010764'
+				  });
+			},
 			showModel(txt){
 				this.modelContent=txt
 				this.popupShow=true

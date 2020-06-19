@@ -12,7 +12,7 @@
 			</view>
 		</view>
 		<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
-		 refresher-background="#fff" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
+		 refresher-background="#eee" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 		 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 		 @scrolltolower="loadingData">
 			<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index"

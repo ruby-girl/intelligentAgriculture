@@ -25,9 +25,9 @@
 							<view class="small-text">种植进度</view>
 						</view>
 					</view>
-					<view  class="play-box">
+					<!-- <view  class="play-box">
 						<image src="../../static/imgs/play.png" mode=""></image>
-					</view>
+					</view> -->
 					<view class="map-bottom-box">					
 						<view class="list-item">
 							<view class="flex  align-items-center justify-content-flex-justify">
@@ -100,9 +100,9 @@
 				</view>
 				<view class="farm-detail-box">
 					<view><text style="font-size: 16px;">数据监测</text></view>
-					<view>
+					<view style="font-size: 14px;padding-bottom:10rpx;">
 						<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">空气温度变化记录</text>
-						<text class="item-num" style="width:50%;text-align: right;display: inline-block;">最近7日数据</text>
+						<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
 					</view>				
 					<view class="">
 						<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" ref="line" :opts="option" chartType="line" option/>
@@ -126,9 +126,9 @@
 				option:{
 					
 						//数字的图--折线图数据
-						categories: ['2012', '2013', '2014', '2015', '2016', '2017'],
+						categories: ['2020/6/13', '2020/6/14', '2020/6/15', '2020/6/16', '2020/6/17', '2020/6/18','2020/6/19'],
 						series: [
-							{ name: '成交量A', data: [35, 8, 25, 37, 4, 20]}
+							{ name: '', data: [35, 8, 25, 37, 4, 20,18]}
 						]
 					
 				},
@@ -185,7 +185,7 @@
 				})
 			},
 			findRangeData(){
-				this.$api.findRangeData().then(res=>{
+				this.$api.findRangeData({massifId:this.massifId}).then(res=>{
 					
 				})
 			}

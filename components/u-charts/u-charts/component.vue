@@ -1,7 +1,10 @@
 <template>
-	<canvas v-if="canvasId" :id="canvasId" disable-scroll="true" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px', 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}"
-	 @error="error">
-	</canvas>
+	<div>
+		<canvas v-if="canvasId" :id="canvasId" disable-scroll="true" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px', 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}"
+		 @error="error">
+		</canvas>
+		<image :src="imgSrc" style="width: 750rpx;height: 500rpx;"></image>
+	</div>
 </template>
 
 <script>
@@ -40,6 +43,11 @@
 		mounted() {
 			this.init();
 		},
+		data(){
+			return{
+				imgSrc:''
+			}
+		},
 		methods: {
 			init() {
 				switch (this.chartType) {
@@ -68,7 +76,7 @@
 					enableScroll: false,
 					xAxis: {
 						disableGrid: true,
-						itemCount: 4,
+						itemCount: 8,
 						scrollShow: false
 					},
 					yAxis: {
@@ -90,7 +98,9 @@
 					canvasId: this.canvasId,
 					type: 'line',
 					fontSize: 11,
-					legend: true,
+					legend:{
+						show:false
+					},
 					dataLabel: false,
 					dataPointShape: true,
 					background: '#FFFFFF',
@@ -105,17 +115,19 @@
 						gridType: 'dash',
 						dashLength: 7,
 						itemCount: 7,
-						scrollShow: false
+						scrollShow: false,
+						rotateLabel:true,
+						labelCount:7
 					},
 					yAxis: {
 						gridType: 'dash',
-						gridColor: '#fff',
+						gridColor: '#999',
 						dashLength: 8,
 						splitNumber: 5,
 						min: 10,
 						max: 180,
 						format: (val) => {
-							return val.toFixed(0) + '元'
+							return val.toFixed(0) + '℃'
 						}
 					},
 					width: this.cWidth * this.pixelRatio,
@@ -126,6 +138,24 @@
 						}
 					}
 				});
+				let _this=this
+				canvases[this.canvasId].addEventListener('renderComplete', () => {//监控图表渲染完成
+										setTimeout(function(){//延迟一定时间执行
+											uni.canvasToTempFilePath({//将图表转成图片
+												x: 0,
+												y: 0,
+												width:375*2,
+												height:250*2,
+												fileType:'png',
+												canvasId:_this.canvasId,
+												success: function(res) {
+												  _this.imgSrc=res.tempFilePath;
+												 },
+												 fail:function(res){
+												 }
+											},_this);
+										},100);
+								});
 			},
 			// 这里仅作为示例传入两个参数，cid为canvas-id,newdata为更新的数据，需要更多参数请自行修改
 			changeData(cid,newdata) {
@@ -162,4 +192,10 @@
 		flex: 1;
 		background-color: #FFFFFF;
 	}
+	canvas{
+		    position: absolute;
+		    width: 100%;
+		    right: -900px;
+		    top: -600px;
+		}
 </style>
