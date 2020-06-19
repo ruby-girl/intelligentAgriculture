@@ -18,8 +18,11 @@
 		globalData: {
 			// imgUrl: 'https://bysk.scddwb.com/byapi/showImg/planting/',
 			// baseUrl: 'https://bysk.scddwb.com/byapi/',
-			imgUrl: 'http://kwt.mmy.red:8081/',
-			baseUrl: 'http://kwt.mmy.red:8081/',
+			
+			// imgUrl: 'http://kwt.mmy.red:8081/',
+			// baseUrl: 'http://kwt.mmy.red:8081/',
+			imgUrl: 'https://91b73374612d.ngrok.io/',
+			baseUrl: 'https://91b73374612d.ngrok.io/',
 			isLogin: false,
 			openId: ''
 		}

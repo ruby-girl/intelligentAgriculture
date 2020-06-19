@@ -278,6 +278,7 @@
 					success: (res) => {
 						let that = this
 						res.tempFilePaths.forEach(item => {
+							console.info('item',item)
 							that.uploadImg(item,n)
 						});
 
@@ -285,6 +286,7 @@
 				});
 			},
 			uploadImg(url,n) {
+				console.info('url',url)
 				let that = this
 				let URLPath = getApp().globalData.baseUrl + 'farm/uploadHead';
 				wx.uploadFile({
