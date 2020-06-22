@@ -225,3 +225,11 @@ export const  massifFindFarmId= (data) => {
 		data:data
 	})
 }
+//获取用户OPENID
+export const  decodeUserInfo= (data) => {
+	return http.request({ 
+		url: 'wXLoginController/decodeUserInfo',
+		method: 'post',
+		data:data
+	})
+}

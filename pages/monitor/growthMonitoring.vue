@@ -86,14 +86,18 @@
 								</view>
 							</view>
 						   <view class="flex">
-							   <view class="map-bottom-tip">
+							   <view class="map-bottom-tip display-flex justify-content-flex-center">
 								   <image src="../../static/imgs/like.png" mode="aspectFill"></image>
-								   <text>20人点赞</text>
+								  <!-- <text class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
+								    lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">20人点赞</text> -->
+								  <button class="like-txt" style="margin-top:100rpx" open-type="getUserInfo"
+								    lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">
+								   	20人点赞</button>
 							   </view>
-							   <view class="map-bottom-tip">
+							  <!-- <view class="map-bottom-tip">
 							   	  <image src="../../static/imgs/code.png" mode="aspectFill"></image>
 							   	  <text>分享二维码</text>		   
-							   </view>
+							   </view> -->
 						   </view>
 						</view>
 					</view>
@@ -139,7 +143,8 @@
 				massifId:'',
 				scrollTop:0,
 				cWidth:'',
-				cHeight:''
+				cHeight:'',
+				openid:''
 			};
 		},
 		onShareAppMessage: function () {	
@@ -163,6 +168,40 @@
 		mounted() {
 		},
 		methods: {
+			// 手动授权方法
+			onGotUserInfo(e) {
+				let _this=this
+				console.info('dianji ')
+				wx.login({
+					success(res) {
+						if (res.code) {
+							//发起网络请求
+							var code = res.code
+							console.log('code=====',code)
+							// 这里通过code获取openid
+							_this.$api.decodeUserInfo({code:code}).then(res=>{
+								// _this.openid=res.data
+							})
+							// getApp().globalData.openId='XXXXXXXXXXXXX'
+							// 获取微信用户信息
+							// wx.getUserInfo({
+							// 	success: function(res) {
+							// 		var userInfo = res.userInfo
+							// 		_this.user.nickName = userInfo.nickName //昵称
+							// 		_this.user.avatarUrl = userInfo.avatarUrl //头像
+							// 		_this.userLogin()
+							// 	},
+							// 	fail: res => {
+							// 		console.info('失败')
+							// 		// 获取失败的去引导用户授权 
+							// 	}
+							// })
+						} else {
+			
+						}
+					}
+				})
+			},
 			scroll: function(e) {
 								this.scrollTop = e.detail.scrollTop
 						},
@@ -403,5 +442,16 @@
 			width:88rpx;
 			height:68rpx;
 		}
+	}
+	.like-txt{
+		background: #fff;
+		border:none;
+		font-size: 28rpx;
+		display: inline-block;
+		margin:0 !important;
+		padding:0 !important;
+	}
+	button::after{
+		border:none;
 	}
 </style>

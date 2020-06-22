@@ -17,7 +17,7 @@
 			<!-- 	<view class="image-center"> -->
 			<camera device-position="back" flash="off" @error="error" class="image-center"></camera>
 			<!-- 	</view> -->
-			<image src="../../../static/photo.png" @click="takePhoto" class="img-start"></image>
+			<image src="@/static/imgs/photo.png" @click="takePhoto" class="img-start"></image>
 		</view>
 	</view>
 

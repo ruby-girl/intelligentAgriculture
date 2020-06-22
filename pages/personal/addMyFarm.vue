@@ -43,7 +43,7 @@
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="imgList.length<4">
+						<view class="solids" @tap="chooseType(1)" v-if="imgList.length<1">
 							<text class='cuIcon-cameraadd'></text>
 						</view>
 					</view>
@@ -65,7 +65,7 @@
 								<text class='cuIcon-close'></text>
 							</view>
 						</view>
-						<view class="solids" @tap="ChooseImage" v-if="imgList2.length<4">
+						<view class="solids" @tap="chooseType(2)" v-if="imgList2.length<4">
 							<text class='cuIcon-cameraadd'></text>
 						</view>
 					</view>
@@ -251,26 +251,24 @@
 				}
 			},
 			chooseType(n){
-				let _this =  this;
-				
+				let _this =this;			
 				wx.showActionSheet({
 				  itemList: ['拍照','从手机相册选择'],
 				  success (res) {
 					  if(res.tapIndex  == 0){
 						  uni.navigateTo({
-						  	url:'../plantManage/framManage/camera?person=true&photoType='+n
+						  	url:'cameraModel?person=true&photoType='+n
 						  })
 					  }else{
 						  _this.chooseImage(n);
 					  }
-				    console.log(res.tapIndex)
 				  },
 				  fail (res) {
 				    console.log(res.errMsg)
 				  }
 				})
 			},
-			ChooseImage(n) {
+			chooseImage(n) {
 				uni.chooseImage({
 					count: 6, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -292,10 +290,10 @@
 				wx.uploadFile({
 					url: URLPath,
 					filePath: url,
-					name: 'files',
+					name: 'file',
 					//formData: { type: 'headImg' },
 					success: function(resData) {
-						let data = JSON.parse(resData.data).data
+						let data = JSON.parse(resData.data)
 						if(n==1){
 							that.imgList = that.imgList.concat(that.imgUrl + data)
 							that.imgArr.push(data)

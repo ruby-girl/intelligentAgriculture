@@ -21,8 +21,8 @@
 			
 			// imgUrl: 'http://kwt.mmy.red:8081/',
 			// baseUrl: 'http://kwt.mmy.red:8081/',
-			imgUrl: 'https://91b73374612d.ngrok.io/',
-			baseUrl: 'https://91b73374612d.ngrok.io/',
+			imgUrl: 'https://6c6e439aa331.ngrok.io/',
+			baseUrl: 'https://6c6e439aa331.ngrok.io/',
 			isLogin: false,
 			openId: ''
 		}
