@@ -233,3 +233,11 @@ export const  decodeUserInfo= (data) => {
 		data:data
 	})
 }
+
+export const  likes= (data) => {
+	return http.request({ 
+		url: 'massif/likes',
+		method: 'post',
+		data:data
+	})
+}

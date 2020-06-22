@@ -4,10 +4,11 @@
 		<view>
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" @scroll="scroll">
 				<view class="map-container">
-				<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl' src="http://pili-live-hls.tree-iot.com/zhslive/0018DE743E31C1.m3u8">
-				</video>
-					
-					<view class="map-top-box flex align-items-center justify-content-flex-justify">		
+					<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl'
+					 src="http://pili-live-hls.tree-iot.com/zhslive/0018DE743E31C1.m3u8">
+					</video>
+
+					<view class="map-top-box flex align-items-center justify-content-flex-justify">
 						<view class="map-top-item">
 							<view style="font-size: 15px;font-weight: bold;">{{obj.surplus}}</view>
 							<view class="small-text">剩余时间(天)</view>
@@ -28,7 +29,7 @@
 					<!-- <view  class="play-box">
 						<image src="../../static/imgs/play.png" mode=""></image>
 					</view> -->
-					<view class="map-bottom-box">					
+					<view class="map-bottom-box">
 						<view class="list-item">
 							<view class="flex  align-items-center justify-content-flex-justify">
 								<view class="flex  align-items-center">
@@ -85,20 +86,20 @@
 									<text class="small-text">土壤水分</text>
 								</view>
 							</view>
-						   <view class="flex">
-							   <view class="map-bottom-tip display-flex justify-content-flex-center">
-								   <image src="../../static/imgs/like.png" mode="aspectFill"></image>
-								  <!-- <text class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
+							<view class="flex">
+								<view class="map-bottom-tip display-flex justify-content-flex-center">
+									<image src="../../static/imgs/like.png" mode="aspectFill"></image>
+									<!-- <text class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
 								    lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">20人点赞</text> -->
-								  <button class="like-txt" style="margin-top:100rpx" open-type="getUserInfo"
-								    lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">
-								   	20人点赞</button>
-							   </view>
-							  <!-- <view class="map-bottom-tip">
+									<button class="like-txt" style="margin-top:100rpx" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo"
+									 withCredentials="true">
+										20人点赞</button>
+								</view>
+								<!-- <view class="map-bottom-tip">
 							   	  <image src="../../static/imgs/code.png" mode="aspectFill"></image>
 							   	  <text>分享二维码</text>		   
 							   </view> -->
-						   </view>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -107,125 +108,139 @@
 					<view style="font-size: 14px;padding-bottom:10rpx;">
 						<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">空气温度变化记录</text>
 						<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
-					</view>				
-					<view class="">
-						<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" ref="line" :opts="option" chartType="line" option/>
 					</view>
-				</view>		   
+					<view class="">
+						<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" ref="line"
+						 :opts="option" chartType="line" option />
+					</view>
+				</view>
 			</scroll-view>
 		</view>
-		
+
 	</view>
 </template>
 
 <script>
 	import LineChart from '@/components/u-charts/u-charts/component.vue';
-	import {formatDate} from "@/utils/index.js" 
+	import {
+		formatDate
+	} from "@/utils/index.js"
 	export default {
-		components: {		
-			LineChart		
+		components: {
+			LineChart
 		},
 		data() {
 			return {
-				option:{
-					
-						//数字的图--折线图数据
-						categories: ['2020/6/13', '2020/6/14', '2020/6/15', '2020/6/16', '2020/6/17', '2020/6/18','2020/6/19'],
-						series: [
-							{ name: '', data: [35, 8, 25, 37, 4, 20,18]}
-						]
-					
+				option: {
+
+					//数字的图--折线图数据
+					categories: ['2020/6/13', '2020/6/14', '2020/6/15', '2020/6/16', '2020/6/17', '2020/6/18', '2020/6/19'],
+					series: [{
+						name: '',
+						data: [35, 8, 25, 37, 4, 20, 18]
+					}]
+
 				},
 				baseId: '',
 				obj: {},
 				windowHeight: 300,
-				imgUrl:require('../../static/imgs/location.png'),//冬瓜图片
-				massifId:'',
-				scrollTop:0,
-				cWidth:'',
-				cHeight:'',
-				openid:''
+				imgUrl: require('../../static/imgs/location.png'), //冬瓜图片
+				massifId: '',
+				scrollTop: 0,
+				cWidth: '',
+				cHeight: '',
+				openid: ''
 			};
 		},
-		onShareAppMessage: function () {	
-		    return {
-		        title: '快来看看我的地块生长情况吧！',
-		        desc: '分享页面的内容',
-		        path: 'pages/monitor/growthMonitoring?massifId='+this.massifId // 路径，传递参数到指定页面。
-		    }	
+		onShareAppMessage: function() {
+			return {
+				title: '快来看看我的地块生长情况吧！',
+				desc: '分享页面的内容',
+				path: 'pages/monitor/growthMonitoring?massifId=' + this.massifId // 路径，传递参数到指定页面。
+			}
 		},
-		onShow(){
-			
+		onShow() {
+
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			this.massifId=option.massifId
+			this.massifId = option.massifId
 			this.getData()
 			this.findRangeData()
-			this.cWidth=uni.upx2px(750);
-						this.cHeight=uni.upx2px(500);
+			this.cWidth = uni.upx2px(750);
+			this.cHeight = uni.upx2px(500);
 		},
-		mounted() {
-		},
+		mounted() {},
 		methods: {
 			// 手动授权方法
 			onGotUserInfo(e) {
-				let _this=this
-				console.info('dianji ')
-				wx.login({
-					success(res) {
-						if (res.code) {
-							//发起网络请求
-							var code = res.code
-							console.log('code=====',code)
-							// 这里通过code获取openid
-							_this.$api.decodeUserInfo({code:code}).then(res=>{
-								// _this.openid=res.data
-							})
-							// getApp().globalData.openId='XXXXXXXXXXXXX'
-							// 获取微信用户信息
-							// wx.getUserInfo({
-							// 	success: function(res) {
-							// 		var userInfo = res.userInfo
-							// 		_this.user.nickName = userInfo.nickName //昵称
-							// 		_this.user.avatarUrl = userInfo.avatarUrl //头像
-							// 		_this.userLogin()
-							// 	},
-							// 	fail: res => {
-							// 		console.info('失败')
-							// 		// 获取失败的去引导用户授权 
-							// 	}
-							// })
-						} else {
-			
-						}
+				let _this = this
+				_this.openid = res.data.data.openid
+				if (_this.openid) {
+					let obj = {
+						openid: _this.openid,
+						massifId: _this.massifId
 					}
+					_this.likesFunc(obj)
+				} else {
+					wx.login({
+						success(res) {
+							if (res.code) {
+								//发起网络请求
+								var code = res.code
+								// 这里通过code获取openid
+								_this.$api.decodeUserInfo({
+									code: code
+								}).then(res => {
+									
+									let obj = {
+										openid: _this.openid,
+										massifId: _this.massifId
+									}
+									_this.likesFunc(obj)
+								})
+
+							} else {
+
+							}
+						}
+					})
+				}
+
+			},
+			likesFunc(obj) {
+				_this.$api.likes(obj).then(res => {
+
 				})
 			},
 			scroll: function(e) {
-								this.scrollTop = e.detail.scrollTop
-						},
-			getData() {//获取检测详情
-				this.$api.massifMonitor({massifId:this.massifId}).then(res => {
-					this.obj =res.data.data
-					let arr=this.obj.creationTime.split(' ')
-					let YMD=arr[0]
-					let MD=YMD.split('-')
-					this.obj.creationTime=MD[1]+'-'+MD[2]
-					if(this.obj.status=='ONLINE'){
-						this.obj.statusTxt='在线'
-					}else if(this.obj.status=='OFFLINE'){
-						this.obj.statusTxt='离线'
-					}else if(this.obj.status=='UNACTIVE'){
-						this.obj.statusTxt='未激活'
-					}else if(this.obj.status=='DISABLE'){
-						this.obj.statusTxt='禁用'
+				this.scrollTop = e.detail.scrollTop
+			},
+			getData() { //获取检测详情
+				this.$api.massifMonitor({
+					massifId: this.massifId
+				}).then(res => {
+					this.obj = res.data.data
+					let arr = this.obj.creationTime.split(' ')
+					let YMD = arr[0]
+					let MD = YMD.split('-')
+					this.obj.creationTime = MD[1] + '-' + MD[2]
+					if (this.obj.status == 'ONLINE') {
+						this.obj.statusTxt = '在线'
+					} else if (this.obj.status == 'OFFLINE') {
+						this.obj.statusTxt = '离线'
+					} else if (this.obj.status == 'UNACTIVE') {
+						this.obj.statusTxt = '未激活'
+					} else if (this.obj.status == 'DISABLE') {
+						this.obj.statusTxt = '禁用'
 					}
 				})
 			},
-			findRangeData(){
-				this.$api.findRangeData({massifId:this.massifId}).then(res=>{
-					
+			findRangeData() {
+				this.$api.findRangeData({
+					massifId: this.massifId
+				}).then(res => {
+
 				})
 			}
 		}
@@ -237,9 +252,11 @@
 	.workOrder {
 		background: #eee;
 	}
+
 	.flex {
 		display: flex;
 	}
+
 	.workOrder {
 		height: 100%;
 
@@ -279,19 +296,22 @@
 		background: #49BA89;
 		color: #fff;
 	}
-	.state-box-error{
+
+	.state-box-error {
 		position: relative;
-		padding:3px 6px;
+		padding: 3px 6px;
 		border-top-left-radius: 15px;
 		border-bottom-left-radius: 15px;
-		right:-20rpx;
+		right: -20rpx;
 		background: #FDB523;
-		color:#fff;
+		color: #fff;
 	}
+
 	.item-content-box {
 		width: 30%;
 		text-align: center;
 		line-height: 18px;
+
 		.item-num {
 			font-size: 16px;
 			font-weight: bold;
@@ -308,150 +328,176 @@
 	// 地图CSS
 	.map-container {
 		position: relative;
-		height:600rpx;
+		height: 600rpx;
 	}
-	.detail-name{
-		width:75%;
-		border-right:1px solid #eee;
+
+	.detail-name {
+		width: 75%;
+		border-right: 1px solid #eee;
 	}
-	.small-txt{
+
+	.small-txt {
 		font-size: 12px;
 	}
-	.detail-img{
-		width:25%;
+
+	.detail-img {
+		width: 25%;
 		text-align: center;
 	}
-	.detail-img image,.detail-name image{
-		width:30rpx;
-		height:30rpx;
+
+	.detail-img image,
+	.detail-name image {
+		width: 30rpx;
+		height: 30rpx;
 	}
-	.detail-box{
-		padding:20rpx;
+
+	.detail-box {
+		padding: 20rpx;
 		background: #fff;
 		border-radius: 6px;
 	}
-	.color-grey{
-		color:#999;
+
+	.color-grey {
+		color: #999;
 	}
-	.font-size-16{
+
+	.font-size-16 {
 		font-size: 15px;
 	}
-    .map-top-box{
+
+	.map-top-box {
 		position: absolute;
-		top:10rpx;
-		width:96%;
+		top: 10rpx;
+		width: 96%;
 		background: #fff;
-		padding:10rpx 20rpx;
-		left:2%;
+		padding: 10rpx 20rpx;
+		left: 2%;
 		border-radius: 4px;
 	}
-	 .map-bottom-box{
+
+	.map-bottom-box {
 		position: absolute;
-		bottom:-420rpx;
-		left:2%;
-		width:96%;
+		bottom: -420rpx;
+		left: 2%;
+		width: 96%;
 		background: #fff;
-		padding:10rpx 20rpx;
+		padding: 10rpx 20rpx;
 		border-radius: 4px;
+
 		image {
-				width: 28px;
-				height: 28px;
-				margin-right: 20rpx;
-				position: relative;
-				top: 3px;
+			width: 28px;
+			height: 28px;
+			margin-right: 20rpx;
+			position: relative;
+			top: 3px;
 		}
+
 		.content {
 			padding: 30rpx;
 			overflow-y: auto;
 			position: relative;
 			padding-top: 200rpx;
-		
+
 			.item {
 				padding: 30rpx;
 				line-height: 30rpx;
 				background: rgba(255, 255, 255, 1);
 				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
 				margin-bottom: 30rpx;
-		
+
 				.flex {
 					margin-bottom: 20rpx;
 				}
 			}
-		
+
 			.imgIcon {
 				width: 40rpx;
 				height: 40rpx;
 				margin-right: 10px;
 			}
 		}
-		
+
 		.order-title {
 			line-height: 20px;
 		}
-		.small-text{
-			color:#999999;
+
+		.small-text {
+			color: #999999;
 			font-size: 13px;
 		}
-		.list-item{
+
+		.list-item {
 			background: #fff;
 			border-radius: 8px;
 			margin-bottom: 20rpx;
 		}
+
 		.state-box {
 			position: relative;
-			padding:3px 6px;
+			padding: 3px 6px;
 			border-top-left-radius: 15px;
 			border-bottom-left-radius: 15px;
-			right:-20rpx;
+			right: -20rpx;
 			background: #49BA89;
-			color:#fff;
+			color: #fff;
 		}
-		.item-content-box{
-			width:30%;
+
+		.item-content-box {
+			width: 30%;
 			text-align: center;
-			.item-num{
+
+			.item-num {
 				font-size: 18px;
 				font-weight: bold;
 			}
 		}
 	}
-	.farm-detail-box{
+
+	.farm-detail-box {
 		padding: 20rpx 30rpx;
 		background: #fff;
 		border-top: 440rpx solid #F5F5F5;
 	}
-	.map-bottom-tip{
-		width:50%;
+
+	.map-bottom-tip {
+		width: 100%;
 		text-align: center;
-		margin-top:5rpx;
-		color:#999;
-		image{
+		margin-top: 5rpx;
+		color: #999;
+
+		image {
 			width: 31rpx;
 			height: 27rpx;
 		}
 	}
-	.map-top-item{
-		width:25%;
+
+	.map-top-item {
+		width: 25%;
 		text-align: center;
 	}
-	.play-box{
-		width:100%;
+
+	.play-box {
+		width: 100%;
 		text-align: right;
-		padding:500rpx 20rpx 10rpx 0;
-		image{
-			width:88rpx;
-			height:68rpx;
+		padding: 500rpx 20rpx 10rpx 0;
+
+		image {
+			width: 88rpx;
+			height: 68rpx;
 		}
 	}
-	.like-txt{
+
+	.like-txt {
 		background: #fff;
-		border:none;
+		border: none;
 		font-size: 28rpx;
 		display: inline-block;
-		margin:0 !important;
-		padding:0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		margin-top: 14rpx;
 	}
-	button::after{
-		border:none;
+
+	button::after {
+		border: none;
 	}
 </style>
