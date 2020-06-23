@@ -284,7 +284,6 @@
 				});
 			},
 			uploadImg(url,n) {
-				console.info('url',url)
 				let that = this
 				let URLPath = getApp().globalData.baseUrl + 'farm/uploadHead';
 				wx.uploadFile({
@@ -301,7 +300,6 @@
 							that.imgList2 = that.imgList2.concat(that.imgUrl + data)
 							that.imgArr2.push(data)
 						}
-
 					}
 				})
 			},
@@ -358,8 +356,10 @@
 			addFunc() {
 				if (!this.test()) return
 				this.getSelectValue()
-				this.postData.picture = 'qwe'
-				this.postData.masterPicture = 'qwe'
+				let masterPicture=this.imgArr2.join()
+				let picture=this.picture.join()
+				this.postData.picture = picture
+				this.postData.masterPicture = masterPicture
 				let api;
 				if (!this.postData.farmId) {
 					api = 'insertFarm'

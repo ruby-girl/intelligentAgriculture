@@ -56,7 +56,7 @@
 					<text class="tip-text">当前1.0.0</text>
 
 				</view>
-				<view class="cu-form-group item-jt">
+				<view class="cu-form-group item-jt" @click="toUs">
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/about.png" mode=""></image>关于我们
 					</view>
@@ -179,6 +179,11 @@
 			},
 			showPopup() {
 				this.popupShow = true
+			},
+			toUs(){
+				uni.navigateTo({
+					url: 'aboutUs'
+				});			
 			}
 		}
 	}

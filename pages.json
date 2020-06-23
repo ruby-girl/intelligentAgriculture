@@ -10,6 +10,13 @@
 
 			}
 		},{
+			"path": "pages/personal/aboutUs",
+			"style": {
+				"navigationBarTitleText": "关于我们",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white"
+			}
+		},{
 			"path": "pages/personal/cameraModel",
 			"style": {}
 		},{

@@ -1,8 +1,8 @@
 
 export default {
 	config: {
-		// baseUrl: "http://kwt.mmy.red:8081/",
-		baseUrl: "https://f12109749b4c.ngrok.io/",
+		//baseUrl: "http://kwt.mmy.red:8081/",
+		baseUrl: "https://2b513ce85d07.ngrok.io/",
 		header: {
 			 'Content-Type':'application/json',
 			 'Authorization':'',

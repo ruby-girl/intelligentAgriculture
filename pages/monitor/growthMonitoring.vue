@@ -88,12 +88,14 @@
 							</view>
 							<view class="flex">
 								<view class="map-bottom-tip display-flex justify-content-flex-center">
-									<image src="../../static/imgs/like.png" mode="aspectFill"></image>
-									<!-- <text class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
-								    lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">20人点赞</text> -->
-									<button class="like-txt" style="margin-top:100rpx" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo"
+									<image v-if="isLike" style="margin-top:5px" src="../../static/imgs/like.png" mode="aspectFill"></image>
+									<image style="margin-top:5px" v-else src="../../static/imgs/no-like.png" mode="aspectFill"></image>
+									<!-- <button class="like-txt" style="margin-top:100rpx" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo"
 									 withCredentials="true">
-										20人点赞</button>
+										20人点赞</button> -->
+										<button class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
+										 withCredentials="true">
+											20人点赞</button>
 								</view>
 								<!-- <view class="map-bottom-tip">
 							   	  <image src="../../static/imgs/code.png" mode="aspectFill"></image>
@@ -149,7 +151,8 @@
 				scrollTop: 0,
 				cWidth: '',
 				cHeight: '',
-				openid: ''
+				openid: '',
+				isLike:false
 			};
 		},
 		onShareAppMessage: function() {
@@ -169,19 +172,16 @@
 			this.findRangeData()
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
+			this.openid = getApp().globalData.openid
+			this.getCode()
 		},
 		mounted() {},
 		methods: {
 			// 手动授权方法
-			onGotUserInfo(e) {
-				let _this = this
-				_this.openid = res.data.data.openid
+			getCode() {
+				let _this = this			
 				if (_this.openid) {
-					let obj = {
-						openid: _this.openid,
-						massifId: _this.massifId
-					}
-					_this.likesFunc(obj)
+					return
 				} else {
 					wx.login({
 						success(res) {
@@ -192,25 +192,37 @@
 								_this.$api.decodeUserInfo({
 									code: code
 								}).then(res => {
-									
-									let obj = {
-										openid: _this.openid,
-										massifId: _this.massifId
-									}
-									_this.likesFunc(obj)
+									getApp().globalData.openid=res.data.data.openid
+									_this.openid=res.data.data.openid								
 								})
-
-							} else {
-
 							}
 						}
 					})
 				}
 
 			},
-			likesFunc(obj) {
-				_this.$api.likes(obj).then(res => {
-
+			likesFunc() {
+				let obj = {
+					openid: this.openid,
+					massifId: this.massifId
+				}
+				let _this=this
+				this.$api.likes(obj).then(res => {
+					// let txt;
+					// if(_this.isLike){
+					// 	txt='取消点赞'
+					// }else{
+					// 	txt='点赞成功'
+					// }
+					
+					// uni.showToast({
+					// 	title: txt,
+					// 	icon: 'none',
+					// 	duration: 2000,
+					// 	success() {
+							_this.isLike=!_this.isLike
+					// 	}
+					// });
 				})
 			},
 			scroll: function(e) {

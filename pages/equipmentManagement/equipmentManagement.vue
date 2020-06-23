@@ -36,19 +36,21 @@
 								<view class="item-bottom-box-left" style="border-right:1px solid #eee;">
 									<view  class="flex align-items-center justify-content-flex-justify">
 										<view>版本信息</view>
-										<view>{{item.firmwareVersion}}</view>
+										
 									</view>
-									<text>已是最新版本</text>
+									<view>{{item.firmwareVersion}}</view>
+									<!-- <text>已是最新版本</text> -->
 								</view>
 								<!-- 报红 -->
 								<view style="padding-left:20rpx;color:red" class="flex align-items-center justify-content-flex-justify item-bottom-box-left">
 									<view>
 										<view>设备状态</view>
-										<view>未定位</view>
+										<view v-if="item.statusTxt!=='在线'">故障码</view>			
 									</view>
 									<view>
-										<view>故障码</view>
-										<view>XXX</view>
+										<view v-if="item.statusTxt=='在线'" style="color:#333">正常</view>
+										<view v-else>{{item.statusTxt}}</view>
+										<view v-if="item.statusTxt!=='在线'">XXX</view>							
 									</view>
 								</view>
 							</view>
