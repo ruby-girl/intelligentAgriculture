@@ -2,7 +2,7 @@
 export default {
 	config: {
 		//baseUrl: "http://kwt.mmy.red:8081/",
-		baseUrl: "https://2b513ce85d07.ngrok.io/",
+		baseUrl: "https://kwt.p-er.cn/",
 		header: {
 			 'Content-Type':'application/json',
 			 'Authorization':'',
@@ -64,6 +64,11 @@ export default {
 				if (statusCode === 200) { //成功
 					resolve(response);
 				} else {
+					wx.showToast({
+					  title: response.msg||'请求错误 ',
+					  icon: none,
+					  duration: 2000
+					})
 					reject(response)
 				}
 			}

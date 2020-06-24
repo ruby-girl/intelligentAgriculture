@@ -23,7 +23,7 @@
 				</view>
 				<view style="line-height:35px;">
 					<image style="width:17px;height:20px;" src="../../static/imgs/location-2.png"></image>
-					<text>{{item.provinceName}}{{item.cityName}}{{item.arerName}}{{item.address}}</text>
+					<text>{{item.provinceName}}{{item.cityName}}{{item.arerName}}{{item.address||''}}</text>
 				</view>
 				<view class="flex align-items-center justify-content-flex-justify">
 					<view class="item-type-box flex align-items-center justify-content-flex-justify">
@@ -42,7 +42,7 @@
 					</view>
 				</view>
 				<view class="item-content">
-					{{item.introduce}}
+					{{item.introduce||''}}
 				</view>
 			</view>
 			<view class="loading-more">{{contentdown}}</view>

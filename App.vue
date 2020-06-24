@@ -21,8 +21,8 @@
 			
 			// imgUrl: 'http://kwt.mmy.red:8081/',
 			// baseUrl: 'http://kwt.mmy.red:8081/',
-			imgUrl: 'https://6c6e439aa331.ngrok.io/',
-			baseUrl: 'https://6c6e439aa331.ngrok.io/',
+			imgUrl: 'https://kwt.p-er.cn/',
+			baseUrl: 'https://kwt.p-er.cn/',
 			isLogin: false,
 			openId: ''
 		}

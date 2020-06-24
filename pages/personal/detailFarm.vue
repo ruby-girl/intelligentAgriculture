@@ -36,7 +36,7 @@
 						<text style="font-weight: bold;font-size: 16px;">农场负责人</text>
 						<view class="flex align-items-center justify-content-flex-justify">
 							<view class="detail-name flex align-items-center" style="border:none;">
-								<image style="width: 30px;height: 30px;" src="../../static/imgs/deit.png" mode="aspectFill"></image>
+								<!-- <image style="width: 30px;height: 30px;" src="../../static/imgs/deit.png" mode="aspectFill"></image> -->
 								<view style="line-height:18px;">
 									<view>{{farmDetail.master}}</view>
 									<view class="detail-small-txt">{{farmDetail.fphone}}</view>
@@ -50,7 +50,7 @@
 				</view>
 				<view class="farm-detail-box">
 					<view><text style="font-size: 16px;">农场介绍</text></view>
-					<view class="detail-small-txt">{{farmDetail.introduce}}</view>
+					<view class="detail-small-txt">{{farmDetail.introduce||''}}</view>
 				</view>
 			</scroll-view>
 		</view>
@@ -155,10 +155,11 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
-			callPhone(){
+			callPhone(phone){
+				if(!phone) return;
 				uni.makePhoneCall({			 	
 				 	// 手机号
-				    phoneNumber: '18190010764'
+				    phoneNumber: phone
 				  });
 			},
 			showModel(txt){
@@ -261,8 +262,8 @@
 					farmId: this.farmId
 				}).then(res => {
 					this.farmDetail = res.data.data
-					this.farmAddress = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName + this.farmDetail
-						.address
+					this.farmAddress = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName + (this.farmDetail
+						.address||'')
 					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName
 					this.atuoGetLocation(this.farmAddress, area)
 				})

@@ -241,3 +241,11 @@ export const  likes= (data) => {
 		data:data
 	})
 }
+// 查看点赞状态
+export const  getLikes= (data) => {
+	return http.request({ 
+		url: 'massif/state',
+		method: 'post',
+		data:data
+	})
+}

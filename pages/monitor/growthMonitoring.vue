@@ -93,9 +93,12 @@
 									<!-- <button class="like-txt" style="margin-top:100rpx" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo"
 									 withCredentials="true">
 										20人点赞</button> -->
-										<button class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
+										<button v-if="num==0" class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
 										 withCredentials="true">
-											20人点赞</button>
+											{{num}}人点赞</button>
+											<button v-else class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
+											 withCredentials="true">
+												点赞</button>
 								</view>
 								<!-- <view class="map-bottom-tip">
 							   	  <image src="../../static/imgs/code.png" mode="aspectFill"></image>
@@ -113,7 +116,7 @@
 					</view>
 					<view class="">
 						<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" ref="line"
-						 :opts="option" chartType="line" option />
+						  chartType="line" option />
 					</view>
 				</view>
 			</scroll-view>
@@ -134,14 +137,12 @@
 		data() {
 			return {
 				option: {
-
 					//数字的图--折线图数据
-					categories: ['2020/6/13', '2020/6/14', '2020/6/15', '2020/6/16', '2020/6/17', '2020/6/18', '2020/6/19'],
+					categories: [],
 					series: [{
 						name: '',
-						data: [35, 8, 25, 37, 4, 20, 18]
+						data: []
 					}]
-
 				},
 				baseId: '',
 				obj: {},
@@ -152,18 +153,16 @@
 				cWidth: '',
 				cHeight: '',
 				openid: '',
-				isLike:false
+				isLike:false,
+				num:0
 			};
 		},
 		onShareAppMessage: function() {
 			return {
 				title: '快来看看我的地块生长情况吧！',
-				desc: '分享页面的内容',
+				desc: '',
 				path: 'pages/monitor/growthMonitoring?massifId=' + this.massifId // 路径，传递参数到指定页面。
 			}
-		},
-		onShow() {
-
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
@@ -181,6 +180,7 @@
 			getCode() {
 				let _this = this			
 				if (_this.openid) {
+					_this.getLikes()
 					return
 				} else {
 					wx.login({
@@ -193,13 +193,30 @@
 									code: code
 								}).then(res => {
 									getApp().globalData.openid=res.data.data.openid
-									_this.openid=res.data.data.openid								
+									_this.openid=res.data.data.openid
+									_this.getLikes()
 								})
 							}
 						}
 					})
 				}
 
+			},
+			getLikes(){//进入获取点赞状态
+				let obj = {
+					openid: this.openid,
+					massifId: this.massifId
+				}
+				let _this=this
+				this.$api.getLikes(obj).then(res => {				
+						_this.num=res.data.data.likes
+						if(res.data.data.state==1){
+							_this.isLike=true
+							
+						}else{
+							_this.isLike=false
+						}
+				})
 			},
 			likesFunc() {
 				let obj = {
@@ -208,21 +225,13 @@
 				}
 				let _this=this
 				this.$api.likes(obj).then(res => {
-					// let txt;
-					// if(_this.isLike){
-					// 	txt='取消点赞'
-					// }else{
-					// 	txt='点赞成功'
-					// }
-					
-					// uni.showToast({
-					// 	title: txt,
-					// 	icon: 'none',
-					// 	duration: 2000,
-					// 	success() {
-							_this.isLike=!_this.isLike
-					// 	}
-					// });
+						_this.num=res.data.data.likes
+						if(res.data.data.state==1){
+							_this.isLike=true
+							
+						}else{
+							_this.isLike=false
+						}
 				})
 			},
 			scroll: function(e) {
@@ -252,7 +261,13 @@
 				this.$api.findRangeData({
 					massifId: this.massifId
 				}).then(res => {
-
+					let orderDps=res.data.data[0].orderDps
+					orderDps.forEach(item=>{					
+						this.option.categories.push(formatDate(item.timestamp))
+						this.option.series[0].data.push((item.value).toFixed(1))
+					})
+					console.info(this.option.series)
+					this.$refs.line.init(this.option)
 				})
 			}
 		}

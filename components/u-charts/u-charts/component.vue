@@ -18,13 +18,6 @@
 				type: String,
 				default: 'column'
 			},
-			opts: {
-				required: true,
-				type: Object,
-				default () {
-					return null;
-				},
-			},
 			canvasId: {
 				type: String,
 				default: 'u-canvas',
@@ -41,7 +34,7 @@
 			},
 		},
 		mounted() {
-			this.init();
+			
 		},
 		data(){
 			return{
@@ -49,7 +42,8 @@
 			}
 		},
 		methods: {
-			init() {
+			init(opts) {
+				this.opts=opts
 				switch (this.chartType) {
 					case 'column':
 						this.initColumnChart();
@@ -125,7 +119,7 @@
 						dashLength: 8,
 						splitNumber: 5,
 						min: 10,
-						max: 180,
+						max: 50,
 						format: (val) => {
 							return val.toFixed(0) + '℃'
 						}

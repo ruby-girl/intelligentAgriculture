@@ -10,9 +10,20 @@ export const throttle = (func, wait) => {
 	    }
 	}
 }
-export const formatDate = (time) => {
-	var year=time.getFullYear(); 
-	var month=time.getMonth()+1; 
-	var date=time.getDate(); 
-	return year+"-"+month+"-"+date;
+export const formatDate = (timestamp) => {
+	var d = new Date(timestamp * 1000);    //根据时间戳生成的时间对象
+	     var year=d.getFullYear()
+		var month=d.getMonth()+1
+		var day=d.getDate()
+		var hour=d.getHours()
+		var minute=d.getMinutes()
+		var second=d.getSeconds()
+	    if(month<10){
+			month='0'+month
+		}
+		if(day<10){
+			day='0'+day
+		}
+		let date=year + "/" + month + "/" +day;
+	    return date
 }

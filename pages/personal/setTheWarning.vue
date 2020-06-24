@@ -10,7 +10,7 @@
 					<view class="flex align-items-center justify-content-flex-justify border-top" @tap="toDetail(item)">
 						<text class="small-text">{{item.warningsTxt}}值</text>
 						<view>
-							<text>最低{{item.low||''}}°C 最高{{item.high||''}}°C</text>
+							<text>最低{{item.low||''}}{{item.type}} 最高{{item.high||''}}{{item.type}}</text>
 							<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
 						</view>
 					</view>
@@ -22,7 +22,6 @@
 
 <script>
 	export default {
-	
 		data() {
 			return {
 				moreHeight: 30,
@@ -32,7 +31,6 @@
 				list:[]
 			};
 		},
-		
 		onLoad(option) {			
 			this.massifId=option.massifId
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
@@ -61,8 +59,14 @@
 				this.$api.findList({massifId:this.massifId}).then(res=>{
 					this.list=res.data.data.warnings
 					this.list.forEach((item,i)=>{
-						let txt=item.warningName.split(2,6)
+						let txt=item.warningName.substring(2,6)
 						this.list[i].warningsTxt=txt
+						let type=item.warningName.substring(2,4)
+						if(type=='温度'){
+							this.list[i].type='℃'
+						}else{
+							this.list[i].type='%'
+						}
 					})
 				})
 			}

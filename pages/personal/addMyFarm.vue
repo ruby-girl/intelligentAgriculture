@@ -19,7 +19,7 @@
 					</view>
 					<view class="cu-form-group">
 						<view class="title">农场地址</view>
-						<input v-model="postData.address" @blur="atuoGetLocation" class="form-input-left" placeholder="请输入农场详细地址" name="input"></input>
+						<input v-model="postData.address" class="form-input-left" placeholder="请输入农场详细地址" name="input"></input>
 					</view>
 				</form>
 			</view>
@@ -357,7 +357,7 @@
 				if (!this.test()) return
 				this.getSelectValue()
 				let masterPicture=this.imgArr2.join()
-				let picture=this.picture.join()
+				let picture=this.imgArr.join()
 				this.postData.picture = picture
 				this.postData.masterPicture = masterPicture
 				let api;

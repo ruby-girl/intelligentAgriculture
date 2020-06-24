@@ -11,14 +11,14 @@
 		<view class="border-bottom">
 			<view class="cu-form-group">
 				<input placeholder="请输入验证码" name="input" @input="captchaInput"></input>
-				<button class='cu-btn line-green shadow' :disabled="disabled" @click="codeClick">{{btnTitle}}{{txt}}</button>
+				<button class='cu-btn line-green' :disabled="disabled" @click="codeClick">{{btnTitle}}{{txt}}</button>
 			</view>
 		</view>
 		<button class="cu-btn block bg-green margin-tb-sm lg positon-btn" style="margin-top:100rpx" open-type="getUserInfo"
 		 lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">
 			登录/注册</button>
 		<view class="auto-bottom">
-			注册即为同意<text class="agreement">《数农科技用户使用协议》</text>
+			注册即为同意<text class="agreement" @click="toTermsOfService">《星鸦智农用户使用协议》</text>
 		</view>
 
 	</view>
@@ -58,6 +58,11 @@
 			return false
 		},
 		methods: {
+			toTermsOfService(){
+				uni.navigateTo({
+					url:'termsOfService'
+				})
+			},
 			onInput(e) {
 				this.obj.phone = e.detail.value
 			},
@@ -199,8 +204,10 @@
 	.title-y {
 		text-align: left;
 		margin: 80rpx 0;
-		font-size: 21px;
+		font-size: 42rpx;
 		font-weight: bold;
+		color:#333;
+		font-family:PingFang SC;
 	}
 
 	.auto-bottom {
@@ -213,5 +220,9 @@
 	}
 	.cu-form-group{
 		min-height:80rpx;
+		padding:0;
+	}
+	.cu-btn::after{
+		border-radius: 30px !important;
 	}
 </style>
