@@ -5,7 +5,7 @@
 			<view class="top equipmentManagement-title flex  align-items-center justify-content-flex-justify">
 				<view style="font-size: 16px;font-weight: bold;" class="flex  align-items-center">
 					<image style="height:24px" src="../../static/imgs/equipmentManagement.png" mode=""></image>
-					<text>在线设备3/5</text>
+					<text>在线设备<text v-show="countObj.deviceCount>0">{{countObj.statusCount}}/{{countObj.deviceCount}}</text></text>
 				</view>
 				<view class="equipmentManagement-btn" @click="toAdd">
 					<image src="../../static/imgs/add.png" mode=""></image>
@@ -42,7 +42,7 @@
 									<!-- <text>已是最新版本</text> -->
 								</view>
 								<!-- 报红 -->
-								<view style="padding-left:20rpx;color:red" class="flex align-items-center justify-content-flex-justify item-bottom-box-left">
+								<view style="padding-left:20rpx;color:red" class="flex align-items-flex-start justify-content-flex-justify item-bottom-box-left">
 									<view>
 										<view>设备状态</view>
 										<view v-if="item.statusTxt!=='在线'">故障码</view>			
@@ -99,7 +99,8 @@
 				loadingType: 0,
 				triggered: false,
 				_freshing: false,
-				isLogin:false
+				isLogin:false,
+				countObj:{}
 			};
 		},
 		onLoad(option) {
@@ -107,13 +108,15 @@
 			this.isLogin=getApp().globalData.isLogin
 			if(this.isLogin){
 				this.initData()
-			}	
+				this.deviceCount()
+			}
 		},
 		onShow() {
 			if(!this.isLogin){//每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
 				this.isLogin=getApp().globalData.isLogin
 				if(this.isLogin){
 					this.initData()
+					this.deviceCount()
 				}
 			}
 		},
@@ -121,6 +124,11 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			deviceCount(){//获取在线数/所有设备
+				this.$api.deviceCount().then(res=>{
+					this.countObj=res.data.data
+				})
+			},
 			onPulling() {},
 			onRefresh() {
 				if (this._freshing) return;
@@ -158,20 +166,6 @@
 			toDetail(id){//跳转详情
 				uni.navigateTo({
 					url: 'detailEquipment?deviceId='+id
-				})
-			},
-			delOrganUserWorkOrderManage(id) { //删除
-				let _this = this
-				this.$apiYZX.delOrganUserWorkOrderManage(id).then(res => {
-					if (res.data.code == 200) {
-						uni.showToast({
-							title: '删除成功',
-							duration: 2000,
-							success() {
-								_this.initData()
-							}
-						});
-					}
 				})
 			},
 			scrolltoupper() {
@@ -272,6 +266,7 @@
 		text-align: center;
 		color: #ddd;
 		padding-bottom: 50rpx;
+		padding-top:20px;
 	}
 
 	.content {

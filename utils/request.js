@@ -2,7 +2,7 @@
 export default {
 	config: {
 		//baseUrl: "http://kwt.mmy.red:8081/",
-		baseUrl: "https://kwt.p-er.cn/",
+		baseUrl: "https://xyzn.tree-iot.com/",
 		header: {
 			 'Content-Type':'application/json',
 			 'Authorization':'',

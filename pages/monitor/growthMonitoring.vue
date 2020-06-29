@@ -303,6 +303,7 @@
 		text-align: center;
 		color: #ddd;
 		padding-bottom: 50rpx;
+		padding-top:20px;
 	}
 
 	.order-title {

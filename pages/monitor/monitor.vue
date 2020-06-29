@@ -25,7 +25,7 @@
 			</view>
 			<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-else>
 				<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-					<view class="cu-timeline">
+					<view class="cu-timeline" v-if="timeList.length>0">
 						<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
 							<text class="small-text">{{item.creationTime}}</text>
 							<view class="flex justify-content-flex-justify align-items-center">
@@ -37,6 +37,7 @@
 							</view>
 						</view>
 					</view>
+					<view class="loading-more" v-else>暂无数据</view>
 				</scroll-view>
 			</view>
 		</view>
@@ -129,11 +130,13 @@
 			warningAll(){
 				let obj={
 					pageNum:1,
-					pageSize:100
+					pageSize:3
 				}
 				this.$api.warningAll(obj).then(res=>{
 					this.timeList=res.data.data.massifs
-					this.tabs[1].name=`预警（${this.timeList.length}）`
+					if(this.timeList.length>0){
+						this.tabs[1].name=`预警（${this.timeList.length}）`
+					}
 				})
 			},
 			toUrl(id){//跳转监测详情
@@ -280,6 +283,7 @@
 		text-align: center;
 		color: #ddd;
 		padding-bottom: 50rpx;
+		padding-top:20px;
 	}
 
 	.order-title {

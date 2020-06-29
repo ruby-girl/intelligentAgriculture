@@ -37,7 +37,8 @@
 						<view class="flex align-items-center justify-content-flex-justify">
 							<view class="detail-name flex align-items-center" style="border:none;">
 								<!-- <image style="width: 30px;height: 30px;" src="../../static/imgs/deit.png" mode="aspectFill"></image> -->
-								<view style="line-height:18px;">
+								<view class="cu-avatar lg round" :style="{'backgroundImage':'url('+imgUrl+farmDetail.masterPicture+')'}"></view>
+								<view style="line-height:18px;margin-right: 5px;">
 									<view>{{farmDetail.master}}</view>
 									<view class="detail-small-txt">{{farmDetail.fphone}}</view>
 								</view>
@@ -51,6 +52,9 @@
 				<view class="farm-detail-box">
 					<view><text style="font-size: 16px;">农场介绍</text></view>
 					<view class="detail-small-txt">{{farmDetail.introduce||''}}</view>
+					<view class="flex align-items-center imgs-box">
+						<view v-for="(item,i) in imgArr" class="cu-avatar lg" :style="{'backgroundImage':'url('+imgUrl+item+')'}"></view>
+					</view>
 				</view>
 			</scroll-view>
 		</view>
@@ -67,7 +71,7 @@
 		</view>
 		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-show="TabCur==3">
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-				<view class="cu-timeline">
+				<view class="cu-timeline" v-if="timeList.length>0">
 					<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
 						<text class="small-text">{{item.creationTime}}</text>
 						<view class="flex justify-content-flex-justify align-items-center">
@@ -79,6 +83,7 @@
 						</view>
 					</view>
 				</view>
+				<view class="loading-more" v-else>暂无数据</view>
 			</scroll-view>
 			<popup :content='modelContent' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup"/>
 		</view>
@@ -121,6 +126,7 @@
 						name: '预警'
 					}
 				],
+				imgUrl: getApp().globalData.imgUrl,
 				TabCur: 1,
 				newsList: [],
 				page: 1,
@@ -132,7 +138,8 @@
 				_freshing: false,
 				timeList:[],
 				popupShow:false,
-				modelContent:''
+				modelContent:'',
+				imgArr:[]
 			};
 		},
 		onLoad(option) {
@@ -217,7 +224,9 @@
 				}
 				this.$api.massifFindFarmId(obj).then(res=>{
 					this.timeList=res.data.data.massifs
-					this.tabs[2].name=`预警（${this.timeList.length}）`
+					if(this.timeList.length>0){
+						this.tabs[2].name=`预警（${this.timeList.length}）`
+					}
 				})
 			},
 			getData() {//获取农场下所有地块
@@ -265,17 +274,12 @@
 					this.farmAddress = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName + (this.farmDetail
 						.address||'')
 					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName
+					this.imgArr=res.data.data.picture.split(",");//农场图片 
 					this.atuoGetLocation(this.farmAddress, area)
 				})
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
-				// if (e.currentTarget.dataset.id == 1) {
-				// 	this.listObj.initiatorId = this.obj.organUserId
-				// } else {
-				// 	this.listObj.initiatorId = ''
-				// }
-				// this.initData()
 			},
 			atuoGetLocation(addr, area) { //根据地址获取经纬度
 				let _this = this
@@ -339,6 +343,7 @@
 		text-align: center;
 		color: #ddd;
 		padding-bottom: 50rpx;
+		padding-top:20px;
 	}
 
 	.order-title {
@@ -447,5 +452,10 @@
 	}
 	.cu-timeline{
 		padding:30rpx 0;
+	}
+	.imgs-box .cu-avatar.lg{
+		width:23%;
+		height:150rpx;
+		margin-right: 6px;
 	}
 </style>

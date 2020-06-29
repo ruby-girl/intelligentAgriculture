@@ -8,12 +8,12 @@
 			 @scrolltolower="loadingData">
 				<view class="cu-form-group" v-for="(item,i) in newsList" :key="i" style="padding:20rpx 30rpx;" @click="toDetail(item.massifId)">
 					<view>
-						<view class="item-title">NO.{{item.massifNo}}  {{item.crop}}地</view>
+						<view class="item-title">NO.{{item.massifNo}}  {{item.crop}}地  </view>
 						<view class="small-text">开心农场</view>
 					</view>
 					<image class="right-jt" src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
-				
+				<view class="loading-more">{{contentdown}}</view>
 			</scroll-view>
 		</view>
 		<view class="add-box" @click="toAdd">
@@ -54,7 +54,6 @@
 				moreHeight: 30,
 				windowHeight: 300,
 				contentdown: '',
-				newsList: [],
 				loadingType: 0,
 				triggered: false,
 				_freshing: false,
@@ -177,6 +176,7 @@
 		text-align: center;
 		color: #ddd;
 		padding-bottom: 50rpx;
+		padding-top:20px;
 	}
 
 	.order-title {

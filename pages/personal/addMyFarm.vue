@@ -207,6 +207,15 @@
 					this.provinceCode = res.data.data.provinceCode
 					this.cityCode = res.data.data.cityCode
 					this.areaCode = res.data.data.arerCode
+					this.imgArr=res.data.data.masterPicture.split(",");
+					this.imgList=this.imgArr.map(item=>{
+						return this.imgUrl+item
+					})				
+					this.imgArr2=res.data.data.picture.split(",");
+					this.imgList2=this.imgArr2.map(item=>{
+						return this.imgUrl+item
+					})
+					console.info(this.imgList,this.imgList2)
 					this.$api.districts({
 						parent: 86
 					}).then(res => {
@@ -269,8 +278,14 @@
 				})
 			},
 			chooseImage(n) {
+				let num;
+				if(n==1){
+					num=1
+				}else{
+					num=4
+				}
 				uni.chooseImage({
-					count: 6, //默认9
+					count: num, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: (res) => {
@@ -279,7 +294,6 @@
 							console.info('item',item)
 							that.uploadImg(item,n)
 						});
-
 					}
 				});
 			},
@@ -292,9 +306,10 @@
 					name: 'file',
 					//formData: { type: 'headImg' },
 					success: function(resData) {
-						let data = JSON.parse(resData.data)
+						let data = JSON.parse(resData.data).data
 						if(n==1){
 							that.imgList = that.imgList.concat(that.imgUrl + data)
+							console.info('that.imgList',that.imgList)
 							that.imgArr.push(data)
 						}else{
 							that.imgList2 = that.imgList2.concat(that.imgUrl + data)
@@ -319,8 +334,10 @@
 						if (res.confirm) {
 							if(n==1){
 								this.imgArr.splice(e.currentTarget.dataset.index, 1)
+								this.imgList.splice(e.currentTarget.dataset.index, 1)
 							}else{
 								this.imgArr2.splice(e.currentTarget.dataset.index, 1)
+								this.imgList2.splice(e.currentTarget.dataset.index, 1)
 							}
 						}
 					}
@@ -356,10 +373,10 @@
 			addFunc() {
 				if (!this.test()) return
 				this.getSelectValue()
-				let masterPicture=this.imgArr2.join()
-				let picture=this.imgArr.join()
-				this.postData.picture = picture
-				this.postData.masterPicture = masterPicture
+				// let masterPicture=this.imgArr2.join()
+				// let picture=this.imgArr.join()
+				this.postData.picture = this.imgArr2.join()
+				this.postData.masterPicture = this.imgArr.join()
 				let api;
 				if (!this.postData.farmId) {
 					api = 'insertFarm'

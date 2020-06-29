@@ -107,14 +107,20 @@
 						})
 						return
 					}
-				}	
+				}
+				if (!this.obj.massifId) {
+					uni.showToast({
+						title: '请关联地块',
+						icon: 'none'
+					})
+					return
+				}
 				let api;
 				if (!this.obj.deviceId) {
 					api = 'insertDevice'
 				} else {
 					api = 'updateDevice';
 				}
-				console.info(this.obj)
 				this.$api[api](this.obj).then(res => {
 					if (this.obj.deviceId) {
 						this.toastFunc('编辑成功')
