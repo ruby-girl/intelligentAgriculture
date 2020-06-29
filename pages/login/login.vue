@@ -1,7 +1,7 @@
 <template>
 	<view class="padding-login">
 		<view class="title-y">
-			欢迎登录/注册星鸦智农！
+			欢迎登录/注册星鸦智农！ !
 		</view>
 		<view class="border-bottom">
 			<view class="cu-form-group">

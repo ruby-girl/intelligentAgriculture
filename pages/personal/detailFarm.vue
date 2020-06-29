@@ -37,7 +37,8 @@
 						<view class="flex align-items-center justify-content-flex-justify">
 							<view class="detail-name flex align-items-center" style="border:none;">
 								<!-- <image style="width: 30px;height: 30px;" src="../../static/imgs/deit.png" mode="aspectFill"></image> -->
-								<view style="line-height:18px;">
+								<view class="cu-avatar lg round" :style="{'backgroundImage':'url('+imgUrl+farmDetail.masterPicture+')'}"></view>
+								<view style="line-height:18px;margin-right: 5px;">
 									<view>{{farmDetail.master}}</view>
 									<view class="detail-small-txt">{{farmDetail.fphone}}</view>
 								</view>
@@ -121,6 +122,7 @@
 						name: '预警'
 					}
 				],
+				imgUrl: getApp().globalData.imgUrl,
 				TabCur: 1,
 				newsList: [],
 				page: 1,

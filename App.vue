@@ -21,8 +21,8 @@
 			
 			// imgUrl: 'http://kwt.mmy.red:8081/',
 			// baseUrl: 'http://kwt.mmy.red:8081/',
-			imgUrl: 'https://kwt.p-er.cn/',
-			baseUrl: 'https://kwt.p-er.cn/',
+			imgUrl: 'https://xyzn.tree-iot.com',
+			baseUrl: 'https://xyzn.tree-iot.com/',
 			isLogin: false,
 			openId: ''
 		}
