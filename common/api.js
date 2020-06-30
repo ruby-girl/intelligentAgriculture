@@ -3,9 +3,9 @@ import http from '@/utils/request.js'
 //设置请求结束后拦截器
 http.interceptor.response = (response) => {
 	uni.hideLoading();
-	if(response.statusCode!=200){
+	if(response.data.stateCode!==200){
 		uni.showToast({
-		    title: response.msg,
+		    title: response.data.msg,
 			icon:'none'		
 		})		
 	}

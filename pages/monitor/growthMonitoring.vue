@@ -22,7 +22,7 @@
 							<view class="small-text">种植日期</view>
 						</view>
 						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">{{obj.proportion||'-'}}%</view>
+							<view style="font-size: 15px;font-weight: bold;">{{obj.proportion}}%</view>
 							<view class="small-text">种植进度</view>
 						</view>
 					</view>
@@ -49,7 +49,7 @@
 							<view class="box-margin flex justify-content-flex-justify align-items-center">
 								<view class="item-content-box">
 									<view class="item-num">
-										{{obj.proportion||'-'}}<span class="small-txt">%</span>
+										{{obj.proportion}}<span class="small-txt">%</span>
 									</view>
 									<text class="small-text">冬瓜</text>
 								</view>
@@ -88,12 +88,12 @@
 							</view>
 							<view class="flex">
 								<view class="map-bottom-tip display-flex justify-content-flex-center">
-									<image v-if="isLike" style="margin-top:5px" src="../../static/imgs/like.png" mode="aspectFill"></image>
-									<image style="margin-top:5px" v-else src="../../static/imgs/no-like.png" mode="aspectFill"></image>
+									<image v-if="isLike" style="margin-top:10rpx" src="../../static/imgs/like.png" mode="aspectFill"></image>
+									<image style="margin-top:10rpx" v-else src="../../static/imgs/no-like.png" mode="aspectFill"></image>
 									<!-- <button class="like-txt" style="margin-top:100rpx" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo"
 									 withCredentials="true">
 										20人点赞</button> -->
-										<button v-if="num==0" class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
+										<button v-if="num!==0" class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
 										 withCredentials="true">
 											{{num}}人点赞</button>
 											<button v-else class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
@@ -145,7 +145,7 @@
 					}]
 				},
 				baseId: '',
-				obj: {},
+				obj: {proportion:'0'},
 				windowHeight: 300,
 				imgUrl: require('../../static/imgs/location.png'), //冬瓜图片
 				massifId: '',
@@ -167,6 +167,9 @@
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.massifId = option.massifId
+			
+		},
+		onShow() {
 			this.getData()
 			this.findRangeData()
 			this.cWidth = uni.upx2px(750);

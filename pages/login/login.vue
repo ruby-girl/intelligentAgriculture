@@ -1,7 +1,7 @@
 <template>
 	<view class="padding-login">
 		<view class="title-y">
-			欢迎登录/注册星鸦智农！ !
+			欢迎登录/注册星鸦智农！
 		</view>
 		<view class="border-bottom">
 			<view class="cu-form-group">
@@ -71,6 +71,20 @@
 			},
 			// 手动授权方法
 			onGotUserInfo(e) {
+				if (!this.obj.phone) {
+					uni.showToast({
+						title: '请输入手机号',
+						icon: 'none'
+					})
+					return
+				}
+				if (!this.obj.yzm) {
+					uni.showToast({
+						title: '请输入验证码',
+						icon: 'none'
+					})
+					return
+				}
 				let _this=this
 				wx.login({
 					success(res) {

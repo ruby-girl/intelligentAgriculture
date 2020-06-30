@@ -53,7 +53,7 @@
 					<view><text style="font-size: 16px;">农场介绍</text></view>
 					<view class="detail-small-txt">{{farmDetail.introduce||''}}</view>
 					<view class="flex align-items-center imgs-box">
-						<view v-for="(item,i) in imgArr" class="cu-avatar lg" :style="{'backgroundImage':'url('+imgUrl+item+')'}"></view>
+						<view v-for="(item,i) in imgArr" :key="i" class="cu-avatar lg" :style="{'backgroundImage':'url('+imgUrl+item+')'}"></view>
 					</view>
 				</view>
 			</scroll-view>

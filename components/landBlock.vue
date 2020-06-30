@@ -18,7 +18,7 @@
 		<view class="box-margin flex justify-content-flex-justify align-items-center">
 			<view class="item-content-box">
 				<view class="item-num">
-					{{itemObject.proportion||'-'}}<span class="small-txt">%</span>
+					{{itemObject.proportion}}<span class="small-txt">%</span>
 				</view>
 				<text class="small-text">冬瓜</text>
 			</view>
@@ -61,7 +61,14 @@
 <script>
 	export default {
 		name:'landBlock',
-		props: ['itemObject'],	
+		props: {
+			itemObject: {
+			      type: Object,
+			      default: function() {		      
+			        return {proportion:'0'};
+			      }
+			    }
+		},	
 		data() {
 			return {
 				

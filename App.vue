@@ -8,7 +8,7 @@
 		},
 		onShareAppMessage(res) {
 			return {
-				title: '农事云'
+				title: '星鸦智农'
 			}
 		},
 		onHide: function() {
@@ -16,11 +16,6 @@
 		},
 
 		globalData: {
-			// imgUrl: 'https://bysk.scddwb.com/byapi/showImg/planting/',
-			// baseUrl: 'https://bysk.scddwb.com/byapi/',
-			
-			// imgUrl: 'http://kwt.mmy.red:8081/',
-			// baseUrl: 'http://kwt.mmy.red:8081/',
 			imgUrl: 'https://xyzn.tree-iot.com',
 			baseUrl: 'https://xyzn.tree-iot.com/',
 			isLogin: false,

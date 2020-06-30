@@ -26,7 +26,7 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					{{String(nums.farmCount)||'-'}}
+					{{nums.farmCount}}
 				</view>
 			</view>
 			<view class="item-box" @click="toLandManagement()">
@@ -37,7 +37,7 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					{{String(nums.massifCount)||'-'}}
+					{{nums.massifCount}}
 				</view>
 			</view>
 		</view>
@@ -77,7 +77,10 @@
 		data() {
 			return {
 				switchB: true,
-				nums: {},
+				nums: {
+					massifCount:'-',
+					farmCount:'-'
+				},
 				user: {},
 				isLogin: false,
 				popupShow: false
@@ -85,12 +88,6 @@
 		},
 		components: {
 			popup
-		},
-		onShareAppMessage(res) {
-			return {
-				title: '农事云',
-				path: '/pages/index/index'
-			}
 		},
 		onLoad() {
 			let _this = this
@@ -104,7 +101,7 @@
 						phone: res.data.phone || '',
 						avatarUrl: res.data.avatarUrl
 					}
-					_this.getCount()
+					 _this.getCount()
 				},
 				fail: function() {
 					_this.isLogin = false
@@ -118,6 +115,8 @@
 				if (this.isLogin) {
 					this.getCount()
 				}
+			}else{
+				this.getCount()
 			}
 		},
 		methods: {

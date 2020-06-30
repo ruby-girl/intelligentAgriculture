@@ -31,14 +31,14 @@
 							<image class="item-icon" src="../../static/imgs/land-management.png" mode="aspectFill"></image>
 							<text>地块</text>
 						</view>
-						<text>10</text>
+						<text>{{item.massifCount}}</text>
 					</view>
 					<view class="flex item-type-box align-items-center justify-content-flex-justify">
 						<view class="">
 							<image class="item-icon" src="../../static/imgs/warning.png" mode="aspectFill"></image>
 							<text>预警</text>
 						</view>
-						<text style="color:red;">10</text>
+						<text style="color:red;">{{item.waringCount}}</text>
 					</view>
 				</view>
 				<view class="item-content">
