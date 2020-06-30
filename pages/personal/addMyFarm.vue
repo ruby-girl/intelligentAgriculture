@@ -208,7 +208,14 @@
 					this.cityCode = res.data.data.cityCode
 					this.areaCode = res.data.data.arerCode
 					this.imgArr=res.data.data.masterPicture.split(",");
+					this.imgList=this.imgArr.map(item=>{
+						return this.imgUrl+item
+					})				
 					this.imgArr2=res.data.data.picture.split(",");
+					this.imgList2=this.imgArr2.map(item=>{
+						return this.imgUrl+item
+					})
+					console.info(this.imgList,this.imgList2)
 					this.$api.districts({
 						parent: 86
 					}).then(res => {
@@ -327,8 +334,10 @@
 						if (res.confirm) {
 							if(n==1){
 								this.imgArr.splice(e.currentTarget.dataset.index, 1)
+								this.imgList.splice(e.currentTarget.dataset.index, 1)
 							}else{
 								this.imgArr2.splice(e.currentTarget.dataset.index, 1)
+								this.imgList2.splice(e.currentTarget.dataset.index, 1)
 							}
 						}
 					}

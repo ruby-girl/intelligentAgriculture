@@ -33,11 +33,14 @@
 			</view>
 			<view class="color-grey" style="text-align: center;">数据更新于{{obj.newest||''}}</view>
 		</view>
-		<view class="bottom-lg-btn">删除设备</view>
+		<view class="bottom-lg-btn" @click="popupShow=true">删除设备</view>
+		<popup content='确定要删除该设备吗？' align='center' cancelText="取消" :show='popupShow' :showCancel='true' confirmText='确定'
+		 @confirm="deleteDevice" @close="closePopup" />
 	</view>
 </template>
 
 <script>
+	import popup from "@/components/neil-modal/neil-modal.vue"
 	export default {
 		data() {
 			return {
@@ -50,14 +53,40 @@
 				}],
 				optionValue: 0,
 				deviceId:'',
-				obj:{}
+				obj:{},
+				popupShow:false
 			}
+		},
+		components: {
+			popup
 		},
 		onLoad(option) {
 			this.deviceId=option.deviceId
 			this.selectDevice()
 		},
 		methods: {
+			closePopup() {
+				this.popupShow = false
+			},
+			deleteDevice(){//删除设备
+				this.$api.deleteDevice({deviceId:this.deviceId}).then(res=>{
+					uni.showToast({
+						title: '删除成功',
+						duration: 2000,
+						success() {
+							setTimeout(function(){
+								let pages = getCurrentPages(); // 当前页面
+								let beforePage = pages[pages.length - 2]; // 前一个页面
+								uni.navigateBack({
+									success: function() {
+										beforePage.initData(); // 执行前一个页面的onLoad方法
+									}
+								});
+							},2000)
+						}
+					});
+				})
+			},
 			toAdd(){//跳转编辑
 				uni.navigateTo({
 					url: 'addEquipment?deviceId='+this.deviceId

@@ -26,7 +26,7 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					{{nums.farmCount||'-'}}
+					{{String(nums.farmCount)||'-'}}
 				</view>
 			</view>
 			<view class="item-box" @click="toLandManagement()">
@@ -37,7 +37,7 @@
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
 				<view class="position-num">
-					{{nums.massifCount||'-'}}
+					{{String(nums.massifCount)||'-'}}
 				</view>
 			</view>
 		</view>

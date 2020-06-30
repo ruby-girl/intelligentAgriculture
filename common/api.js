@@ -249,3 +249,19 @@ export const  getLikes= (data) => {
 		data:data
 	})
 }
+//查询设备数量和在线设备数量
+export const  deviceCount= () => {
+	return http.request({ 
+		url: 'device/count',
+		method: 'post'
+	})
+}
+
+//删除设备
+export const  deleteDevice= (data) => {
+	return http.request({ 
+		url: 'device/deleteDevice',
+		method: 'post',
+		data:data
+	})
+}
