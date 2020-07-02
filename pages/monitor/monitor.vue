@@ -100,10 +100,10 @@
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.isLogin=getApp().globalData.isLogin
-			if(this.isLogin){
-				this.initData()
-				this.warningAll()
-			}
+			// if(this.isLogin){
+			// 	this.initData()
+			// 	this.warningAll()
+			// }
 		},
 		onShow() {		
 			if(!this.isLogin){//每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
@@ -112,6 +112,9 @@
 					this.initData()
 					this.warningAll()
 				}
+			}else{
+				this.initData()
+				this.warningAll()
 			}
 		},
 		mounted() {

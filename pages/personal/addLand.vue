@@ -37,7 +37,7 @@
 			<view class="title">是否关联</view>
 			<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
 		</view>
-		<view :class="{'bottom-lg-btn':true,'btn-disabled':btnDisabled}" @click="insertMassif">保存</view>
+		<view :class="{'bottom-lg-btn':true}" @click="insertMassif">保存</view>
 		<view v-if="obj.massifId" class="bottom-lg-btn" style="background: #fff;color:#000;" @click="delMassif">删除地块</view>
 		<view class="cu-modal" :class="modalName=='DialogModal1'?'show':''">
 			<view class="cu-dialog">
@@ -85,8 +85,7 @@
 				},
 				devicegetList: [], //设备列表
 				switchB: true, //是否关联设备
-				modalName: '',
-				btnDisabled:false
+				modalName: ''
 			}
 		},
 		onLoad(option) {
@@ -104,10 +103,10 @@
 				this.modalName = null
 			},
 			delMassif() { //删除设备
-				if (this.switchB) {
+				if (this.switchB&&this.obj.devices.length>0) {
 					this.modalName = 'DialogModal1'
 					return
-				}
+				}			
 				this.$api.deleteMassif({
 					massifId: this.obj.massifId
 				}).then(res => {
@@ -117,18 +116,20 @@
 						success() {
 							let pages = getCurrentPages(); // 当前页面
 							let beforePage = pages[pages.length - 2]; // 前一个页面
-							uni.navigateBack({
-								success: function() {
-									beforePage.onLoad(); // 执行前一个页面的onLoad方法
-								}
-							});
+							setTimeout(function(){
+								uni.navigateBack({
+									success: function() {
+										beforePage.onLoad(); // 执行前一个页面的onLoad方法
+									}
+								});
+							},2000)
 						}
 					});
 				})
 			},
 			changeSwitch(e) {
 				this.switchB = e.detail.value
-				if(!this.switchB){
+				if(!this.switchB&&this.devicegetList.length>0){
 					this.obj.relation=0
 					this.devicegetList.forEach((item, i) => {
 						this.devicegetList[i].isChecked = false
@@ -141,7 +142,7 @@
 				this.$api.selectIdAll({massifId:id}).then(res => {
 					this.obj = res.data.data
 					this.obj.massifId=id
-					if(this.obj.relation==1){
+					if(this.obj.relation==1){//是否关联了设备
 						this.switchB=true
 					}else{
 						this.switchB=false
@@ -152,8 +153,6 @@
 						this.obj.devices[i].isChecked = true
 						devicegetList.push(this.obj.devices[i])
 					})
-					
-					delete this.obj.devices
 					delete this.obj.creationTime
 					this.obj.deviceId=deviceId
 					this.devicegetList=[...devicegetList]
@@ -167,9 +166,6 @@
 				this.obj.farmId = arr[0].farmId
 			},
 			insertMassif() { //添加地快
-				if(this.btnDisabled){//没有设备无法添加
-					return
-				}
 				if (!this.obj.massifName) {
 					uni.showToast({
 						title: '请输入地块名称',
@@ -188,8 +184,10 @@
 				let api;
 				if(!this.obj.massifId){
 					 api='insertMassif'
-				}else api='updateMassif';	
-				this.$api[api](this.obj).then(res => {
+				}else api='updateMassif';
+				let postData={...this.obj}
+				delete postData.devices
+				this.$api[api](postData).then(res => {
 					if (this.obj.massifId) {
 						uni.showToast({
 							title: '编辑成功',
@@ -235,15 +233,15 @@
 						this.getLandDetail(this.obj.massifId,devicegetList)//获取地块详情
 					}else{
 						this.devicegetList=devicegetList
-						if(this.devicegetList.length<1){
-							uni.showToast({
-								title: '当前无可用设备，无法添加地块',
-								icon: 'none'
-							})
-							this.btnDisabled=true
-						}else{
-							this.btnDisabled=false
-						}
+						// if(this.devicegetList.length<1){
+						// 	uni.showToast({
+						// 		title: '当前无可用设备，无法添加地块',
+						// 		icon: 'none'
+						// 	})
+						// 	this.btnDisabled=true
+						// }else{
+						// 	this.btnDisabled=false
+						// }
 					}
 				})
 			},

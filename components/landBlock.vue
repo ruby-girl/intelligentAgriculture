@@ -20,7 +20,7 @@
 				<view class="item-num">
 					{{itemObject.proportion}}<span class="small-txt">%</span>
 				</view>
-				<text class="small-text">冬瓜</text>
+				<text class="small-text">{{itemObject.crop}}</text>
 			</view>
 			<view class="item-content-box">
 				<view class="item-num">

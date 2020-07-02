@@ -87,23 +87,16 @@
 								</view>
 							</view>
 							<view class="flex">
-								<view class="map-bottom-tip display-flex justify-content-flex-center">
-									<image v-if="isLike" style="margin-top:10rpx" src="../../static/imgs/like.png" mode="aspectFill"></image>
-									<image style="margin-top:10rpx" v-else src="../../static/imgs/no-like.png" mode="aspectFill"></image>
-									<!-- <button class="like-txt" style="margin-top:100rpx" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo"
-									 withCredentials="true">
-										20人点赞</button> -->
-										<button v-if="num!==0" class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
-										 withCredentials="true">
+								<view class="map-bottom-tip" >
+									<view class="likes-box flex justify-content-flex-center align-items-center">
+										<image v-if="isLike"  src="../../static/imgs/like.png" mode="aspectFill" @click="likesFunc"></image>
+										<image  v-else src="../../static/imgs/no-like.png" mode="aspectFill" @click="likesFunc"></image>
+										<button v-if="num!==0" class="like-txt"  lang="zh_CN" withCredentials="true" @click="likesFunc">
 											{{num}}人点赞</button>
-											<button v-else class="like-txt" style="margin-top:100rpx"  lang="zh_CN" @click="likesFunc"
-											 withCredentials="true">
-												点赞</button>
+										<button v-else class="like-txt"  lang="zh_CN" withCredentials="true" @click="likesFunc">
+											点赞</button>
+									</view>
 								</view>
-								<!-- <view class="map-bottom-tip">
-							   	  <image src="../../static/imgs/code.png" mode="aspectFill"></image>
-							   	  <text>分享二维码</text>		   
-							   </view> -->
 							</view>
 						</view>
 					</view>
@@ -116,7 +109,7 @@
 					</view>
 					<view class="">
 						<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" ref="line"
-						  chartType="line" option />
+						 chartType="line" option />
 					</view>
 				</view>
 			</scroll-view>
@@ -145,7 +138,9 @@
 					}]
 				},
 				baseId: '',
-				obj: {proportion:'0'},
+				obj: {
+					proportion: '0'
+				},
 				windowHeight: 300,
 				imgUrl: require('../../static/imgs/location.png'), //冬瓜图片
 				massifId: '',
@@ -153,8 +148,8 @@
 				cWidth: '',
 				cHeight: '',
 				openid: '',
-				isLike:false,
-				num:0
+				isLike: false,
+				num: 0
 			};
 		},
 		onShareAppMessage: function() {
@@ -167,7 +162,7 @@
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.massifId = option.massifId
-			
+
 		},
 		onShow() {
 			this.getData()
@@ -181,10 +176,9 @@
 		methods: {
 			// 手动授权方法
 			getCode() {
-				let _this = this			
+				let _this = this
 				if (_this.openid) {
 					_this.getLikes()
-					return
 				} else {
 					wx.login({
 						success(res) {
@@ -195,8 +189,8 @@
 								_this.$api.decodeUserInfo({
 									code: code
 								}).then(res => {
-									getApp().globalData.openid=res.data.data.openid
-									_this.openid=res.data.data.openid
+									getApp().globalData.openid = res.data.data.openid
+									_this.openid = res.data.data.openid
 									_this.getLikes()
 								})
 							}
@@ -205,20 +199,20 @@
 				}
 
 			},
-			getLikes(){//进入获取点赞状态
+			getLikes() { //进入获取点赞状态
 				let obj = {
 					openid: this.openid,
 					massifId: this.massifId
 				}
-				let _this=this
-				this.$api.getLikes(obj).then(res => {				
-						_this.num=res.data.data.likes
-						if(res.data.data.state==1){
-							_this.isLike=true
-							
-						}else{
-							_this.isLike=false
-						}
+				let _this = this
+				this.$api.getLikes(obj).then(res => {
+					_this.num = res.data.data.likes
+					if (res.data.data.state == 1) {
+						_this.isLike = true
+
+					} else {
+						_this.isLike = false
+					}
 				})
 			},
 			likesFunc() {
@@ -226,15 +220,15 @@
 					openid: this.openid,
 					massifId: this.massifId
 				}
-				let _this=this
+				let _this = this
 				this.$api.likes(obj).then(res => {
-						_this.num=res.data.data.likes
-						if(res.data.data.state==1){
-							_this.isLike=true
-							
-						}else{
-							_this.isLike=false
-						}
+					_this.num = res.data.data.likes
+					if (res.data.data.state == 1) {
+						_this.isLike = true
+
+					} else {
+						_this.isLike = false
+					}
 				})
 			},
 			scroll: function(e) {
@@ -264,8 +258,8 @@
 				this.$api.findRangeData({
 					massifId: this.massifId
 				}).then(res => {
-					let orderDps=res.data.data[0].orderDps
-					orderDps.forEach(item=>{					
+					let orderDps = res.data.data[0].orderDps
+					orderDps.forEach(item => {
 						this.option.categories.push(formatDate(item.timestamp))
 						this.option.series[0].data.push((item.value).toFixed(1))
 					})
@@ -306,7 +300,7 @@
 		text-align: center;
 		color: #ddd;
 		padding-bottom: 50rpx;
-		padding-top:20px;
+		padding-top: 20px;
 	}
 
 	.order-title {
@@ -420,7 +414,7 @@
 			height: 28px;
 			margin-right: 20rpx;
 			position: relative;
-			top: 3px;
+			
 		}
 
 		.content {
@@ -530,5 +524,8 @@
 
 	button::after {
 		border: none;
+	}
+	.likes-box{
+		text-align: center;
 	}
 </style>

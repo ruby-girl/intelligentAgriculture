@@ -49,11 +49,11 @@
 		},
 		methods: {
 			toScanCode() { //扫码
-			let _this=this
+				let _this = this
 				uni.scanCode({
 					success: function(res) {
 						console.log(JSON.stringify(res));
-						_this.obj.sn=res.result	
+						_this.obj.sn = res.result
 					}
 				});
 			},
@@ -61,8 +61,8 @@
 				this.$api.selectDevice({
 					deviceId: this.obj.deviceId
 				}).then(res => {
-					let obj=res.data.data
-					obj.SN=obj.sn
+					let obj = res.data.data
+					obj.SN = obj.sn
 					delete obj.sn
 					delete obj.newest
 					this.obj = obj
@@ -75,12 +75,18 @@
 					pageSize: 100
 				}).then(res => {
 					this.massifsList = res.data.data.massifs
-					if (this.obj.deviceId) {//回填地块
-						this.optionValue = this.massifsList.findIndex((item, i) => {
-							return item.massifId == this.obj.massifId
-						})
-					}else{
-						this.obj.massifId=this.massifsList[0].massifId
+					this.massifsList.unshift({
+						massifId: "",
+						massifName: "请选择"
+					})
+					if (this.obj.deviceId) { //如果有设备id,回填地块
+						if (this.obj.massifId ==undefined) { //如果没有关联地块
+							this.optionValue = 0
+						} else {
+							this.optionValue = this.massifsList.findIndex((item, i) => {
+								return item.massifId == this.obj.massifId
+							})
+						}
 					}
 				})
 			},
@@ -99,7 +105,7 @@
 					})
 					return
 				}
-				if(!this.obj.deviceId){
+				if (!this.obj.deviceId) {
 					if (!this.obj.SN && !this.obj.deviceId) {
 						uni.showToast({
 							title: '请输入设备序列号',
@@ -108,12 +114,11 @@
 						return
 					}
 				}
+				let postData;
 				if (!this.obj.massifId) {
-					uni.showToast({
-						title: '请关联地块',
-						icon: 'none'
-					})
-					return
+					postData = { ...this.obj
+					}
+					delete postData.massifId
 				}
 				let api;
 				if (!this.obj.deviceId) {
@@ -121,7 +126,7 @@
 				} else {
 					api = 'updateDevice';
 				}
-				this.$api[api](this.obj).then(res => {
+				this.$api[api](postData).then(res => {
 					if (this.obj.deviceId) {
 						this.toastFunc('编辑成功')
 					} else {
@@ -129,21 +134,23 @@
 					}
 				})
 			},
-			toastFunc(title){
-				let _this=this
+			toastFunc(title) {
+				let _this = this
 				uni.showToast({
 					title: title,
 					duration: 2000,
 					success() {
-						setTimeout(function(){
+						setTimeout(function() {
 							let pages = getCurrentPages(); // 当前页面
 							let beforePage = pages[pages.length - 2]; // 前一个页面
 							uni.navigateBack({
 								success: function() {
-									beforePage.onLoad({deviceId:_this.obj.deviceId}); // 执行前一个页面的onLoad方法
+									beforePage.onLoad({
+										deviceId: _this.obj.deviceId
+									}); // 执行前一个页面的onLoad方法
 								}
 							});
-						},2000)
+						}, 2000)
 					}
 				});
 			}
