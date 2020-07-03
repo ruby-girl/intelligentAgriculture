@@ -109,12 +109,10 @@
 			if(!this.isLogin){//每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
 				this.isLogin=getApp().globalData.isLogin
 				if(this.isLogin){
-					this.initData()
-					this.warningAll()
+					this.initData(1)			
 				}
 			}else{
-				this.initData()
-				this.warningAll()
+				this.initData(1)
 			}
 		},
 		mounted() {
@@ -169,12 +167,12 @@
 				this.triggered = false; //触发onRestore，并关闭刷新图标
 				this._freshing = false;
 			},
-			initData() {
+			initData(n) {
 				this.newsList = []
 				this.page = 1
 				this.loadingType = 1
 				this.contentdown = ''
-				this.getData()
+				this.getData(n)
 			},
 
 			delOrganUserWorkOrderManage(id) { //删除
@@ -202,7 +200,7 @@
 					this.getData()
 				}
 			},
-			getData() {
+			getData(n) {
 				let obj = {
 					pageNum: this.page,
 					pageSize: 10
@@ -235,6 +233,9 @@
 					} else {
 						this.contentdown = '上拉加载更多'
 						this.loadingType = 1
+					}
+					if(n){//列表接口请求时间过长，所以放在回调里再请求预警
+						this.warningAll()
 					}
 				})
 			},

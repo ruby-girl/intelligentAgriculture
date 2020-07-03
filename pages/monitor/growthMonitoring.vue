@@ -51,7 +51,7 @@
 									<view class="item-num">
 										{{obj.proportion}}<span class="small-txt">%</span>
 									</view>
-									<text class="small-text">冬瓜</text>
+									<text class="small-text">{{obj.crop}}</text>
 								</view>
 								<view class="item-content-box">
 									<view class="item-num">
@@ -142,7 +142,6 @@
 					proportion: '0'
 				},
 				windowHeight: 300,
-				imgUrl: require('../../static/imgs/location.png'), //冬瓜图片
 				massifId: '',
 				scrollTop: 0,
 				cWidth: '',

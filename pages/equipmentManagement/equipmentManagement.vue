@@ -111,12 +111,10 @@
 			if(!this.isLogin){//每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
 				this.isLogin=getApp().globalData.isLogin
 				if(this.isLogin){
-					this.initData()
-					this.deviceCount()
+					this.initData(1)			
 				}
 			}else{
-				this.initData()
-				this.deviceCount()
+				this.initData(1)
 			}
 		},
 		mounted() {
@@ -150,12 +148,12 @@
 				this.triggered = false; //触发onRestore，并关闭刷新图标
 				this._freshing = false;
 			},
-			initData() {
+			initData(n) {
 				this.newsList = []
 				this.page = 1
 				this.loadingType = 1
 				this.contentdown = ''
-				this.getData()
+				this.getData(n)
 			},
 			toAdd(){//添加设备页面		
 				uni.navigateTo({
@@ -178,7 +176,7 @@
 					this.getData()
 				}
 			},
-			getData() {
+			getData(n) {
 				let obj = {
 					pageNum: this.page,
 					pageSize: 6
@@ -211,6 +209,9 @@
 					} else {
 						this.contentdown = '上拉加载更多'
 						this.loadingType = 1
+					}
+					if(n){//设备列表请求时间过长，所以放在回调里获取在线数/所有设备
+						this.deviceCount()
 					}
 				})
 			}

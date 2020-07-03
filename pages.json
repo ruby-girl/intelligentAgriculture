@@ -79,7 +79,7 @@
 
 			"path": "pages/monitor/monitor",
 			"style": {
-				"navigationBarTitleText": "监测与预警",
+				"navigationBarTitleText": "监测预警",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true

@@ -19,9 +19,10 @@
 			<view class="title">关联作物</view>
 			<input placeholder="输入作物名称" v-model="obj.crop" name="input"></input>
 		</view>
-		<view class="cu-form-group">
+		<view class="cu-form-group" style="position: relative;">
 			<view class="title">作物周期</view>
 			<input placeholder="输入作物周期" v-model="obj.cycle" type="number" name="input"></input>
+			<text class="unit">天</text>
 		</view>
 		<view class="cu-form-group" style="padding-bottom:0;height:40rpx">
 			<view class="title">关联设备</view>
@@ -321,5 +322,9 @@
 	}
 	.btn-disabled{
 		background: #aaa;
+	}
+	.unit{
+		position: absolute;
+		right: 20px;
 	}
 </style>

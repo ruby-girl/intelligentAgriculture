@@ -39,8 +39,19 @@
 		}, 
 		methods: {
 			toDetail(item){//跳转设置
+			let low,high;
+			if(item.low==undefined){
+				low=''
+			}else{
+				low=item.low
+			}
+			if(item.high==undefined){
+				high=''
+			}else{
+				high=item.high
+			}
 				uni.navigateTo({
-					url: 'detailWarning?warningId='+item.warningId+'&massifId='+this.massifId+'&low='+item.low+'&high='+item.high
+					url: 'detailWarning?warningId='+item.warningId+'&massifId='+this.massifId+'&low='+low+'&high='+high
 				})
 			},
 			changeSwitch(e,i) {
