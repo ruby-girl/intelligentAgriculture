@@ -87,14 +87,22 @@
 								</view>
 							</view>
 							<view class="flex">
-								<view class="map-bottom-tip" >
+								<view class="map-bottom-tip">
 									<view class="likes-box flex justify-content-flex-center align-items-center">
-										<image v-if="isLike"  src="../../static/imgs/like.png" mode="aspectFill" @click="likesFunc"></image>
-										<image  v-else src="../../static/imgs/no-like.png" mode="aspectFill" @click="likesFunc"></image>
-										<button v-if="num!==0" class="like-txt"  lang="zh_CN" withCredentials="true" @click="likesFunc">
-											{{num}}人点赞</button>
-										<button v-else class="like-txt"  lang="zh_CN" withCredentials="true" @click="likesFunc">
-											点赞</button>
+										<view class="flex justify-content-flex-center align-items-center likes-shere-box">
+											<image v-if="isLike" src="../../static/imgs/like.png" mode="aspectFill" @click="likesFunc"></image>
+											<image v-else src="../../static/imgs/no-like.png" mode="aspectFill" @click="likesFunc"></image>
+											<button v-if="num!==0" class="like-txt" lang="zh_CN" withCredentials="true" @click="likesFunc">
+												{{num}}人点赞</button>
+											<button v-else class="like-txt" lang="zh_CN" withCredentials="true" @click="likesFunc">
+												点赞</button>
+										</view>
+										<view style="height:25px;border-left:2px solid #eee;"></view>
+										<view class="flex justify-content-flex-center align-items-center likes-shere-box">
+											<image class="right-img"  src="../../static/imgs/share.png" mode="aspectFill" @click="shareFunc"></image>
+											<button  class="like-txt" lang="zh_CN" withCredentials="true" @click="shareFunc">
+												分享</button>
+										</view>
 									</view>
 								</view>
 							</view>
@@ -103,13 +111,45 @@
 				</view>
 				<view class="farm-detail-box">
 					<view><text style="font-size: 16px;">数据监测</text></view>
-					<view style="font-size: 14px;padding-bottom:10rpx;">
-						<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">空气温度变化记录</text>
-						<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
+					<view>
+						<view style="font-size: 14px;padding-bottom:10rpx;">
+							<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">空气温度变化记录</text>
+							<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
+						</view>
+						<view class="">
+							<line-chart id='line' :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}"
+							 ref="line" chartType="line" />
+						</view>
 					</view>
-					<view class="">
-						<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" ref="line"
-						 chartType="line" option />
+					<view style="padding-top:20rpx">
+						<view style="font-size: 14px;padding-bottom:10rpx;">
+							<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">空气湿度变化记录</text>
+							<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
+						</view>
+						<view class="">
+							<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" id='atmosphericHumidityLine'
+							 ref="atmosphericHumidityLine" chartType="line" />
+						</view>
+					</view>
+					<view style="padding-top:20rpx">
+						<view style="font-size: 14px;padding-bottom:10rpx;">
+							<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">土壤温度变化记录</text>
+							<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
+						</view>
+						<view class="">
+							<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" id='soilTemperatureLine'
+							 ref="soilTemperatureLine" chartType="line" />
+						</view>
+					</view>
+					<view style="padding-top:20rpx">
+						<view style="font-size: 14px;padding-bottom:10rpx;">
+							<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">土壤湿度变化记录</text>
+							<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
+						</view>
+						<view class="">
+							<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" id='soilHumidityLine'
+							 ref="soilHumidityLine" chartType="line" />
+						</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -130,6 +170,30 @@
 		data() {
 			return {
 				option: {
+					//数字的图--折线图数据
+					categories: [],
+					series: [{
+						name: '',
+						data: []
+					}]
+				},
+				atmosphericHumidityOption: {
+					//数字的图--折线图数据
+					categories: [],
+					series: [{
+						name: '',
+						data: []
+					}]
+				},
+				soilTemperatureOption: {
+					//数字的图--折线图数据
+					categories: [],
+					series: [{
+						name: '',
+						data: []
+					}]
+				},
+				soilHumidityOption: {
 					//数字的图--折线图数据
 					categories: [],
 					series: [{
@@ -161,11 +225,17 @@
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.massifId = option.massifId
-
+			// wx.showShareMenu({//分享朋友圈
+			// 	withShareTicket: true,
+			// 	menus: ['shareAppMessage', 'shareTimeline']
+			// })
 		},
 		onShow() {
 			this.getData()
-			this.findRangeData()
+			this.findRangeData() //大气温度
+			this.atmosphericHumidity() //大气湿度
+			this.soilTemperature() //土壤温度
+			this.soilHumidity() //土壤湿度
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
 			this.openid = getApp().globalData.openid
@@ -173,6 +243,7 @@
 		},
 		mounted() {},
 		methods: {
+			// onShareTimeline(){},//分享朋友圈需要定义的方法
 			// 手动授权方法
 			getCode() {
 				let _this = this
@@ -197,6 +268,16 @@
 					})
 				}
 
+			},
+			shareFunc(){
+				let obj={
+					scene:this.massifId,
+					page:'pages/monitor/growthMonitoring',
+					width:'300'
+				}
+				this.$api.getUnlimited(obj).then(res=>{
+					
+				})
 			},
 			getLikes() { //进入获取点赞状态
 				let obj = {
@@ -253,7 +334,7 @@
 					}
 				})
 			},
-			findRangeData() {
+			findRangeData() { //大气温度
 				this.$api.findRangeData({
 					massifId: this.massifId
 				}).then(res => {
@@ -262,8 +343,43 @@
 						this.option.categories.push(formatDate(item.timestamp))
 						this.option.series[0].data.push((item.value).toFixed(1))
 					})
-					console.info(this.option.series)
-					this.$refs.line.init(this.option)
+					this.$refs.line.init(this.option, '℃')
+				})
+			},
+			atmosphericHumidity() { //大气湿度
+				this.$api.atmosphericHumidity({
+					massifId: this.massifId
+				}).then(res => {
+					let orderDps = res.data.data[0].orderDps
+					orderDps.forEach(item => {
+						this.atmosphericHumidityOption.categories.push(formatDate(item.timestamp))
+						this.atmosphericHumidityOption.series[0].data.push((item.value).toFixed(1))
+					})
+					this.$refs.atmosphericHumidityLine.init(this.atmosphericHumidityOption, '%')
+				})
+			},
+			soilTemperature() { //土壤温度
+				this.$api.soilTemperature({
+					massifId: this.massifId
+				}).then(res => {
+					let orderDps = res.data.data[0].orderDps
+					orderDps.forEach(item => {
+						this.soilTemperatureOption.categories.push(formatDate(item.timestamp))
+						this.soilTemperatureOption.series[0].data.push((item.value).toFixed(1))
+					})
+					this.$refs.soilTemperatureLine.init(this.soilTemperatureOption, '℃')
+				})
+			},
+			soilHumidity() { //土壤湿度
+				this.$api.soilHumidity({
+					massifId: this.massifId
+				}).then(res => {
+					let orderDps = res.data.data[0].orderDps
+					orderDps.forEach(item => {
+						this.soilHumidityOption.categories.push(formatDate(item.timestamp))
+						this.soilHumidityOption.series[0].data.push((item.value).toFixed(1))
+					})
+					this.$refs.soilHumidityLine.init(this.soilHumidityOption, '%')
 				})
 			}
 		}
@@ -290,7 +406,10 @@
 			z-index: 1;
 		}
 	}
-
+	.likes-shere-box{
+		width:49%;
+		text-align: center;
+	}
 	.box-margin {
 		padding-top: 5px;
 	}
@@ -352,7 +471,8 @@
 	// 地图CSS
 	.map-container {
 		position: relative;
-		height: 600rpx;
+		height: 650rpx;
+		padding-top: 50rpx;
 	}
 
 	.detail-name {
@@ -413,7 +533,7 @@
 			height: 28px;
 			margin-right: 20rpx;
 			position: relative;
-			
+
 		}
 
 		.content {
@@ -493,6 +613,10 @@
 			width: 31rpx;
 			height: 27rpx;
 		}
+		.right-img{
+			width: 36rpx;
+			height:33rpx;
+		}
 	}
 
 	.map-top-item {
@@ -524,7 +648,8 @@
 	button::after {
 		border: none;
 	}
-	.likes-box{
+
+	.likes-box {
 		text-align: center;
 	}
 </style>

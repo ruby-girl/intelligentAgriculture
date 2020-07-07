@@ -42,14 +42,14 @@
 			}
 		},
 		methods: {
-			init(opts) {
+			init(opts,unit) {
 				this.opts=opts
 				switch (this.chartType) {
 					case 'column':
 						this.initColumnChart();
 						break;
 					case 'line':
-						this.initLineChart();
+						this.initLineChart(unit);
 						break;
 					default:
 						break;
@@ -86,7 +86,7 @@
 					}
 				});
 			},
-			initLineChart() {
+			initLineChart(unit) {
 				canvases[this.canvasId] = new uCharts({
 					$this: this,
 					canvasId: this.canvasId,
@@ -102,16 +102,15 @@
 					categories: this.opts.categories,
 					series: this.opts.series,
 					animation: true,
-					enableScroll: false,
+					enableScroll: true,
 					xAxis: {
 						type: 'grid',
 						gridColor: '#fff',
 						gridType: 'dash',
-						dashLength: 7,
+						dashLength: 4,
 						itemCount: 7,
 						scrollShow: false,
-						rotateLabel:true,
-						labelCount:7
+						rotateLabel:true			
 					},
 					yAxis: {
 						gridType: 'dash',
@@ -121,7 +120,7 @@
 						min: 10,
 						max: 50,
 						format: (val) => {
-							return val.toFixed(0) + '℃'
+							return val.toFixed(0) + unit
 						}
 					},
 					width: this.cWidth * this.pixelRatio,

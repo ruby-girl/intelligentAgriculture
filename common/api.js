@@ -265,3 +265,36 @@ export const  deleteDevice= (data) => {
 		data:data
 	})
 }
+
+//大气湿度7日数据
+export const  atmosphericHumidity= (data) => {
+	return http.request({ 
+		url: 'device/atmosphericHumidity',
+		method: 'post',
+		data:data
+	})
+}
+//土壤温度7日数据
+export const  soilTemperature= (data) => {
+	return http.request({ 
+		url: 'device/soilTemperature',
+		method: 'post',
+		data:data
+	})
+}
+//土壤湿度7日数据
+export const  soilHumidity= (data) => {
+	return http.request({ 
+		url: 'device/soilHumidity',
+		method: 'post',
+		data:data
+	})
+}
+//获取小程序码
+export const  getUnlimited= (data) => {
+	return http.request({ 
+		url: 'wXLoginController/getUnlimited',
+		method: 'post',
+		data:data
+	})
+}

@@ -161,7 +161,7 @@
 		"list": [
 				{
 				"pagePath": "pages/monitor/monitor",
-				"text": "监测与预警",
+				"text": "监测预警",
 				"iconPath": "static/imgs/detection.png",
 				"selectedIconPath": "static/imgs/detection-1.png"
 			},

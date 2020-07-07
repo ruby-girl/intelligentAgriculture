@@ -105,6 +105,13 @@
 			// 	this.warningAll()
 			// }
 		},
+		onShareAppMessage: function() {
+			return {
+				title: '星鸦智农',
+				desc: '',
+				path: 'pages/monitor/monitor' // 路径，传递参数到指定页面。
+			}
+		},
 		onShow() {		
 			if(!this.isLogin){//每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
 				this.isLogin=getApp().globalData.isLogin
