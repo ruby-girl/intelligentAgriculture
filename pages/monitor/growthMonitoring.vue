@@ -35,7 +35,7 @@
 								<view class="flex  align-items-center">
 									<image class="land-img" src="../../static/imgs/location.png" mode=""></image>
 									<view class="item-title">
-										<view class="order-title">{{obj.massifNo}}</view>
+										<view class="order-title">NO.{{obj.massifNo}}</view>
 										<view class="order-title small-text">{{obj.farmName}}</view>
 									</view>
 								</view>
@@ -49,9 +49,9 @@
 							<view class="box-margin flex justify-content-flex-justify align-items-center">
 								<view class="item-content-box">
 									<view class="item-num">
-										{{obj.proportion}}<span class="small-txt">%</span>
+										{{obj.crop}}
 									</view>
-									<text class="small-text">{{obj.crop}}</text>
+									<text class="small-text">作物名称</text>
 								</view>
 								<view class="item-content-box">
 									<view class="item-num">
@@ -86,6 +86,12 @@
 									<text class="small-text">土壤水分</text>
 								</view>
 							</view>
+							<view class="flex align-items-center">
+								<view class="progress">
+								    <text class="progressing" v-bind:style="'width:' + obj.proportion+'%' "></text>	
+								</view>
+								<text class="progress-txt"><text style="font-size: 16px;font-weight: bold;">{{obj.proportion}}</text><text class="small-txt">%</text></text>
+							</view>
 							<view class="flex">
 								<view class="map-bottom-tip">
 									<view class="likes-box flex justify-content-flex-center align-items-center">
@@ -101,7 +107,7 @@
 										<view class="flex justify-content-flex-center align-items-center likes-shere-box">
 											<image class="right-img"  src="../../static/imgs/share.png" mode="aspectFill" @click="shareFunc"></image>
 											<button  class="like-txt" lang="zh_CN" withCredentials="true" @click="shareFunc">
-												分享</button>
+												分享二维码</button>
 										</view>
 									</view>
 								</view>
@@ -651,5 +657,23 @@
 
 	.likes-box {
 		text-align: center;
+	}
+	.progress {
+	  width: 70%;
+	  height: 16px;
+	  background: rgba(255, 255, 255, 0.2);
+	  margin: 12px 15px;
+	  border-radius: 10px;
+	  text-align: center;
+	  color: #fff;
+	  border:1px solid #49BA89;
+	  .progressing {
+	    position: relative;
+	    float: left;
+	    margin: 0 auto;
+	    height: 15px;
+	    background: #49BA89;
+	    border-radius: 10px;
+	  }
 	}
 </style>
