@@ -160,7 +160,13 @@
 				</view>
 			</scroll-view>
 		</view>
-
+		<view class="cu-modal" :class="shoeModel?'show':''">
+			<view class="cu-dialog">
+				<view class="bg-img" style="padding:40rpx">
+					<image :src="modelImg" mode="aspectFit"></image>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -218,7 +224,9 @@
 				cHeight: '',
 				openid: '',
 				isLike: false,
-				num: 0
+				num: 0,
+				shoeModel:false,
+				modelImg:''
 			};
 		},
 		onShareAppMessage: function() {
@@ -230,7 +238,12 @@
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			this.massifId = option.massifId
+			if(option.scene){
+				this.massifId = option.scene
+			}else{
+				this.massifId = option.massifId
+			}
+			
 			// wx.showShareMenu({//分享朋友圈
 			// 	withShareTicket: true,
 			// 	menus: ['shareAppMessage', 'shareTimeline']
@@ -275,15 +288,19 @@
 				}
 
 			},
-			shareFunc(){
+			shareFunc(){//显示小程序码
 				let obj={
 					scene:this.massifId,
 					page:'pages/monitor/growthMonitoring',
-					width:'300'
+					width:'250'
 				}
 				this.$api.getUnlimited(obj).then(res=>{
-					
+					this.shoeModel=true
+					this.modelImg='https://xyzn.tree-iot.com'+res.data.path
 				})
+			},
+			hideModal(){
+				this.shoeModel=false
 			},
 			getLikes() { //进入获取点赞状态
 				let obj = {
@@ -295,13 +312,12 @@
 					_this.num = res.data.data.likes
 					if (res.data.data.state == 1) {
 						_this.isLike = true
-
 					} else {
 						_this.isLike = false
 					}
 				})
 			},
-			likesFunc() {
+			likesFunc() {//点赞
 				let obj = {
 					openid: this.openid,
 					massifId: this.massifId
