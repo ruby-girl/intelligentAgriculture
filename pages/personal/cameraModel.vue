@@ -47,7 +47,6 @@
 					quality: 'high',
 					success: (res) => {
 						this.urlImg = res.tempImagePath
-						console.log(this.urlImg)
 					}
 				})
 			},
@@ -64,7 +63,6 @@
 				uni.navigateBack({
 					delta: 1,
 					success: function() {
-						console.log(prevPage)
 						prevPage.onLoad({
 							img: _this.urlImg,
 							photoType: _this.photoType

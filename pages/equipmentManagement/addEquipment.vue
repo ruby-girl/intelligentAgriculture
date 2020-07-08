@@ -52,7 +52,6 @@
 				let _this = this
 				uni.scanCode({
 					success: function(res) {
-						console.log(JSON.stringify(res));
 						_this.obj.sn = res.result
 					}
 				});

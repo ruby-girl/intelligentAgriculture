@@ -109,6 +109,13 @@
 				}
 			});
 		},
+		onShareAppMessage: function() {
+			return {
+				title: '星鸦智农',
+				desc: '',
+				path: 'pages/personal/personal'
+			}
+		},
 		onShow() {
 			if (!this.isLogin) { //每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
 				this.isLogin = getApp().globalData.isLogin
@@ -124,7 +131,6 @@
 				this.popupShow = false
 			},
 			toSetWaring() { //跳转预警设置
-			console.log('这条')
 				if (!this.isLogin) {
 					uni.showToast({
 						title: '请先登录',
@@ -132,7 +138,6 @@
 					})
 					return
 				}
-				console.log('这条')
 				uni.navigateTo({
 					url: 'landWaring'
 				});

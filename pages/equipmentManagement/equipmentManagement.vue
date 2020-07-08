@@ -107,6 +107,13 @@
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.isLogin=getApp().globalData.isLogin
 		},
+		onShareAppMessage: function() {
+			return {
+				title: '星鸦智农',
+				desc: '',
+				path: 'pages/equipmentManagement/equipmentManagement'
+			}
+		},
 		onShow() {
 			if(!this.isLogin){//每次进入页面检查是否登录，如果没有登录，再拿一次最新状态
 				this.isLogin=getApp().globalData.isLogin

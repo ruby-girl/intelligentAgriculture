@@ -215,7 +215,6 @@
 					this.imgList2=this.imgArr2.map(item=>{
 						return this.imgUrl+item
 					})
-					console.info(this.imgList,this.imgList2)
 					this.$api.districts({
 						parent: 86
 					}).then(res => {
@@ -291,7 +290,6 @@
 					success: (res) => {
 						let that = this
 						res.tempFilePaths.forEach(item => {
-							console.info('item',item)
 							that.uploadImg(item,n)
 						});
 					}
@@ -309,7 +307,6 @@
 						let data = JSON.parse(resData.data).data
 						if(n==1){
 							that.imgList = that.imgList.concat(that.imgUrl + data)
-							console.info('that.imgList',that.imgList)
 							that.imgArr.push(data)
 						}else{
 							that.imgList2 = that.imgList2.concat(that.imgUrl + data)

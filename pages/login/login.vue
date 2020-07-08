@@ -43,15 +43,15 @@
 				}
 			}
 		},
-		onLoad() {},
-		onShow() {
-			// uni.hideHomeButton()
-		},
-		onShareAppMessage(res) {
+		onShareAppMessage: function() {
 			return {
 				title: '星鸦智农',
-				path: '/pages/index/index'
+				desc: '',
+				path: '/pages/login/login'
 			}
+		},
+		onShow() {
+			// uni.hideHomeButton()
 		},
 		onBackPress(e) {
 			// return true 表示禁止默认返回
