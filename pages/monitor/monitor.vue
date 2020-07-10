@@ -138,7 +138,8 @@
 			warningAll(){
 				let obj={
 					pageNum:1,
-					pageSize:3
+					pageSize:3,
+					
 				}
 				this.$api.warningAll(obj).then(res=>{
 					this.timeList=res.data.data.massifs
@@ -223,6 +224,8 @@
 							this.newsList[i].statusTxt='未激活'
 						}else if(this.newsList[i].status=='DISABLE'){
 							this.newsList[i].statusTxt='禁用'
+						}else{
+							this.newsList[i].statusTxt='-'
 						}
 					})
 					if (this.page == 1 && this.newsList.length == 0) {

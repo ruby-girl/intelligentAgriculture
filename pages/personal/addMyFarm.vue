@@ -207,14 +207,18 @@
 					this.provinceCode = res.data.data.provinceCode
 					this.cityCode = res.data.data.cityCode
 					this.areaCode = res.data.data.arerCode
-					this.imgArr=res.data.data.masterPicture.split(",");
-					this.imgList=this.imgArr.map(item=>{
-						return this.imgUrl+item
-					})				
-					this.imgArr2=res.data.data.picture.split(",");
-					this.imgList2=this.imgArr2.map(item=>{
-						return this.imgUrl+item
-					})
+					if(res.data.data.masterPicture){
+						this.imgArr=res.data.data.masterPicture.split(",");
+						this.imgList=this.imgArr.map(item=>{
+							return this.imgUrl+item
+						})	
+					}
+					if(res.data.data.picture){
+						this.imgArr2=res.data.data.picture.split(",");
+						this.imgList2=this.imgArr2.map(item=>{
+							return this.imgUrl+item
+						})
+					}			
 					this.$api.districts({
 						parent: 86
 					}).then(res => {

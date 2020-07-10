@@ -1,17 +1,5 @@
 import http from '@/utils/request.js'
 
-//设置请求结束后拦截器
-http.interceptor.response = (response) => {
-	uni.hideLoading();
-	if(response.data.stateCode!==200){
-		uni.showToast({
-		    title: response.data.msg,
-			icon:'none'		
-		})		
-	}
-	//判断返回状态 执行相应操作
-	return response;
-}
 // 登录
 export const login = (data) => {
 	return http.request({
@@ -192,7 +180,14 @@ export const  updateOpening= (data) => {
 		data:data
 	})
 }
-
+// 预警列表 设置值
+export const  updateValue= (data) => {
+	return http.request({ 
+		url: 'warning/updateValue',
+		method: 'post',
+		data:data
+	})
+}
 // 7日温度数据
 export const  findRangeData= (data) => {
 	return http.request({ 

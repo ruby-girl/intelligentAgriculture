@@ -41,7 +41,7 @@
 					return
 				}
 				let _this=this
-				this.$api.updateOpening(this.obj).then(res=>{
+				this.$api.updateValue(this.obj).then(res=>{
 					uni.showToast({
 						title: '设置成功',
 						duration: 2000,

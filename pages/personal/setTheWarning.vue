@@ -64,6 +64,8 @@
 						title: '设置成功',
 						duration: 2000
 					})
+				}).catch(res=>{
+					this.findList()
 				})
 			},
 			findList(){

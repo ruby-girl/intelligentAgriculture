@@ -5,7 +5,7 @@
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" @scroll="scroll">
 				<view class="map-container">
 					<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl'
-					 src="http://pili-live-hls.tree-iot.com/zhslive/0018DE743E31C1.m3u8">
+					 :src="obj.hlsLivePlayUrl">
 					</video>
 
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
@@ -42,7 +42,7 @@
 								<view class="state-box" v-if="obj.statusTxt=='在线'">
 									{{obj.statusTxt||''}}
 								</view>
-								<view class="state-box-error" v-else>
+								<view class="state-box-error" v-else-if="obj.statusTxt!=='-'">
 									{{obj.statusTxt||''}}
 								</view>
 							</view>
@@ -160,7 +160,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		<view class="cu-modal" :class="shoeModel?'show':''">
+		<view class="cu-modal" :class="shoeModel?'show':''" @click="hideModal">
 			<view class="cu-dialog">
 				<view class="bg-img" style="padding:40rpx">
 					<image :src="modelImg" mode="aspectFit"></image>
@@ -298,7 +298,7 @@
 					this.shoeModel=true
 					this.modelImg='https://xyzn.tree-iot.com'+res.data.path
 				})
-			},
+			},		
 			hideModal(){
 				this.shoeModel=false
 			},
@@ -353,6 +353,8 @@
 						this.obj.statusTxt = '未激活'
 					} else if (this.obj.status == 'DISABLE') {
 						this.obj.statusTxt = '禁用'
+					}else{
+						this.obj.statusTxt = '-'
 					}
 				})
 			},

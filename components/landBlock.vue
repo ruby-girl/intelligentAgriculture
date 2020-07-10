@@ -11,7 +11,7 @@
 			<view class="state-box" v-if="itemObject.statusTxt=='在线'">
 				{{itemObject.statusTxt}}
 			</view>
-			<view class="state-box-error" v-else>
+			<view class="state-box-error" v-else-if="itemObject.statusTxt!=='-'">
 				{{itemObject.statusTxt}}
 			</view>
 		</view>

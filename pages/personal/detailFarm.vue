@@ -273,8 +273,10 @@
 					this.farmDetail = res.data.data
 					this.farmAddress = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName + (this.farmDetail
 						.address||'')
-					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName
-					this.imgArr=res.data.data.picture.split(",");//农场图片 
+					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName				
+					if(res.data.data.picture){
+						this.imgArr=res.data.data.picture.split(",");//农场图片
+					}
 					this.atuoGetLocation(this.farmAddress, area)
 				})
 			},
