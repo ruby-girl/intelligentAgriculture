@@ -119,7 +119,7 @@
         "usingComponents" : true,
         "permission" : {
             "scope.userLocation" : {
-                "desc" : "地图开发"
+                "desc" : "获取农场位置"
             }
         }
     },

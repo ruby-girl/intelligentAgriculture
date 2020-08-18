@@ -79,7 +79,7 @@
 						massifName: "请选择"
 					})
 					if (this.obj.deviceId) { //如果有设备id,回填地块
-						if (this.obj.massifId ==undefined) { //如果没有关联地块
+						if (this.obj.massifId == undefined) { //如果没有关联地块
 							this.optionValue = 0
 						} else {
 							this.optionValue = this.massifsList.findIndex((item, i) => {
@@ -114,24 +114,21 @@
 					}
 				}
 				let postData;
+				postData = { ...this.obj}
 				if (!this.obj.massifId) {
-					postData = { ...this.obj
-					}
+					
 					delete postData.massifId
 				}
-				let api;
+				console.info('postData',postData)
 				if (!this.obj.deviceId) {
-					api = 'insertDevice'
-				} else {
-					api = 'updateDevice';
-				}
-				this.$api[api](postData).then(res => {
-					if (this.obj.deviceId) {
-						this.toastFunc('编辑成功')
-					} else {
+					this.$api.insertDevice(postData).then(res => {
 						this.toastFunc('添加成功')
-					}
-				})
+					})
+				} else {
+					this.$api.updateDevice(postData).then(res => {
+						this.toastFunc('编辑成功')
+					})
+				}
 			},
 			toastFunc(title) {
 				let _this = this
