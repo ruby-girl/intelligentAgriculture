@@ -364,9 +364,13 @@
 				}).then(res => {
 					let orderDps = res.data.data[0].orderDps
 					orderDps.forEach(item => {
-						this.option.categories.push(formatDate(item.timestamp))
-						this.option.series[0].data.push((item.value).toFixed(1))
+					
+						if(item.value!==undefined&&item.timestamp){
+							this.option.categories.push(formatDate(item.timestamp))
+							this.option.series[0].data.push((parseFloat(item.value)).toFixed(1))
+						}
 					})
+					console.info('this.option',this.option)
 					this.$refs.line.init(this.option, '℃')
 				})
 			},
@@ -376,8 +380,11 @@
 				}).then(res => {
 					let orderDps = res.data.data[0].orderDps
 					orderDps.forEach(item => {
-						this.atmosphericHumidityOption.categories.push(formatDate(item.timestamp))
-						this.atmosphericHumidityOption.series[0].data.push((item.value).toFixed(1))
+						if(item.value!==undefined&&item.timestamp){
+							this.atmosphericHumidityOption.categories.push(formatDate(item.timestamp))
+							this.atmosphericHumidityOption.series[0].data.push((parseFloat(item.value)).toFixed(1))
+						}
+						
 					})
 					this.$refs.atmosphericHumidityLine.init(this.atmosphericHumidityOption, '%')
 				})
@@ -388,8 +395,12 @@
 				}).then(res => {
 					let orderDps = res.data.data[0].orderDps
 					orderDps.forEach(item => {
-						this.soilTemperatureOption.categories.push(formatDate(item.timestamp))
-						this.soilTemperatureOption.series[0].data.push((item.value).toFixed(1))
+						if(item.value!==undefined&&item.timestamp){
+							console.info('??????')
+							this.soilTemperatureOption.categories.push(formatDate(item.timestamp))
+							this.soilTemperatureOption.series[0].data.push((parseFloat(item.value)).toFixed(1))
+						}
+						
 					})
 					this.$refs.soilTemperatureLine.init(this.soilTemperatureOption, '℃')
 				})
@@ -400,8 +411,11 @@
 				}).then(res => {
 					let orderDps = res.data.data[0].orderDps
 					orderDps.forEach(item => {
-						this.soilHumidityOption.categories.push(formatDate(item.timestamp))
-						this.soilHumidityOption.series[0].data.push((item.value).toFixed(1))
+						if(item.value!==undefined&&item.timestamp){
+							this.soilHumidityOption.categories.push(formatDate(item.timestamp))
+							this.soilHumidityOption.series[0].data.push((parseFloat(item.value)).toFixed(1))
+						}
+						
 					})
 					this.$refs.soilHumidityLine.init(this.soilHumidityOption, '%')
 				})
