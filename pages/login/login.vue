@@ -1,7 +1,7 @@
 <template>
 	<view class="padding-login">
 		<view class="title-y">
-			欢迎登录/注册科维特！
+			欢迎登录/注册星鸦智农！
 		</view>
 		<view class="border-bottom">
 			<view class="cu-form-group">
@@ -18,7 +18,7 @@
 		 lang="zh_CN" @getuserinfo="onGotUserInfo" withCredentials="true">
 			登录/注册</button>
 		<view class="auto-bottom">
-			注册即为同意<text class="agreement" @click="toTermsOfService">《科维特用户使用协议》</text>
+			注册即为同意<text class="agreement" @click="toTermsOfService">《星鸦智农用户使用协议》</text>
 		</view>
 
 	</view>
@@ -45,7 +45,7 @@
 		},
 		onShareAppMessage: function() {
 			return {
-				title: '科维特',
+				title: '星鸦智农',
 				desc: '',
 				path: '/pages/login/login'
 			}

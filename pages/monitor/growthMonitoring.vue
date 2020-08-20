@@ -4,10 +4,6 @@
 		<view>
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" @scroll="scroll">
 				<view class="map-container">
-					<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl'
-					 :src="obj.hlsLivePlayUrl">
-					</video>
-
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
 						<view class="map-top-item">
 							<view style="font-size: 15px;font-weight: bold;">{{obj.surplus}}</view>
@@ -26,6 +22,11 @@
 							<view class="small-text">种植进度</view>
 						</view>
 					</view>
+					<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl'
+					 :src="obj.hlsLivePlayUrl">
+					</video>
+
+					
 					<!-- <view  class="play-box">
 						<image src="../../static/imgs/play.png" mode=""></image>
 					</view> -->
@@ -49,7 +50,7 @@
 							<view class="box-margin flex justify-content-flex-justify align-items-center">
 								<view class="item-content-box">
 									<view class="item-num">
-										{{obj.crop}}
+										{{obj.crop||'-'}}
 									</view>
 									<text class="small-text">作物名称</text>
 								</view>
@@ -243,11 +244,6 @@
 			}else{
 				this.massifId = option.massifId
 			}
-			
-			// wx.showShareMenu({//分享朋友圈
-			// 	withShareTicket: true,
-			// 	menus: ['shareAppMessage', 'shareTimeline']
-			// })
 		},
 		onShow() {
 			this.getData()
@@ -396,11 +392,9 @@
 					let orderDps = res.data.data[0].orderDps
 					orderDps.forEach(item => {
 						if(item.value!==undefined&&item.timestamp){
-							console.info('??????')
 							this.soilTemperatureOption.categories.push(formatDate(item.timestamp))
 							this.soilTemperatureOption.series[0].data.push((parseFloat(item.value)).toFixed(1))
-						}
-						
+						}					
 					})
 					this.$refs.soilTemperatureLine.init(this.soilTemperatureOption, '℃')
 				})
@@ -509,8 +503,6 @@
 	// 地图CSS
 	.map-container {
 		position: relative;
-		height: 650rpx;
-		padding-top: 50rpx;
 	}
 
 	.detail-name {
@@ -548,32 +540,24 @@
 	}
 
 	.map-top-box {
-		position: absolute;
-		top: 10rpx;
-		width: 96%;
+		// position: absolute;
+		// top: 10rpx;
+		
 		background: #fff;
 		padding: 10rpx 20rpx;
-		left: 2%;
-		border-radius: 4px;
+		// left: 2%;
 	}
 
 	.map-bottom-box {
-		position: absolute;
-		bottom: -420rpx;
-		left: 2%;
-		width: 96%;
 		background: #fff;
 		padding: 10rpx 20rpx;
-		border-radius: 4px;
-
+		border-bottom: 10px solid #f9f9f9;
 		image {
 			width: 28px;
 			height: 28px;
 			margin-right: 20rpx;
 			position: relative;
-
 		}
-
 		.content {
 			padding: 30rpx;
 			overflow-y: auto;
@@ -638,7 +622,7 @@
 	.farm-detail-box {
 		padding: 20rpx 30rpx;
 		background: #fff;
-		border-top: 440rpx solid #F5F5F5;
+		// border-top: 440rpx solid #F5F5F5;
 	}
 
 	.map-bottom-tip {

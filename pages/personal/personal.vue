@@ -111,7 +111,7 @@
 		},
 		onShareAppMessage: function() {
 			return {
-				title: '科维特',
+				title: '星鸦智农',
 				desc: '',
 				path: 'pages/personal/personal'
 			}
