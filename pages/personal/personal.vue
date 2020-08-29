@@ -106,7 +106,7 @@
 				fail: function() {
 					_this.isLogin = false
 					getApp().globalData.isLogin = false
-				}
+				},
 			});
 		},
 		onShareAppMessage: function() {
@@ -144,7 +144,8 @@
 			},
 			getCount() {
 				this.$api.massifCount().then(res => {
-					this.nums = res.data.data
+					this.nums = res.data.data;
+					console.log(res)
 				})
 			},
 			toMyFarm() { //跳转我的农场

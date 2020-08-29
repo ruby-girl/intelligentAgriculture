@@ -3,7 +3,7 @@ import http from '@/utils/request.js'
 // 登录
 export const login = (data) => {
 	return http.request({
-		url: 'user/login',
+		url: 'login',
 		method: 'post',
 		data,
 	})
@@ -12,7 +12,7 @@ export const login = (data) => {
 // 获取验证码
 export const captcha = (data) => {
 	return http.request({
-		url: 'user/send',
+		url: 'api/user/send',
 		method: 'post',
 		data,
 	})
@@ -21,14 +21,14 @@ export const captcha = (data) => {
 // 个人中心数据
 export const  massifCount= (data) => {
 	return http.request({
-		url: 'massif/count',
+		url: 'api/massif/count',
 		method: 'post'
 	})
 }
 // 农场列表
 export const farmGetAll= (data) => {
 	return http.request({
-		url: 'farm/getAll',
+		url: 'api/farm/getAll',
 		method: 'post',
 		data:data
 	})
@@ -36,7 +36,7 @@ export const farmGetAll= (data) => {
 // 获取农场详情
 export const  selectFarmId= (data) => {
 	return http.request({
-		url: 'farm/selectFarmId',
+		url: 'api/farm/selectFarmId',
 		method: 'post',
 		data:data
 	})
@@ -44,7 +44,7 @@ export const  selectFarmId= (data) => {
 // 添加农场
 export const  insertFarm= (data) => {
 	return http.request({
-		url: 'farm/insertFrom',
+		url: 'api/farm/insertFrom',
 		method: 'post',
 		data:data
 	})
@@ -52,7 +52,7 @@ export const  insertFarm= (data) => {
 // 编辑农场
 export const  updateFarm= (data) => {
 	return http.request({
-		url: 'farm/update',
+		url: 'api/farm/update',
 		method: 'post',
 		data:data
 	})
@@ -60,7 +60,7 @@ export const  updateFarm= (data) => {
 // 获取省市区
 export const  districts= (data) => {
 	return http.request({
-		url: 'districts',
+		url: 'api/districts',
 		method: 'post',
 		data:data
 	})
@@ -68,7 +68,7 @@ export const  districts= (data) => {
 // 添加设备
 export const  insertDevice= (data) => {
 	return http.request({
-		url: 'device/insertDevice',
+		url: 'api/device/insertDevice',
 		method: 'post',
 		data:data
 	})
@@ -76,7 +76,7 @@ export const  insertDevice= (data) => {
 // 添加地块
 export const  insertMassif= (data) => {
 	return http.request({
-		url: 'massif/insertMassif',
+		url: 'api/massif/insertMassif',
 		method: 'post',
 		data:data
 	})
@@ -84,7 +84,7 @@ export const  insertMassif= (data) => {
 // 编辑地块
 export const updateMassif= (data) => {
 	return http.request({
-		url: 'massif/updateMassif',
+		url: 'api/massif/updateMassif',
 		method: 'post',
 		data:data
 	})
@@ -92,7 +92,7 @@ export const updateMassif= (data) => {
 // 获取未绑定地块设备列表
 export const  devicegetNoBangAll= (data) => {
 	return http.request({
-		url: 'device/getAll',
+		url: 'api/device/getAll',
 		method: 'post',
 		data:data
 	})
@@ -100,7 +100,7 @@ export const  devicegetNoBangAll= (data) => {
 // 获取地块列表
 export const  selectMassif= (data) => {
 	return http.request({
-		url: 'massif/selectMassif',
+		url: 'api/massif/selectMassif',
 		method: 'post',
 		data:data
 	})
@@ -108,7 +108,7 @@ export const  selectMassif= (data) => {
 //删除地块
 export const  deleteMassif= (data) => {
 	return http.request({
-		url: 'massif/deleteMassif',
+		url: 'api/massif/deleteMassif',
 		method: 'post',
 		data:data
 	})
@@ -117,7 +117,7 @@ export const  deleteMassif= (data) => {
 //获取地块详情
 export const  selectIdAll= (data) => {
 	return http.request({
-		url: 'massif/selectIdAll',
+		url: 'api/massif/selectIdAll',
 		method: 'post',
 		data:data
 	})
@@ -127,7 +127,7 @@ export const  selectIdAll= (data) => {
 
 export const  findByDevice= (data) => {
 	return http.request({
-		url: 'device/findByDevice',
+		url: 'api/device/findByDevice',
 		method: 'post',
 		data:data
 	})
@@ -135,7 +135,7 @@ export const  findByDevice= (data) => {
 // T获取设备详情
 export const  selectDevice= (data) => {
 	return http.request({
-		url: 'device/selectDevice',
+		url: 'api/device/selectDevice',
 		method: 'post',
 		data:data
 	})
@@ -143,7 +143,7 @@ export const  selectDevice= (data) => {
 // 编辑设备
 export const  updateDevice= (data) => {
 	return http.request({
-		url: 'device/updateDevice',
+		url: 'api/device/updateDevice',
 		method: 'post',
 		data:data
 	})
@@ -151,7 +151,7 @@ export const  updateDevice= (data) => {
 // 首页监测
 export const  selectMonitor= (data) => {
 	return http.request({
-		url: 'massif/selectMonitor',
+		url: 'api/massif/selectMonitor',
 		method: 'post',
 		data:data
 	})
@@ -159,7 +159,7 @@ export const  selectMonitor= (data) => {
 // 监测详情==监控等数据
 export const  massifMonitor= (data) => {
 	return http.request({
-		url: 'massif/massifMonitor',
+		url: 'api/massif/massifMonitor',
 		method: 'post',
 		data:data
 	})
@@ -167,7 +167,7 @@ export const  massifMonitor= (data) => {
 // 预警列表
 export const  findList= (data) => {
 	return http.request({ 
-		url: 'warning/findList',
+		url: 'api/warning/findList',
 		method: 'post',
 		data:data
 	})
@@ -175,7 +175,7 @@ export const  findList= (data) => {
 // 预警列表 设置开关
 export const  updateOpening= (data) => {
 	return http.request({ 
-		url: 'warning/updateOpening',
+		url: 'api/warning/updateOpening',
 		method: 'post',
 		data:data
 	})
@@ -183,7 +183,7 @@ export const  updateOpening= (data) => {
 // 预警列表 设置值
 export const  updateValue= (data) => {
 	return http.request({ 
-		url: 'warning/updateValue',
+		url: 'api/warning/updateValue',
 		method: 'post',
 		data:data
 	})
@@ -191,7 +191,7 @@ export const  updateValue= (data) => {
 // 7日温度数据
 export const  findRangeData= (data) => {
 	return http.request({ 
-		url: 'device/findRangeData',
+		url: 'api/device/findRangeData',
 		method: 'post',
 		data:data
 	})
@@ -199,7 +199,7 @@ export const  findRangeData= (data) => {
 //获取用户下所有预警
 export const  warningAll= (data) => {
 	return http.request({ 
-		url: 'massif/warningAll',
+		url: 'api/massif/warningAll',
 		method: 'post',
 		data:data
 	})
@@ -207,7 +207,7 @@ export const  warningAll= (data) => {
 //获取农场下所有地块
 export const  massifSelectFarmId= (data) => {
 	return http.request({ 
-		url: 'massif/selectFarmId',
+		url: 'api/massif/selectFarmId',
 		method: 'post',
 		data:data
 	})
@@ -215,7 +215,7 @@ export const  massifSelectFarmId= (data) => {
 //获取农场下所有预警
 export const  massifFindFarmId= (data) => {
 	return http.request({ 
-		url: 'massif/findFarmId',
+		url: 'api/massif/findFarmId',
 		method: 'post',
 		data:data
 	})
@@ -223,7 +223,7 @@ export const  massifFindFarmId= (data) => {
 //获取用户OPENID
 export const  decodeUserInfo= (data) => {
 	return http.request({ 
-		url: 'wXLoginController/decodeUserInfo',
+		url: 'api/wXLoginController/decodeUserInfo',
 		method: 'post',
 		data:data
 	})
@@ -231,7 +231,7 @@ export const  decodeUserInfo= (data) => {
 
 export const  likes= (data) => {
 	return http.request({ 
-		url: 'massif/likes',
+		url: 'api/massif/likes',
 		method: 'post',
 		data:data
 	})
@@ -239,7 +239,7 @@ export const  likes= (data) => {
 // 查看点赞状态
 export const  getLikes= (data) => {
 	return http.request({ 
-		url: 'massif/state',
+		url: 'api/massif/state',
 		method: 'post',
 		data:data
 	})
@@ -247,7 +247,7 @@ export const  getLikes= (data) => {
 //查询设备数量和在线设备数量
 export const  deviceCount= () => {
 	return http.request({ 
-		url: 'device/count',
+		url: 'api/device/count',
 		method: 'post'
 	})
 }
@@ -255,7 +255,7 @@ export const  deviceCount= () => {
 //删除设备
 export const  deleteDevice= (data) => {
 	return http.request({ 
-		url: 'device/deleteDevice',
+		url: 'api/device/deleteDevice',
 		method: 'post',
 		data:data
 	})
@@ -264,7 +264,7 @@ export const  deleteDevice= (data) => {
 //大气湿度7日数据
 export const  atmosphericHumidity= (data) => {
 	return http.request({ 
-		url: 'device/atmosphericHumidity',
+		url: 'api/device/atmosphericHumidity',
 		method: 'post',
 		data:data
 	})
@@ -272,7 +272,7 @@ export const  atmosphericHumidity= (data) => {
 //土壤温度7日数据
 export const  soilTemperature= (data) => {
 	return http.request({ 
-		url: 'device/soilTemperature',
+		url: 'api/device/soilTemperature',
 		method: 'post',
 		data:data
 	})
@@ -280,7 +280,7 @@ export const  soilTemperature= (data) => {
 //土壤湿度7日数据
 export const  soilHumidity= (data) => {
 	return http.request({ 
-		url: 'device/soilHumidity',
+		url: 'api/device/soilHumidity',
 		method: 'post',
 		data:data
 	})
@@ -288,7 +288,7 @@ export const  soilHumidity= (data) => {
 //获取小程序码
 export const  getUnlimited= (data) => {
 	return http.request({ 
-		url: 'wXLoginController/getUnlimited',
+		url: 'api/wXLoginController/getUnlimited',
 		method: 'post',
 		data:data
 	})

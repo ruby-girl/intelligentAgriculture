@@ -1,8 +1,8 @@
 export default {
 	config: {
 		//baseUrl: "http://kwt.mmy.red:8081/",
-		//baseUrl: "https://sc-kwt.com/",
-		baseUrl:"https://xyzn.tree-iot.com/",
+		baseUrl: "https://www.sc-kwt.com/",
+		// baseUrl:"https://xyzn.tree-iot.com/",
 		header: {
 			'Content-Type': 'application/json',
 			'Authorization': '',
@@ -23,7 +23,6 @@ export default {
 		response: null
 	},
 	request(options) {
-
 		let _this = this;
 		uni.showLoading({
 			title: '加载中',
@@ -35,7 +34,7 @@ export default {
 		options.baseUrl = options.baseUrl || _this.config.baseUrl
 		options.dataType = options.dataType || _this.config.dataType
 		options.url = options.baseUrl + options.url
-
+		
 		options.data = options.data || {}
 
 		options.method = options.method || _this.config.method

@@ -1,15 +1,17 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	
 		{
 			"path": "pages/personal/personal",
 			"style": {
-				"navigationBarTitleText": "我的",
+				"navigationBarTitleText": "用户中心",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 
 			}
-		},{
+		},
+		{
 			"path": "pages/personal/aboutUs",
 			"style": {
 				"navigationBarTitleText": "关于我们",
@@ -145,6 +147,16 @@
 				"disableScroll": true
 			}
 		}
+		,{
+			"path": "pages/aiRecognition/aiRecognition",
+			"style": {
+				"navigationBarTitleText": "AI识别",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -161,7 +173,7 @@
 		"list": [
 				{
 				"pagePath": "pages/monitor/monitor",
-				"text": "监测预警",
+				"text": "监测与预警",
 				"iconPath": "static/imgs/detection.png",
 				"selectedIconPath": "static/imgs/detection-1.png"
 			},
@@ -172,8 +184,14 @@
 				"selectedIconPath": "static/imgs/equipment-management.png"
 			},
 			{
+				"pagePath": "pages/aiRecognition/aiRecognition",
+				"text": "AI识别",
+				"iconPath": "static/imgs/ai-recognition.png",
+				"selectedIconPath": "static/imgs/ai-recognition-1.png"
+			},
+			{
 				"pagePath": "pages/personal/personal",
-				"text": "我的",
+				"text": "用户中心",
 				"iconPath": "static/imgs/my.png",
 				"selectedIconPath": "static/imgs/my-1.png"
 			}

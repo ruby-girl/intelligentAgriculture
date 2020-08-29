@@ -29,8 +29,8 @@
 			return {
 				title: 'Hello',
 				obj: {
-					phone: '',
-					yzm: ''
+					username: '',
+					password: ''
 				},
 				headPortrait: '',
 				name: '',
@@ -64,21 +64,21 @@
 				})
 			},
 			onInput(e) {
-				this.obj.phone = e.detail.value
+				this.obj.username = e.detail.value
 			},
 			captchaInput(e){
-				this.obj.yzm = e.detail.value
+				this.obj.password = e.detail.value
 			},
 			// 手动授权方法
 			onGotUserInfo(e) {
-				if (!this.obj.phone) {
+				if (!this.obj.username) {
 					uni.showToast({
 						title: '请输入手机号',
 						icon: 'none'
 					})
 					return
 				}
-				if (!this.obj.yzm) {
+				if (!this.obj.password) {
 					uni.showToast({
 						title: '请输入验证码',
 						icon: 'none'
@@ -115,7 +115,7 @@
 			codeClick() {
 				//点击发送验证码		     
 				let _this = this
-				if (!this.obj.phone) {
+				if (!this.obj.username) {
 					uni.showToast({
 						title: '请输入手机号',
 						icon: 'none'
@@ -124,7 +124,7 @@
 				}
 				this.disabled = true
 				this.$api.captcha({
-					phone: this.obj.phone
+					phone: this.obj.username
 				}).then(res => {
 					if (res.data.stateCode == 200) {
 						this.btnTitle = 60
@@ -146,31 +146,29 @@
 			},
 			userLogin() {
 				let that = this;
-				this.$api.login(this.obj).then(res => {			
-						let obj = {
-							 token: res.data.data.token,					
-							nickName: this.user.nickName,
-							avatarUrl: this.user.avatarUrl,
-							phone: this.obj.phone,
+				this.$api.login(this.obj).then(res => {		
+					let obj = {
+						token: res.data.token,					
+						nickName: this.user.nickName,
+						avatarUrl: this.user.avatarUrl,
+						phone: this.obj.username,
+						
+					}
+					uni.setStorage({
+						key: 'XYZNUserInfo',
+						data: obj,
+						success() {
+							uni.showToast({
+								title: '登录成功',
+								icon: 'success',
+								success() {
+									uni.switchTab({
+										url: '../personal/personal'
+									});
+								}
+							})
 						}
-
-						uni.setStorage({
-							key: 'XYZNUserInfo',
-							data: obj,
-							success() {
-								uni.showToast({
-									title: '登录成功',
-									icon: 'success',
-									success() {
-										uni.switchTab({
-											url: '../personal/personal'
-										});
-
-									}
-								})
-							}
-						})
-					
+					})
 				})
 			}
 		}
