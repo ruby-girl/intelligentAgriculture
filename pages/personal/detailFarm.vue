@@ -192,19 +192,15 @@
 				loadingType: 0,
 				triggered: false,
 				_freshing: false,
-<<<<<<< .mine
 				timeList:[],
 				pestsList:[],
 				popupShow:false,
 				modelContent:'',
-				imgArr:[]
-=======
+				imgArr:[],
 				timeList: [],
 				popupShow: false,
 				modelContent: '',
 				imgArr: []
-
->>>>>>> .theirs
 			};
 		},
 		onLoad(option) {
@@ -301,7 +297,6 @@
 					}
 				})
 			},
-<<<<<<< .mine
 			massifFindFarmPests(){ // 获取农场下所有病虫害
 				let obj={
 					pageNum:1,
@@ -316,22 +311,6 @@
 				})
 			},
 			getData() {//获取农场下所有地块
-=======
-			getData() { //获取农场下所有地块
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
 				let obj = {
 					pageNum: this.page,
 					pageSize: 10,
@@ -423,21 +402,12 @@
 
 				});
 			},
-<<<<<<< .mine
 			dispose(row){// 预警处理
 				uni.switchTab({
 					url: '../personal/personal'
 				});
 			},
 			editFarm(){
-=======
-			editFarm() {
-
-
-
-
-
->>>>>>> .theirs
 				uni.navigateTo({
 					url: 'addMyFarm?id=' + this.farmId
 				})
