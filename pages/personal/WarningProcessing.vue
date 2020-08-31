@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		<view  v-bind:style="{height:windowHeight - 220 +'px',backgroundColor:'#E5E5E5'}">
-			<image :src="row.picture" mode="aspectFit" ></image>
+			<image :src="row.img" mode="aspectFit" style="width: 100%;height: 100%;" @tap="showImage(row.img)"></image>
 		</view>
 		<consult v-on:click='click' ></consult>
 	</view>
@@ -18,6 +18,7 @@
 <script>
 import { throttle } from '@/utils/index.js';
 import consult from '@/components/consult.vue';
+import http from '@/utils/request.js';
 export default {
 	components: {
 		consult,
@@ -36,6 +37,8 @@ export default {
 		this.windowHeight = uni.getSystemInfoSync().windowHeight; // 屏幕的高度
 		this.isLogin = getApp().globalData.isLogin;
 		this.row = JSON.parse(decodeURIComponent(option.item));
+		// console.log(JSON.parse(decodeURIComponent(option.item)))
+		this.row.img = http.config.baseUrl + this.row.picture.substring(1,this.row.picture.length);
 	},
 	onShareAppMessage: function() {
 		return {
@@ -73,6 +76,22 @@ export default {
 				icon: 'none'
 			});
 		},
+		showImage(src){
+			var list = new Array();
+			list.push(src);
+			uni.previewImage({
+				urls: list,
+				longPressActions: {
+					itemList: ['发送给朋友', '保存图片', '收藏'],
+					success: function(data) {
+						console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+					},
+					fail: function(err) {
+						console.log(err.errMsg);
+					}
+				}
+			});
+		}
 	}
 };
 </script>

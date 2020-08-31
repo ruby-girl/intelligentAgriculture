@@ -104,7 +104,8 @@
 									<view style="color:#333">{{item.farmName}} NO.{{item.massifNo}}</view>
 									<view style="color:red">{{item.warningName}}</view>
 								</view>
-								<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
+								<!-- <button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button> -->
+								<navigator class="cu-btn bg-green" :url="'WarningProcessing?item='+ encodeURIComponent(JSON.stringify(item))">查看</navigator>
 							</view>
 						</view>
 					</view>
@@ -291,6 +292,7 @@
 						this.tabs[2].name = `预警（${this.timeList.length}）`
 						this.waningTabs[1].name=`环境（${this.timeList.length}）`
 					}
+					console.log(res)
 				})
 			},
 			massifFindFarmPests(){ // 获取农场下所有病虫害
@@ -302,7 +304,7 @@
 				this.$api.massifFindFarmPests(obj).then(res=>{
 					this.pestsList=res.data.data.massifs
 					if(this.pestsList.length>0){
-						this.tabs[1].name=`病虫害（${this.pestsList.length}）`
+						this.waningTabs[1].name=`病虫害（${this.pestsList.length}）`
 					}
 				})
 			},
@@ -582,5 +584,8 @@
 		
 	.color-black{
 		color: #000000 !important;
+	}
+	.cu-btn{
+		border-radius: 5rpx;
 	}
 </style>
