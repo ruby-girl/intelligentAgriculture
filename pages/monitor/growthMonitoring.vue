@@ -227,7 +227,8 @@
 				isLike: false,
 				num: 0,
 				shoeModel:false,
-				modelImg:''
+				modelImg:'',
+				arrData:[{field:'precipitation',name:'雨量',value:'2000',unit:'mm'},{field:'temperature',name:'空气温度',value:'25',unit:'℃'}]
 			};
 		},
 		onShareAppMessage: function() {
