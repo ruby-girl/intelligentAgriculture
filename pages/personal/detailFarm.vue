@@ -16,7 +16,16 @@
 			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true">
 
 				<view class="map-container">
-					<map style="width:100%;height:300px;" :latitude="latitude" :longitude="longitude" :markers="covers"></map>
+					<map style="width:100%;height:300px;" :latitude="latitude" :longitude="longitude" :markers="covers"
+					 @callouttap="callouttapFunc">
+						<!-- <cover-view slot="callout">
+							<block>
+								<cover-view class="customCallout" marker-id="1">
+									
+								</cover-view>
+							</block>
+						</cover-view> -->
+					</map>
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
 						<view class="detail-name">
 							<view><text style="font-weight: bold;font-size: 16px;">{{farmDetail.farmName}}</text></view>
@@ -44,7 +53,8 @@
 								</view>
 							</view>
 							<view class="detail-img">
-								<image @click="callPhone(farmDetail.fphone)" style="width: 30px;height: 30px;" src="../../static/imgs/phone.png" mode="aspectFill"></image>
+								<image @click="callPhone(farmDetail.fphone)" style="width: 30px;height: 30px;" src="../../static/imgs/phone.png"
+								 mode="aspectFill"></image>
 							</view>
 						</view>
 					</view>
@@ -117,6 +127,11 @@
 					<view class="loading-more" v-else>暂无数据</view>
 				</template>
 			</scroll-view>
+<<<<<<< .mine
+
+=======
+			<popup :content='modelContent' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup" />
+>>>>>>> .theirs
 		</view>
 	</view>
 </template>
@@ -139,6 +154,7 @@
 				covers: [{
 					latitude: '',
 					longitude: ''
+
 				}],
 				farmDetail: {},
 				farmId: '',
@@ -176,11 +192,19 @@
 				loadingType: 0,
 				triggered: false,
 				_freshing: false,
+<<<<<<< .mine
 				timeList:[],
 				pestsList:[],
 				popupShow:false,
 				modelContent:'',
 				imgArr:[]
+=======
+				timeList: [],
+				popupShow: false,
+				modelContent: '',
+				imgArr: []
+
+>>>>>>> .theirs
 			};
 		},
 		onLoad(option) {
@@ -188,7 +212,7 @@
 			qqmapsdk = new QQMapWX({
 				key: 'TN7BZ-YJKCP-OMTD3-LQKOM-2C5KZ-AWFUQ'
 			});
-			let _this=this
+			let _this = this
 			uni.getStorage({
 				key: 'farmId',
 				success: function(res) {
@@ -204,19 +228,24 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
-			callPhone(phone){
-				if(!phone) return;
-				uni.makePhoneCall({			 	
-				 	// 手机号
-				    phoneNumber: phone
-				  });
+			callouttapFunc: function(e) {
+				uni.navigateTo({
+					url: 'nearTheEquipment?latitude='+this.latitude+'&longitude='+this.longitude
+				})
 			},
-			showModel(txt){
-				this.modelContent=txt
-				this.popupShow=true
+			callPhone(phone) {
+				if (!phone) return;
+				uni.makePhoneCall({
+					// 手机号
+					phoneNumber: phone
+				});
 			},
-			closePopup(){
-				this.popupShow=false
+			showModel(txt) {
+				this.modelContent = txt
+				this.popupShow = true
+			},
+			closePopup() {
+				this.popupShow = false
 			},
 			onPulling() {},
 			onRefresh() {
@@ -258,20 +287,21 @@
 					this.getData()
 				}
 			},
-			massifFindFarmId(){//获取农场下所有预警
-				let obj={
-					pageNum:1,
-					pageSize:100,
-					farmId:this.farmId
+			massifFindFarmId() { //获取农场下所有预警
+				let obj = {
+					pageNum: 1,
+					pageSize: 100,
+					farmId: this.farmId
 				}
-				this.$api.massifFindFarmId(obj).then(res=>{
-					this.timeList=res.data.data.massifs
-					if(this.timeList.length>0){
-						this.tabs[2].name=`预警（${this.timeList.length}）`
+				this.$api.massifFindFarmId(obj).then(res => {
+					this.timeList = res.data.data.massifs
+					if (this.timeList.length > 0) {
+						this.tabs[2].name = `预警（${this.timeList.length}）`
 						this.waningTabs[1].name=`环境（${this.timeList.length}）`
 					}
 				})
 			},
+<<<<<<< .mine
 			massifFindFarmPests(){ // 获取农场下所有病虫害
 				let obj={
 					pageNum:1,
@@ -286,22 +316,38 @@
 				})
 			},
 			getData() {//获取农场下所有地块
+=======
+			getData() { //获取农场下所有地块
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
 				let obj = {
 					pageNum: this.page,
-					pageSize:10,
-					farmId:this.farmId
+					pageSize: 10,
+					farmId: this.farmId
 				}
 				this.$api.massifSelectFarmId(obj).then(res => {
 					this.newsList = this.newsList.concat(res.data.data.massifs)
-					this.newsList.forEach((item,i)=>{
-						if(this.newsList[i].status=='ONLINE'){
-							this.newsList[i].statusTxt='在线'
-						}else if(this.newsList[i].status=='OFFLINE'){
-							this.newsList[i].statusTxt='离线'
-						}else if(this.newsList[i].status=='UNACTIVE'){
-							this.newsList[i].statusTxt='未激活'
-						}else if(this.newsList[i].status=='DISABLE'){
-							this.newsList[i].statusTxt='禁用'
+					this.newsList.forEach((item, i) => {
+						if (this.newsList[i].status == 'ONLINE') {
+							this.newsList[i].statusTxt = '在线'
+						} else if (this.newsList[i].status == 'OFFLINE') {
+							this.newsList[i].statusTxt = '离线'
+						} else if (this.newsList[i].status == 'UNACTIVE') {
+							this.newsList[i].statusTxt = '未激活'
+						} else if (this.newsList[i].status == 'DISABLE') {
+							this.newsList[i].statusTxt = '禁用'
 						}
 					})
 					if (this.page == 1 && this.newsList.length == 0) {
@@ -328,10 +374,10 @@
 				}).then(res => {
 					this.farmDetail = res.data.data
 					this.farmAddress = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName + (this.farmDetail
-						.address||'')
-					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName				
-					if(res.data.data.picture){
-						this.imgArr=res.data.data.picture.split(",");//农场图片
+						.address || '')
+					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName
+					if (res.data.data.picture) {
+						this.imgArr = res.data.data.picture.split(","); //农场图片
 					} 
 					this.atuoGetLocation(this.farmAddress, area)
 				})
@@ -351,9 +397,24 @@
 						if (res.result) {
 							this.latitude = res.result.location.lat
 							this.longitude = res.result.location.lng
-							this.covers=[{
-								latitude: res.result.location.lat,
-								longitude: res.result.location.lng
+							this.covers = [{
+								id: 111,
+								latitude: this.latitude,
+								longitude: this.longitude,
+								callout: {
+									content: '点击查看附近设备',
+									color: '#333333',
+									fontSize: 14,
+									borderWidth: 1,
+									borderRadius: 10,
+									borderColor: '#aaaaaa',
+									bgColor: '#fff',
+									padding: 4,
+									anchorY: -10,
+									anchorX: 0,
+									display: 'ALWAYS',
+									textAlign: 'center'
+								}
 							}]
 						} else {
 							this.atuoGetLocation(area) //具体位置获取不到经纬度，用省市县地址获取
@@ -362,14 +423,23 @@
 
 				});
 			},
+<<<<<<< .mine
 			dispose(row){// 预警处理
 				uni.switchTab({
 					url: '../personal/personal'
 				});
 			},
 			editFarm(){
+=======
+			editFarm() {
+
+
+
+
+
+>>>>>>> .theirs
 				uni.navigateTo({
-					url: 'addMyFarm?id='+this.farmId
+					url: 'addMyFarm?id=' + this.farmId
 				})
 			}
 		}
@@ -415,7 +485,7 @@
 		text-align: center;
 		color: #ddd;
 		padding-bottom: 50rpx;
-		padding-top:20px;
+		padding-top: 20px;
 	}
 
 	.order-title {
@@ -522,12 +592,14 @@
 			text-indent: 2em;
 		}
 	}
-	.cu-timeline{
-		padding:30rpx 0;
+
+	.cu-timeline {
+		padding: 30rpx 0;
 	}
-	.imgs-box .cu-avatar.lg{
-		width:23%;
-		height:150rpx;
+
+	.imgs-box .cu-avatar.lg {
+		width: 23%;
+		height: 150rpx;
 		margin-right: 6px;
 	}
 	.cu-nav .cu-items{

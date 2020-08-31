@@ -1,0 +1,104 @@
+<template>
+  <view class="container-y">
+    <map
+      style="width:100%;height:100%;"
+      :latitude="latitude"
+      :longitude="longitude"
+      :markers="covers"
+    ></map>
+  </view>
+</template>
+
+<script>
+import QQMapWX from '@/static/qqmap-wx-jssdk.min.js';
+var qqmapsdk;
+export default {
+  data() {
+    return {
+      latitude: 39.909,
+      longitude: 116.39742,
+      covers: [
+        {
+          latitude: "",
+		  longitude: ""
+        }
+      ]
+    };
+  },
+  onLoad(option) {
+ //  	this.latitude=option.latitude//这是设备的经纬度
+	// this.longitude=option.longitude
+	this.getCity()
+  },
+  methods: {
+    getCity() {
+		let _this=this
+      // 向用户发起授权请求，弹框提示
+      uni.authorize({
+        // 获取用户定位信息
+        scope: "scope.userLocation",
+        // 用户同意授权执行
+        success() {
+          // 引入腾讯地图api
+          // 实例化API核心类
+         qqmapsdk = new QQMapWX({
+            // 填写自己的Key值，这个值是与AppID绑定的
+            key: "GFHBZ-JU3CD-NEJ4S-PT3J2-JGFH6-7DBOX"
+          });
+          //获取位置信息
+          uni.getLocation({
+            type: "gcj02",
+            success: function(res) {
+				console.info('res',res)
+              _this.longitude = res.longitude;
+              _this.latitude = res.latitude;
+			  _this.getEquipment()
+            }
+          });
+        },
+        // 若用户不同意授权，弹框提示
+        fail(res) {
+          uni.showToast({
+            icon: "none",
+            title: "注意：需要获取您的定位授权,否则部分功能将无法使用",
+            duration: 2000
+          });
+        }
+      });
+    },
+    getEquipment() {
+      this.$api
+        .getNearbyDevice({ latitude: this.latitude, longitude: this.longitude })
+        .then(res => {
+			this.covers = [{
+				id: 111,
+				latitude: this.latitude,
+				longitude: this.longitude,
+				callout: {
+					content: '点击查看附近设备',
+					color: '#333333',
+					fontSize: 14,
+					borderWidth: 1,
+					borderRadius: 10,
+					borderColor: '#aaaaaa',
+					bgColor: '#fff',
+					padding: 4,
+					anchorY: -10,
+					anchorX: 0,
+					display: 'ALWAYS',
+					textAlign: 'center'
+				}
+			}]
+		});
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+page,
+.container-y {
+  background: #eee;
+  height: 100%;
+}
+</style>

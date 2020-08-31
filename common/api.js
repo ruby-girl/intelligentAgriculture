@@ -309,3 +309,12 @@ export const  getUnlimited= (data) => {
 		data:data
 	})
 }
+// 第二版***********************************
+//查询附近100公里内的设备
+export const  getNearbyDevice= (data) => {
+	return http.request({ 
+		url: 'api/device/nearbyDevice',
+		method: 'post',
+		data:data
+	})
+}

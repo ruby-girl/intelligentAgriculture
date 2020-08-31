@@ -165,6 +165,15 @@
 				"disableScroll": true
 			}
 		}
+		,{
+			"path": "pages/personal/nearTheEquipment",
+			"style": {
+				"navigationBarTitleText": "附近设备识别",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true	
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
