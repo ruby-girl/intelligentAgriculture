@@ -212,7 +212,14 @@ export const  findPests= (data) => {
 		data:data
 	})
 }
-
+//获取农场下所有病虫害
+export const  massifFindFarmPests= (data) => {
+	return http.request({ 
+		url: 'api/massif/findFarmPests',
+		method: 'post',
+		data:data
+	})
+}
 //获取农场下所有地块
 export const  massifSelectFarmId= (data) => {
 	return http.request({ 

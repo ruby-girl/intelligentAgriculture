@@ -156,6 +156,14 @@
 				"disableScroll": true
 
 			}
+		},{
+			"path":"pages/personal/WarningProcessing",
+			"style": {
+				"navigationBarTitleText": "预警处理",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true
+			}
 		}
     ],
 	"globalStyle": {

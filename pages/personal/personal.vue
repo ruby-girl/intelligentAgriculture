@@ -145,7 +145,6 @@
 			getCount() {
 				this.$api.massifCount().then(res => {
 					this.nums = res.data.data;
-					console.log(res)
 				})
 			},
 			toMyFarm() { //跳转我的农场

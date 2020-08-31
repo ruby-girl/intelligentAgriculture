@@ -70,22 +70,53 @@
 			</scroll-view>
 		</view>
 		<view v-bind:style="{height:(windowHeight-20)+'px',padding:'10px 0'}" v-show="TabCur==3">
-			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-				<view class="cu-timeline" v-if="timeList.length>0">
-					<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
-						<text class="small-text">{{item.creationTime}}</text>
-						<view class="flex justify-content-flex-justify align-items-center">
-							<view class="timeline-box">
-								<view style="color:#333">{{item.farmName}} NO.{{item.massifNo}}</view>
-								<view style="color:red">{{item.warningName}}</view>
-							</view>
-							<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
+			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-containers" scroll-y="true">
+				<scroll-view scroll-x class="cu-nav">
+					<view class="flex text-center">
+						<view
+							class="cu-items flex-sub"
+							:class="item.id == WarningTabCur ? 'bg-white cur color-black' : 'aa'"
+							v-for="(item, index) in waningTabs"
+							:key="index"
+							@tap="warningTabSelect"
+							:data-id="item.id"
+						>
+							{{ item.name }}
 						</view>
 					</view>
-				</view>
-				<view class="loading-more" v-else>暂无数据</view>
+				</scroll-view>
+				<template v-if="WarningTabCur == 1">
+					<view class="cu-timeline" v-if="pestsList.length > 0">
+						<view class=" cu-item text-olive" v-for="(item,i) in pestsList" :key="i">
+							<text class="small-text">{{item.creationTime}}</text>
+							<view class="flex justify-content-flex-justify align-items-center">
+								<view class="timeline-box">
+									<view style="color:#333">{{item.farmName}} NO.{{item.massifNo}}</view>
+									<view style="color:red">{{item.warningName}}</view>
+								</view>
+								<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
+							</view>
+						</view>
+					</view>
+					<view class="loading-more" v-else>暂无数据</view>
+				</template>
+				<template v-if="WarningTabCur == 2">
+					<view class="cu-timeline" v-if="timeList.length > 0">
+						<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
+							<text class="small-text">{{item.creationTime}}</text>
+							<text class="small-text">1</text>
+							<view class="flex justify-content-flex-justify align-items-center">
+								<view class="timeline-box">
+									<view style="color:#333">{{item.farmName}} NO.{{item.massifNo}}</view>
+									<view style="color:red">{{item.warningName}}</view>
+								</view>
+								<navigator class="cu-btn bg-green" :url="'WarningProcessing?item='+ encodeURIComponent(JSON.stringify(item))">查看</navigator>
+							</view>
+						</view>
+					</view>
+					<view class="loading-more" v-else>暂无数据</view>
+				</template>
 			</scroll-view>
-			<popup :content='modelContent' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup"/>
 		</view>
 	</view>
 </template>
@@ -96,12 +127,10 @@
 		throttle
 	} from "@/utils/index.js"
 	import landBlock from '@/components/landBlock.vue'
-	import popup from "@/components/neil-modal/neil-modal.vue"
 	var qqmapsdk;
 	export default {
 		components: {
 			landBlock,
-			popup
 		},
 		data() {
 			return {
@@ -126,8 +155,19 @@
 						name: '预警'
 					}
 				],
+				waningTabs: [
+					{
+						id: 1,
+						name: '病虫害'
+					},
+					{
+						id:2,
+						name: '农场'
+					}
+				],
 				imgUrl: getApp().globalData.imgUrl,
 				TabCur: 1,
+				WarningTabCur: 1,
 				newsList: [],
 				page: 1,
 				moreHeight: 30,
@@ -137,6 +177,7 @@
 				triggered: false,
 				_freshing: false,
 				timeList:[],
+				pestsList:[],
 				popupShow:false,
 				modelContent:'',
 				imgArr:[]
@@ -155,6 +196,7 @@
 					_this.getFarmDetail()
 					_this.getData()
 					_this.massifFindFarmId()
+					_this.massifFindFarmPests()
 				}
 			})
 		},
@@ -226,6 +268,20 @@
 					this.timeList=res.data.data.massifs
 					if(this.timeList.length>0){
 						this.tabs[2].name=`预警（${this.timeList.length}）`
+						this.waningTabs[1].name=`环境（${this.timeList.length}）`
+					}
+				})
+			},
+			massifFindFarmPests(){ // 获取农场下所有病虫害
+				let obj={
+					pageNum:1,
+					pageSize:100,
+					farmId:this.farmId
+				}
+				this.$api.massifFindFarmPests(obj).then(res=>{
+					this.pestsList=res.data.data.massifs
+					if(this.pestsList.length>0){
+						this.tabs[1].name=`病虫害（${this.pestsList.length}）`
 					}
 				})
 			},
@@ -276,12 +332,16 @@
 					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName				
 					if(res.data.data.picture){
 						this.imgArr=res.data.data.picture.split(",");//农场图片
-					}
+					} 
 					this.atuoGetLocation(this.farmAddress, area)
 				})
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
+			},
+			warningTabSelect(e){
+				this.WarningTabCur = e.currentTarget.dataset.id;
+				console.log(this.WarningTabCur == 1)
 			},
 			atuoGetLocation(addr, area) { //根据地址获取经纬度
 				let _this = this
@@ -302,6 +362,11 @@
 
 				});
 			},
+			dispose(row){// 预警处理
+				uni.switchTab({
+					url: '../personal/personal'
+				});
+			},
 			editFarm(){
 				uni.navigateTo({
 					url: 'addMyFarm?id='+this.farmId
@@ -318,6 +383,11 @@
 
 		.list-container {
 			padding: 10rpx 0;
+			padding-top: 100rpx;
+		}
+			
+		.list-containers{
+			padding: 10rpx 20rpx;
 			padding-top: 100rpx;
 		}
 	}
@@ -459,5 +529,20 @@
 		width:23%;
 		height:150rpx;
 		margin-right: 6px;
+	}
+	.cu-nav .cu-items{
+		height: 90rpx;
+		display: inline-block;
+		line-height: 90rpx;
+		padding: 0 20rpx;
+		white-space: nowrap;
+		color: #9A9A9A;
+	}
+	.bg-white{
+		background-color: #FFFFFF;
+	}
+		
+	.color-black{
+		color: #000000 !important;
 	}
 </style>

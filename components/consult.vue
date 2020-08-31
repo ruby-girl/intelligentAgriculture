@@ -64,5 +64,6 @@
 		border-radius: 10rpx;
 		display: flex;
 		justify-content: center;
+		
 	}
 </style>
