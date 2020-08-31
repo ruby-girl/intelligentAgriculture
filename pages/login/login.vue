@@ -152,7 +152,7 @@
 						nickName: this.user.nickName,
 						avatarUrl: this.user.avatarUrl,
 						phone: this.obj.username,
-						
+						cookie: res.cookies[0],
 					}
 					uni.setStorage({
 						key: 'XYZNUserInfo',

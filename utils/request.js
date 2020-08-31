@@ -43,6 +43,7 @@ export default {
 
 		options.header = {
 			'token': uni.getStorageSync('XYZNUserInfo').token || '',
+			'cookie': uni.getStorageSync('XYZNUserInfo').cookie || '',
 			'Content-Type': 'application/x-www-form-urlencoded'
 		}
 		return new Promise((resolve, reject) => {

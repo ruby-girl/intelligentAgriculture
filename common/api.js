@@ -204,6 +204,15 @@ export const  warningAll= (data) => {
 		data:data
 	})
 }
+//获取用户下所有病虫害
+export const  findPests= (data) => {
+	return http.request({ 
+		url: 'api/massif/findPests',
+		method: 'post',
+		data:data
+	})
+}
+
 //获取农场下所有地块
 export const  massifSelectFarmId= (data) => {
 	return http.request({ 
