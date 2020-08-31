@@ -1,7 +1,7 @@
 <template>
   <view class="container-y">
     <map
-      style="width:100%;height:100%;"
+      style="width:100%;height:100vh;"
       :latitude="latitude"
       :longitude="longitude"
       :markers="covers"
@@ -22,12 +22,13 @@ export default {
           latitude: "",
 		  longitude: ""
         }
-      ]
+      ],
+	  arr:[]
     };
   },
   onLoad(option) {
- //  	this.latitude=option.latitude//这是设备的经纬度
-	// this.longitude=option.longitude
+  	this.latitude=option.latitude//这是设备的经纬度
+	this.longitude=option.longitude
 	this.getCity()
   },
   methods: {
@@ -70,25 +71,38 @@ export default {
       this.$api
         .getNearbyDevice({ latitude: this.latitude, longitude: this.longitude })
         .then(res => {
-			this.covers = [{
-				id: 111,
-				latitude: this.latitude,
-				longitude: this.longitude,
-				callout: {
-					content: '点击查看附近设备',
-					color: '#333333',
-					fontSize: 14,
-					borderWidth: 1,
-					borderRadius: 10,
-					borderColor: '#aaaaaa',
-					bgColor: '#fff',
-					padding: 4,
-					anchorY: -10,
-					anchorX: 0,
-					display: 'ALWAYS',
-					textAlign: 'center'
+			this.arr = res.data.data
+			if(this.arr.length<1){
+				uni.showToast({
+				  icon: "none",
+				  title: "未查询到设备",
+				  duration: 2000
+				});
+				return
+			}
+			this.arr.map(item=>{
+				let obj={
+					id: 111,
+					latitude:item.latitude,
+					longitude:item.longitude,
+					callout: {
+						content: `农场名称：${item.farmName}`,
+						color: '#333333',
+						fontSize: 14,
+						borderWidth: 1,
+						borderRadius: 10,
+						borderColor: '#aaaaaa',
+						bgColor: '#fff',
+						padding: 4,
+						anchorY: -10,
+						anchorX: 0,
+						display: 'BYCLICK',
+						textAlign: 'center'
+					}
 				}
-			}]
+				this.covers.push(obj)
+			})
+			
 		});
     }
   }
