@@ -127,11 +127,7 @@
 					<view class="loading-more" v-else>暂无数据</view>
 				</template>
 			</scroll-view>
-<<<<<<< .mine
-
-=======
 			<popup :content='modelContent' align='center' :show='popupShow' :showCancel='false' confirmText='我知道了' @close="closePopup" />
->>>>>>> .theirs
 		</view>
 	</view>
 </template>
@@ -200,7 +196,7 @@
 				timeList: [],
 				popupShow: false,
 				modelContent: '',
-				imgArr: []
+				imgArr: [],
 			};
 		},
 		onLoad(option) {

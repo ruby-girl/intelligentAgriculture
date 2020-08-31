@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		<view  v-bind:style="{height:windowHeight - 220 +'px',backgroundColor:'#E5E5E5'}">
-			{{''}}
+			<image :src="row.picture" mode="aspectFit" ></image>
 		</view>
 		<consult v-on:click='click' ></consult>
 	</view>
