@@ -318,3 +318,20 @@ export const  getNearbyDevice= (data) => {
 		data:data
 	})
 }
+
+// 查询设备状态
+export const  findNearby= (data) => {
+	return http.request({ 
+		url: 'api/user/findNearby',
+		method: 'post',
+		data:data
+	})
+}
+// 开关附近功能
+export const  updateNearby= (data) => {
+	return http.request({ 
+		url: 'api/farm/updateNearby',
+		method: 'post',
+		data:data
+	})
+}

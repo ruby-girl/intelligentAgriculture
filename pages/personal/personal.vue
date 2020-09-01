@@ -145,6 +145,10 @@
 			getCount() {
 				this.$api.massifCount().then(res => {
 					this.nums = res.data.data;
+				}).catch(res=>{
+					console.info('没登录')
+					this.isLogin = false
+					getApp().globalData.isLogin = false
 				})
 			},
 			toMyFarm() { //跳转我的农场

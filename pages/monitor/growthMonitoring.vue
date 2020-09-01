@@ -47,44 +47,18 @@
 									{{obj.statusTxt||''}}
 								</view>
 							</view>
-							<view class="box-margin flex justify-content-flex-justify align-items-center">
+							<view class="box-margin flex align-items-center flex-wrap">
 								<view class="item-content-box">
 									<view class="item-num">
 										{{obj.crop||'-'}}
 									</view>
 									<text class="small-text">作物名称</text>
 								</view>
-								<view class="item-content-box">
+								<view class="item-content-box" v-for="(item,n) in monitorings" :key="n">
 									<view class="item-num">
-										{{obj.temperature||'-'}}<span class="small-txt">℃</span>
+										{{item.value||'-'}}<span class="small-txt">{{item.unit}}</span>
 									</view>
-									<text class="small-text">空气温度</text>
-								</view>
-								<view class="item-content-box">
-									<view class="item-num">
-										{{obj.humidity||'-'}}<span class="small-txt">%</span>
-									</view>
-									<text class="small-text">空气湿度</text>
-								</view>
-							</view>
-							<view class="box-margin flex justify-content-flex-justify align-items-center">
-								<view class="item-content-box">
-									<view class="item-num">
-										{{obj.care||'-'}}<span class="small-txt">LX</span>
-									</view>
-									<text class="small-text">光照强度</text>
-								</view>
-								<view class="item-content-box">
-									<view class="item-num">
-										{{obj.soilTemperature||'-'}}<span class="small-txt">℃</span>
-									</view>
-									<text class="small-text">土壤温度</text>
-								</view>
-								<view class="item-content-box">
-									<view class="item-num">
-										{{obj.soliMoistrue||'-'}}<span class="small-txt">%</span>
-									</view>
-									<text class="small-text">土壤水分</text>
+									<text class="small-text">{{item.name}}</text>
 								</view>
 							</view>
 							<view class="flex align-items-center">
@@ -228,7 +202,7 @@
 				num: 0,
 				shoeModel:false,
 				modelImg:'',
-				arrData:[{field:'precipitation',name:'雨量',value:'2000',unit:'mm'},{field:'temperature',name:'空气温度',value:'25',unit:'℃'}]
+				monitorings:[]//有的检测类型
 			};
 		},
 		onShareAppMessage: function() {
@@ -338,6 +312,9 @@
 					massifId: this.massifId
 				}).then(res => {
 					this.obj = res.data.data
+					// 处理该设备有的检测类型
+					this.monitorings=res.data.data.monitorings
+					//*** */
 					let arr = this.obj.creationTime.split(' ')
 					let YMD = arr[0]
 					let MD = YMD.split('-')
@@ -484,7 +461,7 @@
 	}
 
 	.item-content-box {
-		width: 30%;
+		width: 32%;
 		text-align: center;
 		line-height: 18px;
 
@@ -610,7 +587,7 @@
 		}
 
 		.item-content-box {
-			width: 30%;
+			width: 32%;
 			text-align: center;
 
 			.item-num {

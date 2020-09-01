@@ -70,7 +70,17 @@ export default {
 					uni.hideLoading();
 					if (response.data.stateCode == 200) {
 						resolve(response);
-					} else {
+					} else if(response.data.msg=='USER_NOT_LOGIN'){
+						uni.showToast({
+							title: '请重新登录',
+							icon: 'none'
+						})
+						uni.clearStorage();
+						getApp().globalData.isLogin = false
+						setTimeout(function(){
+							reject(response)
+						},1200)
+					}else{
 						uni.showToast({
 							title: response.data.msg,
 							icon: 'none'

@@ -222,8 +222,11 @@
 		},
 		methods: {
 			callouttapFunc: function(e) {
+				// uni.navigateTo({
+				// 	url: 'nearTheEquipment?latitude='+this.latitude+'&longitude='+this.longitude+'&farmId='+this.farmId
+				// })
 				uni.navigateTo({
-					url: 'nearTheEquipment?latitude='+this.latitude+'&longitude='+this.longitude
+					url: 'nearTheEquipment?farmId='+this.farmId
 				})
 			},
 			callPhone(phone) {
@@ -292,7 +295,6 @@
 						this.tabs[2].name = `预警（${this.timeList.length}）`
 						this.waningTabs[1].name=`环境（${this.timeList.length}）`
 					}
-					console.log(res)
 				})
 			},
 			massifFindFarmPests(){ // 获取农场下所有病虫害
