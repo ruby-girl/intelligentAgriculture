@@ -38,53 +38,56 @@
 					<view class="loading-more">{{ contentdown }}</view>
 				</scroll-view>
 			</view>
-			<view v-bind:style="{ height: windowHeight - 20 + 'px', padding: '10px 0' }" v-else>
-				<scroll-view v-bind:style="{ height: windowHeight - 20 + 'px' }" class="list-container" scroll-y="true">
-					<scroll-view scroll-x class="cu-nav">
-						<view class="flex text-center">
-							<view
-								class="cu-items flex-sub"
-								:class="item.id == WarningTabCur ? 'bg-white cur color-black' : ''"
-								v-for="(item, index) in waningTabs"
-								:key="index"
-								@tap="warningTabSelect"
-								:data-id="item.id"
-							>
-								{{ item.name }}
-							</view>
+			
+			<view v-bind:style="{ height: windowHeight - 40 + 'px', padding: '10px 0',paddingTop:'200rpx' }" v-else>
+				<scroll-view scroll-x class="cu-nav"  style="padding: 0 30rpx;position: fixed;z-index: 1;top: 90rpx;background-color: #F0F0F0;height: 120rpx;">
+					<view class="flex text-center" style="margin-top: 30rpx;">
+						<view
+							class="cu-items flex-sub"
+							:class="item.id == WarningTabCur ? 'bg-white cur color-black' : 'bg-gray'"
+							v-for="(item, index) in waningTabs"
+							:key="index"
+							@tap="warningTabSelect"
+							:data-id="item.id"
+						>
+							{{ item.name }}
 						</view>
-					</scroll-view>
-					<template v-if="WarningTabCur == 1">
-						<view class="cu-timeline" v-if="pestsList.length > 0">
-							<view class=" cu-item text-olive" v-for="(item,i) in pestsList" :key="i">
-								<text class="small-text">{{item.creationTime}}</text>
-								<view class="flex justify-content-flex-justify align-items-center">
-									<view class="timeline-box">
-										<view style="color:#333">{{item.farmName}} NO.{{item.massifNo}}</view>
-										<view style="color:red">{{item.warningName}}</view>
+					</view>
+				</scroll-view>
+				<scroll-view v-bind:style="{ height: windowHeight - 100 + 'px', backgroundColor: '#f0f0f0', padingTop:0 }" class="list-containers" scroll-y="true">
+					<view style="height: 100%;background-color: #FFFFFF;">
+						<template v-if="WarningTabCur == 1">
+							<view class="cu-timeline" v-if="pestsList.length > 0">
+								<view class=" cu-item text-olive" v-for="(item, i) in pestsList" :key="i">
+									<text class="small-text">{{ item.creationTime }}</text>
+									<view class="flex justify-content-flex-justify align-items-center">
+										<view class="timeline-box">
+											<view style="color:#333">{{ item.farmName }} NO.{{ item.massifNo }}</view>
+											<view style="color:red">{{ item.warningName }}</view>
+										</view>
+										<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
 									</view>
-									<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
 								</view>
 							</view>
-						</view>
-						<view class="loading-more" v-else>暂无数据</view>
-					</template>
-					<template v-if="WarningTabCur == 2">
-						<view class="cu-timeline" v-if="timeList.length > 0">
-							<view class="cu-item text-olive" v-for="(item,i) in timeList" :key="i">
-								<text class="small-text">{{item.creationTime}}</text>
-								<text class="small-text">1</text>
-								<view class="flex justify-content-flex-justify align-items-center">
-									<view class="timeline-box">
-										<view style="color:#333">{{item.farmName}} NO.{{item.massifNo}}</view>
-										<view style="color:red">{{item.warningName}}</view>
+							<view class="loading-more" v-else><image src="../../static/imgs/No.png" mode="aspectFit" style="height: 80%;"></image></view>
+						</template>
+						<template v-if="WarningTabCur == 2">
+							<view class="cu-timeline" v-if="timeList.length > 0">
+								<view class="cu-item text-olive" v-for="(item, i) in timeList" :key="i">
+									<text class="small-text">{{ item.creationTime }}</text>
+									<text class="small-text">1</text>
+									<view class="flex justify-content-flex-justify align-items-center">
+										<view class="timeline-box">
+											<view style="color:#333">{{ item.farmName }} NO.{{ item.massifNo }}</view>
+											<view style="color:red">{{ item.warningName }}</view>
+										</view>
+										<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
 									</view>
-									<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
 								</view>
 							</view>
-						</view>
-						<view class="loading-more" v-else>暂无数据</view>
-					</template>
+							<view class="loading-more" v-else><image src="../../static/imgs/No.png" mode="aspectFit" style="height: 80%;"></image></view>
+						</template>
+					</view>
 				</scroll-view>
 			</view>
 		</view>
@@ -123,8 +126,8 @@ export default {
 					name: '病虫害'
 				},
 				{
-					id:2,
-					name:'环境'
+					id: 2,
+					name: '环境'
 				}
 			],
 			list: [
@@ -207,9 +210,9 @@ export default {
 					this.waningTabs[1].name = `环境（${this.timeList.length}）`;
 				}
 			});
-			
 		},
-		findPests(){ // 查询用户下所有病虫害
+		findPests() {
+			// 查询用户下所有病虫害
 			let obj = {
 				pageNum: 1,
 				pageSize: 3
@@ -336,7 +339,7 @@ export default {
 			// }
 			// this.initData()
 		},
-		warningTabSelect(e){
+		warningTabSelect(e) {
 			this.WarningTabCur = e.currentTarget.dataset.id;
 		}
 	}
@@ -351,6 +354,10 @@ page,
 	.list-container {
 		padding: 10rpx 30rpx;
 		padding-top: 100rpx;
+	}
+	.list-containers{
+		padding: 10rpx 30rpx;
+		padding-top: 0;
 	}
 }
 
@@ -379,6 +386,7 @@ page,
 	color: #ddd;
 	padding-bottom: 50rpx;
 	padding-top: 20px;
+	height: 100%;
 }
 
 .order-title {
@@ -418,16 +426,16 @@ page,
 .cu-timeline {
 	padding: 30rpx 0;
 }
-.cu-nav .cu-items{
+.cu-nav .cu-items {
 	height: 90rpx;
 	display: inline-block;
 	line-height: 90rpx;
 	padding: 0 20rpx;
 	white-space: nowrap;
-	color: #9A9A9A;
+	color: #9a9a9a;
 }
-	
-.color-black{
+
+.color-black {
 	color: #000000 !important;
 }
 </style>

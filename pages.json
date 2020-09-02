@@ -173,6 +173,15 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true	
 			}
+		},
+		{
+			"path": "pages/aiRecognition/identifyResults",
+			"style": {
+				"navigationBarTitleText": "识别结果",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white",
+				"disableScroll": true	
+			}
 		}
     ],
 	"globalStyle": {

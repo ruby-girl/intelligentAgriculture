@@ -1,9 +1,9 @@
 <template>
 	<view class="bodys" style="height: 100%;background-image: url(../../static/imgs/ai-recognition-bg.png);background-size: 100%">
-		<view class="flex top">
+		<!-- <view class="flex top">
 			<text class="text-serch">当前农作物：{{ text }}</text>
 			<view class="text-but" @tap="SwitchCrops()">切换作物</view>
-		</view>
+		</view> -->
 		<view class="flex">
 			<view class="item-box">
 				<view class="flex justify-content-flex-justify item-jt align-items-center">
@@ -96,6 +96,13 @@ export default {
 				})
 				return
 			}
+			if (e != 'pests'){
+				uni.showToast({
+					title: '暂未开放',
+					icon: 'none'
+				});
+				return
+			}
 			var that = this;
 			wx.chooseImage({
 				count: 1, // 默认9
@@ -103,6 +110,9 @@ export default {
 				sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
 				success: function(res) {
 					// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+					uni.showLoading({
+					    title: '识别中'
+					});
 					var tempFilePaths = res.tempFilePaths;
 					uni.uploadFile({
 						url: http.config.baseUrl+'api/ai/pests', 
@@ -112,17 +122,25 @@ export default {
 							'token': uni.getStorageSync('XYZNUserInfo').token 
 						},
 						success: (uploadFileRes) => {
-							console.log(uploadFileRes);
+							var list = JSON.parse(uploadFileRes.data)
+							var array = list.data.result;
+							if (list.data.result.length > 3) {
+								array = array.slice(0,3);
+							}
+							uni.navigateTo({
+							    url: './identifyResults?iamge='+tempFilePaths + '&item=' + encodeURIComponent(JSON.stringify(array))
+							});
 						}
 					});
 						
 				},
 				fail: function(res) {
-					console.log('fail...');
-				},
-				complete: function(res) {
-					console.log('完成...');
+					uni.showToast({
+						title: '请求超时，请重试',
+						icon: 'none'
+					});
 				}
+				
 			});
 		},
 
