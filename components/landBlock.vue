@@ -15,44 +15,18 @@
 				{{itemObject.statusTxt}}
 			</view>
 		</view>
-		<view class="box-margin flex justify-content-flex-justify align-items-center">
+		<view class="box-margin flex  align-items-center flex-wrap">
 			<view class="item-content-box">
 				<view class="item-num">
 					{{itemObject.proportion||'-'}}<span class="small-txt">%</span>
 				</view>
 				<text class="small-text">{{itemObject.crop}}</text>
 			</view>
-			<view class="item-content-box">
+			<view class="item-content-box" v-for="(item,i) in itemObject.monitorings" :key="i">
 				<view class="item-num">
-					{{itemObject.temperature||'-'}}<span class="small-txt">℃</span>
+					{{item.value||'-'}}<span class="small-txt">{{item.unit}}</span>
 				</view>
-				<text class="small-text">空气温度</text>
-			</view>
-			<view class="item-content-box">
-				<view class="item-num">
-					{{itemObject.humidity||'-'}}<span class="small-txt">%</span>
-				</view>
-				<text class="small-text">空气湿度</text>
-			</view>
-		</view>
-		<view class="box-margin flex justify-content-flex-justify align-items-center">
-			<view class="item-content-box">
-				<view class="item-num">
-					{{itemObject.care||'-'}}<span class="small-txt">LX</span>
-				</view>
-				<text class="small-text">光照强度</text>
-			</view>
-			<view class="item-content-box">
-				<view class="item-num">
-					{{itemObject.soilTemperature||'-'}}<span class="small-txt">℃</span>
-				</view>
-				<text class="small-text">土壤温度</text>
-			</view>
-			<view class="item-content-box">
-				<view class="item-num">
-					{{itemObject.soliMoistrue||'-'}}<span class="small-txt">%</span>
-				</view>
-				<text class="small-text">土壤水分</text>
+				<text class="small-text">{{item.name}}</text>
 			</view>
 		</view>
 	</view>
@@ -145,7 +119,7 @@
 		color:#fff;
 	}
 	.item-content-box{
-		width:30%;
+		width:32%;
 		text-align: center;
 		.item-num{
 			font-size: 18px;

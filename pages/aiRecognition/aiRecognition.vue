@@ -56,7 +56,7 @@ export default {
 		return {
 			title: '星鸦智农',
 			desc: '',
-			path: 'pages/personal/personal'
+			path: 'pages/aiRecognition/aiRecognition'
 		};
 	},
 	onShow() {
