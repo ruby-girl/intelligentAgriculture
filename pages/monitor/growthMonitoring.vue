@@ -222,14 +222,15 @@
 		},
 		onShow() {
 			this.getData()
-			this.findRangeData() //大气温度
-			this.atmosphericHumidity() //大气湿度
-			this.soilTemperature() //土壤温度
-			this.soilHumidity() //土壤湿度
+			// this.findRangeData() //大气温度
+			// this.atmosphericHumidity() //大气湿度
+			// this.soilTemperature() //土壤温度
+			// this.soilHumidity() //土壤湿度
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
 			this.openid = getApp().globalData.openid
 			this.getCode()
+			this.findRangeDatay()
 		},
 		mounted() {},
 		methods: {
@@ -330,6 +331,16 @@
 					}else{
 						this.obj.statusTxt = '-'
 					}
+				})
+			},
+			findRangeDatay(){
+				this.$api.findRangeData({
+					massifId: this.massifId
+				}).then(res => {
+					let list = res.data.data
+					list.map(item=>{
+						
+					})
 				})
 			},
 			findRangeData() { //大气温度

@@ -335,3 +335,11 @@ export const  updateNearby= (data) => {
 		data:data
 	})
 }
+//7日数据
+export const  findRangeDatay= (data) => {
+	return http.request({ 
+		url: 'api/device/findRangeDatay',
+		method: 'post',
+		data:data
+	})
+}
