@@ -77,9 +77,9 @@ export default {
 						})
 						uni.clearStorage();
 						getApp().globalData.isLogin = false
-						setTimeout(function(){
+					
 							reject(response)
-						},1200)
+						
 					}else{
 						uni.showToast({
 							title: response.data.msg,

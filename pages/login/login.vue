@@ -58,10 +58,10 @@
 			return false
 		},
 		methods: {
-			toTermsOfService(){
+			toTermsOfService(){			
 				uni.navigateTo({
-					url:'termsOfService'
-				})
+					url:'/pageA/termsOfService'
+				})	
 			},
 			onInput(e) {
 				this.obj.username = e.detail.value

@@ -1,6 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-	
+
 		{
 			"path": "pages/personal/personal",
 			"style": {
@@ -18,17 +18,10 @@
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
-		},{
+		}, {
 			"path": "pages/personal/cameraModel",
 			"style": {}
-		},{
-			"path": "pages/login/termsOfService",
-			"style": {
-				"navigationBarTitleText": "服务条款",
-				"navigationBarBackgroundColor": "#17BB89",
-				"navigationBarTextStyle": "white"
-			}
-		},{
+		}, {
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录",
@@ -41,7 +34,7 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		},{
+		}, {
 			"path": "pages/personal/myFarm",
 			"style": {
 				"navigationBarTitleText": "农场管理",
@@ -49,35 +42,35 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		},{
+		}, {
 			"path": "pages/personal/addMyFarm",
 			"style": {
 				"navigationBarTitleText": "添加农场",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
-		},{
+		}, {
 			"path": "pages/personal/detailFarm",
 			"style": {
 				"navigationBarTitleText": "我的农场",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
-		},{
+		}, {
 			"path": "pages/personal/landManagement",
 			"style": {
 				"navigationBarTitleText": "地块管理",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
-		},{
+		}, {
 			"path": "pages/personal/addLand",
 			"style": {
 				"navigationBarTitleText": "添加地块",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
-		},{
+		}, {
 
 			"path": "pages/monitor/monitor",
 			"style": {
@@ -87,7 +80,7 @@
 				"disableScroll": true
 
 			}
-		},{
+		}, {
 
 			"path": "pages/monitor/growthMonitoring",
 			"style": {
@@ -97,7 +90,7 @@
 				"disableScroll": true
 
 			}
-		},{
+		}, {
 
 			"path": "pages/equipmentManagement/equipmentManagement",
 			"style": {
@@ -106,7 +99,7 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		},{	
+		}, {
 			"path": "pages/equipmentManagement/addEquipment",
 			"style": {
 				"navigationBarTitleText": "添加设备",
@@ -114,7 +107,7 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		},{	
+		}, {
 			"path": "pages/equipmentManagement/detailEquipment",
 			"style": {
 				"navigationBarTitleText": "设备详情",
@@ -122,7 +115,7 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		},{
+		}, {
 			"path": "pages/personal/setTheWarning",
 			"style": {
 				"navigationBarTitleText": "地块预警设置",
@@ -130,7 +123,7 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		},{
+		}, {
 			"path": "pages/personal/landWaring",
 			"style": {
 				"navigationBarTitleText": "预警设置",
@@ -138,7 +131,7 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		},{	
+		}, {
 			"path": "pages/personal/detailWarning",
 			"style": {
 				"navigationBarTitleText": "预警设置",
@@ -146,8 +139,7 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		}
-		,{
+		}, {
 			"path": "pages/aiRecognition/aiRecognition",
 			"style": {
 				"navigationBarTitleText": "AI识别",
@@ -156,25 +148,41 @@
 				"disableScroll": true
 
 			}
-		},{
-			"path":"pages/personal/WarningProcessing",
+		}, {
+			"path": "pages/personal/WarningProcessing",
 			"style": {
 				"navigationBarTitleText": "预警处理",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		}
-		,{
+		}, {
 			"path": "pages/personal/nearTheEquipment",
 			"style": {
 				"navigationBarTitleText": "附近设备识别",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
-				"disableScroll": true	
+				"disableScroll": true
 			}
 		}
-    ],
+	],
+	"subPackages": [{
+		"root": "pageA",
+		"pages": [{
+			"path": "termsOfService",
+			"style": {
+				"navigationBarTitleText": "服务条款",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white"
+			}
+		}]
+	}],
+	"preloadRule": {
+		"pageA/termsOfService": {
+			"network": "all",
+			"packages": ["__APP__"]
+		}
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "星鸦智农",
@@ -187,8 +195,7 @@
 		"color": "#999999",
 		"selectedColor": "#17BB89",
 		"backgroundColor": "#F7F7F7",
-		"list": [
-				{
+		"list": [{
 				"pagePath": "pages/monitor/monitor",
 				"text": "监测与预警",
 				"iconPath": "static/imgs/detection.png",
