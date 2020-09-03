@@ -1,5 +1,5 @@
 <template>
-	<view style="padding-top:20%;">
+	<view style="padding-top:20%;text-align: center;">
 		<image src="@/static/imgs/no-login.png" alt="" mode="widthFix"/>
 		<view  class="not-login-text">账号未登录，无法查看</view>
 	</view>

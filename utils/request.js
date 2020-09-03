@@ -1,8 +1,7 @@
 export default {
 	config: {
-		//baseUrl: "http://kwt.mmy.red:8081/",
 		baseUrl: "https://www.sc-kwt.com/",
-		// baseUrl:"https://xyzn.tree-iot.com/",
+		//baseUrl:"https://xyzn.tree-iot.com/",
 		header: {
 			'Content-Type': 'application/json',
 			'Authorization': '',
