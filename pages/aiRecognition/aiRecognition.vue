@@ -1,5 +1,5 @@
 <template>
-	<view class="bodys" style="height: 100%;background-image: url(../../static/imgs/ai-recognition-bg.png);background-size: 100%">
+	<view class="bodys" v-bind:style="{height:windowHeight + 'px'}" style="height: ;background-image: url(../../static/imgs/ai-recognition-bg.png);background-size: 100%">
 		<!-- <view class="flex top">
 			<text class="text-serch">当前农作物：{{ text }}</text>
 			<view class="text-but" @tap="SwitchCrops()">切换作物</view>
@@ -7,10 +7,10 @@
 		<view class="flex">
 			<view class="item-box">
 				<view class="flex justify-content-flex-justify item-jt align-items-center">
-					<image src="../../static/imgs/recognition-disease-entities.png" mode="aspectFit" @tap="scan('entities')"></image>
+					<image src="../../static/imgs/recognition-disease-entities.png" mode="heightFix" @tap="scan('entities')" v-bind:style="{height:windowHeight/2 - 40 + 'px'}" style="margin:0 auto;"></image>
 				</view>
 				<view class="flex justify-content-flex-justify item-jt align-items-center">
-					<image src="../../static/imgs/recognition-diseases-pests.png" mode="aspectFit" @tap="scan('pests')"></image>
+					<image src="../../static/imgs/recognition-diseases-pests.png" mode="heightFix" @tap="scan('pests')"  v-bind:style="{height:windowHeight/2 - 40 + 'px'}" style="margin:0 auto;"></image>
 				</view>
 			</view>
 		</view>
@@ -27,12 +27,14 @@ export default {
 			text: '草莓',
 			avatarUrl: null,
 			isLogin: false,
+			windowHeight:300,
 		};
 	},
 	components: {
 		consult,
 	},
 	onLoad() {
+		this.windowHeight = uni.getSystemInfoSync().windowHeight; // 屏幕的高度
 		let _this = this;
 		uni.getStorage({
 			key: 'XYZNUserInfo',

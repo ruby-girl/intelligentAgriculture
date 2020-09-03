@@ -483,6 +483,7 @@ page,
 		color: #ddd;
 		padding-bottom: 50rpx;
 		padding-top: 20px;
+		height: 100%;
 	}
 
 	.order-title {

@@ -14,7 +14,7 @@
 						{{item.name == '非动物'?'':'相似度'}}
 					</text>
 					<text style="font-size: 25rpx;">
-						{{item.name == '非动物'?'':Number(item.score*100).toFixed(1)+'%'}}
+						{{item.name == '非动物'?'':Number(item.score*100).toFixed(2)+'%'}}
 					</text>
 				</view>
 			</view>
