@@ -1,5 +1,5 @@
 <template>
-	<view class="bodys" v-bind:style="{height:windowHeight + 'px'}" style="height: ;background-image: url(../../static/imgs/ai-recognition-bg.png);background-size: 100%">
+	<view class="bodys" v-bind:style="{height:windowHeight + 'px',backgroundImage:'url(' + backgroundImageUrl+ ')',backgroundSize:'100%'}" style="">
 		<!-- <view class="flex top">
 			<text class="text-serch">当前农作物：{{ text }}</text>
 			<view class="text-but" @tap="SwitchCrops()">切换作物</view>
@@ -28,6 +28,7 @@ export default {
 			avatarUrl: null,
 			isLogin: false,
 			windowHeight:300,
+			backgroundImageUrl: http.config.baseUrl + 'upload/456540.png',
 		};
 	},
 	components: {
@@ -171,6 +172,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	
 .top {
 	padding: 30rpx 0 30rpx 40rpx;
 }
