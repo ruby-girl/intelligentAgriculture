@@ -218,8 +218,8 @@
 			{
 				"pagePath": "pages/aiRecognition/aiRecognition",
 				"text": "AI识别",
-				"iconPath": "static/imgs/ai-recognition.png",
-				"selectedIconPath": "static/imgs/ai-recognition-1.png"
+				"iconPath": "static/imgs/ai.png",
+				"selectedIconPath": "static/imgs/ai1.png"
 			},
 			{
 				"pagePath": "pages/personal/personal",

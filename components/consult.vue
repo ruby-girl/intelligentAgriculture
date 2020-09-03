@@ -1,6 +1,6 @@
 <template>
 	<view class="list-item">
-		<view class="flex" style="margin-top: 40rpx;">
+		<view class="flex" style="margin-top: 20rpx;">
 			<view class="item-box bg"><image src="../static/imgs/Check-wikipedia.png" mode="widthFix" @tap="click(0,'查百科')"></image></view>
 			<view class="item-box bg"><image src="../static/imgs/for-experts.png" mode="widthFix" @tap="click(1,'找专家')"></image></view>
 			<view class="item-box bg"><image src="../static/imgs/The-consulting.png" mode="widthFix" @tap="click(2,'看咨询')"></image></view>
