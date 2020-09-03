@@ -53,7 +53,7 @@
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/tip.png" mode=""></image>版本更新
 					</view>
-					<text class="tip-text">当前1.0.0</text>
+					<text class="tip-text">当前1.0.1</text>
 
 				</view>
 				<view class="cu-form-group item-jt" @click="toUs">

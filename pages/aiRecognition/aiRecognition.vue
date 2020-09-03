@@ -28,7 +28,8 @@ export default {
 			avatarUrl: null,
 			isLogin: false,
 			windowHeight:300,
-			backgroundImageUrl: http.config.baseUrl + 'upload/456540.png',
+			// backgroundImageUrl: http.config.baseUrl + 'upload/456540.png',// www.sc-kwt.com图片地址
+			backgroundImageUrl: http.config.baseUrl + 'upload/456525.png',// xyzn.tree-iot.com图片地址
 		};
 	},
 	components: {
@@ -130,6 +131,7 @@ export default {
 							if (list.data.result.length > 3) {
 								array = array.slice(0,3);
 							}
+							console.log(uploadFileRes)
 							uni.navigateTo({
 							    url: './identifyResults?iamge='+tempFilePaths + '&item=' + encodeURIComponent(JSON.stringify(array))
 							});

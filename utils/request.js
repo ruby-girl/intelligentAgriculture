@@ -1,7 +1,7 @@
 export default {
 	config: {
-		baseUrl: "https://www.sc-kwt.com/",
-		//baseUrl:"https://xyzn.tree-iot.com/",
+		//baseUrl: "https://www.sc-kwt.com/",
+		baseUrl:"https://xyzn.tree-iot.com/",
 		header: {
 			'Content-Type': 'application/json',
 			'Authorization': '',
