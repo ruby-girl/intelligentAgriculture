@@ -1,8 +1,8 @@
 <!-- 生长监测 -->
 <template>
-	<view class="workOrder">
+	<view class="workOrder"  >
 		<view>
-			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" @scroll="scroll">
+			<scroll-view v-bind:style="{height:windowHeight+'px'}" style="overflow: hidden;" class="list-container" scroll-y="true" @scroll="scroll" >
 				<view class="map-container">
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
 						<view class="map-top-item">
