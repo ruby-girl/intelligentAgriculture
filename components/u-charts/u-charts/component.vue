@@ -1,5 +1,9 @@
 <template>
 	<div>
+		<view style="font-size: 14px;padding-bottom:10rpx;">
+			<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">{{title}}变化记录</text>
+			<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
+		</view>
 		<canvas v-if="canvasId" :id="canvasId" disable-scroll="true" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px', 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}"
 		 @error="error">
 		</canvas>
@@ -32,9 +36,12 @@
 				type: Number,
 				default: 1,
 			},
+			title:{type: String,default: '1'},
+			opts:{},
+			unit:{}
 		},
-		mounted() {
-			
+		mounted() {			
+			this.init(this.opts,this.unit)
 		},
 		data(){
 			return{
@@ -87,6 +94,7 @@
 				});
 			},
 			initLineChart(unit) {
+				console.info('this.canvasId',this.canvasId)
 				canvases[this.canvasId] = new uCharts({
 					$this: this,
 					canvasId: this.canvasId,
@@ -190,5 +198,9 @@
 		    width: 100%;
 		    right: -900px;
 		    top: -600px;
+		}
+		.item-num {
+			font-size: 16px;
+			font-weight: bold;
 		}
 </style>

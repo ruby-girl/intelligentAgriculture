@@ -26,7 +26,7 @@
 					 :src="obj.hlsLivePlayUrl">
 					</video>
 
-					
+
 					<!-- <view  class="play-box">
 						<image src="../../static/imgs/play.png" mode=""></image>
 					</view> -->
@@ -63,9 +63,10 @@
 							</view>
 							<view class="flex align-items-center">
 								<view class="progress">
-								    <text class="progressing" v-bind:style="'width:' + obj.proportion+'%' "></text>	
+									<text class="progressing" v-bind:style="'width:' + obj.proportion+'%' "></text>
 								</view>
-								<text class="progress-txt"><text style="font-size: 16px;font-weight: bold;">{{obj.proportion}}</text><text class="small-txt">%</text></text>
+								<text class="progress-txt"><text style="font-size: 16px;font-weight: bold;">{{obj.proportion}}</text><text
+									 class="small-txt">%</text></text>
 							</view>
 							<view class="flex">
 								<view class="map-bottom-tip">
@@ -80,8 +81,8 @@
 										</view>
 										<view style="height:25px;border-left:2px solid #eee;"></view>
 										<view class="flex justify-content-flex-center align-items-center likes-shere-box">
-											<image class="right-img"  src="../../static/imgs/share.png" mode="aspectFill" @click="shareFunc"></image>
-											<button  class="like-txt" lang="zh_CN" withCredentials="true" @click="shareFunc">
+											<image class="right-img" src="../../static/imgs/share.png" mode="aspectFill" @click="shareFunc"></image>
+											<button class="like-txt" lang="zh_CN" withCredentials="true" @click="shareFunc">
 												分享二维码</button>
 										</view>
 									</view>
@@ -92,46 +93,13 @@
 				</view>
 				<view class="farm-detail-box">
 					<view><text style="font-size: 16px;">数据监测</text></view>
-					<view>
-						<view style="font-size: 14px;padding-bottom:10rpx;">
-							<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">空气温度变化记录</text>
-							<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
-						</view>
-						<view class="">
-							<line-chart id='line' :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}"
-							 ref="line" chartType="line" />
+					<view style="padding-top:20rpx" v-if="chartsList.length>0">
+						<view class="" v-for="(item,n) in chartsList" :key="n">
+							<line-chart :title="item.name" :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}"
+							 :canvasId="item.field+'Line'" chartType="line" :opts="item.opts" :unit="item.unit" />
 						</view>
 					</view>
-					<view style="padding-top:20rpx">
-						<view style="font-size: 14px;padding-bottom:10rpx;">
-							<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">空气湿度变化记录</text>
-							<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
-						</view>
-						<view class="">
-							<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" id='atmosphericHumidityLine'
-							 ref="atmosphericHumidityLine" chartType="line" />
-						</view>
-					</view>
-					<view style="padding-top:20rpx">
-						<view style="font-size: 14px;padding-bottom:10rpx;">
-							<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">土壤温度变化记录</text>
-							<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
-						</view>
-						<view class="">
-							<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" id='soilTemperatureLine'
-							 ref="soilTemperatureLine" chartType="line" />
-						</view>
-					</view>
-					<view style="padding-top:20rpx">
-						<view style="font-size: 14px;padding-bottom:10rpx;">
-							<text style="font-weight: bold;width:50%;text-align:left;display: inline-block;">土壤湿度变化记录</text>
-							<text class="item-num" style="width:50%;text-align: right;display: inline-block;color:#999;font-size:13px">最近7日数据</text>
-						</view>
-						<view class="">
-							<line-chart :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}" id='soilHumidityLine'
-							 ref="soilHumidityLine" chartType="line" />
-						</view>
-					</view>
+
 				</view>
 			</scroll-view>
 		</view>
@@ -156,38 +124,7 @@
 		},
 		data() {
 			return {
-				option: {
-					//数字的图--折线图数据
-					categories: [],
-					series: [{
-						name: '',
-						data: []
-					}]
-				},
-				atmosphericHumidityOption: {
-					//数字的图--折线图数据
-					categories: [],
-					series: [{
-						name: '',
-						data: []
-					}]
-				},
-				soilTemperatureOption: {
-					//数字的图--折线图数据
-					categories: [],
-					series: [{
-						name: '',
-						data: []
-					}]
-				},
-				soilHumidityOption: {
-					//数字的图--折线图数据
-					categories: [],
-					series: [{
-						name: '',
-						data: []
-					}]
-				},
+				chartsList: [],
 				baseId: '',
 				obj: {
 					proportion: '0'
@@ -200,9 +137,9 @@
 				openid: '',
 				isLike: false,
 				num: 0,
-				shoeModel:false,
-				modelImg:'',
-				monitorings:[]//有的检测类型
+				shoeModel: false,
+				modelImg: '',
+				monitorings: [] //有的检测类型
 			};
 		},
 		onShareAppMessage: function() {
@@ -214,18 +151,14 @@
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
-			if(option.scene){
+			if (option.scene) {
 				this.massifId = option.scene
-			}else{
+			} else {
 				this.massifId = option.massifId
 			}
 		},
 		onShow() {
 			this.getData()
-			// this.findRangeData() //大气温度
-			// this.atmosphericHumidity() //大气湿度
-			// this.soilTemperature() //土壤温度
-			// this.soilHumidity() //土壤湿度
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
 			this.openid = getApp().globalData.openid
@@ -260,19 +193,19 @@
 				}
 
 			},
-			shareFunc(){//显示小程序码
-				let obj={
-					scene:this.massifId,
-					page:'pages/monitor/growthMonitoring',
-					width:'250'
+			shareFunc() { //显示小程序码
+				let obj = {
+					scene: this.massifId,
+					page: 'pages/monitor/growthMonitoring',
+					width: '250'
 				}
-				this.$api.getUnlimited(obj).then(res=>{
-					this.shoeModel=true
-					this.modelImg='https://xyzn.tree-iot.com'+res.data.path
+				this.$api.getUnlimited(obj).then(res => {
+					this.shoeModel = true
+					this.modelImg = 'https://xyzn.tree-iot.com' + res.data.path
 				})
-			},		
-			hideModal(){
-				this.shoeModel=false
+			},
+			hideModal() {
+				this.shoeModel = false
 			},
 			getLikes() { //进入获取点赞状态
 				let obj = {
@@ -289,7 +222,7 @@
 					}
 				})
 			},
-			likesFunc() {//点赞
+			likesFunc() { //点赞
 				let obj = {
 					openid: this.openid,
 					massifId: this.massifId
@@ -314,7 +247,7 @@
 				}).then(res => {
 					this.obj = res.data.data
 					// 处理该设备有的检测类型
-					this.monitorings=res.data.data.monitorings
+					this.monitorings = res.data.data.monitorings
 					//*** */
 					let arr = this.obj.creationTime.split(' ')
 					let YMD = arr[0]
@@ -328,79 +261,38 @@
 						this.obj.statusTxt = '未激活'
 					} else if (this.obj.status == 'DISABLE') {
 						this.obj.statusTxt = '禁用'
-					}else{
+					} else {
 						this.obj.statusTxt = '-'
 					}
 				})
 			},
-			findRangeDatay(){
+			findRangeDatay() {//折线图所有数据集合
 				this.$api.findRangeData({
 					massifId: this.massifId
 				}).then(res => {
-					let list = res.data.data
-					list.map(item=>{
-						
+					var chart = res.data.data
+					var chartsList = chart.filter(li => {
+						return li.sevenDays.data
 					})
-				})
-			},
-			findRangeData() { //大气温度
-				this.$api.findRangeData({
-					massifId: this.massifId
-				}).then(res => {
-					let orderDps = res.data.data[0].orderDps
-					orderDps.forEach(item => {
-					
-						if(item.value!==undefined&&item.timestamp){
-							this.option.categories.push(formatDate(item.timestamp))
-							this.option.series[0].data.push((parseFloat(item.value)).toFixed(1))
+					chartsList.map(items => {
+						let orderDps = items.sevenDays.data[0].orderDps
+						let option = {
+							//数字的图--折线图数据
+							categories: [],
+							series: [{
+								name: '',
+								data: []
+							}]
 						}
+						orderDps.forEach(item => {
+							if (item.value !== undefined && item.timestamp) {
+								option.categories.push(formatDate(item.timestamp))
+								option.series[0].data.push((parseFloat(item.value)).toFixed(1))
+							}
+						})
+						items.opts = option
 					})
-					console.info('this.option',this.option)
-					this.$refs.line.init(this.option, '℃')
-				})
-			},
-			atmosphericHumidity() { //大气湿度
-				this.$api.atmosphericHumidity({
-					massifId: this.massifId
-				}).then(res => {
-					let orderDps = res.data.data[0].orderDps
-					orderDps.forEach(item => {
-						if(item.value!==undefined&&item.timestamp){
-							this.atmosphericHumidityOption.categories.push(formatDate(item.timestamp))
-							this.atmosphericHumidityOption.series[0].data.push((parseFloat(item.value)).toFixed(1))
-						}
-						
-					})
-					this.$refs.atmosphericHumidityLine.init(this.atmosphericHumidityOption, '%')
-				})
-			},
-			soilTemperature() { //土壤温度
-				this.$api.soilTemperature({
-					massifId: this.massifId
-				}).then(res => {
-					let orderDps = res.data.data[0].orderDps
-					orderDps.forEach(item => {
-						if(item.value!==undefined&&item.timestamp){
-							this.soilTemperatureOption.categories.push(formatDate(item.timestamp))
-							this.soilTemperatureOption.series[0].data.push((parseFloat(item.value)).toFixed(1))
-						}					
-					})
-					this.$refs.soilTemperatureLine.init(this.soilTemperatureOption, '℃')
-				})
-			},
-			soilHumidity() { //土壤湿度
-				this.$api.soilHumidity({
-					massifId: this.massifId
-				}).then(res => {
-					let orderDps = res.data.data[0].orderDps
-					orderDps.forEach(item => {
-						if(item.value!==undefined&&item.timestamp){
-							this.soilHumidityOption.categories.push(formatDate(item.timestamp))
-							this.soilHumidityOption.series[0].data.push((parseFloat(item.value)).toFixed(1))
-						}
-						
-					})
-					this.$refs.soilHumidityLine.init(this.soilHumidityOption, '%')
+					this.chartsList = [...chartsList]
 				})
 			}
 		}
@@ -427,10 +319,12 @@
 			z-index: 1;
 		}
 	}
-	.likes-shere-box{
-		width:49%;
+
+	.likes-shere-box {
+		width: 49%;
 		text-align: center;
 	}
+
 	.box-margin {
 		padding-top: 5px;
 	}
@@ -531,7 +425,7 @@
 	.map-top-box {
 		// position: absolute;
 		// top: 10rpx;
-		
+
 		background: #fff;
 		padding: 10rpx 20rpx;
 		// left: 2%;
@@ -541,12 +435,14 @@
 		background: #fff;
 		padding: 10rpx 20rpx;
 		border-bottom: 10px solid #f9f9f9;
+
 		image {
 			width: 28px;
 			height: 28px;
 			margin-right: 20rpx;
 			position: relative;
 		}
+
 		.content {
 			padding: 30rpx;
 			overflow-y: auto;
@@ -624,9 +520,10 @@
 			width: 31rpx;
 			height: 27rpx;
 		}
-		.right-img{
+
+		.right-img {
 			width: 36rpx;
-			height:33rpx;
+			height: 33rpx;
 		}
 	}
 
@@ -663,22 +560,24 @@
 	.likes-box {
 		text-align: center;
 	}
+
 	.progress {
-	  width: 70%;
-	  height: 16px;
-	  background: rgba(255, 255, 255, 0.2);
-	  margin: 12px 15px;
-	  border-radius: 10px;
-	  text-align: center;
-	  color: #fff;
-	  border:1px solid #49BA89;
-	  .progressing {
-	    position: relative;
-	    float: left;
-	    margin: 0 auto;
-	    height: 15px;
-	    background: #49BA89;
-	    border-radius: 10px;
-	  }
+		width: 70%;
+		height: 16px;
+		background: rgba(255, 255, 255, 0.2);
+		margin: 12px 15px;
+		border-radius: 10px;
+		text-align: center;
+		color: #fff;
+		border: 1px solid #49BA89;
+
+		.progressing {
+			position: relative;
+			float: left;
+			margin: 0 auto;
+			height: 15px;
+			background: #49BA89;
+			border-radius: 10px;
+		}
 	}
 </style>
