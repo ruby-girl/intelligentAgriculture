@@ -16,10 +16,12 @@
             "autoclose" : true,
             "delay" : 0
         },
-        "optimization":{//分包
-            "subPackages": true
+        "optimization" : {
+            //分包
+            "subPackages" : true
         },
         "runmode" : "liberate", // 开启分包优化后，必须配置资源释放模式
+
         /* 模块配置 */
         "modules" : {
             "Maps" : {},
@@ -115,7 +117,7 @@
     "mp-weixin" : {
         "appid" : "wx665007fdba155acf",
         "setting" : {
-            "urlCheck" : false,
+            "urlCheck" : true,
             "es6" : true,
             "postcss" : true,
             "minified" : true
@@ -126,9 +128,10 @@
                 "desc" : "获取农场位置"
             }
         },
-		"optimization":{//分包
-		    "subPackages": true
-		}
+        "optimization" : {
+            //分包
+            "subPackages" : true
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true
