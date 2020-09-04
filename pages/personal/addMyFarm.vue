@@ -263,22 +263,22 @@
 				}
 			},
 			chooseType(n){
-				let _this =this;			
-				wx.showActionSheet({
-				  itemList: ['拍照','从手机相册选择'],
-				  success (res) {
-					  if(res.tapIndex  == 0){
-						  uni.navigateTo({
-						  	url:'cameraModel?person=true&photoType='+n
-						  })
-					  }else{
-						  _this.chooseImage(n);
-					  }
-				  },
-				  fail (res) {
-				    console.log(res.errMsg)
-				  }
-				})
+				// let _this =this;			
+				// wx.showActionSheet({
+				//   itemList: ['拍照','从手机相册选择'],
+				//   success (res) {
+				// 	  if(res.tapIndex  == 0){
+				// 		  uni.navigateTo({
+				// 		  	url:'cameraModel?person=true&photoType='+n
+				// 		  })
+				// 	  }else{
+						  this.chooseImage(n);
+				// 	  }
+				//   },
+				//   fail (res) {
+				//     console.log(res.errMsg)
+				//   }
+				// })
 			},
 			chooseImage(n) {
 				let num;
@@ -289,8 +289,8 @@
 				}
 				uni.chooseImage({
 					count: num, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['album'], //从相册选择
+					sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
 					success: (res) => {
 						let that = this
 						res.tempFilePaths.forEach(item => {
@@ -301,12 +301,14 @@
 			},
 			uploadImg(url,n) {
 				let that = this
-				let URLPath = getApp().globalData.baseUrl + 'farm/uploadHead';
+				let URLPath = getApp().globalData.baseUrl + 'api/farm/uploadHead';
 				wx.uploadFile({
 					url: URLPath,
 					filePath: url,
 					name: 'file',
-					//formData: { type: 'headImg' },
+					header: {
+						'token': uni.getStorageSync('XYZNUserInfo').token
+					},
 					success: function(resData) {
 						let data = JSON.parse(resData.data).data
 						if(n==1){
