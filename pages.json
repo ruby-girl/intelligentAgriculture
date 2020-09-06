@@ -183,6 +183,27 @@
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
+		},{
+			"path": "mandate",
+			"style": {
+				"navigationBarTitleText": "授权",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white"
+			}
+		},{
+			"path": "photoAlbum",
+			"style": {
+				"navigationBarTitleText": "生长历程",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white"
+			}
+		},{
+			"path": "getNearTheEquipment",
+			"style": {
+				"navigationBarTitleText": "附近设备",
+				"navigationBarBackgroundColor": "#17BB89",
+				"navigationBarTextStyle": "white"
+			}
 		}]
 	}],
 	"preloadRule": {

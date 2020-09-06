@@ -343,3 +343,68 @@ export const  findRangeDatay= (data) => {
 		data:data
 	})
 }
+//删除农场
+export const  deleteFarm= (data) => {
+	return http.request({ 
+		url: 'api/farm/deleteFarm',
+		method: 'post',
+		data:data
+	})
+}
+
+// 添加员工
+export const  authSave= (data) => {
+	return http.request({ 
+		url: 'api/auth/save',
+		method: 'post',
+		data:data
+	})
+}
+//修改害虫预警开关
+export const  updatePests= (data) => {
+	return http.request({ 
+		url: 'api/pests/updatePests',
+		method: 'post',
+		data:data
+	})
+}
+//根据地块获取设备
+export const  findMassifIdByDevice= (data) => {
+	return http.request({ 
+		url: 'api/device/findMassifIdByDevice',
+		method: 'post',
+		data:data
+	})
+}
+//生长监测通过设备id查询设备数据
+export const  findDeviceData= (data) => {
+	return http.request({ 
+		url: 'api/massif/findDeviceData',
+		method: 'post',
+		data:data
+	})
+}
+//获取生长历程图片
+export const  GetDeviceImageData= (data) => {
+	return http.request({ 
+		url: 'api/device/GetDeviceImageData',
+		method: 'post',
+		data:data
+	})
+}
+// 获取附近设备总开关状态
+export const  userFindNearby= (data) => {
+	return http.request({ 
+		url: 'api/user/findNearby',
+		method: 'post',
+		data:data
+	})
+}
+// 修改附近设备总开关状态
+export const  userUpdateNearby= (data) => {
+	return http.request({ 
+		url: 'api/user/updateNearby',
+		method: 'post',
+		data:data
+	})
+}

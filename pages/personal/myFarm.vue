@@ -19,7 +19,8 @@
 			 @tap="toDetail(item.farmId)">
 				<view class="flex align-items-center justify-content-flex-justify">
 					<text class="item-title">{{item.farmName}}</text>
-					<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
+					<view class="del-box" @click.stop="delFarm(item.farmId)">删除</view>
+					<!-- <image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image> -->
 				</view>
 				<view style="line-height:35px;">
 					<image style="width:17px;height:20px;" src="../../static/imgs/location-2.png"></image>
@@ -41,16 +42,19 @@
 						<text style="color:red;">{{item.waringCount}}</text>
 					</view>
 				</view>
-				<view class="item-content">
+				<!-- <view class="item-content">
 					{{item.introduce||''}}
-				</view>
+				</view> -->
 			</view>
 			<view class="loading-more">{{contentdown}}</view>
 		</scroll-view>
+		 <popup content='该农场下的地块和设备也会全部删除,是否继续？' align='center' cancelText="我再想想" :show='popupShow' :showCancel='true' confirmText='确定'
+		  @confirm="confirmFunc" @close="closePopup" />
 	</view>
 </template>
 
 <script>
+	import popup from "@/components/neil-modal/neil-modal.vue"
 	import {
 		throttle
 	} from "@/utils/index.js"
@@ -68,8 +72,13 @@
 				newsList: [],
 				loadingType: 0,
 				triggered: false,
-				_freshing: false
+				_freshing: false,
+				popupShow:false,
+				delID:null
 			};
+		},
+		components: {
+			popup
 		},
 		onLoad(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
@@ -78,7 +87,27 @@
 			// this.getData()
 		},
 		methods: {
-
+			delFarm(id){//删除农场
+				this.delID=id
+				this.popupShow=true
+			},
+			confirmFunc(){
+				let _this=this
+				this.$api.deleteFarm({farmId:this.delID}).then(res=>{
+					
+					uni.showToast({
+						title: '删除成功',
+						duration: 2000,
+						success() {
+							_this.popupShow=false
+							_this.initData()
+						}
+					});
+				})
+			},
+			closePopup(){
+				this.popupShow=false
+			},
 			onPulling() {},
 			onRefresh() {
 				if (this._freshing) return;
@@ -176,7 +205,10 @@
 			padding-top: 80rpx;
 		}
 	}
-
+	.del-box{
+		padding:0 15rpx;
+		color:red;
+	}
 	.flex {
 		display: flex;
 		justify-content: space-between;

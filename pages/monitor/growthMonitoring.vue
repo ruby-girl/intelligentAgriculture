@@ -1,10 +1,15 @@
 <!-- 生长监测 -->
 <template>
-	<view class="workOrder"  >
+	<view class="workOrder">
 		<view>
-			<scroll-view v-bind:style="{height:windowHeight+'px'}" style="overflow: hidden;" class="list-container" scroll-y="true" @scroll="scroll" >
+			<scroll-view v-bind:style="{height:windowHeight+'px'}" style="overflow: hidden;" class="list-container" scroll-y="true"
+			 @scroll="scroll">
 				<view class="map-container">
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
+						<view class="map-top-item">
+							<view style="font-size: 15px;font-weight: bold;">{{obj.proportion}}%</view>
+							<view class="small-text">{obj.crop}}</view>
+						</view>
 						<view class="map-top-item">
 							<view style="font-size: 15px;font-weight: bold;">{{obj.surplus}}</view>
 							<view class="small-text">剩余时间(天)</view>
@@ -16,44 +21,30 @@
 						<view class="map-top-item">
 							<view style="font-size: 15px;font-weight: bold;">{{obj.creationTime}}</view>
 							<view class="small-text">种植日期</view>
-						</view>
-						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">{{obj.proportion}}%</view>
-							<view class="small-text">种植进度</view>
-						</view>
+						</view>					
 					</view>
 					<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl'
 					 :src="obj.hlsLivePlayUrl">
 					</video>
-
-
-					<!-- <view  class="play-box">
-						<image src="../../static/imgs/play.png" mode=""></image>
-					</view> -->
 					<view class="map-bottom-box">
 						<view class="list-item">
 							<view class="flex  align-items-center justify-content-flex-justify">
 								<view class="flex  align-items-center">
 									<image class="land-img" src="../../static/imgs/location.png" mode=""></image>
 									<view class="item-title">
-										<view class="order-title">NO.{{obj.massifNo}}</view>
+										<view class="order-title" style="font-weight: bold;">NO.{{obj.massifNo}}  {{obj.massifName}}</view>
+										<view class="order-title small-text">当前设备：{{picker[index]}}</view>
 										<view class="order-title small-text">{{obj.farmName}}</view>
 									</view>
 								</view>
-								<view class="state-box" v-if="obj.statusTxt=='在线'">
-									{{obj.statusTxt||''}}
-								</view>
-								<view class="state-box-error" v-else-if="obj.statusTxt!=='-'">
-									{{obj.statusTxt||''}}
-								</view>
+								<picker @change="PickerChange" :value="index" :range="picker">
+									<view class="picker" >
+										<!-- {{picker[index]}} -->
+										<text style="color:#00AE66">切换设备</text>
+									</view>
+								</picker>
 							</view>
 							<view class="box-margin flex align-items-center flex-wrap">
-								<view class="item-content-box">
-									<view class="item-num">
-										{{obj.crop||'-'}}
-									</view>
-									<text class="small-text">作物名称</text>
-								</view>
 								<view class="item-content-box" v-for="(item,n) in monitorings" :key="n">
 									<view class="item-num">
 										{{item.value||'-'}}<span class="small-txt">{{item.unit}}</span>
@@ -92,14 +83,28 @@
 					</view>
 				</view>
 				<view class="farm-detail-box">
-					<view><text style="font-size: 16px;">数据监测</text></view>
-					<view style="padding-top:20rpx" v-if="chartsList.length>0">
-						<view class="" v-for="(item,n) in chartsList" :key="n">
-							<line-chart :title="item.name" :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}"
-							 :canvasId="item.field+'Line'" chartType="line" :opts="item.opts" :unit="item.unit" />
+					<view>
+						<!-- <text style="font-size: 16px;">数据监测</text> -->
+						<view class="flex text-center">
+							<view class="cu-item flex-sub" :class="item.id == TabCur ? 'text-green cur' : ''" v-for="(item, index) in tabs"
+							 :key="index" @tap="tabSelect" :data-id="item.id">
+								{{ item.name }}
+							</view>
 						</view>
 					</view>
-
+					<view style="height: 100%;background-color: #FFFFFF;">
+						<template v-if="TabCur == 1">
+							<view style="padding-top:20rpx" v-if="chartsList.length>0">
+								<view class="" v-for="(item,n) in chartsList" :key="n">
+									<line-chart :title="item.name" :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}"
+									 :canvasId="item.field+'Line'" chartType="line" :opts="item.opts" :unit="item.unit" />
+								</view>
+							</view>						
+						</template>
+						<template v-if="TabCur == 2">
+							<auxograph :imgsArr="imgsArr"/>
+						</template>
+					</view>
 				</view>
 			</scroll-view>
 		</view>
@@ -115,12 +120,13 @@
 
 <script>
 	import LineChart from '@/components/u-charts/u-charts/component.vue';
+	import Auxograph from '@/components/auxograph.vue';
 	import {
 		formatDate
 	} from "@/utils/index.js"
 	export default {
 		components: {
-			LineChart
+			LineChart,Auxograph
 		},
 		data() {
 			return {
@@ -129,6 +135,16 @@
 				obj: {
 					proportion: '0'
 				},
+				tabs: [{
+						id: 1,
+						name: '数据监测'
+					},
+					{
+						id: 2,
+						name: '生长历程'
+					}
+				],
+				TabCur: 1,
 				windowHeight: 300,
 				massifId: '',
 				scrollTop: 0,
@@ -139,7 +155,12 @@
 				num: 0,
 				shoeModel: false,
 				modelImg: '',
-				monitorings: [] //有的检测类型
+				monitorings: [], //有的检测类型
+				deviceList:[],
+				deviceId:null,//当前设备ID
+				imgsArr:[],//生长历程
+				index:0,
+				picker:[]
 			};
 		},
 		onShareAppMessage: function() {
@@ -147,6 +168,13 @@
 				title: '快来看看我的地块生长情况吧！',
 				desc: '',
 				path: 'pages/monitor/growthMonitoring?massifId=' + this.massifId // 路径，传递参数到指定页面。
+			}
+		},
+		watch:{
+			deviceId(v,n){
+				this.findDeviceData()
+				this.findRangeDatay()
+				this.GetDeviceImageData()
 			}
 		},
 		onLoad(option) {
@@ -159,14 +187,21 @@
 		},
 		onShow() {
 			this.getData()
+			this.findMassifIdByDevice()//获取设备
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
 			this.openid = getApp().globalData.openid
 			this.getCode()
-			this.findRangeDatay()
 		},
 		mounted() {},
 		methods: {
+			PickerChange(e) {
+				this.index = e.detail.value
+				this.deviceId=this.deviceList[this.index].deviceId
+			},
+			tabSelect(e) {
+				this.TabCur = e.currentTarget.dataset.id;
+			},
 			// onShareTimeline(){},//分享朋友圈需要定义的方法
 			// 手动授权方法
 			getCode() {
@@ -247,7 +282,7 @@
 				}).then(res => {
 					this.obj = res.data.data
 					// 处理该设备有的检测类型
-					this.monitorings = res.data.data.monitorings
+					// this.monitorings = res.data.data.monitorings
 					//*** */
 					let arr = this.obj.creationTime.split(' ')
 					let YMD = arr[0]
@@ -266,9 +301,48 @@
 					}
 				})
 			},
-			findRangeDatay() {//折线图所有数据集合
+			findMassifIdByDevice(){//设备
+				this.$api.findMassifIdByDevice({massifId:this.massifId,pageNum:1,pageSize:20}).then(res=>{
+					this.deviceList = res.data.data
+					if(this.deviceList.length>0){
+						this.deviceId=this.deviceList[0].deviceId
+						this.deviceList.map(item=>{
+							this.picker.push(item.deviceName)
+						})
+						// this.findDeviceData()
+						// this.findRangeDatay()
+					}
+				})
+			},
+			findDeviceData() { //根据设备ID拿监测数据
+				this.$api.findDeviceData({
+					deviceId:this.deviceId
+				}).then(res => {
+					this.monitorings = res.data.data.monitorings
+				})
+			},
+			GetDeviceImageData(){//生长历程
+				this.$api.GetDeviceImageData({deviceId:this.deviceId}).then(res=>{
+					this.imgsArr = res.data.data
+					this.imgsArr.map(item=>{					
+						let f=item.picture.split('[')[1]
+						let t=f.split(']')[0]
+						let arr=t.split(',')
+						arr.forEach((li,n)=>{
+							if(li.charAt(0) == ' '){
+								console.info('是空')
+								li=li.split(' ')[1]
+								console.info(li)
+							}
+							arr[n]=li
+						})
+						item.resArr=arr					
+					})
+				})
+			},
+			findRangeDatay() { //折线图所有数据集合
 				this.$api.findRangeData({
-					massifId: this.massifId
+					deviceId: this.deviceId
 				}).then(res => {
 					var chart = res.data.data
 					var chartsList = chart.filter(li => {

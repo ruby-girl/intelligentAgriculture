@@ -4,10 +4,10 @@
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
 				<view class="list-item margin-top"  v-for="(item,i) in list" :key="i">
 					<view class="flex align-items-center justify-content-flex-justify">
-						<text class="item-title" @tap="toDetail(item)">{{item.warningName}}</text>
-						<switch @change="changeSwitch($event,i)" :class="item.opening?'checked':''" :checked="item.opening?true:false" color="red"></switch>
+						<text class="item-title" @tap="toDetail(item)">{{item.warningId?item.warningName:'害虫预警'}}</text>
+						<switch @change="changeSwitch($event,i,item.warningI)" :class="item.opening?'checked':''" :checked="item.opening?true:false" color="red"></switch>
 					</view>
-					<view class="flex align-items-center justify-content-flex-justify border-top" @tap="toDetail(item)">
+					<view class="flex align-items-center justify-content-flex-justify border-top" @tap="toDetail(item)" v-if="item.pestsName!=='害虫预警'">
 						<text class="small-text">{{item.warningsTxt}}值</text>
 						<view>
 							<text>最低{{item.low||''}}{{item.type}} 最高{{item.high||''}}{{item.type}}</text>
@@ -54,19 +54,37 @@
 					url: 'detailWarning?warningId='+item.warningId+'&massifId='+this.massifId+'&low='+low+'&high='+high
 				})
 			},
-			changeSwitch(e,i) {
+			changeSwitch(e,i,isPests) {
 				this.list[i].opening=e.detail.value
-				this.switchFunc(this.list[i].warningId,e.detail.value)
+				let id;
+				if(isPests){
+					id=this.list[i].warningId
+				}else{
+					id=this.list[i].pestsId
+				}
+				this.switchFunc(id,e.detail.value,isPests)
 			},
-			switchFunc(id,value=false){
-				this.$api.updateOpening({warningId:id,opening:value}).then(res=>{
-					uni.showToast({
-						title: '设置成功',
-						duration: 2000
+			switchFunc(id,value=false,isPests){			
+				if(isPests){
+					this.$api.updateOpening({warningId:id,opening:value}).then(res=>{
+						uni.showToast({
+							title: '设置成功',
+							duration: 2000
+						})
+					}).catch(res=>{
+						this.findList()
 					})
-				}).catch(res=>{
-					this.findList()
-				})
+				}else{
+					this.$api.updatePests({pestsId:id,opening:value}).then(res=>{
+						uni.showToast({
+							title: '设置成功',
+							duration: 2000
+						})
+					}).catch(res=>{
+						this.findList()
+					})
+				}
+				
 			},
 			findList(){
 				this.$api.findList({massifId:this.massifId}).then(res=>{

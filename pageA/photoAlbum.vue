@@ -1,0 +1,38 @@
+<template>
+	<view class="flex justify-content-flex-justify flex-wrap img-container">
+		<view v-for="(item,i) in imgArr" :key="i" class="img-box" :style="{background: 'url('+pathUrl+item+')',backgroundSize:'100% 100%'}">
+			
+		</view>
+	</view>
+</template>
+
+<script>
+	import http from '@/utils/request.js'
+	export default {
+		data() {
+			return {
+				pathUrl:http.config.imgUrl,
+				imgArr:[]
+			}
+		},
+		onLoad(option){	
+			this.imgArr=getApp().globalData.photoImgs
+		},
+		
+		methods: {
+			
+		}}
+</script>
+
+<style scoped>
+	.img-container{
+		padding: 30rpx;
+	}
+	.img-box{
+		width: 47%;
+		height:350rpx;
+		/* background: #fff !important; */
+		margin-bottom: 30rpx;
+		border-radius: 6px;
+	}
+</style>

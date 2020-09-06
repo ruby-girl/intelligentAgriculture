@@ -34,7 +34,9 @@
 					@scrolltoupper="scrolltoupper"
 					@scrolltolower="loadingData"
 				>
-					<view class="" v-for="(item, index) in newsList" :key="index" @tap="toUrl(item.massifId)"><land-block :itemObject="item" /></view>
+					<view class="" v-for="(item, index) in newsList" :key="index" @tap="toUrl(item.massifId)">
+						<monitor-land :itemObject="item" />					
+					</view>
 					<view class="loading-more">{{ contentdown }}</view>
 				</scroll-view>
 			</view>
@@ -98,12 +100,12 @@
 
 <script>
 import { throttle } from '@/utils/index.js';
-import landBlock from '@/components/landBlock.vue';
+import monitorLand from '@/components/monitorLand.vue';
 import popup from '@/components/neil-modal/neil-modal.vue';
 import notLogin from '@/components/notLogin/notLogin.vue';
 export default {
 	components: {
-		landBlock,
+		monitorLand,
 		popup,
 		notLogin
 	},
@@ -295,17 +297,30 @@ export default {
 			this.$api.selectMonitor(obj).then(res => {
 				this.newsList = this.newsList.concat(res.data.data.massifs);
 				this.newsList.forEach((item, i) => {
-					if (this.newsList[i].status == 'ONLINE') {
-						this.newsList[i].statusTxt = '在线';
-					} else if (this.newsList[i].status == 'OFFLINE') {
-						this.newsList[i].statusTxt = '离线';
-					} else if (this.newsList[i].status == 'UNACTIVE') {
-						this.newsList[i].statusTxt = '未激活';
-					} else if (this.newsList[i].status == 'DISABLE') {
-						this.newsList[i].statusTxt = '禁用';
-					} else {
-						this.newsList[i].statusTxt = '-';
-					}
+					// if (this.newsList[i].status == 'ONLINE') {
+					// 	this.newsList[i].statusTxt = '在线';
+					// } else if (this.newsList[i].status == 'OFFLINE') {
+					// 	this.newsList[i].statusTxt = '离线';
+					// } else if (this.newsList[i].status == 'UNACTIVE') {
+					// 	this.newsList[i].statusTxt = '未激活';
+					// } else if (this.newsList[i].status == 'DISABLE') {
+					// 	this.newsList[i].statusTxt = '禁用';
+					// } else {
+					// 	this.newsList[i].statusTxt = '-';
+					// }
+					item.device.forEach((li,n)=>{
+						if (li.status == 'ONLINE') {
+							li.statusTxt = '在线';
+						} else if (listatus == 'OFFLINE') {
+							li.statusTxt = '离线';
+						} else if (li.status == 'UNACTIVE') {
+							li.statusTxt = '未激活';
+						} else if (li.status == 'DISABLE') {
+							li.statusTxt = '禁用';
+						} else {
+							li.statusTxt = '-';
+						}
+					})
 				});
 				if (this.page == 1 && this.newsList.length == 0) {
 					this.loadingType = 0;

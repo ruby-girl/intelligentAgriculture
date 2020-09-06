@@ -2,6 +2,7 @@ export default {
 	config: {
 		//baseUrl: "https://www.sc-kwt.com/",
 		baseUrl:"https://xyzn.tree-iot.com/",
+		imgUrl:"https://xyzn.tree-iot.com",
 		header: {
 			'Content-Type': 'application/json',
 			'Authorization': '',
@@ -92,7 +93,7 @@ export default {
 				} else {
 					uni.hideLoading();
 					wx.showToast({
-						title: response.msg || '请求错误 ',
+						title: response.data.msg || '请求错误 ',
 						icon: 'none',
 						duration: 2000
 					})

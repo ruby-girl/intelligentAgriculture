@@ -43,18 +43,32 @@
 		</view>
 		<view class="container-input">
 			<form>
+				<view class="cu-form-group item-jt">
+					<view class="title display-flex align-items-center">
+						<image src="../../static/imgs/tip.png" mode=""></image>版本更新
+					</view>
+					<text class="tip-text">当前1.0.1</text>
+				
+				</view>
+				<view class="cu-form-group item-jt" @click="toGetNearTheEquipment">
+					<view class="title display-flex align-items-center">
+						<image class="small-img" src="../../static/imgs/fujin.png" mode=""></image>查找附近设备
+					</view>
+					<image src="../../static/imgs/arrows.png" mode=""></image>
+				
+				</view>
 				<view class="cu-form-group item-jt" @click="toSetWaring">
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/warning.png" mode=""></image>预警设置
 					</view>
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
-				<view class="cu-form-group item-jt">
+				<view class="cu-form-group item-jt" @click="toMandate">
 					<view class="title display-flex align-items-center">
-						<image src="../../static/imgs/tip.png" mode=""></image>版本更新
+						<image class="small-img" src="../../static/imgs/shouquan.png" mode=""></image>授权
 					</view>
-					<text class="tip-text">当前1.0.1</text>
-
+					<image src="../../static/imgs/arrows.png" mode=""></image>
+				
 				</view>
 				<view class="cu-form-group item-jt" @click="toUs">
 					<view class="title display-flex align-items-center">
@@ -130,6 +144,18 @@
 			closePopup() {
 				this.popupShow = false
 			},
+			toGetNearTheEquipment(){
+				if (!this.isLogin) {
+					uni.showToast({
+						title: '请先登录',
+						icon: 'none'
+					})
+					return
+				}
+				uni.navigateTo({
+					url: '/pageA/getNearTheEquipment'
+				});
+			},
 			toSetWaring() { //跳转预警设置
 				if (!this.isLogin) {
 					uni.showToast({
@@ -140,6 +166,18 @@
 				}
 				uni.navigateTo({
 					url: 'landWaring'
+				});
+			},
+			toMandate(){
+				if (!this.isLogin) {
+					uni.showToast({
+						title: '请先登录',
+						icon: 'none'
+					})
+					return
+				}
+				uni.navigateTo({
+					url: '/pageA/mandate'
 				});
 			},
 			getCount() {
@@ -230,7 +268,11 @@
 		width: 14rpx;
 		height: 28rpx;
 	}
-
+	.title>.small-img{
+		width: 38rpx;
+		height: 38rpx;
+		margin-right: 5px;
+	}
 	.tip-text {
 		color: #999999;
 		font-size: 14px;
