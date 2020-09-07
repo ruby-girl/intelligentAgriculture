@@ -8,7 +8,7 @@
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
 						<view class="map-top-item">
 							<view style="font-size: 15px;font-weight: bold;">{{obj.proportion}}%</view>
-							<view class="small-text">{obj.crop}}</view>
+							<view class="small-text">{{obj.crop}}</view>
 						</view>
 						<view class="map-top-item">
 							<view style="font-size: 15px;font-weight: bold;">{{obj.surplus}}</view>
@@ -23,7 +23,8 @@
 							<view class="small-text">种植日期</view>
 						</view>					
 					</view>
-					<video custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl'
+					<image v-if="picker[index] == '大地探针'" style="width:100%;height: 600rpx;" mode="heightFix" :src="imgUrl" @tap="showImg(imgUrl)"></image>
+					<video v-else  custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl'
 					 :src="obj.hlsLivePlayUrl">
 					</video>
 					<view class="map-bottom-box">
@@ -121,6 +122,7 @@
 <script>
 	import LineChart from '@/components/u-charts/u-charts/component.vue';
 	import Auxograph from '@/components/auxograph.vue';
+	import http from '@/utils/request.js'
 	import {
 		formatDate
 	} from "@/utils/index.js"
@@ -160,7 +162,8 @@
 				deviceId:null,//当前设备ID
 				imgsArr:[],//生长历程
 				index:0,
-				picker:[]
+				picker:[],
+				imgUrl:'' //非直播设备的图片地址 
 			};
 		},
 		onShareAppMessage: function() {
@@ -196,8 +199,8 @@
 		mounted() {},
 		methods: {
 			PickerChange(e) {
-				this.index = e.detail.value
-				this.deviceId=this.deviceList[this.index].deviceId
+				this.index = e.detail.value;
+				this.deviceId=this.deviceList[this.index].deviceId;
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
@@ -309,6 +312,7 @@
 						this.deviceList.map(item=>{
 							this.picker.push(item.deviceName)
 						})
+						
 						// this.findDeviceData()
 						// this.findRangeDatay()
 					}
@@ -330,14 +334,13 @@
 						let arr=t.split(',')
 						arr.forEach((li,n)=>{
 							if(li.charAt(0) == ' '){
-								console.info('是空')
 								li=li.split(' ')[1]
-								console.info(li)
 							}
 							arr[n]=li
 						})
 						item.resArr=arr					
 					})
+					this.imgUrl = http.config.imgUrl + this.imgsArr[this.imgsArr.length -1].resArr[0];
 				})
 			},
 			findRangeDatay() { //折线图所有数据集合
@@ -368,7 +371,14 @@
 					})
 					this.chartsList = [...chartsList]
 				})
-			}
+			},
+			// showImg(url){
+			// 	let list = new Array();
+			// 	list.push(url);
+			// 	uni.previewImage({
+			// 		urls: list,
+			// 	});
+			// }
 		}
 	}
 </script>
