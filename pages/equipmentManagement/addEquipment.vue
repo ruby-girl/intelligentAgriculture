@@ -5,6 +5,7 @@
 			<input placeholder="输入设备名称" v-model="obj.SN" name="input"></input>
 			<image @click="toScanCode" class="code-img" src="../../static/imgs/qr-code.png" mode=""></image>
 		</view>
+		
 		<view class="cu-form-group">
 			<view class="title">设备名称</view>
 			<input placeholder="输入设备名称" v-model="obj.deviceName" name="input"></input>

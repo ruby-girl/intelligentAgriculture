@@ -124,7 +124,6 @@ export const  selectIdAll= (data) => {
 }
 
 // TAB 获取设备列表
-
 export const  findByDevice= (data) => {
 	return http.request({
 		url: 'api/device/findByDevice',
