@@ -30,7 +30,7 @@
 	}
 	.img-box{
 		width: 47%;
-		height:350rpx;
+		height:350rpx; 
 		/* background: #fff !important; */
 		margin-bottom: 30rpx;
 		border-radius: 6px;
