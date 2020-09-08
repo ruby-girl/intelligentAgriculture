@@ -94,7 +94,6 @@
 				});
 			},
 			initLineChart(unit) {
-				console.info('this.canvasId',this.canvasId)
 				canvases[this.canvasId] = new uCharts({
 					$this: this,
 					canvasId: this.canvasId,

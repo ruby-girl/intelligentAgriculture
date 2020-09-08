@@ -5,7 +5,7 @@
 				<view class="list-item margin-top"  v-for="(item,i) in list" :key="i">
 					<view class="flex align-items-center justify-content-flex-justify">
 						<text class="item-title" @tap="toDetail(item)">{{item.warningId?item.warningName:'害虫预警'}}</text>
-						<switch @change="changeSwitch($event,i,item.warningI)" :class="item.opening?'checked':''" :checked="item.opening?true:false" color="red"></switch>
+						<switch @change="changeSwitch($event,i,item.warningId)" :class="item.opening?'checked':''" :checked="item.opening?true:false" color="red"></switch>
 					</view>
 					<view class="flex align-items-center justify-content-flex-justify border-top" @tap="toDetail(item)" v-if="item.pestsName!=='害虫预警'">
 						<text class="small-text">{{item.warningsTxt}}值</text>

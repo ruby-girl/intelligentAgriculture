@@ -186,7 +186,7 @@
 		},{
 			"path": "mandate",
 			"style": {
-				"navigationBarTitleText": "授权",
+				"navigationBarTitleText": "添加员工",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}

@@ -65,7 +65,7 @@
 				</view>
 				<view class="cu-form-group item-jt" @click="toMandate">
 					<view class="title display-flex align-items-center">
-						<image class="small-img" src="../../static/imgs/shouquan.png" mode=""></image>授权
+						<image class="small-img" src="../../static/imgs/shouquan.png" mode=""></image>添加员工
 					</view>
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				

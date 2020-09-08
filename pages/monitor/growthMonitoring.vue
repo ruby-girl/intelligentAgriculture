@@ -23,9 +23,9 @@
 							<view class="small-text">种植日期</view>
 						</view>					
 					</view>
-					<image v-if="picker[index] == '大地探针'" style="width:100%;height: 600rpx;" mode="heightFix" :src="imgUrl" @tap="showImg(imgUrl)"></image>
-					<video v-else  custom-cache="false" autoplay="true" controls style="width:100%;height: 600rpx;" :poster='obj.liveCoverUrl'
-					 :src="obj.hlsLivePlayUrl">
+					<image v-if="picker[index] == '大地探针'" style="width:100%;height: 600rpx;" mode="heightFix" :src="LiveUrl.liveCoverUrl" ></image>
+					<video v-else id="myVideo" autoplay="true" custom-cache="false"  controls style="width:100%;height: 600rpx;" :poster='LiveUrl.liveCoverUrl'
+					 :src="LiveUrl.hlsLivePlayUrl">
 					</video>
 					<view class="map-bottom-box">
 						<view class="list-item">
@@ -163,7 +163,8 @@
 				imgsArr:[],//生长历程
 				index:0,
 				picker:[],
-				imgUrl:'' //非直播设备的图片地址 
+				imgUrl:'' ,//非直播设备的图片地址 
+				LiveUrl: [], // 设备直播地址
 			};
 		},
 		onShareAppMessage: function() {
@@ -187,6 +188,7 @@
 			} else {
 				this.massifId = option.massifId
 			}
+			this.videoContext = wx.createVideoContext('myVideo')
 		},
 		onShow() {
 			this.getData()
@@ -198,6 +200,7 @@
 		},
 		mounted() {},
 		methods: {
+		
 			PickerChange(e) {
 				this.index = e.detail.value;
 				this.deviceId=this.deviceList[this.index].deviceId;
@@ -323,6 +326,7 @@
 					deviceId:this.deviceId
 				}).then(res => {
 					this.monitorings = res.data.data.monitorings
+					this.LiveUrl = res.data.data;
 				})
 			},
 			GetDeviceImageData(){//生长历程
