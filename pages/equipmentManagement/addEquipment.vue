@@ -2,13 +2,12 @@
 	<view>
 		<view class="cu-form-group" style="position: relative;">
 			<view class="title">设备序列号</view>
-			<input placeholder="输入设备名称" v-model="obj.SN" name="input"></input>
+			<input placeholder="输入设备名称" v-model="obj.SN" name="input" @input="findDeviceName"></input>
 			<image @click="toScanCode" class="code-img" src="../../static/imgs/qr-code.png" mode=""></image>
 		</view>
-		
 		<view class="cu-form-group">
 			<view class="title">设备名称</view>
-			<input placeholder="输入设备名称" v-model="obj.deviceName" name="input"></input>
+			<input placeholder="设备名称将自动填入" v-model="obj.deviceName" name="input" disabled></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">关联地块</view>
@@ -150,7 +149,27 @@
 						}, 2000)
 					}
 				});
+			},
+			findDeviceName(){// 通过SN带出设备名称
+				if (this.obj.SN.length >= 12) {
+					this.$api.findDeviceName({
+						SN:this.obj.SN
+					}).then(res => {
+						if (res) {
+							this.obj.deviceName = res.data.data;
+						} else {
+							uni.showToast({
+								title:res.message,
+								icon:none,
+							})
+						}
+					})
+				} else {
+					this.obj.deviceName = '';
+				}
+				
 			}
+			
 		}
 	}
 </script>

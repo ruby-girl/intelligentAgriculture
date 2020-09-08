@@ -126,9 +126,10 @@
 				this.$api.captcha({
 					phone: this.obj.username
 				}).then(res => {
+					console.log('1',res)
 					if (res.data.stateCode == 200) {
 						this.btnTitle = 60
-						this.txt = 'S秒后获取'
+						this.txt = '秒后获取'
 						let timer = setInterval(function() {
 							if (_this.btnTitle == 1) {
 								clearInterval(timer)
@@ -140,7 +141,19 @@
 							}
 						}, 1000)
 					} else {
-						this.disabled = false
+						console.log('2',res)
+						// this.btnTitle = 180
+						// this.txt = '秒后获取'
+						// let timer = setInterval(function() {
+						// 	if (_this.btnTitle == 1) {
+						// 		clearInterval(timer)
+						// 		_this.btnTitle = '获取验证码'
+						// 		_this.txt = ''
+						// 		_this.disabled = false
+						// 	} else {
+						// 		_this.btnTitle = _this.btnTitle - 1
+						// 	}
+						// }, 1000)
 					}
 				})
 			},

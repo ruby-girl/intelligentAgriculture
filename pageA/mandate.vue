@@ -2,7 +2,7 @@
 	<view class="">
 		<view class="cu-form-group">
 			<view class="title">用户名</view>
-			<input class="form-input-left" v-model="postData.staffName" placeholder="请输入农场名称"></input>
+			<input class="form-input-left" v-model="postData.staffName" placeholder="请输入用户名"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">手机号码</view>
@@ -33,15 +33,15 @@
 						title: '授权成功',
 						duration: 2000,
 						success() {
-							// setTimeout(function(){
-							// 	let pages = getCurrentPages(); // 当前页面
-							// 	let beforePage = pages[pages.length - 2]; // 前一个页面
-							// 	uni.navigateBack({
-							// 		success: function() {
-							// 			beforePage.onLoad(); // 执行前一个页面的onLoad方法
-							// 		}
-							// 	});
-							// },2000)
+							setTimeout(function(){
+								let pages = getCurrentPages(); // 当前页面
+								let beforePage = pages[pages.length - 2]; // 前一个页面
+								uni.navigateBack({
+									success: function() {
+										beforePage.onLoad(); // 执行前一个页面的onLoad方法
+									}
+								});
+							},2000)
 						}
 					});
 				})

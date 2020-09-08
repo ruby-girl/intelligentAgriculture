@@ -266,7 +266,14 @@ export const  deviceCount= () => {
 		method: 'post'
 	})
 }
-
+//通过SN查询设备名
+export const findDeviceName= (data) => {
+	return http.request({
+		url: 'api/device/findDeviceName',
+		method: 'post',
+		data:data
+	})
+}
 //删除设备
 export const  deleteDevice= (data) => {
 	return http.request({ 
