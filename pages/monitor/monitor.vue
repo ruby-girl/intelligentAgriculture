@@ -311,7 +311,7 @@ export default {
 					item.device.forEach((li,n)=>{
 						if (li.status == 'ONLINE') {
 							li.statusTxt = '在线';
-						} else if (listatus == 'OFFLINE') {
+						} else if (li.status == 'OFFLINE') {
 							li.statusTxt = '离线';
 						} else if (li.status == 'UNACTIVE') {
 							li.statusTxt = '未激活';

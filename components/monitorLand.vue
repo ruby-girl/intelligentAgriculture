@@ -34,29 +34,29 @@
 				</view>
 		
 			<view>
-				<view class="pie" v-if="itemObject.cycle<50">
+				<view class="pie" v-if="itemObject.proportion<50">
 					<view class="pie-txt">
 						<text>
-							{{itemObject.cycle}}%
+							{{itemObject.proportion}}%
 						</text>
 						<view class="">
 							{{itemObject.crop}}
 						</view>
 					</view>
-					<view class="pie-cycle" :style="{'transform':'rotate(.'+itemObject.cycle+'turn)'}"></view>
+					<view class="pie-cycle" :style="{'transform':'rotate(.'+itemObject.proportion+'turn)'}"></view>
 				</view>
-				<view class="pie-big" v-else-if="itemObject.cycle<100">
+				<view class="pie-big" v-else-if="itemObject.proportion<100">
 					<view class="pie-txt">
 						<text>
-							{{itemObject.cycle}}%
+							{{itemObject.proportion}}%
 						</text>
 						<view class="">
 							{{itemObject.crop}}
 						</view>
 					</view>
-					<view class="pie-cycle" :style="{'transform':'rotate(.'+itemObject.cycle/10+'turn)'}"></view>
+					<view class="pie-cycle" :style="{'transform':'rotate(.'+itemObject.proportion/10+'turn)'}"></view>
 				</view>
-				<view class="pie-big-end" v-else-if="itemObject.cycle==100">
+				<view class="pie-big-end" v-else-if="itemObject.proportion==100">
 					<view class="pie-txt">
 						<text>
 							已成熟
@@ -67,7 +67,7 @@
 					</view>
 					<view class="pie-cycle" :style="{'transform':'rotate(1turn)'}"></view>
 				</view>
-				<view>生长进度</view>
+				<view style="text-align: center;">生长进度</view>
 			</view>
 		</view>
 	</view>
