@@ -1,6 +1,6 @@
 <template>
 	<view class="container-y">
-		<map style="width:100%;height:100vh;" :latitude="latitude" :longitude="longitude" :markers="covers" @callouttap="callouttapFunc">
+		<map style="width:100%;height:100vh;" show-location :latitude="latitude" :longitude="longitude" :markers="covers" @callouttap="callouttapFunc">
 		</map>
 		<view class="current-postion">
 			<view class="flex align-items-center justify-content-flex-justify">

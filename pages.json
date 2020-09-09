@@ -139,16 +139,18 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		}, {
-			"path": "pages/aiRecognition/aiRecognition",
-			"style": {
-				"navigationBarTitleText": "AI识别",
-				"navigationBarBackgroundColor": "#17BB89",
-				"navigationBarTextStyle": "white",
-				"disableScroll": true
+		}, 
+		// {
+		// 	"path": "pages/aiRecognition/aiRecognition",
+		// 	"style": {
+		// 		"navigationBarTitleText": "AI识别",
+		// 		"navigationBarBackgroundColor": "#17BB89",
+		// 		"navigationBarTextStyle": "white",
+		// 		"disableScroll": true
 
-			}
-		}, {
+		// 	}
+		// }, 
+		{
 			"path": "pages/personal/WarningProcessing",
 			"style": {
 				"navigationBarTitleText": "预警处理",
@@ -156,7 +158,8 @@
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		}, {
+		}, 
+		{
 			"path": "pages/personal/nearTheEquipment",
 			"style": {
 				"navigationBarTitleText": "附近设备识别",
@@ -197,7 +200,8 @@
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
-		},{
+		},
+		{
 			"path": "getNearTheEquipment",
 			"style": {
 				"navigationBarTitleText": "附近设备",
@@ -236,11 +240,17 @@
 				"iconPath": "static/imgs/equipment-management-1.png",
 				"selectedIconPath": "static/imgs/equipment-management.png"
 			},
+			// {
+			// 	"pagePath": "pages/aiRecognition/aiRecognition",
+			// 	"text": "AI识别",
+			// 	"iconPath": "static/imgs/ai.png",
+			// 	"selectedIconPath": "static/imgs/ai1.png"
+			// },
 			{
-				"pagePath": "pages/aiRecognition/aiRecognition",
-				"text": "AI识别",
-				"iconPath": "static/imgs/ai.png",
-				"selectedIconPath": "static/imgs/ai1.png"
+				"pagePath": "pages/personal/nearTheEquipment",
+				"text": "查找附近",
+				"iconPath": "static/imgs/nearby.png",
+				"selectedIconPath": "static/imgs/nearby1.png"
 			},
 			{
 				"pagePath": "pages/personal/personal",

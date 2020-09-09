@@ -141,19 +141,18 @@
 							}
 						}, 1000)
 					} else {
-						console.log('2',res)
-						// this.btnTitle = 180
-						// this.txt = '秒后获取'
-						// let timer = setInterval(function() {
-						// 	if (_this.btnTitle == 1) {
-						// 		clearInterval(timer)
-						// 		_this.btnTitle = '获取验证码'
-						// 		_this.txt = ''
-						// 		_this.disabled = false
-						// 	} else {
-						// 		_this.btnTitle = _this.btnTitle - 1
-						// 	}
-						// }, 1000)
+						this.btnTitle = 180
+						this.txt = '秒后获取'
+						let timer = setInterval(function() {
+							if (_this.btnTitle == 1) {
+								clearInterval(timer)
+								_this.btnTitle = '获取验证码'
+								_this.txt = ''
+								_this.disabled = false
+							} else {
+								_this.btnTitle = _this.btnTitle - 1
+							}
+						}, 1000)
 					}
 				})
 			},

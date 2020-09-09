@@ -23,7 +23,7 @@
 							<view class="small-text">种植日期</view>
 						</view>					
 					</view>
-					<image v-if="picker[index] == '大地探针'" style="width:100%;height: 600rpx;" mode="heightFix" :src="LiveUrl.liveCoverUrl" ></image>
+					<image v-if="picker[index] == '大地探针'" style="width:100%;height: 600rpx;" mode="aspectFit" src="../../static/imgs/The-probe.jpg" ></image>
 					<video v-else id="myVideo" autoplay="true" custom-cache="false"  controls style="width:100%;height: 600rpx;" :poster='LiveUrl.liveCoverUrl'
 					 :src="LiveUrl.hlsLivePlayUrl">
 					</video>
@@ -163,7 +163,7 @@
 				imgsArr:[],//生长历程
 				index:0,
 				picker:[],
-				imgUrl:'' ,//非直播设备的图片地址 
+				// imgUrl:'' ,//非直播设备的图片地址 
 				LiveUrl: [], // 设备直播地址
 			};
 		},
@@ -200,10 +200,10 @@
 		},
 		mounted() {},
 		methods: {
-		
 			PickerChange(e) {
 				this.index = e.detail.value;
 				this.deviceId=this.deviceList[this.index].deviceId;
+				
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
@@ -290,6 +290,7 @@
 					// 处理该设备有的检测类型
 					// this.monitorings = res.data.data.monitorings
 					//*** */
+					console.log(res)
 					let arr = this.obj.creationTime.split(' ')
 					let YMD = arr[0]
 					let MD = YMD.split('-')
@@ -312,10 +313,10 @@
 					this.deviceList = res.data.data
 					if(this.deviceList.length>0){
 						this.deviceId=this.deviceList[0].deviceId
+						this.picker = [];
 						this.deviceList.map(item=>{
 							this.picker.push(item.deviceName)
 						})
-						
 						// this.findDeviceData()
 						// this.findRangeDatay()
 					}
@@ -344,7 +345,8 @@
 						})
 						item.resArr=arr					
 					})
-					this.imgUrl = http.config.imgUrl + this.imgsArr[this.imgsArr.length -1].resArr[0];
+					this.imgsArr.reverse();
+					// this.imgUrl = http.config.imgUrl + this.imgsArr[0].resArr[0]; //非直播获取图片
 				})
 			},
 			findRangeDatay() { //折线图所有数据集合

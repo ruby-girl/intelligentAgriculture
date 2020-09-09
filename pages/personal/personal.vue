@@ -47,16 +47,14 @@
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/tip.png" mode=""></image>版本更新
 					</view>
-					<text class="tip-text">当前1.0.1</text>
-				
+					<text class="tip-text">当前1.0.8</text>
 				</view>
-				<view class="cu-form-group item-jt" @click="toGetNearTheEquipment">
+				<!-- <view class="cu-form-group item-jt" @click="toGetNearTheEquipment">
 					<view class="title display-flex align-items-center">
 						<image class="small-img" src="../../static/imgs/fujin.png" mode=""></image>查找附近设备
 					</view>
 					<image src="../../static/imgs/arrows.png" mode=""></image>
-				
-				</view>
+				</view> -->
 				<view class="cu-form-group item-jt" @click="toSetWaring">
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/warning.png" mode=""></image>预警设置
