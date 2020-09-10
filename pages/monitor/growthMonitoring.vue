@@ -242,7 +242,7 @@
 				}
 				this.$api.getUnlimited(obj).then(res => {
 					this.shoeModel = true
-					this.modelImg = 'https://xyzn.tree-iot.com' + res.data.path
+					this.modelImg = http.config.imgUrl+ res.data.path
 				})
 			},
 			hideModal() {
