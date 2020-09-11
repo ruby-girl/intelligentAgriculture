@@ -218,7 +218,7 @@ export default {
 	onLoad(option) {
 		this.windowHeight = uni.getSystemInfoSync().windowHeight; // 屏幕的高度
 		qqmapsdk = new QQMapWX({
-			key: 'L7NBZ-HIX33-ZHZ3T-Y52IZ-R22DK-LIBK7'
+			key: 'BOBBZ-PX2CP-XDNDR-VJPPF-Z4HA5-ISBUS'
 		});
 		let _this = this;
 		uni.getStorage({

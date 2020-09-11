@@ -120,7 +120,7 @@
             "urlCheck" : true,
             "es6" : true,
             "postcss" : true,
-            "minified" : false
+            "minified" : true
         },
         "usingComponents" : true,
         "permission" : {
