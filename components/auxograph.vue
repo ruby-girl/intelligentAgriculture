@@ -13,9 +13,9 @@
 				</view>
 						
 				<view class="timeline-item" v-else>	
-					<view class="timeline-img-right flex">				
-						<view class="time-txt">{{item.date}}</view>
+					<view class="timeline-img-left flex">	
 						<view class="border-box"></view>
+						<view class="time-txt">{{item.date}}</view>
 					</view>	
 					<view class="timeline-content js--fadeInRight">							
 						<image :src="pathUrl+item.resArr[0]" mode="widthFix" @tap="toPhoto(item.resArr)"></image>

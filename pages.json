@@ -140,16 +140,7 @@
 				"disableScroll": true
 			}
 		}, 
-		// {
-		// 	"path": "pages/aiRecognition/aiRecognition",
-		// 	"style": {
-		// 		"navigationBarTitleText": "AI识别",
-		// 		"navigationBarBackgroundColor": "#17BB89",
-		// 		"navigationBarTextStyle": "white",
-		// 		"disableScroll": true
-
-		// 	}
-		// }, 
+		
 		{
 			"path": "pages/personal/WarningProcessing",
 			"style": {
@@ -162,7 +153,7 @@
 		{
 			"path": "pages/personal/nearTheEquipment",
 			"style": {
-				"navigationBarTitleText": "附近设备识别",
+				"navigationBarTitleText": "附近30公里设备",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
@@ -189,14 +180,14 @@
 		},{
 			"path": "mandate",
 			"style": {
-				"navigationBarTitleText": "添加员工",
+				"navigationBarTitleText": "添加被授权人",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
 		},{
 			"path": "photoAlbum",
 			"style": {
-				"navigationBarTitleText": "生长历程",
+				"navigationBarTitleText": "成长记录",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white"
 			}
@@ -230,7 +221,7 @@
 		"backgroundColor": "#fff",
 		"list": [{
 				"pagePath": "pages/monitor/monitor",
-				"text": "监测与预警",
+				"text": "监测预警",
 				"iconPath": "static/imgs/detection.png",
 				"selectedIconPath": "static/imgs/detection-1.png"
 			},
@@ -240,15 +231,9 @@
 				"iconPath": "static/imgs/equipment-management-1.png",
 				"selectedIconPath": "static/imgs/equipment-management.png"
 			},
-			// {
-			// 	"pagePath": "pages/aiRecognition/aiRecognition",
-			// 	"text": "AI识别",
-			// 	"iconPath": "static/imgs/ai.png",
-			// 	"selectedIconPath": "static/imgs/ai1.png"
-			// },
 			{
 				"pagePath": "pages/personal/nearTheEquipment",
-				"text": "查找附近",
+				"text": "附近设备",
 				"iconPath": "static/imgs/nearby.png",
 				"selectedIconPath": "static/imgs/nearby1.png"
 			},

@@ -47,7 +47,7 @@
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/tip.png" mode=""></image>版本更新
 					</view>
-					<text class="tip-text">当前1.0.8</text>
+					<text class="tip-text">当前1.0.9</text>
 				</view>
 				<!-- <view class="cu-form-group item-jt" @click="toGetNearTheEquipment">
 					<view class="title display-flex align-items-center">
@@ -63,7 +63,7 @@
 				</view>
 				<view class="cu-form-group item-jt" @click="toMandate">
 					<view class="title display-flex align-items-center">
-						<image class="small-img" src="../../static/imgs/shouquan.png" mode=""></image>添加员工
+						<image class="small-img" src="../../static/imgs/shouquan.png" mode=""></image>添加被授权人
 					</view>
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				

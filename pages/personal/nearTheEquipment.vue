@@ -1,15 +1,15 @@
 <template>
 	<view class="container-y">
-		<map style="width:100%;height:100vh;" show-location :latitude="latitude" :longitude="longitude" :markers="covers" @callouttap="callouttapFunc">
+		<map style="width:100%;height:100vh;" scale="9" show-location :latitude="latitude" :longitude="longitude" :markers="covers" @callouttap="callouttapFunc">
 		</map>
-		<view class="current-postion">
+		<!-- <view class="current-postion">
 			<view class="flex align-items-center justify-content-flex-justify">
 				<view class="">
 					是否保持设备关联
 				</view>
 				<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="#e54d42"></switch>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 

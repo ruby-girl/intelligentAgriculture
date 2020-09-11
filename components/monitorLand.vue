@@ -34,7 +34,7 @@
 				</view>
 		
 			<view>
-				<view class="pie" v-if="itemObject.proportion<50">
+				<view class="pie" v-if="itemObject.proportion<10">
 					<view class="pie-txt">
 						<text>
 							{{itemObject.proportion}}%
@@ -43,7 +43,18 @@
 							{{itemObject.crop}}
 						</view>
 					</view>
-					<view class="pie-cycle" :style="{'transform':'rotate(.'+Math.floor(itemObject.proportion)  +'turn)'}"></view>
+					<view class="pie-cycle" :style="{'transform':'rotate(.0' + Math.floor(itemObject.proportion) +'turn)'}"></view>
+				</view>
+				<view class="pie" v-else-if="itemObject.proportion<50">
+					<view class="pie-txt">
+						<text>
+							{{itemObject.proportion}}%
+						</text>
+						<view class="">
+							{{itemObject.crop}}
+						</view>
+					</view>
+					<view class="pie-cycle" :style="{'transform':'rotate(.'+ Math.floor(itemObject.proportion) +'turn)'}"></view>
 				</view>
 				<view class="pie-big" v-else-if="itemObject.proportion<100">
 					<view class="pie-txt">
