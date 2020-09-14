@@ -22,14 +22,14 @@
 					high:'',
 					warningId:''
 				},
-				massifId:''
+				deviceId:''
 				}
 		},
 		onLoad(option) {
 			this.obj.warningId=option.warningId
 			this.obj.low=option.low
 			this.obj.high=option.high
-			this.massifId=option.massifId
+			this.deviceId=option.deviceId
 		},
 		methods: {
 			setFunc(){
@@ -51,7 +51,7 @@
 								let beforePage = pages[pages.length - 2]; // 前一个页面
 								uni.navigateBack({
 									success: function() {
-										beforePage.onLoad({massifId:_this.massifId}); // 执行前一个页面的onLoad方法
+										beforePage.onLoad({deviceId:_this.deviceId}); // 执行前一个页面的onLoad方法
 									}
 								});
 							},2000)

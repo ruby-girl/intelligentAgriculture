@@ -49,7 +49,7 @@
 									<text class="small-text">1</text>
 									<view class="flex justify-content-flex-justify align-items-center">
 										<view class="timeline-box">
-											<view style="color:#333">{{ item.farmName }} NO.{{ item.massifNo }}</view>
+											<view style="color:#333">{{ item.farmName }} NO.{{ item.massifNo }} {{item.massifName}} {{item.deviceName}}</view>
 											<view style="color:red">{{ item.warningName }}</view>
 										</view>
 										<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
@@ -207,6 +207,7 @@ export default {
 			this.loadingType = 1;
 			this.contentdown = '';
 			this.getData(n);
+			this.warningAll();
 		},
 
 		delOrganUserWorkOrderManage(id) {

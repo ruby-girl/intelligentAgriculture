@@ -2,9 +2,9 @@
 <template>
 	<view class="workOrder">
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-				<view class="list-item margin-top"  v-for="(item,i) in list" :key="i">
-					<view class="flex align-items-center justify-content-flex-justify">
-						<text class="item-title" @tap="toDetail(item)">{{item.warningId?item.warningName:'害虫预警'}}</text>
+				<view class="list-item margin-top"  v-for="(item,i) in list" :key="i" v-if="item.pestsName !=='害虫预警'">
+					<view class="flex align-items-center justify-content-flex-justify" >
+						<text class="item-title" @tap="toDetail(item)" >{{item.warningName}}</text>
 						<switch @change="changeSwitch($event,i,item.warningId)" :class="item.opening?'checked':''" :checked="item.opening?true:false" color="red"></switch>
 					</view>
 					<view class="flex align-items-center justify-content-flex-justify border-top" @tap="toDetail(item)" v-if="item.pestsName!=='害虫预警'">
@@ -27,12 +27,12 @@
 				moreHeight: 30,
 				windowHeight: 300,
 				switchB:true,
-				massifId:'',
+				deviceId:'',
 				list:[]
 			};
 		},
 		onLoad(option) {			
-			this.massifId=option.massifId
+			this.deviceId=option.deviceId
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.findList()
 			// this.getData()
@@ -51,7 +51,7 @@
 				high=item.high
 			}
 				uni.navigateTo({
-					url: 'detailWarning?warningId='+item.warningId+'&massifId='+this.massifId+'&low='+low+'&high='+high
+					url: 'detailWarning?warningId='+item.warningId+'&deviceId='+this.deviceId+'&low='+low+'&high='+high
 				})
 			},
 			changeSwitch(e,i,isPests) {
@@ -87,7 +87,7 @@
 				
 			},
 			findList(){
-				this.$api.findList({massifId:this.massifId}).then(res=>{
+				this.$api.findList({deviceId:this.deviceId}).then(res=>{
 					this.list=res.data.data.warnings
 					this.list.forEach((item,i)=>{
 						let txt=item.warningName.substring(2,6)

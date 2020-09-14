@@ -107,14 +107,36 @@
 					<view style="height: 100%;background-color: #FFFFFF;">
 						<template v-if="TabCur == 1">
 							<view style="padding-top:20rpx" v-if="chartsList.length > 0">
-								<view class="" v-for="(item,n) in chartsList" :key="n">
-									<line-chart :title="item.name" :width="cWidth*2" :height="cHeight*2" :style="{'width':cWidth+'px','height':cHeight+'px'}"
-									 :canvasId="item.field+'Line'" chartType="line" :opts="item.opts" :unit="item.unit" />
+								<view class="" v-for="(item, n) in chartsList" :key="n">
+									<line-chart
+										:title="item.name"
+										:width="cWidth * 2"
+										:height="cHeight * 2"
+										:style="{ width: cWidth + 'px', height: cHeight + 'px' }"
+										:canvasId="item.field + 'Line'"
+										chartType="line"
+										:opts="item.opts"
+										:unit="item.unit"
+										:max="item.max"
+										:min="item.min"
+									/>
 								</view>
 							</view>
 						</template>
 						<template v-if="TabCur == 2">
-							<view class="text-center"><text>最近30天成长记录</text></view>
+							<view class="uni-list" style="margin:10rpx 0;">
+								<view class="uni-list-cell">
+									<view class="uni-list-cell-left " style="width: 50%;text-align: center;">切换日期</view>
+									<view class="uni-list-cell-db ">
+										<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
+											<view class="uni-input" style="height: 80rpx;text-align: center;">{{ date }}</view>
+										</picker>
+									</view>
+								</view>
+							</view>
+							<view class="text-center">
+								<text>{{ textMsg }}</text>
+							</view>
 							<auxograph :imgsArr="imgsArr" />
 						</template>
 					</view>
@@ -140,7 +162,13 @@ export default {
 		Auxograph
 	},
 	data() {
+		const currentDate = this.getDate({
+			format: true
+		});
 		return {
+			date: currentDate,
+			isTitme: true,
+			textMsg: '最近15天成长记录',
 			chartsList: [],
 			baseId: '',
 			obj: {
@@ -174,7 +202,7 @@ export default {
 			index: 0,
 			picker: [],
 			// imgUrl:'' ,//非直播设备的图片地址
-			LiveUrl: [] ,// 设备直播地址
+			LiveUrl: [] // 设备直播地址
 		};
 	},
 	onShareAppMessage: function() {
@@ -209,6 +237,14 @@ export default {
 		this.getCode();
 	},
 	mounted() {},
+	computed: {
+		startDate() {
+			return this.getDate('start');
+		},
+		endDate() {
+			return this.getDate('end');
+		}
+	},
 	methods: {
 		PickerChange(e) {
 			this.index = e.detail.value;
@@ -251,6 +287,7 @@ export default {
 				page: 'pages/monitor/growthMonitoring',
 				width: '250'
 			};
+
 			this.$api.getUnlimited(obj).then(res => {
 				this.shoeModel = true;
 				this.modelImg = 'https://xyzn.tree-iot.com' + res.data.path;
@@ -305,7 +342,6 @@ export default {
 					// 处理该设备有的检测类型
 					// this.monitorings = res.data.data.monitorings
 					//*** */
-					console.log(res);
 					let arr = this.obj.creationTime.split(' ');
 					let YMD = arr[0];
 					let MD = YMD.split('-');
@@ -347,7 +383,6 @@ export default {
 				.then(res => {
 					this.monitorings = res.data.data.monitorings;
 					this.LiveUrl = res.data.data;
-					console.log('设备数据：', this.monitorings);
 				});
 		},
 		GetDeviceImageData() {
@@ -367,6 +402,7 @@ export default {
 					item.resArr = arr;
 				});
 				this.imgsArr.reverse();
+				console.log('生长历程', this.imgsArr);
 				// this.imgUrl = http.config.imgUrl + this.imgsArr[0].resArr[0]; //非直播获取图片
 			});
 		},
@@ -402,10 +438,54 @@ export default {
 						items.opts = option;
 					});
 					this.chartsList = [...chartsList];
-					console.log('折线数据，', this.chartsList);
 				});
 		},
-		
+		bindDateChange: function(e) {
+			this.isTitme = false;
+			this.date = e.target.value;
+			this.textMsg = e.target.value + '当天的成长记录';
+			var str = e.detail.value.split('-');
+			var date = str[0] + str[1] + str[2];
+			this.$api.imagesDate({ deviceId: this.deviceId, date: date }).then(res => {
+				var Arrimgs = new Array();
+				res.data.data.forEach(item =>{
+					Arrimgs.push({
+						date:this.formats(item.time),
+						picture:item.url,
+						resArr:[item.url],
+					})
+				})
+				this.imgsArr = Arrimgs;
+			});
+		},
+		add0(m){return m<10?'0'+m:m },
+		formats(time)
+		{
+			//time是整数，否则要parseInt转换
+			var time = new Date(time);
+			var y = time.getFullYear();
+			var m = time.getMonth()+1;
+			var d = time.getDate();
+			var h = time.getHours();
+			var mm = time.getMinutes();
+			var s = time.getSeconds();
+			return y+'-'+this.add0(m)+'-'+this.add0(d)+' '+this.add0(h)+':'+this.add0(mm)+':'+this.add0(s);
+		},
+		getDate(type) {
+			const date = new Date();
+			let year = date.getFullYear();
+			let month = date.getMonth() + 1;
+			let day = date.getDate();
+
+			if (type === 'start') {
+				year = year - 60;
+			} else if (type === 'end') {
+				year = year + 2;
+			}
+			month = month > 9 ? month : '0' + month;
+			day = day > 9 ? day : '0' + day;
+			return `${year}-${month}-${day}`;
+		}
 		// showImg(url){
 		// 	let list = new Array();
 		// 	list.push(url);

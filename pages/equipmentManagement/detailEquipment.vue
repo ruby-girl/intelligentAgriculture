@@ -32,9 +32,8 @@
 				</view>
 				<view class="flex align-items-center justify-content-flex-justify">
 					<view class="font-size-16 ">
-						<text class="color-grey">信号指标强度：</text><text>{{obj.signallntensity||''}}dBm</text>
+						<text class="color-grey">信号指标强度：</text><text>{{obj.signalIntensity}}dBm</text>
 					</view>
-					
 				</view>
 			</view>
 			<view class="color-grey" style="text-align: center;">数据更新于{{obj.newest||''}}</view>

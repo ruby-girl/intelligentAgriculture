@@ -414,3 +414,11 @@ export const  userUpdateNearby= (data) => {
 		data:data
 	})
 }
+// 根据指定日期返回成长历程图
+export const imagesDate= (data) => {
+	return http.request({
+		url: 'api/device/imagesDate',
+		method: 'post',
+		data:data
+	})
+}

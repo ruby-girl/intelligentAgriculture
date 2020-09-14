@@ -132,7 +132,8 @@
 			},
 			toSet(id){
 				uni.navigateTo({
-					url: 'setTheWarning?massifId='+id
+					// url: 'setTheWarning?massifId='+id,
+					url: 'deviceList?massifId='+id
 				})
 			}
 		}

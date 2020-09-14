@@ -8,7 +8,7 @@
 						<view class="time-txt">{{item.date}}</view>
 					</view>	
 					<view class="timeline-content js--fadeInLeft">
-						<image :src="pathUrl+item.resArr[0]" mode="widthFix" @tap="toPhoto(item.resArr)"></image>
+						<image :src="item.resArr[0]" mode="widthFix" @tap="toPhoto(item.resArr)"></image>
 					</view>
 				</view>
 						
@@ -18,7 +18,7 @@
 						<view class="time-txt">{{item.date}}</view>
 					</view>	
 					<view class="timeline-content js--fadeInRight">							
-						<image :src="pathUrl+item.resArr[0]" mode="widthFix" @tap="toPhoto(item.resArr)"></image>
+						<image :src="item.resArr[0]" mode="widthFix" @tap="toPhoto(item.resArr)"></image>
 					</view>
 				</view>
 			</view>

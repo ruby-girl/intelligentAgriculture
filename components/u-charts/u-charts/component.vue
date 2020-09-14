@@ -36,6 +36,12 @@
 				type: Number,
 				default: 1,
 			},
+			max:{
+				type:Number,
+			},
+			min:{
+				type:Number,
+			},
 			title:{type: String,default: '1'},
 			opts:{},
 			unit:{}
@@ -82,6 +88,7 @@
 					},
 					yAxis: {
 						//disabled:true
+						
 					},
 					dataLabel: true,
 					width: this.cWidth * this.pixelRatio,
@@ -124,8 +131,8 @@
 						gridColor: '#999',
 						dashLength: 8,
 						splitNumber: 5,
-						min: 10,
-						max: 50,
+						max:this.max,
+						min:this.min,
 						format: (val) => {
 							return val.toFixed(0) + unit
 						}
