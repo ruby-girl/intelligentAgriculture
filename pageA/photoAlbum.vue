@@ -1,6 +1,6 @@
 <template>
 	<view class="flex justify-content-flex-justify flex-wrap img-container">
-		<view v-for="(item,i) in imgArr" :key="i" class="img-box" :style="{background: 'url('+pathUrl+item+')',backgroundSize:'100% 100%'}" @tap="showImg(i)">
+		<view v-for="(item,i) in imgArr" :key="i" class="img-box" :style="{background: 'url('+item+')',backgroundSize:'100% 100%'}" @tap="showImg(i)">
 		</view>
 	</view>
 </template>
@@ -22,7 +22,7 @@
 			showImg(index){
 				let list = new Array()
 				this.imgArr.forEach(item => {
-					list.push(this.pathUrl + item)
+					list.push(item)
 				})
 				uni.previewImage({
 					urls:list,
