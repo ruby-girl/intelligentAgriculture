@@ -188,7 +188,7 @@ export default {
 				_this.getFarmDetail();
 				_this.getData();
 				_this.warningAll();
-				_this.massifFindFarmPests();
+				// _this.massifFindFarmPests();
 			}
 		});
 	},
@@ -200,9 +200,11 @@ export default {
 			// uni.navigateTo({
 			// 	url: 'nearTheEquipment?latitude='+this.latitude+'&longitude='+this.longitude+'&farmId='+this.farmId
 			// })
-			uni.navigateTo({
-				url: 'nearTheEquipment?farmId=' + this.farmId
-			});
+			
+			// uni.navigateTo({
+			// 	url: './nearTheEquipment?farmId=' + this.farmId
+			// });
+			
 		},
 		callPhone(phone) {
 			if (!phone) return;
@@ -362,20 +364,20 @@ export default {
 								id: 111,
 								latitude: this.latitude,
 								longitude: this.longitude,
-								callout: {
-									content: '点击查看附近设备',
-									color: '#333333',
-									fontSize: 14,
-									borderWidth: 1,
-									borderRadius: 10,
-									borderColor: '#aaaaaa',
-									bgColor: '#fff',
-									padding: 4,
-									anchorY: -10,
-									anchorX: 0,
-									display: 'ALWAYS',
-									textAlign: 'center'
-								}
+								// callout: {
+								// 	content: '点击查看附近设备',
+								// 	color: '#333333',
+								// 	fontSize: 14,
+								// 	borderWidth: 1,
+								// 	borderRadius: 10,
+								// 	borderColor: '#aaaaaa',
+								// 	bgColor: '#fff',
+								// 	padding: 4,
+								// 	anchorY: -10,
+								// 	anchorX: 0,
+								// 	display: 'ALWAYS',
+								// 	textAlign: 'center'
+								// }
 							}
 						];
 					} else {
