@@ -129,7 +129,6 @@
 					yAxis: {
 						gridType: 'dash',
 						gridColor: '#999',
-						dashLength: 8,
 						splitNumber: 5,
 						max:this.max,
 						min:this.min,

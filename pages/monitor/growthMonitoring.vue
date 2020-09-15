@@ -401,8 +401,6 @@ export default {
 					});
 					item.resArr = arr;
 				});
-				this.imgsArr.reverse();
-				console.log('生长历程', this.imgsArr);
 				// this.imgUrl = http.config.imgUrl + this.imgsArr[0].resArr[0]; //非直播获取图片
 			});
 		},

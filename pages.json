@@ -163,7 +163,7 @@
 		{
 			"path": "pages/personal/nearTheEquipment",
 			"style": {
-				"navigationBarTitleText": "附近30公里设备",
+				"navigationBarTitleText": "附近100公里设备",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true

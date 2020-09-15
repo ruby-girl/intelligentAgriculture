@@ -1,14 +1,14 @@
 <template>
 	<view class="container-y">
-		<map style="width:100%;height:100vh;" scale="9" show-location :latitude="latitude" :longitude="longitude" :markers="covers" @callouttap="callouttapFunc"></map>
-		<!-- <view class="current-postion">
+		<map style="width:100%;height:100vh;" scale="6" show-location :latitude="latitude" :longitude="longitude" :markers="covers" @callouttap="callouttapFunc"></map>
+		<view class="current-postion">
 			<view class="flex align-items-center justify-content-flex-justify">
 				<view class="">
-					是否保持设备关联
+					是否共享设备
 				</view>
 				<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="#e54d42"></switch>
 			</view>
-		</view> -->
+		</view>
 	</view>
 </template>
 
@@ -80,7 +80,6 @@ export default {
 					uni.getLocation({
 						type: 'gcj02',
 						success: function(res) {
-							console.info('res', res);
 							_this.longitude = res.longitude;
 							_this.latitude = res.latitude;
 							_this.getEquipment();
@@ -126,7 +125,7 @@ export default {
 							padding: 4,
 							anchorY: -10,
 							anchorX: 0,
-							display: 'BYCLICK',
+							display: 'ALWAYS',
 							textAlign: 'center'
 						}
 					};

@@ -22,7 +22,7 @@
 			showImg(index){
 				let list = new Array()
 				this.imgArr.forEach(item => {
-					list.push(this.pathUrl + item)
+					list.push(item)
 				})
 				uni.previewImage({
 					urls:list,
