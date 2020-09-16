@@ -160,15 +160,25 @@
 				"disableScroll": true
 			}
 		},
+		// {
+		// 	"path": "pages/personal/nearTheEquipment",
+		// 	"style": {
+		// 		"navigationBarTitleText": "附近100公里设备",
+		// 		"navigationBarBackgroundColor": "#17BB89",
+		// 		"navigationBarTextStyle": "white",
+		// 		"disableScroll": true
+		// 	}
+		// }, 
 		{
-			"path": "pages/personal/nearTheEquipment",
+			"path": "pages/personal/allNearTheEquipment",
 			"style": {
 				"navigationBarTitleText": "附近100公里设备",
 				"navigationBarBackgroundColor": "#17BB89",
 				"navigationBarTextStyle": "white",
 				"disableScroll": true
 			}
-		}, {
+		},
+		{
 			"path": "pages/aiRecognition/identifyResults",
 			"style": {
 				"navigationBarTitleText": "识别结果",
@@ -198,14 +208,6 @@
 				"path": "photoAlbum",
 				"style": {
 					"navigationBarTitleText": "成长记录",
-					"navigationBarBackgroundColor": "#17BB89",
-					"navigationBarTextStyle": "white"
-				}
-			},
-			{
-				"path": "getNearTheEquipment",
-				"style": {
-					"navigationBarTitleText": "附近设备",
 					"navigationBarBackgroundColor": "#17BB89",
 					"navigationBarTextStyle": "white"
 				}
@@ -243,7 +245,7 @@
 				"selectedIconPath": "static/imgs/equipment-management.png"
 			},
 			{
-				"pagePath": "pages/personal/nearTheEquipment",
+				"pagePath": "pages/personal/allNearTheEquipment",
 				"text": "附近设备",
 				"iconPath": "static/imgs/nearby.png",
 				"selectedIconPath": "static/imgs/nearby1.png"
