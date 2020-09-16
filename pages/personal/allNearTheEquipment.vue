@@ -168,7 +168,13 @@ export default {
               _this.latitude = res.latitude;
               if(_this.isLogin){
                   _this.getEquipment();
-              }
+              }else{
+				  uni.showToast({
+				    icon: "none",
+				    title: "请登录后获取附近设备！",
+				    duration: 2000
+				  });
+			  }
             }
           });
         },
@@ -222,7 +228,7 @@ export default {
               }
             };
             this.covers.push(obj);
-            console.log("re", obj);
+    
           });
         });
     },
