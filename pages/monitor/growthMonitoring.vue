@@ -249,6 +249,7 @@ export default {
 		PickerChange(e) {
 			this.index = e.detail.value;
 			this.deviceId = this.deviceList[this.index].deviceId;
+			this.chartsList = [];
 		},
 		tabSelect(e) {
 			this.TabCur = e.currentTarget.dataset.id;
