@@ -65,7 +65,7 @@
 							{{itemObject.crop}}
 						</view>
 					</view>
-					<view class="pie-cycle" :style="{'transform':'rotate(.'+Math.floor(itemObject.proportion)/10+'turn)'}"></view>
+					<view class="pie-cycle" :style="{'transform':'rotate(.'+Math.floor(itemObject.proportion) +'turn)'}"></view>
 				</view>
 				<view class="pie-big-end" v-else-if="itemObject.proportion==100">
 					<view class="pie-txt">

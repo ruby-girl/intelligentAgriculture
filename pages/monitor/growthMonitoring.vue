@@ -236,6 +236,13 @@ export default {
 		this.openid = getApp().globalData.openid;
 		this.getCode();
 	},
+	onAppHide(){
+		console.log('离开页面')
+	},
+	onUnload(){
+		console.log('离开页面')
+		this.deviceCommand(0);
+	},
 	mounted() {},
 	computed: {
 		startDate() {
@@ -250,6 +257,7 @@ export default {
 			this.index = e.detail.value;
 			this.deviceId = this.deviceList[this.index].deviceId;
 			this.chartsList = [];
+			this.deviceCommand(1);
 		},
 		tabSelect(e) {
 			this.TabCur = e.currentTarget.dataset.id;
@@ -370,6 +378,14 @@ export default {
 					this.deviceList.map(item => {
 						this.picker.push(item.deviceName);
 					});
+					this.deviceCommand(1);
+					uni.setStorage({
+						key: 'video',
+						data: this.deviceList,
+						success() {
+							
+						}
+					})
 					// this.findDeviceData()
 					// this.findRangeDatay()
 				}
@@ -447,28 +463,29 @@ export default {
 			var date = str[0] + str[1] + str[2];
 			this.$api.imagesDate({ deviceId: this.deviceId, date: date }).then(res => {
 				var Arrimgs = new Array();
-				res.data.data.forEach(item =>{
+				res.data.data.forEach(item => {
 					Arrimgs.push({
-						date:this.formats(item.time),
-						picture:item.url,
-						resArr:[item.url],
-					})
-				})
+						date: this.formats(item.time),
+						picture: item.url,
+						resArr: [item.url]
+					});
+				});
 				this.imgsArr = Arrimgs;
 			});
 		},
-		add0(m){return m<10?'0'+m:m },
-		formats(time)
-		{
+		add0(m) {
+			return m < 10 ? '0' + m : m;
+		},
+		formats(time) {
 			//time是整数，否则要parseInt转换
 			var time = new Date(time);
 			var y = time.getFullYear();
-			var m = time.getMonth()+1;
+			var m = time.getMonth() + 1;
 			var d = time.getDate();
 			var h = time.getHours();
 			var mm = time.getMinutes();
 			var s = time.getSeconds();
-			return y+'-'+this.add0(m)+'-'+this.add0(d)+' '+this.add0(h)+':'+this.add0(mm)+':'+this.add0(s);
+			return y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s);
 		},
 		getDate(type) {
 			const date = new Date();
@@ -484,6 +501,31 @@ export default {
 			month = month > 9 ? month : '0' + month;
 			day = day > 9 ? day : '0' + day;
 			return `${year}-${month}-${day}`;
+		},
+		deviceCommand(index) { // 控制直播设备开关
+			for (var i = 0; i < this.deviceList.length; i++) {
+				if (index == 1 && this.deviceList[this.index].deviceName == '生态智慧树') {
+					this.re(this.deviceList[this.index].sn,index);
+				}
+				if (index == 0 && this.deviceList[i].deviceName == '生态智慧树') {
+					this.re(this.deviceList[this.index].sn,index);
+				}
+			}
+		},
+		re(num,i){
+			uni.request({
+				url:'https://xyzn.tree-iot.com/api/device/command',
+				data:{
+					num: this.deviceList[this.index].sn,
+					number:i
+				},
+				method:"POST",
+				header:{
+					'Content-Type': 'application/json'
+				},
+				success(res) {
+				}
+			})
 		}
 		// showImg(url){
 		// 	let list = new Array();

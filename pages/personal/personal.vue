@@ -15,7 +15,6 @@
 					登录/注册
 				</view>
 			</view>
-
 		</view>
 		<view class="flex justify-content-flex-justify positon-box">
 			<view class="item-box" @click="toMyFarm">

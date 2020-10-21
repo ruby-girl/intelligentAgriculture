@@ -13,6 +13,25 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+			var data = uni.getStorageSync('video');
+			if (data) {
+				data.forEach(item => {
+					uni.request({
+						url:'https://xyzn.tree-iot.com/api/device/command',
+						data:{
+							num: item.sn,
+							number:0
+						},
+						method:"POST",
+						header:{
+							'Content-Type': 'application/json'
+						},
+						success(res) {
+							uni.removeStorageSync('video');
+						}
+					})
+				})
+			}
 		},
 
 		globalData: {
