@@ -6,9 +6,9 @@
 		</view>
 		<view class="cu-form-group">
 			<view class="title">手机号码</view>
-			<input class="form-input-left" v-model="postData.phone" type="number" placeholder="请输入手机号码"></input>
+			<input class="form-input-left" v-model="postData.staffPhone" type="number" placeholder="请输入手机号码"></input>
 		</view>
-		<view :class="{'bottom-lg-btn':true}" @click="authSave">保存</view>
+		<view :class="{'bottom-lg-btn':true}" @click="hireInsert">保存</view>
 	</view>
 </template>
 
@@ -18,7 +18,7 @@
 			return {
 				postData:{
 					staffName:'',
-					phone:''
+					staffPhone:''
 				}
 			}
 		},
@@ -27,8 +27,8 @@
 			
 		},
 		methods: {
-			authSave(){
-				this.$api.authSave(this.postData).then(res=>{
+			hireInsert(){
+				this.$api.hireInsert(this.postData).then(res=>{
 					uni.showToast({
 						title: '授权成功',
 						duration: 2000,

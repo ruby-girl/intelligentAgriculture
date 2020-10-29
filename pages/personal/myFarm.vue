@@ -19,12 +19,12 @@
 			 @tap="toDetail(item.farmId)">
 				<view class="flex align-items-center justify-content-flex-justify">
 					<text class="item-title">{{item.farmName}}</text>
-					<view class="del-box" @click.stop="delFarm(item.farmId)">删除</view>
+					<!-- <view class="del-box" @click.stop="delFarm(item.farmId)">删除</view> -->
 					<!-- <image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image> -->
 				</view>
 				<view style="line-height:35px;">
 					<image style="width:17px;height:20px;" src="../../static/imgs/location-2.png"></image>
-					<text>{{item.provinceName}}{{item.cityName}}{{item.arerName}}{{item.address||''}}</text>
+					<text>{{item.provinceName}}{{item.cityName}}{{item.countyName}}{{item.address||''}}</text>
 				</view>
 				<view class="flex align-items-center justify-content-flex-justify">
 					<view class="item-type-box flex align-items-center justify-content-flex-justify">
@@ -171,24 +171,25 @@
 					pageNum: this.page,
 					pageSize: this.pageSize
 				}
-				this.$api.farmGetAll(obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.farms)
-					if (this.page == 1 && this.newsList.length == 0) {
-						this.loadingType = 0
-						this.contentdown = '暂无数据'
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-						this.contentdown = ''
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-						this.contentdown = '无更多数据'
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length) {
-						this.loadingType = 0
-						this.contentdown = '无更多数据'
-					} else {
-						this.contentdown = '上拉加载更多'
-						this.loadingType = 1
-					}
+				this.$api.farmList({userId:uni.getStorageSync('XYZNUserInfo').userId}).then(res => {
+					// this.newsList = this.newsList.concat(res.data.data.farms)
+					this.newsList = res.data.data
+					// if (this.page == 1 && this.newsList.length == 0) {
+					// 	this.loadingType = 0
+					// 	this.contentdown = '暂无数据'
+					// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
+					// 	this.contentdown = ''
+					// 	this.loadingType = 0
+					// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
+					// 	this.contentdown = '无更多数据'
+					// 	this.loadingType = 0
+					// } else if (res.data.data.rowCount == this.newsList.length) {
+					// 	this.loadingType = 0
+					// 	this.contentdown = '无更多数据'
+					// } else {
+					// 	this.contentdown = '上拉加载更多'
+					// 	this.loadingType = 1
+					// }
 				})
 			}
 		}

@@ -50,14 +50,14 @@
 						<view class="flex align-items-center justify-content-flex-justify">
 							<view class="detail-name flex align-items-center" style="border:none;">
 								<!-- <image style="width: 30px;height: 30px;" src="../../static/imgs/deit.png" mode="aspectFill"></image> -->
-								<view class="cu-avatar lg round" :style="{ backgroundImage: 'url(' + imgUrl + farmDetail.masterPicture + ')' }"></view>
-								<view style="line-height:18px;margin-right: 5px;">
+								<view class="cu-avatar lg round" :style="{ backgroundImage: 'url('+ masterPicture + ')' }"></view>
+								<view style="line-height:18px;margin-left: 5px;">
 									<view>{{ farmDetail.master }}</view>
-									<view class="detail-small-txt">{{ farmDetail.fphone }}</view>
+									<view class="detail-small-txt">{{ farmDetail.masterPhone }}</view>
 								</view>
 							</view>
 							<view class="detail-img">
-								<image @click="callPhone(farmDetail.fphone)" style="width: 30px;height: 30px;" src="../../static/imgs/phone.png" mode="aspectFill"></image>
+								<image @click="callPhone(farmDetail.masterPhone)" style="width: 30px;height: 30px;" src="../../static/imgs/phone.png" mode="aspectFill"></image>
 							</view>
 						</view>
 					</view>
@@ -66,7 +66,7 @@
 					<view><text style="font-size: 16px;">农场介绍</text></view>
 					<view class="detail-small-txt">{{ farmDetail.introduce || '' }}</view>
 					<view class="flex align-items-center imgs-box">
-						<view v-for="(item, i) in imgArr" :key="i" class="cu-avatar lg" :style="{ backgroundImage: 'url(' + imgUrl + item + ')' }"></view>
+						<view v-for="(item, i) in imgArr" :key="i" class="cu-avatar lg" :style="{ backgroundImage: 'url(' + item + ')' }"></view>
 					</view>
 				</view>
 			</scroll-view>
@@ -96,7 +96,7 @@
 				<view style="height: 100%;background-color: #FFFFFF;">
 					<template >
 						<view class="cu-timeline" v-if="timeList.length > 0">
-							<view class="cu-item text-olive" v-for="(item, i) in timeList" :key="i">
+							<!-- <view class="cu-item text-olive" v-for="(item, i) in timeList" :key="i">
 								<text class="small-text">{{ item.creationTime }}</text>
 								<text class="small-text">1</text>
 								<view class="flex justify-content-flex-justify align-items-center">
@@ -106,6 +106,17 @@
 									</view>
 									<navigator class="cu-btn bg-green" :url="'WarningProcessing?item=' + encodeURIComponent(JSON.stringify(item))">查看</navigator>
 								</view>
+							</view> -->
+							<view class="cu-item text-olive" v-for="(item, i) in timeList" :key="i">
+								<text class="small-text">{{ item.createTime }}</text>
+								<view class="flex  align-items-center">
+									<view class="timeline-box">
+										<view style="color:#333">{{ item.farmName }} NO.{{ item.massifNo }} {{item.massifName}} </view>
+										<view style="color:red">{{ item.warnName }}</view>
+									</view>
+									<button size="mini" class="bg-green" @click="showModel(item.warnMessage)">查看</button>
+								</view>
+								
 							</view>
 						</view>
 						<view class="loading-more" v-else><image src="../../static/imgs/No.png" mode="aspectFit" style="height: 80%;"></image></view>
@@ -121,10 +132,12 @@
 import QQMapWX from '@/static/qqmap-wx-jssdk.min.js';
 import { throttle } from '@/utils/index.js';
 import landBlock from '@/components/landBlock.vue';
+import popup from '@/components/neil-modal/neil-modal.vue';
 var qqmapsdk;
 export default {
 	components: {
-		landBlock
+		landBlock,
+		popup
 	},
 	data() {
 		return {
@@ -169,10 +182,7 @@ export default {
 			popupShow: false,
 			modelContent: '',
 			imgArr: [],
-			timeList: [],
-			popupShow: false,
-			modelContent: '',
-			imgArr: []
+			masterPicture:'',
 		};
 	},
 	onLoad(option) {
@@ -187,7 +197,6 @@ export default {
 				_this.farmId = res.data;
 				_this.getFarmDetail();
 				_this.getData();
-				_this.warningAll();
 				// _this.massifFindFarmPests();
 			}
 		});
@@ -214,9 +223,11 @@ export default {
 			});
 		},
 		showModel(txt) {
+			console.log('asd');
 			this.modelContent = txt;
 			this.popupShow = true;
 		},
+		
 		closePopup() {
 			this.popupShow = false;
 		},
@@ -250,7 +261,6 @@ export default {
 			this.loadingType = 1;
 			this.contentdown = '';
 			this.getData();
-			this.warningAll();
 		},
 		scrolltoupper() {
 			console.info('下拉');
@@ -263,17 +273,29 @@ export default {
 				this.getData();
 			}
 		},
-		warningAll() {
+		warningAll(index,array) {
 			//获取农场下所有预警
-			let obj = {
-				pageNum: 1,
-				pageSize: 3
-			};
-			this.$api.warningAll(obj).then(res => {
-				this.timeList = res.data.data.massifs;
+			this.$api.warnMsgGetAll().then(res => {
+				var list = [];
+				res.data.data.forEach(items =>{
+					array.forEach(item => {
+						if (items.deviceId == item.deviceId) {
+							list.push(items);
+						}
+					})
+				})
+				this.timeList = list;
 				if (this.timeList.length > 0) {
-					this.tabs[2].name = `预警（${this.timeList.length}）`;
-				}
+						this.tabs[2].name = `预警（${this.timeList.length}）`;
+					}
+				// this.timeList = res.data.data.massifs;
+				// if (++index < array.length) {
+				// 	this.warningAll(index, array);
+				// } else {
+				// 	if (this.timeList.length > 0) {
+				// 		this.tabs[2].name = `预警（${this.timeList.length}）`;
+				// 	}
+				// }
 			});
 		},
 		// massifFindFarmPests() {
@@ -292,54 +314,106 @@ export default {
 		// },
 		getData() {
 			//获取农场下所有地块
-			let obj = {
-				pageNum: this.page,
-				pageSize: 10,
-				farmId: this.farmId
-			};
-			this.$api.massifSelectFarmId(obj).then(res => {
-				this.newsList = this.newsList.concat(res.data.data.massifs);
-				this.newsList.forEach((item, i) => {
-					if (this.newsList[i].status == 'ONLINE') {
-						this.newsList[i].statusTxt = '在线';
-					} else if (this.newsList[i].status == 'OFFLINE') {
-						this.newsList[i].statusTxt = '离线';
-					} else if (this.newsList[i].status == 'UNACTIVE') {
-						this.newsList[i].statusTxt = '未激活';
-					} else if (this.newsList[i].status == 'DISABLE') {
-						this.newsList[i].statusTxt = '禁用';
-					}
-				});
-				if (this.page == 1 && this.newsList.length == 0) {
-					this.loadingType = 0;
-					this.contentdown = '暂无数据';
-				} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-					this.contentdown = '';
-					this.loadingType = 0;
-				} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-					this.contentdown = '无更多数据';
-					this.loadingType = 0;
-				} else if (res.data.data.rowCount == this.newsList.length) {
-					this.loadingType = 0;
-					this.contentdown = '无更多数据';
+			this.$api.massifGetMassif({farmId:this.farmId}).then(res => {
+				
+				this.findMassifIdByDevice(0,res.data.data)
+				// this.newsList.forEach((item, i) => {
+				// 	if (this.newsList[i].status == 'ONLINE') {
+				// 		this.newsList[i].statusTxt = '在线';
+				// 	} else if (this.newsList[i].status == 'OFFLINE') {
+				// 		this.newsList[i].statusTxt = '离线';
+				// 	} else if (this.newsList[i].status == 'UNACTIVE') {
+				// 		this.newsList[i].statusTxt = '未激活';
+				// 	} else if (this.newsList[i].status == 'DISABLE') {
+				// 		this.newsList[i].statusTxt = '禁用';
+				// 	}
+				// });
+				// if (this.page == 1 && this.newsList.length == 0) {
+				// 	this.loadingType = 0;
+				// 	this.contentdown = '暂无数据';
+				// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
+				// 	this.contentdown = '';
+				// 	this.loadingType = 0;
+				// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
+				// 	this.contentdown = '无更多数据';
+				// 	this.loadingType = 0;
+				// } else if (res.data.data.rowCount == this.newsList.length) {
+				// 	this.loadingType = 0;
+				// 	this.contentdown = '无更多数据';
+				// } else {
+				// 	this.contentdown = '上拉加载更多';
+				// 	this.loadingType = 1;
+				// }
+			});
+		},
+		findMassifIdByDevice(index,array) {
+			this.$api.monitor({ massifId: array[index].massifId }).then(res => {
+				// 产品数据
+				array[index].proportion = res.data.data.proportion;
+				if (++index < array.length) {
+					this.findMassifIdByDevice(index, array);
 				} else {
-					this.contentdown = '上拉加载更多';
-					this.loadingType = 1;
+					this.massifGetDeviceList(0,array);
 				}
 			});
 		},
+		massifGetDeviceList(index,array) {
+			// 根据地块获取设备列表
+			this.$api.massifGetDeviceList({ massifId: array[index].massifId }).then(res => {
+				array[index].deviceId = res.data.data[0].deviceId;
+				if (++index < array.length) {
+					this.massifGetDeviceList(index, array);
+				} else {
+					this.getOneData(0,array);
+					this.warningAll(0,array);
+				}
+			});
+		},
+		getOneData(index, array) {
+			// 根据id获取设备详情
+			this.$api.selectDevice({ deviceId: array[index].deviceId }).then(res => {
+				if (res.data.data.Details.status == 'ONLINE') {
+					array[index].statusTxt = '在线';
+				} else if (res.data.data.Details.status == 'OFFLINE') {
+					array[index].statusTxt = '离线';
+				} else if (res.data.data.Details.status == 'UNACTIVE') {
+					array[index].statusTxt = '未激活';
+				} else if (res.data.data.Details.status == 'DISABLE') {
+					array[index].statusTxt = '禁用';
+				}
+				if (++index < array.length) {
+					this.getOneData(index, array);
+				} else {
+					this.deviceGetPresentData(0,array);
+				}
+			});
+		},
+		deviceGetPresentData(index,array) {
+			//根据设备ID拿监测数据
+			this.$api.deviceGetPresentData({ deviceId: array[index].deviceId}).then(res => {
+					array[index].monitorings = res.data.data;
+					if (++index < array.length) {
+						this.deviceGetPresentData(index, array);
+					} else {
+						this.newsList = array;
+					}
+				});
+		},
 		getFarmDetail() {
 			this.$api
-				.selectFarmId({
+				.farmGetOne({
 					farmId: this.farmId
 				})
 				.then(res => {
-					this.farmDetail = res.data.data;
-					this.farmAddress = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName + (this.farmDetail.address || '');
-					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.arerName;
-					if (res.data.data.picture) {
-						this.imgArr = res.data.data.picture.split(','); //农场图片
+					this.farmDetail = res.data.data[0].farm;
+					this.masterPicture = res.data.data[0].masterPhotos[0].path;
+					this.farmAddress = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.countyName + (this.farmDetail.address || '');
+					let area = this.farmDetail.provinceName + this.farmDetail.cityName + this.farmDetail.countyName;
+					if (res.data.data[0].farmPhoto[0].path) {
+						this.imgArr = res.data.data.farmPhoto[0].path; //农场图片
 					}
+					
+					console.log(this.farmDetail);
 					this.atuoGetLocation(this.farmAddress, area);
 				});
 		},
@@ -356,6 +430,7 @@ export default {
 			qqmapsdk.geocoder({
 				address: addr,
 				complete: res => {
+					console.log('dis',res)
 					if (res.result) {
 						this.latitude = res.result.location.lat;
 						this.longitude = res.result.location.lng;

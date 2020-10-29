@@ -46,7 +46,7 @@
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/tip.png" mode=""></image>版本更新
 					</view>
-					<text class="tip-text">当前1.0.10</text>
+					<text class="tip-text">当前1.0.12</text>
 				</view>
 				<view class="cu-form-group item-jt" @click="toSetWaring">
 					<view class="title display-flex align-items-center">
@@ -168,13 +168,20 @@
 					return
 				}
 				uni.navigateTo({
-					url: '/pageA/mandate'
+					url: '/pageA/impowerList'
 				});
 			},
 			getCount() {
 				this.$api.massifCount().then(res => {
-					this.nums = res.data.data;
+					this.nums.massifCount = res.data.data;
 				}).catch(res=>{
+					console.info('没登录')
+					this.isLogin = false
+					getApp().globalData.isLogin = false
+				});
+				this.$api.farmCount().then(res => {
+					this.nums.farmCount = res.data.data
+				}).catch(res =>{
 					console.info('没登录')
 					this.isLogin = false
 					getApp().globalData.isLogin = false

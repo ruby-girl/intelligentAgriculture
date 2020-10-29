@@ -16,15 +16,15 @@
 				 refresher-background="#eee" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 				 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 				 @scrolltolower="loadingData">
-					<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index" @tap="toDetail(item.deviceId)">
-						<view class="">
+					<view class="list-item" :style="{'margin-top':index==0?true:false}" v-for="(item,index) in newsList" :key="index" >
+						<view class="" >
 							<view class="flex align-items-center justify-content-flex-justify">
 								<view class="">
-									<text>SN:{{item.sn||''}}</text>
+									<text>SN:{{item.deviceSn||''}}</text>
 									<text>{{item.deviceName||''}}</text>
 								</view>
 								<view>
-									<image v-if="item.statusTxt=='在线'" class="line-img" src="../../static/imgs/online.png" mode="aspectFill"></image>
+									<image v-if="item.Details.status=='ONLINE'" class="line-img" src="../../static/imgs/online.png" mode="aspectFill"></image>
 									<image v-else class="line-img" src="../../static/imgs/offline.png" mode="aspectFill"></image>
 									<text :style="{'color':item.statusTxt=='在线'?'#49BA89':'#E50C05'}">{{item.statusTxt||''}}</text>
 									<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
@@ -36,9 +36,8 @@
 								<view class="item-bottom-box-left" style="border-right:1px solid #eee;">
 									<view  class="flex align-items-center justify-content-flex-justify">
 										<view>版本信息</view>
-										
 									</view>
-									<view>{{item.firmwareVersion}}</view>
+									<view>{{item.Details.firmwareVersion}}</view>
 									<!-- <text>已是最新版本</text> -->
 								</view>
 								<!-- 报红 -->
@@ -55,25 +54,36 @@
 								</view>
 							</view>
 						</view>
-						
+						<view class=""  style="padding: 10rpx;border-top: 1px solid #E5E5E5;">
+							<view class="flex align-items-center justify-content-flex-justify" >
+								<view class="text-center flex-1 small-text " style="border-right: 1px solid #E5E5E5;" @tap="show(false,item.deviceId)">解绑</view>
+								<view class="text-center flex-1 small-text" @tap="toDetail(item.deviceId)">换绑</view>
+								<view class="text-center flex-1" style="border-left: 1px solid #E5E5E5;font-size: 12px;color: #E50C05;" @tap="show(true,item.deviceId)">删除</view>
+							</view>
+						</view>
 					</view>
 					<view class="loading-more">{{contentdown}}</view>
+					
 				</scroll-view>
 		</view>
 		<view v-else>
 			<not-login />
 		</view>
+		<popup :content='textMsg' align='center' cancelText="我再想想" :show='popupShow' :showCancel='true' confirmText='确定'
+		@confirm="confirmFunc()" @close="closePopup" />
 	</view>
 </template>
 
 <script>
+	import popup from "@/components/neil-modal/neil-modal.vue"
 	import {
 		throttle
 	} from "@/utils/index.js"
 	import notLogin from "@/components/notLogin/notLogin.vue"
 	export default {
 		components: {
-			notLogin
+			notLogin,
+			popup,
 		},
 		data() {
 			return {
@@ -100,7 +110,11 @@
 				triggered: false,
 				_freshing: false,
 				isLogin:false,
-				countObj:{}
+				countObj:{},
+				popupShow: false,
+				textMsg:'',
+				deviceId:'',
+				type:'',
 			};
 		},
 		onLoad(option) {
@@ -128,6 +142,36 @@
 			this.loadingData = throttle(this.loadingData, 2000);
 		},
 		methods: {
+			show(num,id){
+				this.popupShow = true;
+				this.deviceId = id;
+				this.type = num;
+				if (num) {
+					this.textMsg = '删除设备会清除该设备所有数据,确认删除么？'
+				} else {
+					this.textMsg = '解绑设备会解除与现有地块的绑定,确认解绑么？'
+				}
+			},
+			confirmFunc(){
+				var api = '';
+				var that = this;
+				if (this.type) {
+					api = 'deviceDelete';
+				} else {
+					api = 'deviceUnbind';
+				}
+				this.$api[api]({deviceId:this.deviceId}).then(res => {
+					uni.showToast({
+						title:'成功',
+						success() {
+							that.initData();
+						}
+					})
+				})
+			}, 
+			closePopup(){
+				this.popupShow = false;
+			},
 			deviceCount(){//获取在线数/所有设备
 				this.$api.deviceCount().then(res=>{
 					this.countObj=res.data.data
@@ -169,7 +213,7 @@
 			},
 			toDetail(id){//跳转详情
 				uni.navigateTo({
-					url: 'detailEquipment?deviceId='+id
+					url: 'addEquipment?deviceId='+id
 				})
 			},
 			scrolltoupper() {
@@ -184,44 +228,33 @@
 				}
 			},
 			getData(n) {
-				let obj = {
-					pageNum: this.page,
-					pageSize: 6
-				}
-				this.$api.findByDevice(obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.devices)
-					this.newsList.forEach((item,i)=>{
-						if(this.newsList[i].status=='ONLINE'){
-							this.newsList[i].statusTxt='在线'
-						}else if(this.newsList[i].status=='OFFLINE'){
-							this.newsList[i].statusTxt='离线'
-						}else if(this.newsList[i].status=='UNACTIVE'){
-							this.newsList[i].statusTxt='未激活'
-						}else if(this.newsList[i].status=='DISABLE'){
-							this.newsList[i].statusTxt='禁用'
+				this.$api.deviceGetList().then(res => {
+					this.getOneData(0,res.data.data)
+				})
+			},
+			getOneData(index,array){// 根据id获取设备详情
+				if (array.length > 0) {
+					this.$api.selectDevice({deviceId:array[index].deviceId}).then(res => {
+						array[index].Details = res.data.data.Details;
+						if(++index < array.length){
+							this.coverFindByidlist(index,array);
+						} else {
+							array.forEach((item,i)=>{
+								if(array[i].Details.status=='ONLINE'){
+									array[i].statusTxt='在线'
+								}else if(array[i].Details.status=='OFFLINE'){
+									array[i].statusTxt='离线'
+								}else if(array[i].Details.status=='UNACTIVE'){
+									array[i].statusTxt='未激活'
+								}else if(array[i].Details.status=='DISABLE'){
+									array[i].statusTxt='禁用'
+								}
+							});
+							this.newsList = array;
 						}
 					})
-					if (this.page == 1 && this.newsList.length == 0) {
-						this.loadingType = 0
-						this.contentdown = '暂无数据'
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-						this.contentdown = ''
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-						this.contentdown = '无更多数据'
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length) {
-						this.loadingType = 0
-						this.contentdown = '无更多数据'
-					} else {
-						this.contentdown = '上拉加载更多'
-						this.loadingType = 1
-					}
-					if(n){//设备列表请求时间过长，所以放在回调里获取在线数/所有设备
-						this.deviceCount()
-					}
-				})
-			}
+				}
+			},
 		}
 	}
 </script>
@@ -257,7 +290,7 @@
 		box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.2);
 		border-radius: 6px;
 		background: #fff;
-		padding: 20rpx 0 20px 10px;
+		padding: 20rpx  20rpx 0 20rpx;
 		margin: 20rpx 8rpx 30rpx 8rpx;
 
 		image {

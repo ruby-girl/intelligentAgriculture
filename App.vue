@@ -13,31 +13,19 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
-			var data = uni.getStorageSync('video');
-			if (data) {
-				data.forEach(item => {
-					uni.request({
-						url:'https://xyzn.tree-iot.com/api/device/command',
-						data:{
-							num: item.sn,
-							number:0
-						},
-						method:"POST",
-						header:{
-							'Content-Type': 'application/json'
-						},
-						success(res) {
-							uni.removeStorageSync('video');
-						}
-					})
-				})
-			}
 		},
 
 		globalData: {
 			imgUrl: 'https://xyzn.tree-iot.com',
-			baseUrl: 'https://xyzn.tree-iot.com/',
+			baseUrl: 'https://www.sc-kwt.com/tracing/',// 1022
+			baseUrl3: 'https://www.sc-kwt.com/tools/', // 1021
 			isLogin: false,
+			oss:{
+				endpoint: 'oss-cn-beijing.aliyuncs.com',
+				osskeyid: 'LTAI4GEKh2XfGchAVZigtFrK',
+				osskeysecret: '5TIsFoGWykYJhCMpF2dSz1g46QqVpb',
+				bucketname: 'xkzn-file',
+			},
 			openId: ''
 		}
 	}

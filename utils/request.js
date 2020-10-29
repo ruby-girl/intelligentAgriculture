@@ -1,8 +1,8 @@
 export default {
 	config: {
-		//baseUrl: "https://www.sc-kwt.com/",
-		baseUrl:"https://xyzn.tree-iot.com/",
-		imgUrl:"https://xyzn.tree-iot.com",
+		baseUrl: "https://www.sc-kwt.com/",
+		// baseUrl:"https://yd.sc-kwt.com/tracing/",
+		imgUrl:"https://www.sc-kwt.com",
 		header: {
 			'Content-Type': 'application/json',
 			'Authorization': '',
@@ -43,8 +43,8 @@ export default {
 
 		options.header = {
 			'token': uni.getStorageSync('XYZNUserInfo').token || '',
-			'cookie': uni.getStorageSync('XYZNUserInfo').cookie || '',
-			'Content-Type': 'application/x-www-form-urlencoded'
+			// 'cookie': uni.getStorageSync('XYZNUserInfo').cookie || '',
+			'Content-Type': 'application/json'
 		}
 		return new Promise((resolve, reject) => {
 			let _config = null
@@ -68,7 +68,7 @@ export default {
 				_reslog(response)
 				if (statusCode === 200) { //成功
 					uni.hideLoading();
-					if (response.data.stateCode == 200) {
+					if (response.data.code == 200) {
 						resolve(response);
 					} else if(response.data.msg=='USER_NOT_LOGIN'){
 						uni.showToast({

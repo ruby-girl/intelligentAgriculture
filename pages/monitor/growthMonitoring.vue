@@ -7,22 +7,22 @@
 					<view class="map-top-box flex align-items-center justify-content-flex-justify">
 						<view class="map-top-item">
 							<view style="font-size: 15px;font-weight: bold;">{{ obj.proportion }}%</view>
-							<view class="small-text">{{ obj.crop }}</view>
+							<view class="small-text">{{ obj.crops }}</view>
 						</view>
 						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">{{ obj.surplus }}</view>
+							<view style="font-size: 15px;font-weight: bold;">{{ obj.remaining }}</view>
 							<view class="small-text">剩余时间(天)</view>
 						</view>
 						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">{{ obj.already }}</view>
+							<view style="font-size: 15px;font-weight: bold;">{{ obj.growth }}</view>
 							<view class="small-text">已成长(天)</view>
 						</view>
 						<view class="map-top-item">
-							<view style="font-size: 15px;font-weight: bold;">{{ obj.creationTime }}</view>
+							<view style="font-size: 15px;font-weight: bold;">{{ obj.date }}</view>
 							<view class="small-text">种植日期</view>
 						</view>
 					</view>
-					<image v-if="picker[index] == '大地探针'" style="width:100%;height: 600rpx;" mode="aspectFit" src="../../static/imgs/The-probe.jpg"></image>
+					<image v-if="!LiveUrl" style="width:100%;height: 600rpx;" mode="aspectFit" src="../../static/imgs/The-probe.jpg"></image>
 					<video
 						v-else
 						id="myVideo"
@@ -41,7 +41,7 @@
 									<view class="item-title">
 										<view class="order-title" style="font-weight: bold;">NO.{{ obj.massifNo }} {{ obj.massifName }}</view>
 										<view class="order-title small-text">当前设备：{{ picker[index] }}</view>
-										<view class="order-title small-text">{{ obj.farmName }}</view>
+										<view class="order-title small-text">{{ data.farmName }}</view>
 									</view>
 								</view>
 								<picker @change="PickerChange" :value="index" :range="picker">
@@ -55,9 +55,9 @@
 								<view class="item-content-box" v-for="(item, n) in monitorings" :key="n">
 									<view class="item-num">
 										{{ item.value || '-' }}
-										<span class="small-txt">{{ item.unit }}</span>
+										<span class="small-txt">{{ item.unit || '' }}</span>
 									</view>
-									<text class="small-text">{{ item.name }}</text>
+									<text class="small-text">{{ item.operation }}</text>
 								</view>
 							</view>
 							<view class="flex align-items-center">
@@ -67,7 +67,7 @@
 									<text class="small-txt">%</text>
 								</text>
 							</view>
-							<view class="flex">
+							<!-- <view class="flex">
 								<view class="map-bottom-tip">
 									<view class="likes-box flex justify-content-flex-center align-items-center">
 										<view class="flex justify-content-flex-center align-items-center likes-shere-box">
@@ -83,7 +83,7 @@
 										</view>
 									</view>
 								</view>
-							</view>
+							</view> -->
 						</view>
 					</view>
 				</view>
@@ -109,7 +109,7 @@
 							<view style="padding-top:20rpx" v-if="chartsList.length > 0">
 								<view class="" v-for="(item, n) in chartsList" :key="n">
 									<line-chart
-										:title="item.name"
+										:title="item.operation"
 										:width="cWidth * 2"
 										:height="cHeight * 2"
 										:style="{ width: cWidth + 'px', height: cHeight + 'px' }"
@@ -170,10 +170,8 @@ export default {
 			isTitme: true,
 			textMsg: '最近15天成长记录',
 			chartsList: [],
-			baseId: '',
-			obj: {
-				proportion: '0'
-			},
+			data: {},
+			obj: {},
 			tabs: [
 				{
 					id: 1,
@@ -214,9 +212,9 @@ export default {
 	},
 	watch: {
 		deviceId(v, n) {
-			this.findDeviceData();
-			this.findRangeDatay();
-			this.GetDeviceImageData();
+			this.findMassifIdByDevice();
+			this.deviceetScopeImage();
+			// this.GetDeviceImageData();
 		}
 	},
 	onLoad(option) {
@@ -229,19 +227,18 @@ export default {
 		this.videoContext = wx.createVideoContext('myVideo');
 	},
 	onShow() {
-		this.getData();
+		// this.getData();
 		this.findMassifIdByDevice(); //获取设备
 		this.cWidth = uni.upx2px(750);
 		this.cHeight = uni.upx2px(500);
 		this.openid = getApp().globalData.openid;
-		this.getCode();
+		// this.getCode();
 	},
-	onAppHide(){
-		console.log('离开页面')
+	onAppHide() {
+		console.log('离开页面');
 	},
-	onUnload(){
-		console.log('离开页面')
-		this.deviceCommand(0);
+	onUnload() {
+		console.log('离开页面');
 	},
 	mounted() {},
 	computed: {
@@ -257,7 +254,6 @@ export default {
 			this.index = e.detail.value;
 			this.deviceId = this.deviceList[this.index].deviceId;
 			this.chartsList = [];
-			this.deviceCommand(1);
 		},
 		tabSelect(e) {
 			this.TabCur = e.currentTarget.dataset.id;
@@ -342,118 +338,182 @@ export default {
 		},
 		getData() {
 			//获取检测详情
-			this.$api
-				.massifMonitor({
-					massifId: this.massifId
-				})
-				.then(res => {
-					this.obj = res.data.data;
-					// 处理该设备有的检测类型
-					// this.monitorings = res.data.data.monitorings
-					//*** */
-					let arr = this.obj.creationTime.split(' ');
-					let YMD = arr[0];
-					let MD = YMD.split('-');
-					this.obj.creationTime = MD[1] + '-' + MD[2];
-					if (this.obj.status == 'ONLINE') {
-						this.obj.statusTxt = '在线';
-					} else if (this.obj.status == 'OFFLINE') {
-						this.obj.statusTxt = '离线';
-					} else if (this.obj.status == 'UNACTIVE') {
-						this.obj.statusTxt = '未激活';
-					} else if (this.obj.status == 'DISABLE') {
-						this.obj.statusTxt = '禁用';
-					} else {
-						this.obj.statusTxt = '-';
-					}
-				});
+			// this.$api
+			// 	.massifMonitor({
+			// 		massifId: this.massifId
+			// 	})
+			// 	.then(res => {
+			// 		this.obj = res.data.data;
+			// 		// 处理该设备有的检测类型
+			// 		// this.monitorings = res.data.data.monitorings
+			// 		//*** */
+			// 		let arr = this.obj.creationTime.split(' ');
+			// 		let YMD = arr[0];
+			// 		let MD = YMD.split('-');
+			// 		this.obj.creationTime = MD[1] + '-' + MD[2];
+			// 		if (this.obj.status == 'ONLINE') {
+			// 			this.obj.statusTxt = '在线';
+			// 		} else if (this.obj.status == 'OFFLINE') {
+			// 			this.obj.statusTxt = '离线';
+			// 		} else if (this.obj.status == 'UNACTIVE') {
+			// 			this.obj.statusTxt = '未激活';
+			// 		} else if (this.obj.status == 'DISABLE') {
+			// 			this.obj.statusTxt = '禁用';
+			// 		} else {
+			// 			this.obj.statusTxt = '-';
+			// 		}
+			// 	});
 		},
 		findMassifIdByDevice() {
-			//设备
-			this.$api.findMassifIdByDevice({ massifId: this.massifId, pageNum: 1, pageSize: 20 }).then(res => {
-				this.deviceList = res.data.data;
-				if (this.deviceList.length > 0) {
-					this.deviceId = this.deviceList[0].deviceId;
-					this.picker = [];
-					this.deviceList.map(item => {
-						this.picker.push(item.deviceName);
-					});
-					this.deviceCommand(1);
-					uni.setStorage({
-						key: 'video',
-						data: this.deviceList,
-						success() {
-							
-						}
-					})
-					// this.findDeviceData()
-					// this.findRangeDatay()
+			this.$api.monitor({ massifId: this.massifId }).then(res => {
+				// 产品数据
+				this.obj = res.data.data;
+				this.massifGetOne();
+			});
+		},
+		massifGetOne() {
+			// 获取地块
+			this.$api.massifGetOne({ massifId: this.massifId }).then(res => {
+				this.obj.massifName = res.data.data.massifName;
+				this.obj.massifNo = res.data.data.massifNo;
+				this.farmGetOne(res.data.data.farmId);
+			});
+		},
+		farmGetOne(id) {
+			// 根据地块查询农场
+			this.$api.farmGetOne({ farmId: id }).then(res => {
+				this.data = res.data.data[0].farm;
+				this.massifGetDeviceList();
+			});
+		},
+		massifGetDeviceList() {
+			// 根据地块获取设备列表
+			this.$api.massifGetDeviceList({ massifId: this.massifId }).then(res => {
+				this.getOneData(0, res.data.data);
+			});
+		},
+		getOneData(index, array) {
+			// 根据id获取设备详情
+			this.$api.selectDevice({ deviceId: array[index].deviceId }).then(res => {
+				if (res.data.data.Details.status == 'ONLINE') {
+					array[index].statusTxt = '在线';
+				} else if (res.data.data.Details.status == 'OFFLINE') {
+					array[index].statusTxt = '离线';
+				} else if (res.data.data.Details.status == 'UNACTIVE') {
+					array[index].statusTxt = '未激活';
+				} else if (res.data.data.Details.status == 'DISABLE') {
+					array[index].statusTxt = '禁用';
+				}
+				if (++index < array.length) {
+					this.getOneData(index, array);
+				} else {
+					this.deviceList = array;
+					if (this.deviceList.length > 0) {
+						this.deviceId = this.deviceList[0].deviceId;
+						this.picker = [];
+						this.deviceList.map(item => {
+							this.picker.push(item.deviceName);
+						});
+						
+						this.deviceGetPresentData()
+						this.findRangeDatay()
+						this.deviceetScopeImage();
+					}
 				}
 			});
 		},
-		findDeviceData() {
+		
+		deviceGetPresentData() {
 			//根据设备ID拿监测数据
 			this.$api
-				.findDeviceData({
+				.deviceGetPresentData({
 					deviceId: this.deviceId
 				})
 				.then(res => {
-					this.monitorings = res.data.data.monitorings;
+					this.monitorings = res.data.data;
+				});
+				
+			this.$api.deviceGetLivePath({
+					deviceId: this.deviceId
+				}).then(res =>{
 					this.LiveUrl = res.data.data;
-				});
+				})
 		},
-		GetDeviceImageData() {
+		deviceetScopeImage() {
 			//生长历程
-			this.$api.GetDeviceImageData({ deviceId: this.deviceId }).then(res => {
-				this.imgsArr = res.data.data;
-				this.imgsArr.map(item => {
-					let f = item.picture.split('[')[1];
-					let t = f.split(']')[0];
-					let arr = t.split(',');
-					arr.forEach((li, n) => {
-						if (li.charAt(0) == ' ') {
-							li = li.split(' ')[1];
-						}
-						arr[n] = li;
+			this.$api.deviceetScopeImage({ 
+				device:{
+					deviceId: this.deviceId,
+				}
+			}).then(res => {
+				var Arrimgs = new Array();
+				res.data.data.forEach(item => {
+					Arrimgs.push({
+						date: this.formats(item.time),
+						picture: item.url,
+						resArr: [item.url],
+						deviceId:this.deviceId,
 					});
-					item.resArr = arr;
 				});
+				this.imgsArr = Arrimgs;
 				// this.imgUrl = http.config.imgUrl + this.imgsArr[0].resArr[0]; //非直播获取图片
 			});
 		},
+		
 		findRangeDatay() {
 			//折线图所有数据集合
 			this.$api
-				.findRangeData({
+				.getScopeData({
 					deviceId: this.deviceId
 				})
 				.then(res => {
-					var chart = res.data.data;
-					var chartsList = chart.filter(li => {
-						return li.sevenDays.data;
-					});
+					var chartsList = res.data.data;
+					// var chartsList = chart.filter(li => {
+					// 	return li.sevenDays.data;
+					// });
 					chartsList.map(items => {
-						let orderDps = items.sevenDays.data[0].orderDps;
+						// let orderDps = items.sevenDays.data[0].orderDps;
 						let option = {
 							//数字的图--折线图数据
-							categories: [],
+							categories: this.GetTime(),
 							series: [
 								{
 									name: '',
-									data: []
+									data: items.dps,
 								}
 							]
 						};
-						orderDps.forEach(item => {
-							if (item.value !== undefined && item.timestamp) {
-								option.categories.push(formatDate(item.timestamp));
-								option.series[0].data.push(parseFloat(item.value).toFixed(1));
+						items.dps.forEach(item => {
+							if (item !== undefined && item) {
+								// option.categories.push(formatDate(item.timestamp));
+								option.series[0].data.push(parseFloat(item).toFixed(1));
 							}
 						});
+						console.log(option.series);
 						items.opts = option;
 					});
 					this.chartsList = [...chartsList];
 				});
+		},
+		GetTime() { // 获取当前时间前7天
+			var date = new Date();
+			var base = Date.parse(date); // 转换为时间戳
+			var year = date.getFullYear(); //获取当前年份
+			var mon = date.getMonth() + 1; //获取当前月份
+			var day = date.getDate(); //获取当前日
+			var oneDay = 24 * 3600 *1000
+			var daytime = `${year}${mon >= 10 ? mon : '0' + mon}${day >= 10 ? day : '0' + day}`; //今日时间
+			this.$data.daytime = daytime; // 今日时间赋值给变量
+			
+			var daytimeArr = []
+			for (var i = 1; i < 7 ; i++) { //前七天的时间
+				var now = new Date(base -= oneDay);
+				var myear = now.getFullYear();
+				var month = now.getMonth() + 1;
+				var mday = now.getDate()
+				daytimeArr.push([myear, month >=10 ?month :'0'+ month, mday>=10?mday:'0'+mday].join('-'))
+			}
+			return daytimeArr
 		},
 		bindDateChange: function(e) {
 			this.isTitme = false;
@@ -461,13 +521,19 @@ export default {
 			this.textMsg = e.target.value + '当天的成长记录';
 			var str = e.detail.value.split('-');
 			var date = str[0] + str[1] + str[2];
-			this.$api.imagesDate({ deviceId: this.deviceId, date: date }).then(res => {
+			this.$api.deviceGetImage({
+				device: {
+		            deviceId: this.deviceId
+		        },
+		        time:date
+			}).then(res => {
 				var Arrimgs = new Array();
 				res.data.data.forEach(item => {
 					Arrimgs.push({
 						date: this.formats(item.time),
 						picture: item.url,
-						resArr: [item.url]
+						resArr: [item.url],
+						deviceId:this.deviceId,
 					});
 				});
 				this.imgsArr = Arrimgs;
@@ -502,30 +568,20 @@ export default {
 			day = day > 9 ? day : '0' + day;
 			return `${year}-${month}-${day}`;
 		},
-		deviceCommand(index) { // 控制直播设备开关
-			for (var i = 0; i < this.deviceList.length; i++) {
-				if (index == 1 && this.deviceList[this.index].deviceName == '生态智慧树') {
-					this.re(this.deviceList[this.index].sn,index);
-				}
-				if (index == 0 && this.deviceList[i].deviceName == '生态智慧树') {
-					this.re(this.deviceList[this.index].sn,index);
-				}
-			}
-		},
-		re(num,i){
+		
+		re(num, i) {
 			uni.request({
-				url:'https://xyzn.tree-iot.com/api/device/command',
-				data:{
+				url: 'https://xyzn.tree-iot.com/api/device/command',
+				data: {
 					num: this.deviceList[this.index].sn,
-					number:i
+					number: i
 				},
-				method:"POST",
-				header:{
+				method: 'POST',
+				header: {
 					'Content-Type': 'application/json'
 				},
-				success(res) {
-				}
-			})
+				success(res) {}
+			});
 		}
 		// showImg(url){
 		// 	let list = new Array();

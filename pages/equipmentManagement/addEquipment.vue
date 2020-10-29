@@ -1,11 +1,11 @@
 <template>
 	<view>
-		<view class="cu-form-group" style="position: relative;">
+		<view v-if="!obj.deviceId" class="cu-form-group" style="position: relative;">
 			<view class="title">设备序列号</view>
-			<input placeholder="输入设备名称" v-model="obj.SN" name="input" @input="findDeviceName"></input>
-			<image @click="toScanCode" class="code-img" src="../../static/imgs/qr-code.png" mode=""></image>
+			<input placeholder="输入设备名称" v-model="obj.deviceSn" name="input" @input="findDeviceName" :disabled="obj.deviceId"></input>
+			<image @click="toScanCode" class="code-img" src="../../static/imgs/qr-code.png" mode="" ></image>
 		</view>
-		<view class="cu-form-group">
+		<view v-if="!obj.deviceId" class="cu-form-group">
 			<view class="title">设备名称</view>
 			<input placeholder="设备名称将自动填入" v-model="obj.deviceName" name="input" disabled></input>
 		</view>
@@ -27,7 +27,7 @@
 				obj: {
 					deviceName: '',
 					massifId: '',
-					SN: '',
+					deviceSn: '',
 					deviceId: ''
 				},
 				massifsList: [],
@@ -41,9 +41,9 @@
 				uni.setNavigationBarTitle({
 					title: "编辑设备"
 				})
-				this.btnTxt = '保存'
+				this.btnTxt = '保存';
 			} else {
-				this.selectMassif()
+				this.selectMassif();
 			}
 
 		},
@@ -52,7 +52,7 @@
 				let _this = this
 				uni.scanCode({
 					success: function(res) {
-						_this.obj.sn = res.result
+						_this.obj.deviceSn = res.result
 					}
 				});
 			},
@@ -60,20 +60,13 @@
 				this.$api.selectDevice({
 					deviceId: this.obj.deviceId
 				}).then(res => {
-					let obj = res.data.data
-					obj.SN = obj.sn
-					delete obj.sn
-					delete obj.newest
-					this.obj = obj
+					this.obj = res.data.data.device;
 					this.selectMassif()
 				})
 			},
 			selectMassif() { //获取地块列表
-				this.$api.selectMassif({
-					pageNum: 1,
-					pageSize: 100
-				}).then(res => {
-					this.massifsList = res.data.data.massifs
+				this.$api.selectMassif().then(res => {
+					this.massifsList = res.data.data
 					this.massifsList.unshift({
 						massifId: "",
 						massifName: "请选择"
@@ -105,7 +98,7 @@
 					return
 				}
 				if (!this.obj.deviceId) {
-					if (!this.obj.SN && !this.obj.deviceId) {
+					if (!this.obj.deviceSn && !this.obj.deviceId) {
 						uni.showToast({
 							title: '请输入设备序列号',
 							icon: 'none'
@@ -116,7 +109,6 @@
 				let postData;
 				postData = { ...this.obj}
 				if (!this.obj.massifId) {
-					
 					delete postData.massifId
 				}
 				console.info('postData',postData)
@@ -151,12 +143,12 @@
 				});
 			},
 			findDeviceName(){// 通过SN带出设备名称
-				if (this.obj.SN.length >= 12) {
+				if (this.obj.deviceSn.length >= 12) {
 					this.$api.findDeviceName({
-						SN:this.obj.SN
+						deviceSn:this.obj.deviceSn
 					}).then(res => {
 						if (res) {
-							this.obj.deviceName = res.data.data;
+							this.obj.deviceName = res.data.data.deviceName;
 						} else {
 							uni.showToast({
 								title:res.message,

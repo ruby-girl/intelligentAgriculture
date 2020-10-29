@@ -41,22 +41,22 @@
 				</scroll-view>
 			</view>
 			<view v-bind:style="{ height: windowHeight - 40 + 'px', padding: '10px 0',paddingTop:'100rpx' }" v-else>
-				<scroll-view v-bind:style="{ height: windowHeight - 100 + 'px', backgroundColor: '#f0f0f0', padingTop:0 }" class="list-containers" scroll-y="true">
+				<scroll-view v-bind:style="{ height: windowHeight - 40 + 'px', backgroundColor: '#f0f0f0', padingTop:0 }" class="list-containers" scroll-y="true">
 					<view style="height: 100%;background-color: #FFFFFF;">
-							<view class="cu-timeline" v-if="timeList.length > 0">
-								<view class="cu-item text-olive" v-for="(item, i) in timeList" :key="i">
-									<text class="small-text">{{ item.creationTime }}</text>
-									<text class="small-text">1</text>
-									<view class="flex justify-content-flex-justify align-items-center">
-										<view class="timeline-box">
-											<view style="color:#333">{{ item.farmName }} NO.{{ item.massifNo }} {{item.massifName}} {{item.deviceName}}</view>
-											<view style="color:red">{{ item.warningName }}</view>
-										</view>
-										<button class="cu-btn bg-green" @click="showModel(item.msg)">查看</button>
+						<view class="cu-timeline" v-if="timeList.length > 0">
+							<view class="cu-item text-olive" v-for="(item, i) in timeList" :key="i">
+								<text class="small-text">{{ item.createTime }}</text>
+								<view class="flex  align-items-center">
+									<view class="timeline-box">
+										<view style="color:#333">{{ item.farmName }} NO.{{ item.massifNo }} {{item.massifName}} </view>
+										<view style="color:red">{{ item.warnName }}</view>
 									</view>
+									<button size="mini" class="bg-green" @click="showModel(item.warnMessage)">查看</button>
 								</view>
+								
 							</view>
-							<view class="loading-more" v-else><image src="../../static/imgs/No.png" mode="aspectFit" style="height: 80%;"></image></view>
+						</view>
+						<view class="loading-more" v-else><image src="../../static/imgs/No.png" mode="aspectFit" style="height: 80%;"></image></view>
 					</view>
 				</scroll-view>
 			</view>
@@ -160,12 +160,9 @@ export default {
 			this.popupShow = false;
 		},
 		warningAll() {
-			let obj = {
-				pageNum: 1,
-				pageSize: 3
-			};
-			this.$api.warningAll(obj).then(res => {
-				this.timeList = res.data.data.massifs;
+			this.$api.warnMsgGetAll().then(res => {
+				this.timeList = res.data.data;
+				this.timeList.reverse();
 				if (this.timeList.length > 0) {
 					this.tabs[1].name = `预警（${this.timeList.length}）`;
 				}
@@ -206,7 +203,7 @@ export default {
 			this.page = 1;
 			this.loadingType = 1;
 			this.contentdown = '';
-			this.getData(n);
+			this.getData();
 			this.warningAll();
 		},
 
@@ -237,60 +234,64 @@ export default {
 			}
 		},
 		getData(n) {
-			let obj = {
-				pageNum: this.page,
-				pageSize: 10
-			};
-			this.$api.selectMonitor(obj).then(res => {
-				this.newsList = this.newsList.concat(res.data.data.massifs);
-				this.newsList.forEach((item, i) => {
-					// if (this.newsList[i].status == 'ONLINE') {
-					// 	this.newsList[i].statusTxt = '在线';
-					// } else if (this.newsList[i].status == 'OFFLINE') {
-					// 	this.newsList[i].statusTxt = '离线';
-					// } else if (this.newsList[i].status == 'UNACTIVE') {
-					// 	this.newsList[i].statusTxt = '未激活';
-					// } else if (this.newsList[i].status == 'DISABLE') {
-					// 	this.newsList[i].statusTxt = '禁用';
-					// } else {
-					// 	this.newsList[i].statusTxt = '-';
-					// }
-					item.device.forEach((li,n)=>{
-						if (li.status == 'ONLINE') {
-							li.statusTxt = '在线';
-						} else if (li.status == 'OFFLINE') {
-							li.statusTxt = '离线';
-						} else if (li.status == 'UNACTIVE') {
-							li.statusTxt = '未激活';
-						} else if (li.status == 'DISABLE') {
-							li.statusTxt = '禁用';
-						} else {
-							li.statusTxt = '-';
-						}
-					})
-				});
-				if (this.page == 1 && this.newsList.length == 0) {
-					this.loadingType = 0;
-					this.contentdown = '暂无数据';
-				} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-					this.contentdown = '';
-					this.loadingType = 0;
-				} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-					this.contentdown = '无更多数据';
-					this.loadingType = 0;
-				} else if (res.data.data.rowCount == this.newsList.length) {
-					this.loadingType = 0;
-					this.contentdown = '无更多数据';
+			
+			this.$api.selectMassif().then(res => { // 获取地块
+				this.farmGetOne(0,res.data.data);
+			})
+		},
+		farmGetOne(index,array){// 根据地块查询农场
+			if (array.length > 0) {
+				this.$api.farmGetOne({farmId:array[index].farmId}).then(res => {
+					array[index].address = res.data.data[0].farm.provinceName + res.data.data[0].farm.cityName + res.data.data[0].farm.countyName + res.data.data[0].farm.address;
+					if(++index < array.length){
+						this.farmGetOne(index,array);
+					} else {
+						this.massifGetDeviceList(0,array);
+					}
+				})
+			}
+		},
+		massifGetDeviceList(index,array) { // 获取设备
+				this.$api.massifGetDeviceList({massifId:array[index].massifId}).then(res => {
+					array[index].device = res.data.data;
+					if(++index < array.length){
+						this.getData(index,array);
+					} else {
+						this.monitor(0,array);
+					}
+				})
+		},
+		monitor(index,array){
+			this.$api.monitor({massifId:array[index].massifId}).then(res => {
+				array[index].proportion = res.data.data.proportion;
+				array[index].crops = res.data.data.crops;
+				if(++index < array.length){
+					this.monitor(index,array);
 				} else {
-					this.contentdown = '上拉加载更多';
-					this.loadingType = 1;
+					this.getOneData(0,0,array);
 				}
-				if (n) {
-					//列表接口请求时间过长，所以放在回调里再请求预警
-					this.findPests();
-					this.warningAll();
-				}
-			});
+			})
+		},
+		getOneData(index,num,array){// 根据id获取设备详情
+				this.$api.selectDevice({deviceId:array[index].device[num].deviceId}).then(res => {
+						if(res.data.data.Details.status=='ONLINE'){
+							array[index].device[num].statusTxt='在线'
+						}else if(res.data.data.Details.status=='OFFLINE'){
+							array[index].device[num].statusTxt='离线'
+						}else if(res.data.data.Details.status=='UNACTIVE'){
+							array[index].device[num].statusTxt='未激活'
+						}else if(res.data.data.Details.status=='DISABLE'){
+							array[index].device[num].statusTxt='禁用'
+						}
+					if (++num < array[index].device.length) {
+						this.getOneData(index,num,array);
+					} else if(++index < array.length){
+						num = 0;
+						this.getOneData(index,num,array);
+					} else {
+						this.newsList = array;
+					}
+				})
 		},
 		tabSelect(e) {
 			this.TabCur = e.currentTarget.dataset.id;

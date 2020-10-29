@@ -40,7 +40,7 @@
 							{{itemObject.proportion}}%
 						</text>
 						<view class="">
-							{{itemObject.crop}}
+							{{itemObject.crops}}
 						</view>
 					</view>
 					<view class="pie-cycle" :style="{'transform':'rotate(.0' + Math.floor(itemObject.proportion) +'turn)'}"></view>
@@ -51,7 +51,7 @@
 							{{itemObject.proportion}}%
 						</text>
 						<view class="">
-							{{itemObject.crop}}
+							{{itemObject.crops}}
 						</view>
 					</view>
 					<view class="pie-cycle" :style="{'transform':'rotate(.'+ Math.floor(itemObject.proportion) +'turn)'}"></view>
@@ -62,7 +62,7 @@
 							{{itemObject.proportion}}%
 						</text>
 						<view class="">
-							{{itemObject.crop}}
+							{{itemObject.crops}}
 						</view>
 					</view>
 					<view class="pie-cycle" :style="{'transform':'rotate(.'+Math.floor(itemObject.proportion) +'turn)'}"></view>
@@ -73,7 +73,7 @@
 							已成熟
 						</text>
 						<view class="">
-							{{itemObject.crop}}
+							{{itemObject.crops}}
 						</view>
 					</view>
 					<view class="pie-cycle" :style="{'transform':'rotate(1turn)'}"></view>

@@ -1,6 +1,21 @@
 <template>
 	<view class="detail-container">
-		<view class="detail-box">
+		<view class="cu-form-group" style="position: relative;">
+			<view class="title">
+				<text class="text-red" style="position: absolute;left: -7px;">*</text>设备序列号
+			</view>
+			<input placeholder="输入地块编号" v-model="obj.massifNo" name="input"></input>
+		</view>
+		<view class="cu-form-group">
+			<view class="title"><text class="text-red" style="position: absolute;left: -7px;">*</text>设备名称</view>
+			<input placeholder="输入地块编号" v-model="obj.massifNo" name="input"></input>
+		</view>
+		<view class="cu-form-group">
+			<view class="title"><text class="text-red" style="position: absolute;left: -7px;">*</text>设备类型</view>
+			<input placeholder="输入地块名称" v-model="obj.massifName" name="input"></input>
+		</view>
+		
+		<!-- <view class="detail-box">
 			<view class="flex align-items-center justify-content-flex-justify">
 				<view class="detail-name">
 					<view><text style="font-weight: bold;font-size: 17px;">SN:{{obj.sn||''}}</text><text style="font-size: 13px;">{{obj.deviceName||''}}</text></view>
@@ -37,8 +52,8 @@
 				</view>
 			</view>
 			<view class="color-grey" style="text-align: center;">数据更新于{{obj.newest||''}}</view>
-		</view>
-		<view class="bottom-lg-btn" @click="popupShow=true">删除设备</view>
+		</view> -->
+		<view class="bottom-lg-btn" v-if="obj.deviceId" @click="popupShow=true">删除设备</view>
 		<popup content='确定要删除该设备吗？' align='center' cancelText="取消" :show='popupShow' :showCancel='true' confirmText='确定'
 		 @confirm="deleteDevice" @close="closePopup" />
 	</view>
@@ -58,7 +73,12 @@
 				}],
 				optionValue: 0,
 				deviceId:'',
-				obj:{},
+				obj:{
+					deviceId:'',
+					deviceSn:'',
+					deviceName:'',
+					
+				},
 				popupShow:false
 			}
 		},
@@ -66,10 +86,21 @@
 			popup
 		},
 		onLoad(option) {
-			this.deviceId=option.deviceId
-			this.selectDevice()
+			if (option.deviceId) {
+				this.obj.deviceId =option.deviceId;
+				uni.setNavigationBarTitle({
+					title:"编辑设备"
+				});
+				this.getOneData();
+			}
+			
 		},
 		methods: {
+			getOneData(){
+				this.$api.getOneData({deviceId:this.obj.deviceId}).then(res => {
+					this.obj  = res.data.data.device;
+				});
+			},
 			closePopup() {
 				this.popupShow = false
 			},

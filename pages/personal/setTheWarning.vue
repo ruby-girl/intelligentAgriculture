@@ -2,15 +2,15 @@
 <template>
 	<view class="workOrder">
 			<scroll-view v-bind:style="{height:(windowHeight-20)+'px'}" class="list-container" scroll-y="true">
-				<view class="list-item margin-top"  v-for="(item,i) in list" :key="i" v-if="item.pestsName !=='害虫预警'">
+				<view class="list-item margin-top"  v-for="(item,i) in list" :key="i" >
 					<view class="flex align-items-center justify-content-flex-justify" >
-						<text class="item-title" @tap="toDetail(item)" >{{item.warningName}}</text>
-						<switch @change="changeSwitch($event,i,item.warningId)" :class="item.opening?'checked':''" :checked="item.opening?true:false" color="red"></switch>
+						<text class="item-title" @tap="toDetail(item)" >{{item.warnName}}</text>
+						<switch @change="changeSwitch($event,i,item.warnId)" :class="item.open?'checked':''" :checked="item.open?true:false" color="red"></switch>
 					</view>
-					<view class="flex align-items-center justify-content-flex-justify border-top" @tap="toDetail(item)" v-if="item.pestsName!=='害虫预警'">
-						<text class="small-text">{{item.warningsTxt}}值</text>
+					<view class="flex align-items-center justify-content-flex-justify border-top" @tap="toDetail(item)" >
+						<text class="small-text">{{item.operation}}值</text>
 						<view>
-							<text>最低{{item.low||''}}{{item.type}} 最高{{item.high||''}}{{item.type}}</text>
+							<text>最低{{item.lowest||''}}{{item.unit}} 最高{{item.highest||''}}{{item.unit}}</text>
 							<image class="jt-img" src="../../static/imgs/arrows.png" mode="aspectFill"></image>
 						</view>
 					</view>
@@ -39,19 +39,19 @@
 		}, 
 		methods: {
 			toDetail(item){//跳转设置
-			let low,high;
-			if(item.low==undefined){
-				low=''
+			let lowest,highest;
+			if(item.lowest==undefined){
+				lowest=''
 			}else{
-				low=item.low
+				lowest=item.lowest
 			}
-			if(item.high==undefined){
-				high=''
+			if(item.highest==undefined){
+				highest=''
 			}else{
-				high=item.high
+				highest=item.highest
 			}
 				uni.navigateTo({
-					url: 'detailWarning?warningId='+item.warningId+'&deviceId='+this.deviceId+'&low='+low+'&high='+high
+					url: 'detailWarning?warnId='+item.warnId+'&deviceId='+this.deviceId+'&low='+lowest+'&high='+highest
 				})
 			},
 			changeSwitch(e,i,isPests) {
@@ -87,18 +87,9 @@
 				
 			},
 			findList(){
-				this.$api.findList({deviceId:this.deviceId}).then(res=>{
-					this.list=res.data.data.warnings
-					this.list.forEach((item,i)=>{
-						let txt=item.warningName.substring(2,6)
-						this.list[i].warningsTxt=txt
-						let type=item.warningName.substring(2,4)
-						if(type=='温度'){
-							this.list[i].type='℃'
-						}else{
-							this.list[i].type='%'
-						}
-					})
+				this.$api.warnGetList({deviceId:this.deviceId}).then(res=>{
+					this.list=res.data.data
+					
 				})
 			}
 

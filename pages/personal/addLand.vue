@@ -2,13 +2,16 @@
 	<!-- 添加地块 -->
 	<view>
 		<view class="cu-form-group" style="position: relative;">
-			<view class="title">选择农场</view>
+			<view class="title">
+				<text class="text-red" style="position: absolute;left: -7px;">*</text>选择农场
+			</view>
 			<picker @change="pickerChange($event)" :value="farmValue" :range="farmList" range-key="farmName">
-				<view class="uni-input">{{farmList[farmValue].farmName}}</view>
+				<view class="">{{farmList[farmValue].farmName}}</view>
 			</picker>
 		</view>
+		
 		<view class="cu-form-group">
-			<view class="title">地块编号</view>
+			<view class="title"><text class="text-red" style="position: absolute;left: -7px;">*</text>地块编号</view>
 			<input placeholder="输入地块编号" v-model="obj.massifNo" name="input"></input>
 		</view>
 		<view class="cu-form-group">
@@ -17,14 +20,14 @@
 		</view>
 		<view class="cu-form-group">
 			<view class="title">关联作物</view>
-			<input placeholder="输入作物名称" v-model="obj.crop" name="input"></input>
+			<input placeholder="输入作物名称" v-model="obj.crops" name="input"></input>
 		</view>
 		<view class="cu-form-group" style="position: relative;">
 			<view class="title">作物周期</view>
 			<input placeholder="输入作物周期" v-model="obj.cycle" type="number" name="input"></input>
 			<text class="unit">天</text>
 		</view>
-		<view class="cu-form-group" style="padding-bottom:0;height:40rpx">
+		<!-- <view class="cu-form-group" style="padding-bottom:0;height:40rpx">
 			<view class="title">关联设备</view>
 		</view>
 		<view class="cu-form-group" style="border-top:none;" v-if="devicegetList.length>0">
@@ -37,7 +40,7 @@
 		<view class="cu-form-group" style="border-top:none;" v-if="obj.massifId">
 			<view class="title">是否关联</view>
 			<switch @change="changeSwitch" :class="switchB?'checked':''" :checked="switchB?true:false" color="red"></switch>
-		</view>
+		</view> -->
 		<view :class="{'bottom-lg-btn':true}" @click="insertMassif">保存</view>
 		<view v-if="obj.massifId" class="bottom-lg-btn" style="background: #fff;color:#000;" @click="delMassif">删除地块</view>
 		<view class="cu-modal" :class="modalName=='DialogModal1'?'show':''">
@@ -79,10 +82,10 @@
 				obj: {
 					massifName: '', //地块名
 					massifNo: '', //地块编号
-					crop: '', //作物
-					cycle: '', //预计作物周期
+					crops: '', //作物
+					// cycle: '', //预计作物周期
 					massifId: '', //地块ID
-					deviceId:[]//设备数组
+					// deviceId:[]//设备数组
 				},
 				devicegetList: [], //设备列表
 				switchB: true, //是否关联设备
@@ -90,24 +93,24 @@
 			}
 		},
 		onLoad(option) {
+			this.getFarmData();
 			if (option.massifId) {
-				this.obj.massifId = option.massifId
-					uni.setNavigationBarTitle({
-						title:"编辑地块"
-					})
+				this.obj.massifId = option.massifId;
+				uni.setNavigationBarTitle({
+					title:"编辑地块"
+				});
+				this.massifGetOne();
 			}
-			this.devicegetNoBangAll()
-			this.getFarmData()
 		},
 		methods: {
 			hideModal(){
 				this.modalName = null
 			},
-			delMassif() { //删除设备
-				if (this.switchB&&this.obj.devices.length>0) {
-					this.modalName = 'DialogModal1'
-					return
-				}			
+			delMassif() { //删除地块
+				// if (this.switchB&&this.obj.devices.length>0) {
+				// 	this.modalName = 'DialogModal1'
+				// 	return
+				// }			
 				this.$api.deleteMassif({
 					massifId: this.obj.massifId
 				}).then(res => {
@@ -184,7 +187,7 @@
 				this.getOptionValue()
 				let api;
 				if(!this.obj.massifId){
-					 api='insertMassif'
+					 api='massifSave'
 				}else api='updateMassif';
 				let postData={...this.obj}
 				delete postData.devices
@@ -224,28 +227,40 @@
 					}
 				})
 			},
-			devicegetNoBangAll() { //获获取未绑定地块设备列表
-				this.$api.devicegetNoBangAll().then(res => {
-					res.data.data.devices.forEach((item, i) => {
-						res.data.data.devices[i].isChecked = false
+			massifGetOne(){ // 根据地块id获取详情
+				var that = this;
+				this.$api.massifGetOne({massifId:this.obj.massifId}).then(res => {
+					this.obj = res.data.data;
+					this.farmList.forEach(function(item, index){
+						if (item.farmId == res.data.data.farmId) {
+							that.farmValue = index;
+						}
 					})
-					let devicegetList = res.data.data.devices
-					if(this.obj.massifId){//如果是编辑
-						this.getLandDetail(this.obj.massifId,devicegetList)//获取地块详情
-					}else{
-						this.devicegetList=devicegetList
-						// if(this.devicegetList.length<1){
-						// 	uni.showToast({
-						// 		title: '当前无可用设备，无法添加地块',
-						// 		icon: 'none'
-						// 	})
-						// 	this.btnDisabled=true
-						// }else{
-						// 	this.btnDisabled=false
-						// }
-					}
+					
 				})
 			},
+			// devicegetNoBangAll() { //获获取未绑定地块设备列表
+			// 	this.$api.devicegetNoBangAll().then(res => {
+			// 		res.data.data.devices.forEach((item, i) => {
+			// 			res.data.data.devices[i].isChecked = false
+			// 		})
+			// 		let devicegetList = res.data.data.devices
+			// 		if(this.obj.massifId){//如果是编辑
+			// 			// this.getLandDetail(this.obj.massifId,devicegetList)//获取地块详情
+			// 		}else{
+			// 			this.devicegetList=devicegetList
+			// 			// if(this.devicegetList.length<1){
+			// 			// 	uni.showToast({
+			// 			// 		title: '当前无可用设备，无法添加地块',
+			// 			// 		icon: 'none'
+			// 			// 	})
+			// 			// 	this.btnDisabled=true
+			// 			// }else{
+			// 			// 	this.btnDisabled=false
+			// 			// }
+			// 		}
+			// 	})
+			// },
 			pickerChange(e) { //选择农场
 				this.farmValue = e.target.value
 			},
@@ -269,8 +284,8 @@
 					pageNum: 1,
 					pageSize: 100
 				}
-				this.$api.farmGetAll(obj).then(res => {
-					this.farmList = res.data.data.farms
+				this.$api.farmList({userId:uni.getStorageSync('XYZNUserInfo').userId}).then(res => {
+					this.farmList = res.data.data
 				})
 			}
 		}
@@ -287,7 +302,11 @@
 	}
 
 	.cu-form-group picker::after {
-		line-height: 50rpx;
+		background: url(../../static/imgs/land-management.png) no-repeat;
+		background-size: 50%;
+		    width: 50px;
+		    height: 50px;
+		    background-position: center;
 	}
 
 	.uni-input {

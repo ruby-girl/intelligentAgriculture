@@ -8,7 +8,7 @@
 			 @scrolltolower="loadingData">
 				<view class="cu-form-group" v-for="(item,i) in newsList" :key="i" style="padding:20rpx 30rpx;" @click="toSet(item.massifId)">
 					<view>
-						<view class="item-title">NO.{{item.massifNo}}  {{item.crop}}地</view>
+						<view class="item-title">NO.{{item.massifNo}}  {{item.massifName}}</view>
 						<view class="small-text">预警设置</view>
 					</view>
 					<image class="right-jt" src="../../static/imgs/arrows.png" mode=""></image>
@@ -106,28 +106,10 @@
 				}
 			},
 			getData() {
-				let obj = {
-					pageNum: this.page,
-					pageSize: 15
-				}
-				this.$api.selectMassif(obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.massifs)
-					if (this.page == 1 && this.newsList.length == 0) {
-						this.loadingType = 0
-						this.contentdown = '暂无数据'
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-						this.contentdown = ''
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-						this.contentdown = '无更多数据'
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length) {
-						this.loadingType = 0
-						this.contentdown = '无更多数据'
-					} else {
-						this.contentdown = '上拉加载更多'
-						this.loadingType = 1
-					}
+			
+				this.$api.selectMassif().then(res => {
+					this.newsList = res.data.data
+					
 				})
 			},
 			toSet(id){

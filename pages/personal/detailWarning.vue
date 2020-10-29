@@ -3,11 +3,11 @@
 	<view>	
 		<view class="cu-form-group">
 			<view class="title">最低预警值</view>
-			<input placeholder="低于此值时预警通知" v-model="obj.low" name="input"></input>
+			<input placeholder="低于此值时预警通知" v-model="obj.lowest" name="input"></input>
 		</view>
 		<view class="cu-form-group">
 			<view class="title">最高预警值</view>
-			<input placeholder="高于此值时预警通知" v-model="obj.high" name="input"></input>
+			<input placeholder="高于此值时预警通知" v-model="obj.highest" name="input"></input>
 		</view>
 		<view class="bottom-lg-btn" @click="setFunc">保存</view>
 	</view>
@@ -18,22 +18,23 @@
 		data() {
 			return {
 				obj:{
-					low:'',
-					high:'',
+					lowest:'',
+					highest:'',
 					warningId:''
 				},
 				deviceId:''
 				}
 		},
 		onLoad(option) {
-			this.obj.warningId=option.warningId
-			this.obj.low=option.low
-			this.obj.high=option.high
+			this.obj.warnId=option.warnId
+			this.obj.lowest=option.lowestlowest
+			this.obj.highest=option.highest
 			this.deviceId=option.deviceId
+			this.obj.open = true;
 		},
 		methods: {
 			setFunc(){
-				if(!this.obj.low||!this.obj.high){
+				if(!this.obj.lowest||!this.obj.highest){
 					uni.showToast({
 						title: '请输入预警值',
 						icon: 'none'
@@ -41,7 +42,7 @@
 					return
 				}
 				let _this=this
-				this.$api.updateValue(this.obj).then(res=>{
+				this.$api.warnUpdate(this.obj).then(res=>{
 					uni.showToast({
 						title: '设置成功',
 						duration: 2000,

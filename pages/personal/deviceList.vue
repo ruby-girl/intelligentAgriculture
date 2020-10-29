@@ -93,27 +93,9 @@
 			getData() {
 				let obj = {
 					massifId:this.massifId,
-					pageNum:this.page,
-					pageSize:15,
 				}
-				this.$api.findMassifIdByDevice(obj).then(res => {
-					this.list = this.list.concat(res.data.data)
-					if (this.page == 1 && this.list.length == 0) {
-						this.loadingType = 0
-						this.contentdown = '暂无数据'
-					} else if (res.data.data.rowCount == this.list.length && this.page == 1 && this.list.length < 3) {
-						this.contentdown = ''
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.list.length && this.page == 1 && this.list.length > 2) {
-						this.contentdown = '无更多数据'
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.list.length) {
-						this.loadingType = 0
-						this.contentdown = '无更多数据'
-					} else {
-						this.contentdown = '上拉加载更多'
-						this.loadingType = 1
-					}
+				this.$api.massifGetDeviceList(obj).then(res => {
+					this.list = res.data.data;
 				})
 			},
 			toDetail(id){

@@ -1,24 +1,45 @@
 <!--地块管理-->
 <template>
 	<view class="workOrder">
-		<view v-bind:style="{height:windowHeight+'px'}">
-			<scroll-view v-bind:style="{height:windowHeight+'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
+		<view class="top equipmentManagement-title flex  align-items-center justify-content-flex-justify">
+			<view style="font-size: 16px;font-weight: bold;" class="flex  align-items-center">
+				<view style="width: 20px;height: 20px;background-color: #F2EF78;margin-right: 5px;"></view>
+				<text>我的地块</text>
+			</view>
+			<view class="equipmentManagement-btn" @click="toAdd">
+				<image src="../../static/imgs/add.png" mode=""></image>
+				<text>新增</text>
+			</view>
+		</view>
+		<view >
+			<scroll-view v-bind:style="{height:windowHeight- 50 +'px'}" class="list-container" scroll-y="true" refresher-enabled="true"
 			 refresher-background="#eee" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 			 @refresherabort="onAbort" :refresher-triggered="triggered" :refresher-threshold="100" @scrolltoupper="scrolltoupper"
 			 @scrolltolower="loadingData">
-				<view class="cu-form-group" v-for="(item,i) in newsList" :key="i" style="padding:20rpx 30rpx;" @click="toDetail(item.massifId)">
+				<!-- <view class="cu-form-group" v-for="(item,i) in newsList" :key="i" style="padding:20rpx 30rpx;" @click="toDetail(item.massifId)">
 					<view>
 						<view class="item-title">NO.{{item.massifNo}}  {{item.massifName}}  </view>
 						<view class="small-text">{{item.farmName}}</view>
 					</view>
 					<image class="right-jt" src="../../static/imgs/arrows.png" mode=""></image>
+				</view> -->
+				<view class="flex align-center card"  v-for="(item,i) in newsList" :key="i" @tap="toDetail(item.massifId)">
+					<view class="flex-1 " >
+						<text class="flex">NO.{{item.massifNo}}</text>
+						<text class="flex text-gray">{{item.massifName}}</text>
+					</view>
+					<view >
+						<view class="flex align-center" style="font-family: Verdana, Geneva, Tahoma, sans-serif;line-height: 0.9;">
+							<text style="font-size: 30px;">{{item.cycle}}</text>%
+						</view>
+						<text class="flex text-gray" >已完成</text>
+					</view>
 				</view>
-				<view class="loading-more">{{contentdown}}</view>
 			</scroll-view>
 		</view>
-		<view class="add-box" @click="toAdd">
+		<!-- <view class="add-box" @click="toAdd">
 			<image class="right-jt" src="../../static/imgs/add.png" mode=""></image>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -113,23 +134,24 @@
 					pageSize: 15
 				}
 				this.$api.selectMassif(obj).then(res => {
-					this.newsList = this.newsList.concat(res.data.data.massifs)
-					if (this.page == 1 && this.newsList.length == 0) {
-						this.loadingType = 0
-						this.contentdown = '暂无数据'
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
-						this.contentdown = ''
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
-						this.contentdown = '无更多数据'
-						this.loadingType = 0
-					} else if (res.data.data.rowCount == this.newsList.length) {
-						this.loadingType = 0
-						this.contentdown = '无更多数据'
-					} else {
-						this.contentdown = '上拉加载更多'
-						this.loadingType = 1
-					}
+					this.newsList = res.data.data
+					
+					// if (this.page == 1 && this.newsList.length == 0) {
+					// 	this.loadingType = 0
+					// 	this.contentdown = '暂无数据'
+					// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length < 3) {
+					// 	this.contentdown = ''
+					// 	this.loadingType = 0
+					// } else if (res.data.data.rowCount == this.newsList.length && this.page == 1 && this.newsList.length > 2) {
+					// 	this.contentdown = '无更多数据'
+					// 	this.loadingType = 0
+					// } else if (res.data.data.rowCount == this.newsList.length) {
+					// 	this.loadingType = 0
+					// 	this.contentdown = '无更多数据'
+					// } else {
+					// 	this.contentdown = '上拉加载更多'
+					// 	this.loadingType = 1
+					// }
 				})
 			},
 			toAdd(){
@@ -161,13 +183,18 @@
 		height: 100%;
 
 		.top {
-			position: fixed;
 			background-color: #fff;
 			width: 100%;
-			z-index: 1;
 		}
 	}
-
+	.card{
+		width: 47%;
+		margin: 20rpx 10rpx;
+		background-color: #FFFFFF;
+		border-radius: 20rpx;
+		padding:20rpx 20rpx;
+		float: left;
+	}
 	.box-margin {
 		padding-top: 10px;
 	}
@@ -229,6 +256,28 @@
 			width:60rpx;
 			height:60rpx;
 			margin-top: 18rpx;
+		}
+	}
+	.equipmentManagement-title {
+		padding: 15rpx 30rpx;
+		background: #eee;
+	
+		image {
+			width: 24px;
+			margin-right: 5px;
+		}
+	
+		.equipmentManagement-btn {
+			background: #17BB89;
+			padding: 3px 8px;
+			border-radius: 17px;
+			color: #fff;
+	
+			image {
+				width: 10px;
+				height: 10px;
+				margin-right: 3px;
+			}
 		}
 	}
 </style>

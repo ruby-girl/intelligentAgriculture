@@ -8,7 +8,7 @@
 						<view class="time-txt">{{item.date}}</view>
 					</view>	
 					<view class="timeline-content js--fadeInLeft">
-						<image :src="item.resArr[0]" mode="widthFix" @tap="toPhoto(item.resArr)"></image>
+						<image :src="item.resArr[0]" mode="widthFix" @tap="toPhoto(item)"></image>
 					</view>
 				</view>
 						
@@ -18,7 +18,7 @@
 						<view class="time-txt">{{item.date}}</view>
 					</view>	
 					<view class="timeline-content js--fadeInRight">							
-						<image :src="item.resArr[0]" mode="widthFix" @tap="toPhoto(item.resArr)"></image>
+						<image :src="item.resArr[0]" mode="widthFix" @tap="toPhoto(item)"></image>
 					</view>
 				</view>
 			</view>
@@ -42,11 +42,26 @@
 		
 		methods: {
 			toPhoto(arr){	
-				getApp().globalData.photoImgs=arr
-				uni.navigateTo({
-					url: '/pageA/photoAlbum'
+				var time = arr.date.split(' ');
+				var str = time[0].split('-');
+				var date = str[0] + str[1] + str[2];
+				this.$api.deviceGetImage({ 
+					device: {
+					            deviceId: arr.deviceId
+					        },
+					        time:date
+				}).then(res => {
+					var Arrimgs = new Array();
+					res.data.data.forEach(item => {
+						Arrimgs.push(item.url);
+					});
+					getApp().globalData.photoImgs=Arrimgs;
+					uni.navigateTo({
+						url: '/pageA/photoAlbum'
+					});
 				});
-			}
+				
+			},
 		}
 	}
 </script>

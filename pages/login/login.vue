@@ -29,8 +29,8 @@
 			return {
 				title: 'Hello',
 				obj: {
-					username: '',
-					password: ''
+					phone: '',
+					yzm: ''
 				},
 				headPortrait: '',
 				name: '',
@@ -64,21 +64,21 @@
 				})	
 			},
 			onInput(e) {
-				this.obj.username = e.detail.value
+				this.obj.phone = e.detail.value
 			},
 			captchaInput(e){
-				this.obj.password = e.detail.value
+				this.obj.yzm = e.detail.value
 			},
 			// 手动授权方法
 			onGotUserInfo(e) {
-				if (!this.obj.username) {
+				if (!this.obj.phone) {
 					uni.showToast({
 						title: '请输入手机号',
 						icon: 'none'
 					})
 					return
 				}
-				if (!this.obj.password) {
+				if (!this.obj.yzm) {
 					uni.showToast({
 						title: '请输入验证码',
 						icon: 'none'
@@ -115,7 +115,7 @@
 			codeClick() {
 				//点击发送验证码		     
 				let _this = this
-				if (!this.obj.username) {
+				if (!this.obj.phone) {
 					uni.showToast({
 						title: '请输入手机号',
 						icon: 'none'
@@ -123,48 +123,87 @@
 					return
 				}
 				this.disabled = true
-				this.$api.captcha({
-					phone: this.obj.username
-				}).then(res => {
-					console.log('1',res)
-					if (res.data.stateCode == 200) {
-						this.btnTitle = 60
-						this.txt = '秒后获取'
-						let timer = setInterval(function() {
-							if (_this.btnTitle == 1) {
-								clearInterval(timer)
-								_this.btnTitle = '获取验证码'
-								_this.txt = ''
-								_this.disabled = false
-							} else {
-								_this.btnTitle = _this.btnTitle - 1
-							}
-						}, 1000)
-					} else {
-						this.btnTitle = 180
-						this.txt = '秒后获取'
-						let timer = setInterval(function() {
-							if (_this.btnTitle == 1) {
-								clearInterval(timer)
-								_this.btnTitle = '获取验证码'
-								_this.txt = ''
-								_this.disabled = false
-							} else {
-								_this.btnTitle = _this.btnTitle - 1
-							}
-						}, 1000)
-					}
+				uni.request({
+					url: getApp().globalData.baseUrl3 + 'api/sms/send',
+					method:'POST',
+					header:{
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+					data:{
+						'phone': this.obj.phone,
+					},
+					success: (res) => {
+					        if (res.data.stateCode == 200) {
+					        	this.btnTitle = 60
+					        	this.txt = '秒后获取'
+					        	let timer = setInterval(function() {
+					        		if (_this.btnTitle == 1) {
+					        			clearInterval(timer)
+					        			_this.btnTitle = '获取验证码'
+					        			_this.txt = ''
+					        			_this.disabled = false
+					        		} else {
+					        			_this.btnTitle = _this.btnTitle - 1
+					        		}
+					        	}, 1000)
+					        } else {
+					        	this.btnTitle = 180
+					        	this.txt = '秒后获取'
+					        	let timer = setInterval(function() {
+					        		if (_this.btnTitle == 1) {
+					        			clearInterval(timer)
+					        			_this.btnTitle = '获取验证码'
+					        			_this.txt = ''
+					        			_this.disabled = false
+					        		} else {
+					        			_this.btnTitle = _this.btnTitle - 1
+					        		}
+					        	}, 1000)
+					        }
+					    }
 				})
+				// this.$api.captcha({
+				// 	phone: this.obj.phone
+				// }).then(res => {
+				// 	console.log('1',res)
+				// 	if (res.data.stateCode == 200) {
+				// 		this.btnTitle = 60
+				// 		this.txt = '秒后获取'
+				// 		let timer = setInterval(function() {
+				// 			if (_this.btnTitle == 1) {
+				// 				clearInterval(timer)
+				// 				_this.btnTitle = '获取验证码'
+				// 				_this.txt = ''
+				// 				_this.disabled = false
+				// 			} else {
+				// 				_this.btnTitle = _this.btnTitle - 1
+				// 			}
+				// 		}, 1000)
+				// 	} else {
+				// 		this.btnTitle = 180
+				// 		this.txt = '秒后获取'
+				// 		let timer = setInterval(function() {
+				// 			if (_this.btnTitle == 1) {
+				// 				clearInterval(timer)
+				// 				_this.btnTitle = '获取验证码'
+				// 				_this.txt = ''
+				// 				_this.disabled = false
+				// 			} else {
+				// 				_this.btnTitle = _this.btnTitle - 1
+				// 			}
+				// 		}, 1000)
+				// 	}
+				// })
 			},
 			userLogin() {
 				let that = this;
 				this.$api.login(this.obj).then(res => {		
 					let obj = {
-						token: res.data.token,					
+						token: res.data.data.token,					
 						nickName: this.user.nickName,
 						avatarUrl: this.user.avatarUrl,
-						phone: this.obj.username,
-						cookie: res.cookies[0],
+						phone: this.obj.phone,
+						userId: res.data.data.user.userId,
 					}
 					uni.setStorage({
 						key: 'XYZNUserInfo',

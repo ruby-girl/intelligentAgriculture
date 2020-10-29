@@ -30,7 +30,7 @@
 				</view>
 				<view class="cu-form-group">
 					<view class="title">联系电话</view>
-					<input v-model="postData.fphone" class="form-input-left" placeholder="请输入联系电话" name="input"></input>
+					<input v-model="postData.masterPhone" class="form-input-left" placeholder="请输入联系电话" name="input"></input>
 				</view>
 				<view class="cu-form-group">
 					<view class="title">负责人照片</view>
@@ -38,7 +38,7 @@
 				<view>
 					<view class="grid col-4 grid-square flex-sub">
 						<view class="bg-img" v-for="(item,index) in imgList" :key="index" :data-url="imgList[index]">
-							<image :src="imgList[index]" mode="aspectFill"></image>
+							<image :src="item" mode="aspectFill"></image>
 							<view class="cu-tag bg-red" @tap.stop="DelImg($event,1)" :data-index="index">
 								<text class='cuIcon-close'></text>
 							</view>
@@ -60,7 +60,7 @@
 				<view>
 					<view class="grid col-4 grid-square flex-sub">
 						<view class="bg-img" v-for="(item,index) in imgList2" :key="index" :data-url="imgList2[index]">
-							<image :src="imgList2[index]" mode="aspectFill"></image>
+							<image :src="item" mode="aspectFill"></image>
 							<view class="cu-tag bg-red" @tap.stop="DelImg($event,2)" :data-index="index">
 								<text class='cuIcon-close'></text>
 							</view>
@@ -99,7 +99,8 @@
 				},
 				provinceCode: '',
 				cityCode: '',
-				areaCode: '', 
+				countyCode: '', 
+				
 				init: true,
 				multiIndexsave: [],
 				imgUrl: getApp().globalData.imgUrl,
@@ -118,8 +119,8 @@
 					uni.setNavigationBarTitle({
 						title: "编辑农场"
 					})
-					this.btnTxt = '保存'
-					this.getFarm()
+					this.btnTxt = '保存';
+					this.getFarm();
 				} else {
 					this.getProvinceCode()
 				}
@@ -128,9 +129,7 @@
 		},
 		methods: {
 			getProvinceCode() { //获取省
-				this.$api.districts({
-					parent: 86
-				}).then(res => {
+				this.$api.getProvince().then(res => {
 					let arr = []
 					res.data.data.forEach(item => {
 						let obj = {
@@ -144,8 +143,8 @@
 				})
 			},
 			getByProvinceCode(code, n) { //获取市、、n：有市的默认值
-				this.$api.districts({
-					parent: code
+				this.$api.getCity({
+					code: code
 				}).then(res => {
 					let arr = []
 					res.data.data.forEach(item => {
@@ -165,8 +164,8 @@
 				})
 			},
 			getByCityCode(code) { //获取区
-				this.$api.districts({
-					parent: code
+				this.$api.getCounty({
+					code: code
 				}).then(res => {
 					let arr = []
 					res.data.data.forEach(item => {
@@ -185,7 +184,7 @@
 							return item.id == this.cityCode
 						})
 						let code3 = this.multiArray[2].findIndex((item, i) => {
-							return item.id == this.areaCode
+							return item.id == this.countyCode
 						})
 
 						this.multiIndex = [code1, code2, code3]
@@ -199,29 +198,23 @@
 				})
 			},
 			getFarm() { //如果为编辑，获取农场详情
-				this.$api.selectFarmId({
+				this.$api.farmGetOne({
 					farmId: this.postData.farmId
 				}).then(res => {
-					this.postData = res.data.data
+					this.postData = res.data.data[0].farm;
 					// 根据code设置省市县默认值 
-					this.provinceCode = res.data.data.provinceCode
-					this.cityCode = res.data.data.cityCode
-					this.areaCode = res.data.data.arerCode
-					if(res.data.data.masterPicture){
-						this.imgArr=res.data.data.masterPicture.split(",");
-						this.imgList=this.imgArr.map(item=>{
-							return this.imgUrl+item
-						})	
+					this.provinceCode = this.postData.provinceCode;
+					this.cityCode = this.postData.cityCode;
+					this.countyCode = this.postData.countyCode;
+					if(res.data.data[0].masterPhotos[0].path){
+						this.imgArr.push(res.data.data[0].masterPhotos[0].path);
+						this.imgList.push(res.data.data[0].masterPhotos[0].path); 
 					}
-					if(res.data.data.picture){
-						this.imgArr2=res.data.data.picture.split(",");
-						this.imgList2=this.imgArr2.map(item=>{
-							return this.imgUrl+item
-						})
-					}			
-					this.$api.districts({
-						parent: 86
-					}).then(res => {
+					if(res.data.data[0].farmPhotos[0].path){
+						this.imgArr2.push(res.data.data[0].farmPhotos[0].path);
+						this.imgList2.push(res.data.data[0].farmPhotos[0].path);
+					}
+					this.$api.getProvince().then(res => {
 						let arr = []
 						res.data.data.forEach(item => {
 							let obj = {
@@ -231,14 +224,32 @@
 							arr.push(obj)
 						})
 						this.multiArray[0] = arr;
-						let code;
 						if (this.provinceCode) {
 							this.getByProvinceCode(this.provinceCode, this.cityCode)
 						} else {
 							this.getByProvinceCode(res.data.data[0].code)
 						}
-
 					})
+					// this.$api.districts({
+					// 	parent: 86
+					// }).then(res => {
+					// 	let arr = []
+					// 	res.data.data.forEach(item => {
+					// 		let obj = {
+					// 			name: item.name,
+					// 			id: item.code
+					// 		}
+					// 		arr.push(obj)
+					// 	})
+					// 	this.multiArray[0] = arr;
+					// 	let code;
+					// 	if (this.provinceCode) {
+					// 		this.getByProvinceCode(this.provinceCode, this.cityCode)
+					// 	} else {
+					// 		this.getByProvinceCode(res.data.data[0].code)
+					// 	}
+
+					// })
 				})
 			},
 			MultiChange(e) {
@@ -294,30 +305,41 @@
 					success: (res) => {
 						let that = this
 						res.tempFilePaths.forEach(item => {
-							that.uploadImg(item,n)
+							// that.uploadImg(item,n)
+							uni.saveFile({
+							      tempFilePath: item,
+							      success: function (res) {
+							        // var savedFilePath = res.savedFilePath;
+									that.uploadImg(res.savedFilePath,n)
+							      }
+							});
 						});
 					}
 				});
 			},
 			uploadImg(url,n) {
 				let that = this
-				let URLPath = getApp().globalData.baseUrl + 'api/farm/uploadHead';
+				let URLPath = getApp().globalData.baseUrl + 'api/farm/masterPhotoUpload';
+				
 				wx.uploadFile({
 					url: URLPath,
 					filePath: url,
 					name: 'file',
 					header: {
-						'token': uni.getStorageSync('XYZNUserInfo').token
+						'token': uni.getStorageSync('XYZNUserInfo').token,
 					},
 					success: function(resData) {
 						let data = JSON.parse(resData.data).data
 						if(n==1){
-							that.imgList = that.imgList.concat(that.imgUrl + data)
+							that.imgList = that.imgList.concat( data)
 							that.imgArr.push(data)
 						}else{
-							that.imgList2 = that.imgList2.concat(that.imgUrl + data)
+							that.imgList2 = that.imgList2.concat( data)
 							that.imgArr2.push(data)
 						}
+					},
+					fail:function(res) {
+						console.log(res);
 					}
 				})
 			},
@@ -370,21 +392,22 @@
 				this.postData.provinceName = code1[0].name
 				this.postData.cityCode = code2[0].id
 				this.postData.cityName = code2[0].name
-				this.postData.arerCode = code3[0].id
-				this.postData.arerName = code3[0].name
+				this.postData.countyCode = code3[0].id
+				this.postData.countyName = code3[0].name
 			},
 			addFunc() {
 				if (!this.test()) return
 				this.getSelectValue()
 				// let masterPicture=this.imgArr2.join()
 				// let picture=this.imgArr.join()
-				this.postData.picture = this.imgArr2.join()
-				this.postData.masterPicture = this.imgArr.join()
+				// this.postData.farmPhoto = this.imgArr2;
+				// this.postData.masterPhoto = this.imgArr;
 				let api;
 				if (!this.postData.farmId) {
 					api = 'insertFarm'
 				} else api = 'updateFarm';
-				this.$api[api](this.postData).then(res => {
+				console.log(this.postData);
+				this.$api[api]({farm:this.postData,farmPhoto:this.imgArr2,masterPhoto:this.imgArr}).then(res => {
 					if (this.postData.farmId) {
 						uni.showToast({
 							title: '编辑成功',

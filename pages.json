@@ -211,6 +211,13 @@
 					"navigationBarBackgroundColor": "#17BB89",
 					"navigationBarTextStyle": "white"
 				}
+			},{
+				"path": "impowerList",
+				"style": {
+					"navigationBarTitleText": "授权列表",
+					"navigationBarBackgroundColor": "#17BB89",
+					"navigationBarTextStyle": "white"
+				}
 			}
 		]
 	}],
