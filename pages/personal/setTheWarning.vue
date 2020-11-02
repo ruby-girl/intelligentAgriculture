@@ -55,35 +55,49 @@
 				})
 			},
 			changeSwitch(e,i,isPests) {
-				this.list[i].opening=e.detail.value
-				let id;
-				if(isPests){
-					id=this.list[i].warningId
-				}else{
-					id=this.list[i].pestsId
-				}
-				this.switchFunc(id,e.detail.value,isPests)
+				this.list[i].open=e.detail.value
+				// let id;
+				// if(isPests){
+				// 	id=this.list[i].warnId
+				// }else{
+				// 	id=this.list[i].pestsId
+				// }
+				this.switchFunc(this.list[i],e.detail.value)
 			},
-			switchFunc(id,value=false,isPests){			
-				if(isPests){
-					this.$api.updateOpening({warningId:id,opening:value}).then(res=>{
-						uni.showToast({
-							title: '设置成功',
-							duration: 2000
-						})
-					}).catch(res=>{
-						this.findList()
+			switchFunc(data,value){		
+				console.log(data,value);
+				this.$api.warnUpdate({
+					"warnId": data.warnId,
+					"open": value,
+					"lowest": data.lowest,
+					"highest": data.highest,
+				}).then(res=>{
+					uni.showToast({
+						title: '设置成功',
+						duration: 2000
 					})
-				}else{
-					this.$api.updatePests({pestsId:id,opening:value}).then(res=>{
-						uni.showToast({
-							title: '设置成功',
-							duration: 2000
-						})
-					}).catch(res=>{
-						this.findList()
-					})
-				}
+				}).catch(res=>{
+					this.findList()
+				})
+				// if(isPests){
+				// 	this.$api.updateOpening({warningId:id,opening:value}).then(res=>{
+				// 		uni.showToast({
+				// 			title: '设置成功',
+				// 			duration: 2000
+				// 		})
+				// 	}).catch(res=>{
+				// 		this.findList()
+				// 	})
+				// }else{
+				// 	this.$api.updatePests({pestsId:id,opening:value}).then(res=>{
+				// 		uni.showToast({
+				// 			title: '设置成功',
+				// 			duration: 2000
+				// 		})
+				// 	}).catch(res=>{
+				// 		this.findList()
+				// 	})
+				// }
 				
 			},
 			findList(){

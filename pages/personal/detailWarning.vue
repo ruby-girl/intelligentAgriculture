@@ -27,8 +27,8 @@
 		},
 		onLoad(option) {
 			this.obj.warnId=option.warnId
-			this.obj.lowest=option.lowestlowest
-			this.obj.highest=option.highest
+			this.obj.lowest=option.low
+			this.obj.highest=option.high
 			this.deviceId=option.deviceId
 			this.obj.open = true;
 		},
