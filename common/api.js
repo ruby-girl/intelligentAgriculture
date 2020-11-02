@@ -165,17 +165,18 @@ export const  selectIdAll= (data) => {
 }
 
 // TAB 获取设备列表
-export const  deviceGetList = (data) => {
+export const  deviceGetListData = (data) => {
 	return http.request({
-		url: 'tracing/api/device/getList ',
+		url: 'tracing/api/device/getListData',
 		method: 'post',
 		data:data
 	})
 }
+
 // T获取设备详情
 export const  selectDevice= (data) => {
 	return http.request({
-		url: 'tracing/api/device/getOneData ',
+		url: 'tracing/api/device/getOneData',
 		method: 'post',
 		data:data
 	})
@@ -189,9 +190,9 @@ export const  updateDevice= (data) => {
 	})
 }
 // 首页监测
-export const  selectMonitor= (data) => {
+export const  massifGetMassifData= (data) => {
 	return http.request({
-		url: 'tracing/api/massif/selectMonitor',
+		url: 'tracing/api/massif/getMassifData',
 		method: 'post',
 		data:data
 	})
@@ -528,6 +529,14 @@ export const getConfig= (data) => {
 	return http.request({
 		baseUrl: getApp().globalData.baseUrl3,
 		url: 'tracing/api/oss/getConfig',
+		method: 'post',
+		data:data
+	})
+}
+
+export const deviceGetDetails= (data) => {
+	return http.request({
+		url: 'tracing/api/device/getDetails',
 		method: 'post',
 		data:data
 	})

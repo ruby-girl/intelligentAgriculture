@@ -20,12 +20,6 @@
 			baseUrl: 'https://www.sc-kwt.com/tracing/',// 1022
 			baseUrl3: 'https://www.sc-kwt.com/tools/', // 1021
 			isLogin: false,
-			oss:{
-				endpoint: 'oss-cn-beijing.aliyuncs.com',
-				osskeyid: 'LTAI4GEKh2XfGchAVZigtFrK',
-				osskeysecret: '5TIsFoGWykYJhCMpF2dSz1g46QqVpb',
-				bucketname: 'xkzn-file',
-			},
 			openId: ''
 		}
 	}

@@ -19,7 +19,7 @@
 		</view>
 		<view v-if="isLogin">
 			<view v-if="TabCur == 1">
-				<scroll-view
+				<!-- <scroll-view
 					v-bind:style="{ height: windowHeight + 'px' }"
 					class="list-container"
 					scroll-y="true"
@@ -33,8 +33,14 @@
 					:refresher-threshold="100"
 					@scrolltoupper="scrolltoupper"
 					@scrolltolower="loadingData"
+				> -->
+				<scroll-view
+					v-bind:style="{ height: windowHeight + 'px' }"
+					class="list-container"
+					scroll-y="true"
+					enable-back-to-top="true"
 				>
-					<view class="" v-for="(item, index) in newsList" :key="index" @tap="toUrl(item.massifId)">
+					<view class="" v-for="(item, index) in newsList" :key="index" @tap="toUrl(item)">
 						<monitor-land :itemObject="item" />					
 					</view>
 					<view class="loading-more">{{ contentdown }}</view>
@@ -169,11 +175,18 @@ export default {
 			});
 		},
 		
-		toUrl(id) {
+		toUrl(data) {
 			//跳转监测详情
-			uni.navigateTo({
-				url: 'growthMonitoring?massifId=' + id
-			});
+			if (data.device.length > 0) {
+				uni.navigateTo({
+					url: 'growthMonitoring?massifId=' + data.massifId,
+				});
+			} else {
+				uni.showToast({
+					title:'当前地块未绑定设备，暂时不能查看数据',
+					icon:'none'
+				})
+			}
 		},
 		onPulling() {},
 		onRefresh() {
@@ -234,65 +247,27 @@ export default {
 			}
 		},
 		getData(n) {
-			
-			this.$api.selectMassif().then(res => { // 获取地块
-				this.farmGetOne(0,res.data.data);
-			})
-		},
-		farmGetOne(index,array){// 根据地块查询农场
-			if (array.length > 0) {
-				this.$api.farmGetOne({farmId:array[index].farmId}).then(res => {
-					array[index].address = res.data.data[0].farm.provinceName + res.data.data[0].farm.cityName + res.data.data[0].farm.countyName + res.data.data[0].farm.address;
-					if(++index < array.length){
-						this.farmGetOne(index,array);
-					} else {
-						this.massifGetDeviceList(0,array);
+			this.$api.massifGetMassifData().then(res => { // 获取地块
+				res.data.data.forEach(item =>{
+					if (item.device.length > 4) {
+						item.device = item.device.slice(0,4);
 					}
-				})
-			}
-		},
-		massifGetDeviceList(index,array) { // 获取设备
-				this.$api.massifGetDeviceList({massifId:array[index].massifId}).then(res => {
-					array[index].device = res.data.data;
-					if(++index < array.length){
-						this.getData(index,array);
-					} else {
-						this.monitor(0,array);
-					}
-				})
-		},
-		monitor(index,array){
-			this.$api.monitor({massifId:array[index].massifId}).then(res => {
-				array[index].proportion = res.data.data.proportion;
-				array[index].crops = res.data.data.crops;
-				if(++index < array.length){
-					this.monitor(index,array);
-				} else {
-					this.getOneData(0,0,array);
-				}
-			})
-		},
-		getOneData(index,num,array){// 根据id获取设备详情
-				this.$api.selectDevice({deviceId:array[index].device[num].deviceId}).then(res => {
-						if(res.data.data.Details.status=='ONLINE'){
-							array[index].device[num].statusTxt='在线'
-						}else if(res.data.data.Details.status=='OFFLINE'){
-							array[index].device[num].statusTxt='离线'
-						}else if(res.data.data.Details.status=='UNACTIVE'){
-							array[index].device[num].statusTxt='未激活'
-						}else if(res.data.data.Details.status=='DISABLE'){
-							array[index].device[num].statusTxt='禁用'
+					item.device.forEach(li =>{
+						if(li.status=='ONLINE'){
+							li.statusTxt='在线'
+						}else if(li.status=='OFFLINE'){
+							li.statusTxt='离线'
+						}else if(li.status=='UNACTIVE'){
+							li.statusTxt='未激活'
+						}else if(li.status=='DISABLE'){
+							li.statusTxt='禁用'
 						}
-					if (++num < array[index].device.length) {
-						this.getOneData(index,num,array);
-					} else if(++index < array.length){
-						num = 0;
-						this.getOneData(index,num,array);
-					} else {
-						this.newsList = array;
-					}
-				})
+					})
+				});
+				this.newsList = res.data.data;
+			})
 		},
+		
 		tabSelect(e) {
 			this.TabCur = e.currentTarget.dataset.id;
 			// if (e.currentTarget.dataset.id == 1) {

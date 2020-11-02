@@ -30,7 +30,7 @@
 					</view>
 					<view >
 						<view class="flex align-center" style="font-family: Verdana, Geneva, Tahoma, sans-serif;line-height: 0.9;">
-							<text style="font-size: 30px;">{{item.cycle}}</text>%
+							<text style="font-size: 30px;">{{item.proportion.toFixed(0)}}</text>%
 						</view>
 						<text class="flex text-gray" >已完成</text>
 					</view>
@@ -134,7 +134,6 @@
 					pageSize: 15
 				}
 				this.$api.selectMassif(obj).then(res => {
-					this.newsList = res.data.data
 					
 					// if (this.page == 1 && this.newsList.length == 0) {
 					// 	this.loadingType = 0
@@ -152,6 +151,18 @@
 					// 	this.contentdown = '上拉加载更多'
 					// 	this.loadingType = 1
 					// }
+					this.monitor(0,res.data.data);
+				})
+			},
+			monitor(index,array){
+				this.$api.monitor({massifId:array[index].massifId}).then(res => {
+					array[index].proportion = res.data.data.proportion;
+					array[index].crops = res.data.data.crops;
+					if(++index < array.length){
+						this.monitor(index,array);
+					} else {
+						this.newsList = array;
+					}
 				})
 			},
 			toAdd(){

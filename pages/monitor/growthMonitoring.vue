@@ -212,9 +212,8 @@ export default {
 	},
 	watch: {
 		deviceId(v, n) {
-			this.findMassifIdByDevice();
-			this.deviceetScopeImage();
-			// this.GetDeviceImageData();
+			this.deviceGetDetails();
+			this.deviceGetLivePath(); //设备直播
 		}
 	},
 	onLoad(option) {
@@ -228,7 +227,9 @@ export default {
 	},
 	onShow() {
 		// this.getData();
-		this.findMassifIdByDevice(); //获取设备
+		this.findMassifIdByDevice(); //获取作物
+		this.massifGetDeviceList();
+	
 		this.cWidth = uni.upx2px(750);
 		this.cHeight = uni.upx2px(500);
 		this.openid = getApp().globalData.openid;
@@ -257,6 +258,9 @@ export default {
 		},
 		tabSelect(e) {
 			this.TabCur = e.currentTarget.dataset.id;
+			if (this.TabCur == 2 && this.imgsArr.length == 0) {
+				this.deviceetScopeImage(); //设备生长历程
+			}
 		},
 		// onShareTimeline(){},//分享朋友圈需要定义的方法
 		// 手动授权方法
@@ -389,50 +393,62 @@ export default {
 		massifGetDeviceList() {
 			// 根据地块获取设备列表
 			this.$api.massifGetDeviceList({ massifId: this.massifId }).then(res => {
-				this.getOneData(0, res.data.data);
-			});
-		},
-		getOneData(index, array) {
-			// 根据id获取设备详情
-			this.$api.selectDevice({ deviceId: array[index].deviceId }).then(res => {
-				if (res.data.data.Details.status == 'ONLINE') {
-					array[index].statusTxt = '在线';
-				} else if (res.data.data.Details.status == 'OFFLINE') {
-					array[index].statusTxt = '离线';
-				} else if (res.data.data.Details.status == 'UNACTIVE') {
-					array[index].statusTxt = '未激活';
-				} else if (res.data.data.Details.status == 'DISABLE') {
-					array[index].statusTxt = '禁用';
+				this.deviceList = res.data.data;
+				if (this.deviceList.length > 0) {
+					this.deviceId = this.deviceList[0].deviceId;
+					this.picker = [];
+					this.deviceList.map(item => {
+						this.picker.push(item.deviceName);
+					});
+					// this.deviceGetPresentData(); //设备数据
+					// this.findRangeDatay(); //设备7天数据
+					this.deviceGetDetails();
+					this.deviceGetLivePath(); //设备直播
 				}
-				if (++index < array.length) {
-					this.getOneData(index, array);
-				} else {
-					this.deviceList = array;
-					if (this.deviceList.length > 0) {
-						this.deviceId = this.deviceList[0].deviceId;
-						this.picker = [];
-						this.deviceList.map(item => {
-							this.picker.push(item.deviceName);
-						});
-						
-						this.deviceGetPresentData()
-						this.findRangeDatay()
-						this.deviceetScopeImage();
-					}
-				}
-			});
-		},
-		
-		deviceGetPresentData() {
-			//根据设备ID拿监测数据
-			this.$api
-				.deviceGetPresentData({
-					deviceId: this.deviceId
-				})
-				.then(res => {
-					this.monitorings = res.data.data;
-				});
 				
+			});
+		},
+		deviceGetDetails(){
+			this.$api.deviceGetDetails({deviceId:this.deviceId}).then(res => {
+				this.monitorings = res.data.data.presentData;
+				var chartsList = res.data.data.scopeData;
+				// var chartsList = chart.filter(li => {
+				// 	return li.sevenDays.data;
+				// });
+				chartsList.map(items => {
+					// let orderDps = items.sevenDays.data[0].orderDps;
+					let option = {
+						//数字的图--折线图数据
+						categories: this.GetTime(),
+						series: [
+							{
+								name: '',
+								data: items.dps,
+							}
+						]
+					};
+					items.dps.forEach(item => {
+						if (item !== undefined && item) {
+							// option.categories.push(formatDate(item.timestamp));
+							option.series[0].data.push(parseFloat(item).toFixed(1));
+						}
+					});
+					items.opts = option;
+				});
+				this.chartsList = [...chartsList];
+			})
+		},
+		// deviceGetPresentData() {
+		// 	//根据设备ID拿监测数据
+		// 	this.$api
+		// 		.deviceGetPresentData({
+		// 			deviceId: this.deviceId
+		// 		})
+		// 		.then(res => {
+		// 			this.monitorings = res.data.data;
+		// 		});
+		// },
+		deviceGetLivePath(){ // 直播
 			this.$api.deviceGetLivePath({
 					deviceId: this.deviceId
 				}).then(res =>{
@@ -460,41 +476,40 @@ export default {
 			});
 		},
 		
-		findRangeDatay() {
-			//折线图所有数据集合
-			this.$api
-				.getScopeData({
-					deviceId: this.deviceId
-				})
-				.then(res => {
-					var chartsList = res.data.data;
-					// var chartsList = chart.filter(li => {
-					// 	return li.sevenDays.data;
-					// });
-					chartsList.map(items => {
-						// let orderDps = items.sevenDays.data[0].orderDps;
-						let option = {
-							//数字的图--折线图数据
-							categories: this.GetTime(),
-							series: [
-								{
-									name: '',
-									data: items.dps,
-								}
-							]
-						};
-						items.dps.forEach(item => {
-							if (item !== undefined && item) {
-								// option.categories.push(formatDate(item.timestamp));
-								option.series[0].data.push(parseFloat(item).toFixed(1));
-							}
-						});
-						console.log(option.series);
-						items.opts = option;
-					});
-					this.chartsList = [...chartsList];
-				});
-		},
+		// findRangeDatay() {
+		// 	//折线图所有数据集合
+		// 	this.$api
+		// 		.getScopeData({
+		// 			deviceId: this.deviceId
+		// 		})
+		// 		.then(res => {
+		// 			var chartsList = res.data.data;
+		// 			// var chartsList = chart.filter(li => {
+		// 			// 	return li.sevenDays.data;
+		// 			// });
+		// 			chartsList.map(items => {
+		// 				// let orderDps = items.sevenDays.data[0].orderDps;
+		// 				let option = {
+		// 					//数字的图--折线图数据
+		// 					categories: this.GetTime(),
+		// 					series: [
+		// 						{
+		// 							name: '',
+		// 							data: items.dps,
+		// 						}
+		// 					]
+		// 				};
+		// 				items.dps.forEach(item => {
+		// 					if (item !== undefined && item) {
+		// 						// option.categories.push(formatDate(item.timestamp));
+		// 						option.series[0].data.push(parseFloat(item).toFixed(1));
+		// 					}
+		// 				});
+		// 				items.opts = option;
+		// 			});
+		// 			this.chartsList = [...chartsList];
+		// 		});
+		// },
 		GetTime() { // 获取当前时间前7天
 			var date = new Date();
 			var base = Date.parse(date); // 转换为时间戳
@@ -518,7 +533,7 @@ export default {
 		bindDateChange: function(e) {
 			this.isTitme = false;
 			this.date = e.target.value;
-			this.textMsg = e.target.value + '当天的成长记录';
+			
 			var str = e.detail.value.split('-');
 			var date = str[0] + str[1] + str[2];
 			this.$api.deviceGetImage({
@@ -528,15 +543,23 @@ export default {
 		        time:date
 			}).then(res => {
 				var Arrimgs = new Array();
-				res.data.data.forEach(item => {
-					Arrimgs.push({
-						date: this.formats(item.time),
-						picture: item.url,
-						resArr: [item.url],
-						deviceId:this.deviceId,
+				if (res.data.data) {
+					res.data.data.forEach(item => {
+						Arrimgs.push({
+							date: this.formats(item.time),
+							picture: item.url,
+							resArr: [item.url],
+							deviceId:this.deviceId,
+						});
 					});
-				});
-				this.imgsArr = Arrimgs;
+					this.textMsg = e.target.value + '当天的成长记录';
+					this.imgsArr = Arrimgs;
+				} else {
+					uni.showToast({
+						title:this.date + '当天未获取到数据',
+						icon:'none',
+					})
+				}
 			});
 		},
 		add0(m) {
