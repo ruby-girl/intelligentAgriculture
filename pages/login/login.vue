@@ -204,6 +204,7 @@
 						avatarUrl: this.user.avatarUrl,
 						phone: this.obj.phone,
 						userId: res.data.data.user.userId,
+						roleCode: res.data.data.roleCode,
 					}
 					uni.setStorage({
 						key: 'XYZNUserInfo',

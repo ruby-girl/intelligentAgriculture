@@ -13,6 +13,18 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+			// var data = uni.getStorageSync('video');
+			// if (data) {
+			// 	data.forEach(item => {
+			// 		if (item.deviceName == '生态智慧树') {
+			// 			this.$api.deviceCommand({
+			// 				deviceSn:item.deviceSn,
+			// 				action:0,
+			// 			}).then(res => {
+			// 			})
+			// 		}
+			// 	})
+			// }
 		},
 
 		globalData: {

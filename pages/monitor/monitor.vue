@@ -181,6 +181,7 @@ export default {
 				uni.navigateTo({
 					url: 'growthMonitoring?massifId=' + data.massifId,
 				});
+				
 			} else {
 				uni.showToast({
 					title:'当前地块未绑定设备，暂时不能查看数据',

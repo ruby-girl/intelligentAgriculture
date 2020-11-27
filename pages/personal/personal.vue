@@ -46,7 +46,7 @@
 					<view class="title display-flex align-items-center">
 						<image src="../../static/imgs/tip.png" mode=""></image>版本更新
 					</view>
-					<text class="tip-text">当前1.0.14</text>
+					<text class="tip-text">当前1.0.16</text>
 				</view>
 				<view class="cu-form-group item-jt" @click="toSetWaring">
 					<view class="title display-flex align-items-center">
@@ -54,7 +54,7 @@
 					</view>
 					<image src="../../static/imgs/arrows.png" mode=""></image>
 				</view>
-				<view class="cu-form-group item-jt" @click="toMandate">
+				<view v-if="user.roleCode == 'ADMIN'" class="cu-form-group item-jt" @click="toMandate">
 					<view class="title display-flex align-items-center">
 						<image class="small-img" src="../../static/imgs/shouquan.png" mode=""></image>添加被授权人
 					</view>
@@ -104,7 +104,8 @@
 					_this.user = {
 						nickName: res.data.nickName || '',
 						phone: res.data.phone || '',
-						avatarUrl: res.data.avatarUrl
+						avatarUrl: res.data.avatarUrl,
+						roleCode: res.data.roleCode,
 					}
 					 _this.getCount()
 				},

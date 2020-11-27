@@ -541,3 +541,12 @@ export const deviceGetDetails= (data) => {
 		data:data
 	})
 }
+
+// 控制直播开关
+export const deviceCommand= (data) => {
+	return http.request({
+		url: 'tracing/api/device/command',
+		method: 'post',
+		data:data
+	})
+}
