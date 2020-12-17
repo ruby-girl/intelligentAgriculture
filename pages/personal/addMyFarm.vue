@@ -206,11 +206,11 @@
 					this.provinceCode = this.postData.provinceCode;
 					this.cityCode = this.postData.cityCode;
 					this.countyCode = this.postData.countyCode;
-					if(res.data.data[0].masterPhotos[0].path){
+					if(res.data.data[0].masterPhotos.length > 0){
 						this.imgArr.push(res.data.data[0].masterPhotos[0].path);
 						this.imgList.push(res.data.data[0].masterPhotos[0].path); 
 					}
-					if(res.data.data[0].farmPhotos[0].path){
+					if(res.data.data[0].farmPhotos.length > 0){
 						this.imgArr2.push(res.data.data[0].farmPhotos[0].path);
 						this.imgList2.push(res.data.data[0].farmPhotos[0].path);
 					}

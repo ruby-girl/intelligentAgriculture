@@ -24,8 +24,8 @@
 						</view>
 					</view>
 					<image v-if="JSON.stringify(LiveUrl) =='{}'" style="width:100%;height: 600rpx;" mode="aspectFit" src="../../static/imgs/The-probe.jpg"></image>
-					<video v-else id="myVideo" autoplay="true" custom-cache="false" controls style="width:100%;height: 600rpx;"
-					  :poster="LiveUrl.liveCoverUrl" :src="LiveUrl.hlsLivePlayUrl"></video>
+					<video v-else id="myVideo" ref="myVideo" autoplay="true" custom-cache="false" controls style="width:100%;height: 600rpx;"
+					 :poster="LiveUrl.liveCoverUrl" @error="VideoError" @timeupdate="videowait" :src="LiveUrl.hlsLivePlayUrl"></video>
 					<view class="map-bottom-box">
 						<view class="list-item">
 							<view class="flex  align-items-center justify-content-flex-justify">
@@ -100,7 +100,7 @@
 							</view>
 						</template>
 						<template v-if="TabCur == 2">
-								<view class="uni-list" style="margin:10rpx 0;">
+							<view class="uni-list" style="margin:10rpx 0;">
 								<view class="uni-list-cell">
 									<view class="uni-list-cell-left " style="width: 50%;text-align: center;">切换日期</view>
 									<view class="uni-list-cell-db ">
@@ -197,15 +197,15 @@
 					if (item.deviceId == v) {
 						if (item.deviceName == '生态智慧树') {
 							var that = this;
-							setTimeout(function () {
+							setTimeout(function() {
 								that.deviceGetLivePath();
-							},5000);
+							}, 5000);
 						} else {
 							this.LiveUrl = {};
 						}
 					}
 				})
-				
+
 			}
 		},
 		onLoad(option) {
@@ -216,17 +216,20 @@
 				this.massifId = option.massifId;
 			}
 		},
-		onReady: function (res) {
-		        this.videoContext = uni.createVideoContext('myVideo');
-				// this.videoContext = wx.createVideoContext('myVideo');
+		onReady: function(res) {
+			this.videoContext = uni.createVideoContext('myVideo');
+			// console.log(this.videoContext)
+			// this.videoContext = wx.createVideoContext('myVideo');
 		},
-		onShow() {0
+		onShow() {
+			0
 			// this.getData();
 			this.findMassifIdByDevice(); //获取作物
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
 			this.openid = getApp().globalData.openid;
 			// this.getCode();
+
 		},
 		onAppHide() {
 			console.log('离开页面');
@@ -253,6 +256,24 @@
 			}
 		},
 		methods: {
+			// 视频出错
+			VideoError(e) {
+				this.videoContext.stop()
+				console.log('重新请求')
+				console.log(e)
+				this.$api.deviceGetLivePath({
+					deviceId: this.deviceId
+				}).then(res => {
+					setTimeout(() => {
+						this.LiveUrl = res.data.data;
+						this.videoContext.play()
+					}, 2000)
+				})
+			},
+			// 视频播放
+			videowait(e) {
+				// console.log(e)
+			},
 			PickerChange(e) {
 				this.index = e.detail.value;
 				this.deviceId = this.deviceList[this.index].deviceId;
@@ -343,7 +364,7 @@
 			scroll: function(e) {
 				this.scrollTop = e.detail.scrollTop;
 			},
-		
+
 			findMassifIdByDevice() {
 				this.$api.monitor({
 					massifId: this.massifId
@@ -387,13 +408,12 @@
 						uni.setStorage({
 							key: 'video',
 							data: this.deviceList,
-							success() {
-							}
+							success() {}
 						});
 						this.deviceCommand(1);
 						// this.deviceGetPresentData(); //设备数据
 						// this.findRangeDatay(); //设备7天数据
-						
+
 					}
 
 				});
@@ -442,16 +462,25 @@
 						items.opts = option;
 					});
 					this.chartsList = [...chartsList];
-					
+
 				})
 			},
-		
+
 			deviceGetLivePath() { // 直播
 				this.$api.deviceGetLivePath({
 					deviceId: this.deviceId
 				}).then(res => {
 					this.LiveUrl = res.data.data;
 				})
+
+				// let video = document.getElementById("myVideo")
+				// console.log(video)
+				// video.addEventListener('error', function() {
+				// 	console.log("播放出错");
+				// });
+				// video.addEventListener('stalled', function() {
+				// 	console.log("获取媒体数据失败");
+				// });
 			},
 			deviceetScopeImage() {
 				//生长历程
@@ -591,7 +620,7 @@
 			deviceCommand(index) { // 控制直播设备开关
 				if (index == 1 && this.deviceList[this.index].deviceName == '生态智慧树') {
 					this.re(this.deviceList[this.index].deviceSn, index);
-				} else if (index == 0 && this.deviceList[this.index].deviceName == '生态智慧树'){
+				} else if (index == 0 && this.deviceList[this.index].deviceName == '生态智慧树') {
 					this.re(this.deviceList[this.index].deviceSn, index);
 				}
 			},
@@ -600,7 +629,7 @@
 					deviceSn: num,
 					action: i
 				}).then(res => {
-					
+
 				})
 			}
 			// showImg(url){
