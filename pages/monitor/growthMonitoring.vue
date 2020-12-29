@@ -222,7 +222,7 @@
 			// this.videoContext = wx.createVideoContext('myVideo');
 		},
 		onShow() {
-			0
+			
 			// this.getData();
 			this.findMassifIdByDevice(); //获取作物
 			this.cWidth = uni.upx2px(750);
@@ -259,8 +259,8 @@
 			// 视频出错
 			VideoError(e) {
 				this.videoContext.stop()
+				this.LiveUrl = {}
 				console.log('重新请求')
-				console.log(e)
 				this.$api.deviceGetLivePath({
 					deviceId: this.deviceId
 				}).then(res => {
@@ -272,7 +272,7 @@
 			},
 			// 视频播放
 			videowait(e) {
-				// console.log(e)
+				console.log('播放中...')
 			},
 			PickerChange(e) {
 				this.index = e.detail.value;
