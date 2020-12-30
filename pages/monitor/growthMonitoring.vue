@@ -23,9 +23,12 @@
 							<view class="small-text">种植日期</view>
 						</view>
 					</view>
-					<image v-if="JSON.stringify(LiveUrl) =='{}'" style="width:100%;height: 600rpx;" mode="aspectFit" src="../../static/imgs/The-probe.jpg"></image>
-					<video v-else id="myVideo" ref="myVideo" autoplay="true" custom-cache="false" controls style="width:100%;height: 600rpx;"
-					 :poster="LiveUrl.liveCoverUrl" @error="VideoError" @timeupdate="videowait" :src="LiveUrl.hlsLivePlayUrl"></video>
+					<image v-if="!showVideo&&deviceList[index].deviceName!=='鲜仓宝'&&deviceList[index].deviceName!=='水精灵'" style="width:100%;height: 600rpx;" mode="aspectFit" src="https://xyznv1.oss-cn-beijing.aliyuncs.com/daditanzheng.jpg"></image>
+					<image v-if="!showVideo&&deviceList[index].deviceName=='水精灵'" style="width:100%;height: 600rpx;" mode="aspectFit" src="https://xyznv1.oss-cn-beijing.aliyuncs.com/shuijingling.jpg"></image>
+					<image v-if="!showVideo&&deviceList[index].deviceName=='鲜仓宝'" style="width:100%;height: 600rpx;" mode="aspectFit" src="https://xyznv1.oss-cn-beijing.aliyuncs.com/xiancangbao.jpg"></image>
+					<video v-if="showVideo" id="myVideo" ref="myVideo" autoplay="true" custom-cache="false" controls style="width:100%;height: 600rpx;"
+					 :poster="LiveUrl.liveCoverUrl" @loadedmetadata="loadedmetadata" :src="LiveUrl.hlsLivePlayUrl"></video>
+
 					<view class="map-bottom-box">
 						<view class="list-item">
 							<view class="flex  align-items-center justify-content-flex-justify">
@@ -60,23 +63,6 @@
 									<text class="small-txt">%</text>
 								</text>
 							</view>
-							<!-- <view class="flex">
-								<view class="map-bottom-tip">
-									<view class="likes-box flex justify-content-flex-center align-items-center">
-										<view class="flex justify-content-flex-center align-items-center likes-shere-box">
-											<image v-if="isLike" src="../../static/imgs/like.png" mode="aspectFill" @click="likesFunc"></image>
-											<image v-else src="../../static/imgs/no-like.png" mode="aspectFill" @click="likesFunc"></image>
-											<button v-if="num !== 0" class="like-txt" lang="zh_CN" withCredentials="true" @click="likesFunc">{{ num }}人点赞</button>
-											<button v-else class="like-txt" lang="zh_CN" withCredentials="true" @click="likesFunc">点赞</button>
-										</view>
-										<view style="height:25px;border-left:2px solid #eee;"></view>
-										<view class="flex justify-content-flex-center align-items-center likes-shere-box">
-											<image class="right-img" src="../../static/imgs/share.png" mode="aspectFill" @click="shareFunc"></image>
-											<button class="like-txt" lang="zh_CN" withCredentials="true" @click="shareFunc">分享二维码</button>
-										</view>
-									</view>
-								</view>
-							</view> -->
 						</view>
 					</view>
 				</view>
@@ -179,7 +165,10 @@
 				index: 0,
 				picker: [],
 				// imgUrl:'' ,//非直播设备的图片地址
-				LiveUrl: {} // 设备直播地址
+				LiveUrl: {}, // 设备直播地址
+				showVideo: false,
+				urlTrue:false,//视频源是否加载成功
+				timer:null
 			};
 		},
 		onShareAppMessage: function() {
@@ -191,6 +180,7 @@
 		},
 		watch: {
 			deviceId(v, n) {
+				console.info('有监听了')
 				// this.deviceCommand(1);
 				this.deviceGetDetails();
 				this.deviceList.forEach(item => {
@@ -198,9 +188,14 @@
 						if (item.deviceName == '生态智慧树') {
 							var that = this;
 							setTimeout(function() {
+								console.info('这里有调用？？')
 								that.deviceGetLivePath();
 							}, 5000);
 						} else {
+							this.showVideo=false
+							if(this.timer){
+								clearTimeout(this.timer)
+							}
 							this.LiveUrl = {};
 						}
 					}
@@ -216,26 +211,16 @@
 				this.massifId = option.massifId;
 			}
 		},
-		onReady: function(res) {
-			this.videoContext = uni.createVideoContext('myVideo');
-			// console.log(this.videoContext)
-			// this.videoContext = wx.createVideoContext('myVideo');
-		},
 		onShow() {
-			
-			// this.getData();
 			this.findMassifIdByDevice(); //获取作物
 			this.cWidth = uni.upx2px(750);
 			this.cHeight = uni.upx2px(500);
 			this.openid = getApp().globalData.openid;
-			// this.getCode();
-
-		},
-		onAppHide() {
-			console.log('离开页面');
 		},
 		onUnload() {
-			console.log('离开页面');
+			if(this.timer){
+				clearTimeout(this.timer)
+			}
 			var data = uni.getStorageSync('video');
 			data.forEach(item => {
 				if (item.deviceName == '生态智慧树') {
@@ -256,23 +241,24 @@
 			}
 		},
 		methods: {
-			// 视频出错
-			VideoError(e) {
-				this.videoContext.stop()
-				this.LiveUrl = {}
-				console.log('重新请求')
-				this.$api.deviceGetLivePath({
-					deviceId: this.deviceId
-				}).then(res => {
-					setTimeout(() => {
-						this.LiveUrl = res.data.data;
-						this.videoContext.play()
-					}, 2000)
-				})
-			},
-			// 视频播放
-			videowait(e) {
-				console.log('播放中...')
+			// // 视频出错（注意需真机测试）
+			// VideoError(e) {			
+			// 	this.showVideo = false
+			// 	let _this=this
+			// 	uni.showToast({
+			// 		title: '视频源错误，将重新加载',
+			// 		icon: 'none',
+			// 		success: function(){
+			// 			setTimeout(()=>{
+							
+			// 				_this.deviceGetLivePath()
+			// 			},800)
+			// 		}
+			// 	})
+				
+			// },
+			loadedmetadata(){//只有视频源被成功加载才会执行，依此条件来判断是否需要再次加载直播
+				this.urlTrue=true
 			},
 			PickerChange(e) {
 				this.index = e.detail.value;
@@ -465,12 +451,35 @@
 
 				})
 			},
-
 			deviceGetLivePath() { // 直播
+				this.showVideo = false
 				this.$api.deviceGetLivePath({
 					deviceId: this.deviceId
 				}).then(res => {
-					this.LiveUrl = res.data.data;
+					this.LiveUrl = res.data.data;				
+					setTimeout(() => {
+						this.showVideo = true						
+					}, 500)
+					this.timer=setTimeout(()=>{
+						//如果视频源没有加载成功，再请求一次
+						let _this=this
+						if(!this.urlTrue){
+							uni.showToast({
+								title: '视频源错误，将重新加载',
+								icon: 'none',
+								success: function(){
+									setTimeout(()=>{
+										_this.showVideo = false
+										_this.deviceGetLivePath()
+									},800)
+								}
+							})				
+						}else{
+							clearTimeout(this.timer)
+						}
+					},9000)
+
+					
 				})
 
 				// let video = document.getElementById("myVideo")
@@ -501,41 +510,6 @@
 					this.imgsArr = Arrimgs;
 				});
 			},
-
-			// findRangeDatay() {
-			// 	//折线图所有数据集合
-			// 	this.$api
-			// 		.getScopeData({
-			// 			deviceId: this.deviceId
-			// 		})
-			// 		.then(res => {
-			// 			var chartsList = res.data.data;
-			// 			// var chartsList = chart.filter(li => {
-			// 			// 	return li.sevenDays.data;
-			// 			// });
-			// 			chartsList.map(items => {
-			// 				// let orderDps = items.sevenDays.data[0].orderDps;
-			// 				let option = {
-			// 					//数字的图--折线图数据
-			// 					categories: this.GetTime(),
-			// 					series: [
-			// 						{
-			// 							name: '',
-			// 							data: items.dps,
-			// 						}
-			// 					]
-			// 				};
-			// 				items.dps.forEach(item => {
-			// 					if (item !== undefined && item) {
-			// 						// option.categories.push(formatDate(item.timestamp));
-			// 						option.series[0].data.push(parseFloat(item).toFixed(1));
-			// 					}
-			// 				});
-			// 				items.opts = option;
-			// 			});
-			// 			this.chartsList = [...chartsList];
-			// 		});
-			// },
 			GetTime() { // 获取当前时间前7天
 				var date = new Date();
 				var base = Date.parse(date); // 转换为时间戳
