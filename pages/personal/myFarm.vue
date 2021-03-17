@@ -80,7 +80,7 @@
 		components: {
 			popup
 		},
-		onLoad(option) {
+		onShow(option) {
 			this.windowHeight = uni.getSystemInfoSync().windowHeight // 屏幕的高度
 			this.loadingData = throttle(this.loadingData, 2000);
 			this.initData()

@@ -144,15 +144,15 @@
 			},
 			findDeviceName(){// 通过SN带出设备名称
 				if (this.obj.deviceSn.length >= 12) {
-					this.$api.findDeviceName({
+					this.$api.getDeviceSn({
 						deviceSn:this.obj.deviceSn
 					}).then(res => {
-						if (res) {
-							this.obj.deviceName = res.data.data.deviceName;
+						if (res.data.data.length>0) {
+							this.obj.deviceName = res.data.data[0].deviceName;
 						} else {
 							uni.showToast({
-								title:res.message,
-								icon:none,
+								title:'未查询到该设备',
+								icon:'none',
 							})
 						}
 					})

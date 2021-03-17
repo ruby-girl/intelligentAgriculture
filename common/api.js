@@ -550,3 +550,11 @@ export const deviceCommand= (data) => {
 		data:data
 	})
 }
+// 添加设备 通过序列号查询名称
+export const getDeviceSn= (data) => {
+	return http.request({
+		url: 'tracing/api/deviceSn/getList',
+		method: 'post',
+		data:data
+	})
+}
